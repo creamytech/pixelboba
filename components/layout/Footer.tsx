@@ -139,11 +139,11 @@ export default function Footer() {
             <div className="space-y-2 text-gray-400">
               <p>Ready to make your project pop?</p>
               <Link
-                href="mailto:hello@pixelboba.studio"
+                href="mailto:hello@pixelboba.com"
                 className="flex items-center space-x-2 hover:text-white transition-colors duration-200"
               >
                 <Mail className="w-4 h-4" />
-                <span>hello@pixelboba.studio</span>
+                <span>hello@pixelboba.com</span>
               </Link>
             </div>
           </div>

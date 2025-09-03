@@ -42,10 +42,10 @@ export default function ContactPage() {
                       <div>
                         <h3 className="font-semibold text-ink mb-2">Email</h3>
                         <a
-                          href="mailto:hello@pixelboba.studio"
+                          href="mailto:hello@pixelboba.com"
                           className="text-gray-600 hover:text-taro transition-colors duration-200"
                         >
-                          hello@pixelboba.studio
+                          hello@pixelboba.com
                         </a>
                       </div>
 

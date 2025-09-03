@@ -8,7 +8,12 @@
       "Bash(npm run prepare:*)",
       "Bash(chmod:*)",
       "Bash(npm run build:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run lint)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

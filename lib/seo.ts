@@ -16,8 +16,8 @@ export const siteConfig = {
     'custom development',
   ],
   links: {
-    twitter: 'https://twitter.com/pixelboba',
+    twitter: 'https://twitter.com/pixelboba_',
     github: 'https://github.com/creamytech/pixelboba',
-    instagram: 'https://instagram.com/pixelboba.studio',
+    instagram: 'https://instagram.com/pixel.boba',
   },
 };

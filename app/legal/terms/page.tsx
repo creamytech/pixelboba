@@ -57,11 +57,8 @@ export default function TermsPage() {
                 <h2 className="font-display text-2xl font-bold text-ink mb-4">Contact</h2>
                 <p className="text-gray-600">
                   Questions about these terms? Contact us at{' '}
-                  <a
-                    href="mailto:hello@pixelboba.studio"
-                    className="text-taro hover:text-deep-taro"
-                  >
-                    hello@pixelboba.studio
+                  <a href="mailto:hello@pixelboba.com" className="text-taro hover:text-deep-taro">
+                    hello@pixelboba.com
                   </a>
                 </p>
               </section>

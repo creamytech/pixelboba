@@ -68,11 +68,8 @@ export default function PrivacyPage() {
                 <h2 className="font-display text-2xl font-bold text-ink mb-4">Contact Us</h2>
                 <p className="text-gray-600">
                   If you have questions about this Privacy Policy, please contact us at{' '}
-                  <a
-                    href="mailto:hello@pixelboba.studio"
-                    className="text-taro hover:text-deep-taro"
-                  >
-                    hello@pixelboba.studio
+                  <a href="mailto:hello@pixelboba.com" className="text-taro hover:text-deep-taro">
+                    hello@pixelboba.com
                   </a>
                 </p>
               </section>

@@ -243,8 +243,9 @@ Every element of this site reflects our commitment to:
 
 ## 📞 Support
 
-- 📧 Email: hello@pixelboba.studio
-- 🐦 Twitter: [@pixelboba](https://twitter.com/pixelboba)
+- 📧 Email: hello@pixelboba.com
+- 📱 Instagram: [@pixel.boba](https://instagram.com/pixel.boba)
+- 🐦 X (Twitter): [@pixelboba\_](https://twitter.com/pixelboba_)
 - 💼 LinkedIn: [Pixel Boba](https://linkedin.com/company/pixelboba)
 
 ---

@@ -113,10 +113,10 @@ export default function CTASection() {
             <p>
               Or drop us a line at{' '}
               <a
-                href="mailto:hello@pixelboba.studio"
+                href="mailto:hello@pixelboba.com"
                 className="text-white hover:text-milk-tea transition-colors duration-200 underline"
               >
-                hello@pixelboba.studio
+                hello@pixelboba.com
               </a>
             </p>
           </motion.div>

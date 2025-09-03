@@ -23,8 +23,8 @@ export async function POST(request: NextRequest) {
         const resend = new Resend(process.env.RESEND_API_KEY);
 
         await resend.emails.send({
-          from: 'hello@pixelboba.studio',
-          to: ['hello@pixelboba.studio'],
+          from: 'hello@pixelboba.com',
+          to: ['hello@pixelboba.com'],
           subject: `New Contact Form Submission from ${name}`,
           html: `
             <h2>New Contact Form Submission</h2>
