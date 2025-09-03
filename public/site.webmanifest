@@ -1,0 +1,16 @@
+{
+  "name": "Pixel Boba",
+  "short_name": "Pixel Boba",
+  "description": "Design-first websites with delightful details and boba-smooth interactions. Websites that Pop.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ],
+  "theme_color": "#A78BFA",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}
