@@ -50,10 +50,10 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
-            What Our Clients Say
+            what our clients say
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Don&apos;t just take our word for it—hear from the amazing businesses we&apos;ve had the
+            don&apos;t just take our word for it—hear from the amazing businesses we&apos;ve had the
             pleasure of working with.
           </p>
         </motion.div>

@@ -3,13 +3,13 @@
 import { motion } from 'framer-motion';
 
 const marqueeText = [
-  'Pixel Boba',
+  'pixel boba',
   '•',
-  'Websites that Pop',
+  'websites that pop',
   '•',
-  'Pixel Boba',
+  'pixel boba',
   '•',
-  'Websites that Pop',
+  'websites that pop',
   '•',
 ];
 

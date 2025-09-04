@@ -54,9 +54,9 @@ export default function TermsPage() {
               </section>
 
               <section className="mb-8">
-                <h2 className="font-display text-2xl font-bold text-ink mb-4">Contact</h2>
+                <h2 className="font-display text-2xl font-bold text-ink mb-4">contact</h2>
                 <p className="text-gray-600">
-                  Questions about these terms? Contact us at{' '}
+                  questions about these terms? contact us at{' '}
                   <a href="mailto:hello@pixelboba.com" className="text-taro hover:text-deep-taro">
                     hello@pixelboba.com
                   </a>

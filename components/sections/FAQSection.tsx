@@ -6,52 +6,52 @@ import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
   {
-    question: "What's included in your web design and development services?",
+    question: "what's included in your web design and development services?",
     answer:
       'every project includes custom design, responsive development, seo optimization, performance optimization, content management setup, and post-launch support. we also provide training so you can manage your site independently.',
   },
   {
-    question: 'How long does it typically take to complete a project?',
+    question: 'how long does it typically take to complete a project?',
     answer:
       "most projects take 4-8 weeks from start to finish, depending on complexity and scope. simple websites can be completed in 2-3 weeks, while complex e-commerce or saas platforms may take 8-12 weeks. we'll provide a detailed timeline during our initial consultation.",
   },
   {
-    question: 'Do you work with businesses of all sizes?',
+    question: 'do you work with businesses of all sizes?',
     answer:
       'yes! we work with everyone from solo entrepreneurs and startups to established businesses and enterprises. our approach scales to match your needs and budget, ensuring you get maximum value regardless of your company size.',
   },
   {
-    question: 'What platforms and technologies do you use?',
+    question: 'what platforms and technologies do you use?',
     answer:
       'we specialize in modern technologies like next.js, react, typescript, and tailwind css. for content management, we often use headless cms solutions or custom-built admin panels. we choose the best tools for each project to ensure optimal performance and scalability.',
   },
   {
-    question: 'Can you redesign my existing website?',
+    question: 'can you redesign my existing website?',
     answer:
       "absolutely! we can completely redesign your existing site or perform targeted improvements. we'll analyze your current site, identify areas for improvement, and create a strategy that maintains your seo rankings while dramatically improving user experience.",
   },
   {
-    question: 'Do you provide ongoing maintenance and support?',
+    question: 'do you provide ongoing maintenance and support?',
     answer:
       'yes, we offer flexible maintenance plans including security updates, content updates, performance monitoring, and technical support. you can choose from monthly retainers or project-based support depending on your needs.',
   },
   {
-    question: 'How do you ensure my website will be fast and SEO-friendly?',
+    question: 'how do you ensure my website will be fast and seo-friendly?',
     answer:
       'we follow industry best practices including optimized images, efficient code, fast hosting, proper meta tags, schema markup, and mobile-first design. every site is tested for core web vitals and we aim for 95+ lighthouse scores across all metrics.',
   },
   {
-    question: 'What happens if I need changes after the website launches?',
+    question: 'what happens if i need changes after the website launches?',
     answer:
       'we include a revision period after launch for minor adjustments. for ongoing changes, we offer flexible hourly rates or monthly retainers. we also provide training so you can make content updates yourself.',
   },
   {
-    question: 'Do you handle hosting and domain setup?',
+    question: 'do you handle hosting and domain setup?',
     answer:
       "we can manage everything for you or work with your existing setup. we typically recommend modern hosting solutions like vercel or netlify for optimal performance, but we're flexible based on your preferences and requirements.",
   },
   {
-    question: 'How do we get started?',
+    question: 'how do we get started?',
     answer:
       "simply contact us through our contact form or email. we'll schedule a discovery call to understand your needs, provide a detailed proposal, and create a timeline that works for both parties. most projects can start within 1-2 weeks of agreement.",
   },

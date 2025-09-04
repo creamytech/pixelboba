@@ -129,12 +129,12 @@ export default async function WorkPage({ params }: WorkPageProps) {
           <section className="py-12 bg-gray-50">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <h2 className="font-display text-3xl font-bold text-center mb-8">Before & After</h2>
+                <h2 className="font-display text-3xl font-bold text-center mb-8">before & after</h2>
                 <BeforeAfterSlider
                   beforeImage={frontmatter.beforeImage}
                   afterImage={frontmatter.afterImage}
-                  beforeLabel="Before"
-                  afterLabel="After"
+                  beforeLabel="before"
+                  afterLabel="after"
                 />
               </div>
             </div>
@@ -156,13 +156,13 @@ export default async function WorkPage({ params }: WorkPageProps) {
         <section className="py-20 bg-gradient-to-r from-taro to-deep-taro">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center text-white">
-              <h2 className="font-display text-4xl font-bold mb-6">Ready for Similar Results?</h2>
+              <h2 className="font-display text-4xl font-bold mb-6">ready for similar results?</h2>
               <p className="text-xl text-taro-100 mb-8">
-                Let&apos;s discuss how we can transform your digital presence with the same
+                let&apos;s discuss how we can transform your digital presence with the same
                 attention to detail and results-driven approach.
               </p>
               <Button asChild size="lg" className="bg-white text-taro hover:bg-milk-tea">
-                <Link href="/contact">Start Your Project</Link>
+                <Link href="/contact">start your project</Link>
               </Button>
             </div>
           </div>

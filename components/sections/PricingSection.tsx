@@ -157,7 +157,7 @@ export default function PricingSection() {
                     }`}
                     variant={pkg.popular ? 'default' : 'outline'}
                   >
-                    <Link href="/contact">Get Started</Link>
+                    <Link href="/contact">get started</Link>
                   </Button>
                 </div>
 
@@ -202,7 +202,7 @@ export default function PricingSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <p className="text-gray-600 mb-6">
-            Need something custom? Let&apos;s discuss your specific requirements.
+            need something custom? let&apos;s discuss your specific requirements.
           </p>
           <Button
             asChild
@@ -210,7 +210,7 @@ export default function PricingSection() {
             size="lg"
             className="border-taro text-taro hover:bg-taro hover:text-white"
           >
-            <Link href="/contact">Request Custom Quote</Link>
+            <Link href="/contact">request custom quote</Link>
           </Button>
         </motion.div>
       </div>

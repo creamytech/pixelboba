@@ -5,26 +5,26 @@ import Link from 'next/link';
 
 const featuredProjects = [
   {
-    title: 'EcoFlow Commerce',
+    title: 'ecoflow commerce',
     slug: 'ecoflow-commerce',
-    summary: 'Sustainable e-commerce platform with seamless checkout',
-    category: 'E-commerce',
+    summary: 'sustainable e-commerce platform with seamless checkout',
+    category: 'e-commerce',
     color: 'from-matcha to-matcha/60',
     stats: { lighthouse: 99, conversion: '+34%', bounce: '-18%' },
   },
   {
-    title: 'TechStart SaaS',
+    title: 'techstart saas',
     slug: 'techstart-saas',
-    summary: 'Modern SaaS dashboard with real-time analytics',
-    category: 'SaaS',
+    summary: 'modern saas dashboard with real-time analytics',
+    category: 'saas',
     color: 'from-taro to-deep-taro',
     stats: { lighthouse: 98, conversion: '+42%', bounce: '-25%' },
   },
   {
-    title: 'Artisan Studio',
+    title: 'artisan studio',
     slug: 'artisan-studio',
-    summary: 'Creative portfolio showcasing handcrafted works',
-    category: 'Portfolio',
+    summary: 'creative portfolio showcasing handcrafted works',
+    category: 'portfolio',
     color: 'from-brown-sugar to-brown-sugar/60',
     stats: { lighthouse: 100, conversion: '+28%', bounce: '-15%' },
   },
@@ -42,10 +42,10 @@ export default function FeaturedWorkSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
-            Featured Work
+            featured work
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Each project tells a unique story of collaboration, creativity, and results-driven
+            each project tells a unique story of collaboration, creativity, and results-driven
             design.
           </p>
         </motion.div>
@@ -108,7 +108,7 @@ export default function FeaturedWorkSection() {
                       <span className="px-3 py-1 bg-milk-tea text-brown-sugar text-sm rounded-full">
                         {project.category}
                       </span>
-                      <div className="text-sm text-gray-500">View Case Study →</div>
+                      <div className="text-sm text-gray-500">view case study →</div>
                     </div>
 
                     {/* Results */}
@@ -117,19 +117,19 @@ export default function FeaturedWorkSection() {
                         <div className="font-bold text-matcha text-lg">
                           {project.stats.lighthouse}
                         </div>
-                        <div className="text-xs text-gray-500">Lighthouse</div>
+                        <div className="text-xs text-gray-500">lighthouse</div>
                       </div>
                       <div className="text-center">
                         <div className="font-bold text-taro text-lg">
                           {project.stats.conversion}
                         </div>
-                        <div className="text-xs text-gray-500">Conversion</div>
+                        <div className="text-xs text-gray-500">conversion</div>
                       </div>
                       <div className="text-center">
                         <div className="font-bold text-brown-sugar text-lg">
                           {project.stats.bounce}
                         </div>
-                        <div className="text-xs text-gray-500">Bounce Rate</div>
+                        <div className="text-xs text-gray-500">bounce rate</div>
                       </div>
                     </div>
                   </div>
@@ -151,7 +151,7 @@ export default function FeaturedWorkSection() {
             href="/work"
             className="inline-block bg-taro text-white px-8 py-3 rounded-lg font-semibold hover:bg-deep-taro transition-colors duration-300"
           >
-            View All Work
+            view all work
           </Link>
         </motion.div>
       </div>
