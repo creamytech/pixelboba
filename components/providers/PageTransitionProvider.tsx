@@ -1,13 +1,13 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import BobaLoader from '@/components/loading/BobaLoader';
 
 interface PageTransitionContextType {
   isLoading: boolean;
-  setLoading: (loading: boolean) => void;
+  startTransition: () => void;
+  completeTransition: () => void;
 }
 
 const PageTransitionContext = createContext<PageTransitionContextType | undefined>(undefined);
@@ -27,88 +27,76 @@ interface PageTransitionProviderProps {
 export default function PageTransitionProvider({ children }: PageTransitionProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
+  const [lastPathname, setLastPathname] = useState(pathname);
 
-  // Track navigation loading state
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+  const startTransition = () => {
+    setIsLoading(true);
+  };
 
-    const handleStart = () => {
-      // Add a small delay to avoid flash for very quick navigations
-      timeoutId = setTimeout(() => {
-        setIsLoading(true);
-      }, 150);
-    };
-
-    const handleComplete = () => {
-      clearTimeout(timeoutId);
+  const completeTransition = () => {
+    // Keep loading visible for at least 800ms for nice UX
+    setTimeout(() => {
       setIsLoading(false);
-    };
+    }, 800);
+  };
 
-    // Listen for route changes using the pathname
-    const originalPush = router.push;
-    const originalReplace = router.replace;
-    const originalBack = router.back;
-    const originalForward = router.forward;
-
-    // Override router methods to trigger loading
-    router.push = (...args: Parameters<typeof router.push>) => {
-      handleStart();
-      return originalPush.apply(router, args);
-    };
-
-    router.replace = (...args: Parameters<typeof router.replace>) => {
-      handleStart();
-      return originalReplace.apply(router, args);
-    };
-
-    router.back = () => {
-      handleStart();
-      return originalBack.apply(router);
-    };
-
-    router.forward = () => {
-      handleStart();
-      return originalForward.apply(router);
-    };
-
-    // Cleanup function
-    return () => {
-      clearTimeout(timeoutId);
-      router.push = originalPush;
-      router.replace = originalReplace;
-      router.back = originalBack;
-      router.forward = originalForward;
-    };
-  }, [router]);
-
-  // Stop loading when pathname changes (navigation complete)
+  // Listen for pathname changes to complete transition
   useEffect(() => {
-    setIsLoading(false);
-  }, [pathname]);
+    if (pathname !== lastPathname && isLoading) {
+      completeTransition();
+    }
+    setLastPathname(pathname);
+  }, [pathname, lastPathname, isLoading]);
 
-  // Handle browser back/forward buttons and direct navigation
+  // Handle link clicks to start transitions
   useEffect(() => {
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a[href]') as HTMLAnchorElement;
+
+      if (link && link.href) {
+        const url = new URL(link.href);
+        const currentUrl = new URL(window.location.href);
+
+        // Check if it's an internal navigation (same origin, different pathname)
+        if (url.origin === currentUrl.origin && url.pathname !== currentUrl.pathname) {
+          // Don't start transition if it's opening in a new tab
+          if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+            startTransition();
+          }
+        }
+      }
+    };
+
+    // Handle browser back/forward buttons
     const handlePopState = () => {
-      setIsLoading(true);
-      // Set a timeout to hide loading in case the event doesn't fire
-      const timeoutId = setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-
-      return () => clearTimeout(timeoutId);
+      startTransition();
     };
 
+    document.addEventListener('click', handleLinkClick);
     window.addEventListener('popstate', handlePopState);
 
     return () => {
+      document.removeEventListener('click', handleLinkClick);
       window.removeEventListener('popstate', handlePopState);
     };
   }, []);
 
+  // Fallback: hide loading after 3 seconds if something goes wrong
+  useEffect(() => {
+    if (isLoading) {
+      const fallbackTimer = setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+
+      return () => clearTimeout(fallbackTimer);
+    }
+  }, [isLoading]);
+
   const contextValue = {
     isLoading,
-    setLoading: setIsLoading,
+    startTransition,
+    completeTransition,
   };
 
   return (

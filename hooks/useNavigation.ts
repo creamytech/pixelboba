@@ -5,10 +5,10 @@ import { usePageTransition } from '@/components/providers/PageTransitionProvider
 
 export function useNavigation() {
   const router = useRouter();
-  const { setLoading } = usePageTransition();
+  const { startTransition } = usePageTransition();
 
   const navigateTo = (href: string, options?: { replace?: boolean }) => {
-    setLoading(true);
+    startTransition();
 
     if (options?.replace) {
       router.replace(href);
@@ -18,12 +18,12 @@ export function useNavigation() {
   };
 
   const goBack = () => {
-    setLoading(true);
+    startTransition();
     router.back();
   };
 
   const goForward = () => {
-    setLoading(true);
+    startTransition();
     router.forward();
   };
 
