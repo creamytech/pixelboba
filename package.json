@@ -11,7 +11,8 @@
     "test": "playwright test",
     "e2e": "playwright test",
     "prepare": "husky",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
