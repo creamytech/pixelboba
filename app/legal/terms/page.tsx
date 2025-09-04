@@ -24,7 +24,7 @@ export default function TermsPage() {
               <section className="mb-8">
                 <h2 className="font-display text-2xl font-bold text-ink mb-4">Services</h2>
                 <p className="text-gray-600 mb-4">
-                  Pixel Boba provides web design, development, and related digital services. Our
+                  Pixel Boba LLC provides web design, development, and related digital services. Our
                   services are provided on a project basis as outlined in individual project
                   agreements.
                 </p>

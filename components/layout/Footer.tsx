@@ -155,7 +155,7 @@ export default function Footer() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Pixel Boba. All rights reserved.
+              © {new Date().getFullYear()} Pixel Boba LLC. All rights reserved.
             </div>
 
             <div className="flex space-x-6">

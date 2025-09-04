@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'How Pixel Boba collects, uses, and protects your personal information.',
+  description: 'How Pixel Boba LLC collects, uses, and protects your personal information.',
 };
 
 export default function PrivacyPage() {
