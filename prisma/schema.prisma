@@ -1,0 +1,305 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// NextAuth.js required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum Role {
+  CLIENT
+  ADMIN
+  OWNER
+}
+
+enum ProjectStatus {
+  DISCOVERY
+  WIREFRAMING
+  DESIGN
+  DEVELOPMENT
+  TESTING
+  LAUNCH
+  MAINTENANCE
+  COMPLETED
+  PAUSED
+  CANCELLED
+}
+
+enum ContractStatus {
+  DRAFT
+  SENT
+  SIGNED
+  EXPIRED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum MessageType {
+  TEXT
+  FILE
+  SYSTEM
+  PROJECT_UPDATE
+}
+
+enum NotificationType {
+  MESSAGE
+  INVOICE
+  CONTRACT
+  PROJECT_UPDATE
+  PAYMENT_RECEIVED
+  SYSTEM
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(CLIENT)
+  phone         String?
+  company       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // NextAuth relations
+  accounts Account[]
+  sessions Session[]
+
+  // Portal relations
+  projects          Project[]
+  messages          Message[]
+  contracts         Contract[]
+  invoices          Invoice[]
+  sentNotifications Notification[] @relation("NotificationSender")
+  notifications     Notification[] @relation("NotificationRecipient")
+  files             File[]
+  signatures        Signature[]
+  activities        Activity[]
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  status      ProjectStatus @default(DISCOVERY)
+  progress    Int           @default(0) // 0-100 percentage
+  startDate   DateTime
+  deadline    DateTime?
+  completedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  clientId   String
+  client     User        @relation(fields: [clientId], references: [id])
+  messages   Message[]
+  files      File[]
+  contracts  Contract[]
+  invoices   Invoice[]
+  milestones Milestone[]
+  activities Activity[]
+}
+
+model Milestone {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id        String      @id @default(cuid())
+  content   String
+  type      MessageType @default(TEXT)
+  isRead    Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  // Relations
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id])
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id])
+  fileId    String?
+  file      File?    @relation(fields: [fileId], references: [id])
+}
+
+model Contract {
+  id          String         @id @default(cuid())
+  title       String
+  content     String         @db.Text
+  status      ContractStatus @default(DRAFT)
+  sentAt      DateTime?
+  signedAt    DateTime?
+  expiresAt   DateTime?
+  templateId  String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  clientId   String
+  client     User        @relation(fields: [clientId], references: [id])
+  projectId  String?
+  project    Project?    @relation(fields: [projectId], references: [id])
+  signatures Signature[]
+  files      File[]
+}
+
+model Signature {
+  id        String   @id @default(cuid())
+  imageData String   @db.Text // Base64 encoded signature
+  ipAddress String?
+  userAgent String?
+  signedAt  DateTime @default(now())
+
+  // Relations
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  signerId   String
+  signer     User     @relation(fields: [signerId], references: [id])
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  number        String        @unique
+  title         String
+  description   String?
+  amount        Decimal       @db.Decimal(10, 2)
+  taxAmount     Decimal       @default(0) @db.Decimal(10, 2)
+  totalAmount   Decimal       @db.Decimal(10, 2)
+  status        InvoiceStatus @default(DRAFT)
+  issueDate     DateTime
+  dueDate       DateTime
+  paidAt        DateTime?
+  stripeInvoiceId String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  clientId  String
+  client    User       @relation(fields: [clientId], references: [id])
+  projectId String?
+  project   Project?   @relation(fields: [projectId], references: [id])
+  items     InvoiceItem[]
+}
+
+model InvoiceItem {
+  id          String  @id @default(cuid())
+  description String
+  quantity    Int     @default(1)
+  rate        Decimal @db.Decimal(10, 2)
+  amount      Decimal @db.Decimal(10, 2)
+
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+model File {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  mimetype     String
+  size         Int
+  url          String
+  publicId     String? // For Cloudinary or similar
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  uploaderId String
+  uploader   User      @relation(fields: [uploaderId], references: [id])
+  projectId  String?
+  project    Project?  @relation(fields: [projectId], references: [id])
+  contractId String?
+  contract   Contract? @relation(fields: [contractId], references: [id])
+  messages   Message[]
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  title     String
+  message   String
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  // Relations
+  senderId    String?
+  sender      User?   @relation("NotificationSender", fields: [senderId], references: [id])
+  recipientId String
+  recipient   User    @relation("NotificationRecipient", fields: [recipientId], references: [id])
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  action      String   // "created_project", "uploaded_file", "sent_message", etc.
+  description String
+  metadata    Json? // Additional data about the activity
+  createdAt   DateTime @default(now())
+
+  // Relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id])
+}
+
+model ContractTemplate {
+  id        String   @id @default(cuid())
+  name      String
+  content   String   @db.Text
+  variables Json? // Template variables for dynamic content
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
