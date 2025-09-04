@@ -10,7 +10,7 @@ interface MessageCenterProps {
   projects: Project[];
 }
 
-interface ChatMessage extends Message {
+interface ChatMessage {
   id: string;
   content: string;
   sender: {

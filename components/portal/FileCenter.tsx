@@ -15,7 +15,7 @@ import {
   Search,
   Filter,
 } from 'lucide-react';
-import { File, Project } from '@/types/portal';
+import { File as PortalFile, Project } from '@/types/portal';
 
 interface FileCenterProps {
   projects: Project[];
@@ -37,7 +37,7 @@ const formatFileSize = (bytes: number) => {
 };
 
 export default function FileCenter({ projects }: FileCenterProps) {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<PortalFile[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string>('all');
@@ -106,7 +106,7 @@ export default function FileCenter({ projects }: FileCenterProps) {
     }
   };
 
-  const downloadFile = async (file: File) => {
+  const downloadFile = async (file: PortalFile) => {
     try {
       const response = await fetch(file.url);
       const blob = await response.blob();
@@ -323,7 +323,7 @@ function FileGridItem({
   onDownload,
   onDelete,
 }: {
-  file: File;
+  file: PortalFile;
   onDownload: () => void;
   onDelete: () => void;
 }) {
@@ -381,7 +381,7 @@ function FileListItem({
   onDownload,
   onDelete,
 }: {
-  file: File;
+  file: PortalFile;
   onDownload: () => void;
   onDelete: () => void;
 }) {
