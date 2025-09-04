@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -14,12 +14,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -178,7 +178,7 @@ model Message {
 model Contract {
   id          String         @id @default(cuid())
   title       String
-  content     String         @db.Text
+  content     String
   status      ContractStatus @default(DRAFT)
   sentAt      DateTime?
   signedAt    DateTime?
@@ -198,7 +198,7 @@ model Contract {
 
 model Signature {
   id        String   @id @default(cuid())
-  imageData String   @db.Text // Base64 encoded signature
+  imageData String // Base64 encoded signature
   ipAddress String?
   userAgent String?
   signedAt  DateTime @default(now())
@@ -215,9 +215,9 @@ model Invoice {
   number        String        @unique
   title         String
   description   String?
-  amount        Decimal       @db.Decimal(10, 2)
-  taxAmount     Decimal       @default(0) @db.Decimal(10, 2)
-  totalAmount   Decimal       @db.Decimal(10, 2)
+  amount        Float
+  taxAmount     Float         @default(0)
+  totalAmount   Float
   status        InvoiceStatus @default(DRAFT)
   issueDate     DateTime
   dueDate       DateTime
@@ -238,8 +238,8 @@ model InvoiceItem {
   id          String  @id @default(cuid())
   description String
   quantity    Int     @default(1)
-  rate        Decimal @db.Decimal(10, 2)
-  amount      Decimal @db.Decimal(10, 2)
+  rate        Float
+  amount      Float
 
   invoiceId String
   invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
@@ -298,7 +298,7 @@ model Activity {
 model ContractTemplate {
   id        String   @id @default(cuid())
   name      String
-  content   String   @db.Text
+  content   String
   variables Json? // Template variables for dynamic content
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
