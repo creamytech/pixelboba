@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import PricingSection from '@/components/sections/PricingSection';
+import FAQSection from '@/components/sections/FAQSection';
 import { Code, Palette, Search, Zap, Users, Settings } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -123,6 +125,12 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
+
+        {/* Pricing Section */}
+        <PricingSection />
+
+        {/* FAQ Section */}
+        <FAQSection />
 
         {/* CTA Section */}
         <section className="py-20 bg-gradient-to-r from-taro to-deep-taro">

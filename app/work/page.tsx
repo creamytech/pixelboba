@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { getAllWork } from '@/lib/mdx';
@@ -36,9 +37,10 @@ export default async function WorkPage() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {works.map((work) => (
-                <div
+                <Link
                   key={work.slug}
-                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                  href={`/work/${work.slug}`}
+                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                 >
                   <div className="aspect-video bg-gradient-to-br from-taro to-deep-taro p-8 flex items-center justify-center">
                     <div className="text-white text-center">
@@ -59,9 +61,12 @@ export default async function WorkPage() {
                         </span>
                       ))}
                     </div>
-                    <p className="text-gray-600">{work.frontmatter.summary}</p>
+                    <p className="text-gray-600 mb-4">{work.frontmatter.summary}</p>
+                    <div className="flex items-center text-taro text-sm font-medium">
+                      View Case Study →
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 

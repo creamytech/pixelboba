@@ -3,8 +3,8 @@ export const siteConfig = {
   description:
     'Design-first websites with delightful details and boba-smooth interactions. Websites that Pop.',
   tagline: 'Websites that Pop',
-  url: 'https://pixelboba.studio',
-  ogImage: 'https://pixelboba.studio/og.jpg',
+  url: 'https://pixelboba.com',
+  ogImage: 'https://pixelboba.com/og.jpg',
   keywords: [
     'web design',
     'web development',

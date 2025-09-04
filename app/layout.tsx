@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/lib/seo';
+import StructuredData from '@/components/StructuredData';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.name,
     description: siteConfig.description,
-    creator: '@pixelboba',
+    creator: '@pixelboba_',
   },
   icons: {
     icon: '/favicon.ico',
@@ -55,6 +56,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
+      <head>
+        <StructuredData type="organization" />
+        <StructuredData type="website" />
+      </head>
       <body className="min-h-screen bg-background antialiased">{children}</body>
     </html>
   );

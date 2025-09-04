@@ -11,6 +11,9 @@ export interface WorkFrontmatter {
   summary: string;
   services: string[];
   cover: string;
+  beforeImage?: string;
+  afterImage?: string;
+  website?: string;
   gallery?: string[];
   metrics?: {
     lighthouse?: number;
