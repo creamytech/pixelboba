@@ -6,31 +6,31 @@ import { Zap, Palette, Target, Heart } from 'lucide-react';
 const valueProps = [
   {
     icon: Zap,
-    title: 'Performance',
+    title: 'performance',
     description:
-      'Lightning-fast loading times and smooth interactions that keep users engaged and search engines happy.',
-    stats: '99+ Lighthouse Score',
+      'lightning-fast loading times and smooth interactions that keep users engaged and search engines happy.',
+    stats: '99+ lighthouse score',
   },
   {
     icon: Palette,
-    title: 'Craft',
+    title: 'craft',
     description:
-      'Pixel-perfect designs with attention to every detail, from typography to micro-interactions.',
-    stats: 'Design-First Approach',
+      'pixel-perfect designs with attention to every detail, from typography to micro-interactions.',
+    stats: 'design-first approach',
   },
   {
     icon: Target,
-    title: 'Strategy',
+    title: 'strategy',
     description:
-      'Every design decision is backed by research and aligned with your business goals and user needs.',
-    stats: 'Data-Driven Decisions',
+      'every design decision is backed by research and aligned with your business goals and user needs.',
+    stats: 'data-driven decisions',
   },
   {
     icon: Heart,
-    title: 'Ongoing Care',
+    title: 'ongoing care',
     description:
-      "We don't just launch and disappear. Ongoing support ensures your site stays fresh and functional.",
-    stats: '24/7 Monitoring',
+      "we don't just launch and disappear. ongoing support ensures your site stays fresh and functional.",
+    stats: '24/7 monitoring',
   },
 ];
 
@@ -46,10 +46,10 @@ export default function ValuePropsSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
-            Why Choose Pixel Boba?
+            why choose pixel boba?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We combine beautiful design with exceptional performance to create websites that
+            we combine beautiful design with exceptional performance to create websites that
             don&apos;t just look good—they work brilliantly.
           </p>
         </motion.div>

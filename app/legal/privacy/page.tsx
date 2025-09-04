@@ -3,8 +3,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: 'How Pixel Boba LLC collects, uses, and protects your personal information.',
+  title: 'privacy policy',
+  description: 'how pixel boba llc collects, uses, and protects your personal information.',
 };
 
 export default function PrivacyPage() {
@@ -14,60 +14,60 @@ export default function PrivacyPage() {
       <main className="pt-20">
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-3xl mx-auto">
-            <h1 className="font-display text-4xl font-bold text-ink mb-8">Privacy Policy</h1>
+            <h1 className="font-display text-4xl font-bold text-ink mb-8">privacy policy</h1>
 
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-600 mb-6">
-                <strong>Last updated:</strong> {new Date().toLocaleDateString()}
+                <strong>last updated:</strong> {new Date().toLocaleDateString()}
               </p>
 
               <section className="mb-8">
                 <h2 className="font-display text-2xl font-bold text-ink mb-4">
-                  Information We Collect
+                  information we collect
                 </h2>
                 <p className="text-gray-600 mb-4">
-                  When you contact us or use our services, we may collect:
+                  when you contact us or use our services, we may collect:
                 </p>
                 <ul className="text-gray-600 mb-4 space-y-2">
-                  <li>• Contact information (name, email, phone number)</li>
-                  <li>• Project details and requirements</li>
-                  <li>• Communication preferences</li>
-                  <li>• Technical information about your current website</li>
+                  <li>• contact information (name, email, phone number)</li>
+                  <li>• project details and requirements</li>
+                  <li>• communication preferences</li>
+                  <li>• technical information about your current website</li>
                 </ul>
               </section>
 
               <section className="mb-8">
                 <h2 className="font-display text-2xl font-bold text-ink mb-4">
-                  How We Use Your Information
+                  how we use your information
                 </h2>
-                <p className="text-gray-600 mb-4">We use the information you provide to:</p>
+                <p className="text-gray-600 mb-4">we use the information you provide to:</p>
                 <ul className="text-gray-600 mb-4 space-y-2">
-                  <li>• Respond to your inquiries and provide quotes</li>
-                  <li>• Deliver our design and development services</li>
-                  <li>• Communicate project updates and deliverables</li>
-                  <li>• Send occasional updates about our services (with your consent)</li>
+                  <li>• respond to your inquiries and provide quotes</li>
+                  <li>• deliver our design and development services</li>
+                  <li>• communicate project updates and deliverables</li>
+                  <li>• send occasional updates about our services (with your consent)</li>
                 </ul>
               </section>
 
               <section className="mb-8">
                 <h2 className="font-display text-2xl font-bold text-ink mb-4">
-                  Information Sharing
+                  information sharing
                 </h2>
                 <p className="text-gray-600 mb-4">
-                  We do not sell, trade, or otherwise transfer your personal information to third
+                  we do not sell, trade, or otherwise transfer your personal information to third
                   parties without your consent, except:
                 </p>
                 <ul className="text-gray-600 mb-4 space-y-2">
-                  <li>• When required by law</li>
-                  <li>• To trusted service providers who assist in our operations</li>
-                  <li>• With your explicit permission</li>
+                  <li>• when required by law</li>
+                  <li>• to trusted service providers who assist in our operations</li>
+                  <li>• with your explicit permission</li>
                 </ul>
               </section>
 
               <section className="mb-8">
-                <h2 className="font-display text-2xl font-bold text-ink mb-4">Contact Us</h2>
+                <h2 className="font-display text-2xl font-bold text-ink mb-4">contact us</h2>
                 <p className="text-gray-600">
-                  If you have questions about this Privacy Policy, please contact us at{' '}
+                  if you have questions about this privacy policy, please contact us at{' '}
                   <a href="mailto:hello@pixelboba.com" className="text-taro hover:text-deep-taro">
                     hello@pixelboba.com
                   </a>

@@ -4,62 +4,62 @@ import Footer from '@/components/layout/Footer';
 import { ShoppingBag, Coffee, Layers, Zap, Rocket, RotateCcw } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Our Process - How We Work',
+  title: 'our process - how we work',
   description:
-    'Our proven 6-step process ensures every project is delivered on time, on budget, and exceeds expectations.',
+    'our proven 6-step process ensures every project is delivered on time, on budget, and exceeds expectations.',
 };
 
 const processSteps = [
   {
     icon: ShoppingBag,
-    title: 'Shake',
+    title: 'shake',
     description:
-      'We start by understanding your goals, audience, and challenges. This discovery phase helps us create a tailored strategy.',
-    details: ['Stakeholder interviews', 'Competitive analysis', 'User research', 'Goal definition'],
+      'we start by understanding your goals, audience, and challenges. this discovery phase helps us create a tailored strategy.',
+    details: ['stakeholder interviews', 'competitive analysis', 'user research', 'goal definition'],
   },
   {
     icon: Coffee,
-    title: 'Brew',
+    title: 'brew',
     description:
-      'With insights gathered, we develop a comprehensive plan including sitemap, wireframes, and technical architecture.',
-    details: ['Information architecture', 'Wireframing', 'Technical planning', 'Content strategy'],
+      'with insights gathered, we develop a comprehensive plan including sitemap, wireframes, and technical architecture.',
+    details: ['information architecture', 'wireframing', 'technical planning', 'content strategy'],
   },
   {
     icon: Layers,
-    title: 'Layer',
+    title: 'layer',
     description:
-      'Our design phase brings your brand to life with beautiful, user-centered interfaces and engaging experiences.',
-    details: ['Visual design', 'UI components', 'Interaction design', 'Design system'],
+      'our design phase brings your brand to life with beautiful, user-centered interfaces and engaging experiences.',
+    details: ['visual design', 'ui components', 'interaction design', 'design system'],
   },
   {
     icon: Zap,
-    title: 'Pop',
+    title: 'pop',
     description:
-      'Development begins with clean, efficient code and attention to performance, accessibility, and SEO.',
+      'development begins with clean, efficient code and attention to performance, accessibility, and seo.',
     details: [
-      'Front-end development',
-      'Back-end integration',
-      'Performance optimization',
-      'Quality assurance',
+      'front-end development',
+      'back-end integration',
+      'performance optimization',
+      'quality assurance',
     ],
   },
   {
     icon: Rocket,
-    title: 'Launch',
+    title: 'launch',
     description:
-      'We handle deployment, testing, and launch coordination to ensure everything goes smoothly from day one.',
-    details: ['Deployment setup', 'Final testing', 'Launch coordination', 'Monitoring setup'],
+      'we handle deployment, testing, and launch coordination to ensure everything goes smoothly from day one.',
+    details: ['deployment setup', 'final testing', 'launch coordination', 'monitoring setup'],
   },
   {
     icon: RotateCcw,
-    title: 'Iterate',
+    title: 'iterate',
     description:
-      'Post-launch, we monitor performance and gather feedback to continuously improve your digital experience.',
+      'post-launch, we monitor performance and gather feedback to continuously improve your digital experience.',
     details: [
-      'Performance monitoring',
-      'User feedback analysis',
-      'Ongoing optimization',
-      'Support & maintenance',
+      'performance monitoring',
+      'user feedback analysis',
+      'ongoing optimization',
+      'support & maintenance',
     ],
   },
 ];
@@ -74,11 +74,11 @@ export default function ProcessPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-6">
-                Our Process
+                our process
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Like crafting the perfect boba tea, creating exceptional digital experiences
-                requires the right ingredients, technique, and timing. Here&apos;s how we do it.
+                like crafting the perfect boba tea, creating exceptional digital experiences
+                requires the right ingredients, technique, and timing. here&apos;s how we do it.
               </p>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function ProcessPage() {
                             </div>
                             <div>
                               <span className="text-sm text-gray-500 font-medium">
-                                Step {index + 1}
+                                step {index + 1}
                               </span>
                               <h3 className="font-display text-2xl font-bold text-ink">
                                 {step.title}
@@ -156,17 +156,17 @@ export default function ProcessPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="font-display text-4xl font-bold text-ink mb-6">
-                Ready to Start Your Project?
+                ready to start your project?
               </h2>
               <p className="text-xl text-brown-sugar mb-8">
-                Let&apos;s begin with a conversation about your goals and how we can help you
+                let&apos;s begin with a conversation about your goals and how we can help you
                 achieve them.
               </p>
               <a
                 href="/contact"
                 className="inline-block bg-taro text-white px-8 py-3 rounded-lg font-semibold hover:bg-deep-taro transition-colors duration-200"
               >
-                Let&apos;s Talk
+                let&apos;s talk
               </a>
             </div>
           </div>

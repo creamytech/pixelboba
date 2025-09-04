@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 import { ShoppingBag, Coffee, Layers, Zap, Rocket, RotateCcw } from 'lucide-react';
 
 const processSteps = [
-  { icon: ShoppingBag, title: 'Shake', description: 'Discovery & strategy planning' },
-  { icon: Coffee, title: 'Brew', description: 'Architecture & wireframing' },
-  { icon: Layers, title: 'Layer', description: 'Visual design & interactions' },
-  { icon: Zap, title: 'Pop', description: 'Development & optimization' },
-  { icon: Rocket, title: 'Launch', description: 'Deployment & go-live' },
-  { icon: RotateCcw, title: 'Iterate', description: 'Monitor & improve' },
+  { icon: ShoppingBag, title: 'shake', description: 'discovery & strategy planning' },
+  { icon: Coffee, title: 'brew', description: 'architecture & wireframing' },
+  { icon: Layers, title: 'layer', description: 'visual design & interactions' },
+  { icon: Zap, title: 'pop', description: 'development & optimization' },
+  { icon: Rocket, title: 'launch', description: 'deployment & go-live' },
+  { icon: RotateCcw, title: 'iterate', description: 'monitor & improve' },
 ];
 
 export default function ProcessSection() {
@@ -23,9 +23,9 @@ export default function ProcessSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">Our Process</h2>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">our process</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Like crafting the perfect boba tea, we follow a proven recipe for digital success.
+            like crafting the perfect boba tea, we follow a proven recipe for digital success.
           </p>
         </motion.div>
 
@@ -110,12 +110,12 @@ export default function ProcessSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <p className="text-gray-600 mb-6">Ready to start your project journey?</p>
+          <p className="text-gray-600 mb-6">ready to start your project journey?</p>
           <a
             href="/process"
             className="inline-block border-2 border-taro text-taro px-8 py-3 rounded-lg font-semibold hover:bg-taro hover:text-white transition-colors duration-300"
           >
-            Learn More About Our Process
+            learn more about our process
           </a>
         </motion.div>
       </div>

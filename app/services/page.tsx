@@ -6,62 +6,62 @@ import FAQSection from '@/components/sections/FAQSection';
 import { Code, Palette, Search, Zap, Users, Settings } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Services - What We Do Best',
+  title: 'services - what we do best',
   description:
-    'From web design to development, we offer comprehensive digital services that make your brand pop.',
+    'from web design to development, we offer comprehensive digital services that make your brand pop.',
 };
 
 const services = [
   {
     icon: Palette,
-    title: 'Web Design',
+    title: 'web design',
     description:
-      'Beautiful, user-centered designs that capture your brand essence and engage your audience.',
-    features: ['UI/UX Design', 'Brand Integration', 'Responsive Design', 'Design Systems'],
+      'beautiful, user-centered designs that capture your brand essence and engage your audience.',
+    features: ['ui/ux design', 'brand integration', 'responsive design', 'design systems'],
   },
   {
     icon: Code,
-    title: 'Next.js Development',
+    title: 'next.js development',
     description:
-      'Lightning-fast, SEO-optimized websites built with modern technologies and best practices.',
+      'lightning-fast, seo-optimized websites built with modern technologies and best practices.',
     features: [
-      'Custom Development',
-      'Performance Optimization',
-      'SEO Integration',
-      'Analytics Setup',
+      'custom development',
+      'performance optimization',
+      'seo integration',
+      'analytics setup',
     ],
   },
   {
     icon: Users,
-    title: 'Branding',
+    title: 'branding',
     description:
-      'Complete brand identity solutions that help your business stand out from the competition.',
-    features: ['Logo Design', 'Brand Guidelines', 'Visual Identity', 'Brand Strategy'],
+      'complete brand identity solutions that help your business stand out from the competition.',
+    features: ['logo design', 'brand guidelines', 'visual identity', 'brand strategy'],
   },
   {
     icon: Search,
-    title: 'UX Audit',
+    title: 'ux audit',
     description:
-      'Comprehensive analysis of your current site to identify opportunities for improvement.',
+      'comprehensive analysis of your current site to identify opportunities for improvement.',
     features: [
-      'User Journey Analysis',
-      'Conversion Optimization',
-      'Accessibility Review',
-      'Recommendations',
+      'user journey analysis',
+      'conversion optimization',
+      'accessibility review',
+      'recommendations',
     ],
   },
   {
     icon: Zap,
-    title: 'Performance',
+    title: 'performance',
     description:
-      'Speed optimization and technical enhancements to ensure your site loads fast and ranks well.',
-    features: ['Core Web Vitals', 'Image Optimization', 'Code Splitting', 'CDN Setup'],
+      'speed optimization and technical enhancements to ensure your site loads fast and ranks well.',
+    features: ['core web vitals', 'image optimization', 'code splitting', 'cdn setup'],
   },
   {
     icon: Settings,
-    title: 'Maintenance',
-    description: 'Ongoing support and updates to keep your website secure, fast, and up-to-date.',
-    features: ['Security Updates', 'Content Updates', 'Bug Fixes', 'Performance Monitoring'],
+    title: 'maintenance',
+    description: 'ongoing support and updates to keep your website secure, fast, and up-to-date.',
+    features: ['security updates', 'content updates', 'bug fixes', 'performance monitoring'],
   },
 ];
 
@@ -75,11 +75,11 @@ export default function ServicesPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-6">
-                What We Do
+                what we do
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                We specialize in creating digital experiences that not only look amazing but also
-                perform exceptionally well. Every project is crafted with care and attention to
+                we specialize in creating digital experiences that not only look amazing but also
+                perform exceptionally well. every project is crafted with care and attention to
                 detail.
               </p>
             </div>
@@ -136,15 +136,15 @@ export default function ServicesPage() {
         <section className="py-20 bg-gradient-to-r from-taro to-deep-taro">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center text-white">
-              <h2 className="font-display text-4xl font-bold mb-6">Ready to Get Started?</h2>
+              <h2 className="font-display text-4xl font-bold mb-6">ready to get started?</h2>
               <p className="text-xl text-taro-100 mb-8">
-                Let&apos;s discuss your project and see how we can help bring your vision to life.
+                let&apos;s discuss your project and see how we can help bring your vision to life.
               </p>
               <a
                 href="/contact"
                 className="inline-block bg-white text-taro px-8 py-3 rounded-lg font-semibold hover:bg-milk-tea transition-colors duration-200"
               >
-                Start Your Project
+                start your project
               </a>
             </div>
           </div>

@@ -5,9 +5,9 @@ import Footer from '@/components/layout/Footer';
 import { getAllWork } from '@/lib/mdx';
 
 export const metadata: Metadata = {
-  title: 'Our Work - Creative Digital Experiences',
+  title: 'our work - creative digital experiences',
   description:
-    'Browse our portfolio of beautiful, high-performance websites and digital experiences.',
+    'browse our portfolio of beautiful, high-performance websites and digital experiences.',
 };
 
 export default async function WorkPage() {
@@ -22,10 +22,10 @@ export default async function WorkPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-6">
-                Our Work
+                our work
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                A collection of beautiful, functional websites that demonstrate our commitment to
+                a collection of beautiful, functional websites that demonstrate our commitment to
                 exceptional design and smooth user experiences.
               </p>
             </div>
@@ -63,7 +63,7 @@ export default async function WorkPage() {
                     </div>
                     <p className="text-gray-600 mb-4">{work.frontmatter.summary}</p>
                     <div className="flex items-center text-taro text-sm font-medium">
-                      View Case Study →
+                      view case study →
                     </div>
                   </div>
                 </Link>
@@ -78,10 +78,10 @@ export default async function WorkPage() {
                     <div className="w-6 h-6 bg-taro rounded-full animate-bounce-subtle" />
                   </div>
                   <h3 className="font-display text-2xl font-bold text-ink mb-2">
-                    Portfolio Coming Soon
+                    portfolio coming soon
                   </h3>
                   <p className="text-gray-600">
-                    We&apos;re putting the finishing touches on our case studies. Check back soon to
+                    we&apos;re putting the finishing touches on our case studies. check back soon to
                     see our latest work!
                   </p>
                 </div>

@@ -16,15 +16,15 @@ const XIcon = ({ className }: { className?: string }) => (
 
 const footerNavigation = {
   main: [
-    { name: 'Work', href: '/work' },
-    { name: 'Services', href: '/services' },
-    { name: 'Process', href: '/process' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'work', href: '/work' },
+    { name: 'services', href: '/services' },
+    { name: 'process', href: '/process' },
+    { name: 'about', href: '/about' },
+    { name: 'contact', href: '/contact' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '/legal/privacy' },
-    { name: 'Terms of Service', href: '/legal/terms' },
+    { name: 'privacy policy', href: '/legal/privacy' },
+    { name: 'terms of service', href: '/legal/terms' },
   ],
   social: [
     { name: 'X', href: siteConfig.links.twitter, icon: XIcon },
@@ -45,20 +45,20 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-display text-3xl font-bold mb-4">Stay in the Loop</h3>
+              <h3 className="font-display text-3xl font-bold mb-4">stay in the loop</h3>
               <p className="text-gray-400 mb-8">
-                Get updates on our latest work, industry insights, and exclusive behind-the-scenes
+                get updates on our latest work, industry insights, and exclusive behind-the-scenes
                 content.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <Input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="enter your email"
                   className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
                 />
                 <Button className="bg-taro hover:bg-deep-taro text-white whitespace-nowrap">
-                  Subscribe
+                  subscribe
                 </Button>
               </div>
 
@@ -94,12 +94,12 @@ export default function Footer() {
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <div className="font-display font-bold text-2xl">
-                Pixel Boba
+                pixel boba
                 <span className="inline-block w-2 h-2 bg-taro rounded-full ml-1" />
               </div>
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
-              Design-first websites with delightful details and boba-smooth interactions. We create
+              design-first websites with delightful details and boba-smooth interactions. we create
               digital experiences that truly pop.
             </p>
 
@@ -124,7 +124,7 @@ export default function Footer() {
 
           {/* Navigation Column */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Navigation</h4>
+            <h4 className="font-semibold text-lg mb-4">navigation</h4>
             <ul className="space-y-2">
               {footerNavigation.main.map((item) => (
                 <li key={item.name}>
@@ -141,9 +141,9 @@ export default function Footer() {
 
           {/* Contact Column */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Get in Touch</h4>
+            <h4 className="font-semibold text-lg mb-4">get in touch</h4>
             <div className="space-y-2 text-gray-400">
-              <p>Ready to make your project pop?</p>
+              <p>ready to make your project pop?</p>
               <Link
                 href="mailto:hello@pixelboba.com"
                 className="flex items-center space-x-2 hover:text-white transition-colors duration-200"
@@ -161,7 +161,7 @@ export default function Footer() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Pixel Boba LLC. All rights reserved.
+              © {new Date().getFullYear()} pixel boba llc. all rights reserved.
             </div>
 
             <div className="flex space-x-6">

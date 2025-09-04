@@ -8,11 +8,11 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const navigation = [
-  { name: 'Work', href: '/work' },
-  { name: 'Services', href: '/services' },
-  { name: 'Process', href: '/process' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'work', href: '/work' },
+  { name: 'services', href: '/services' },
+  { name: 'process', href: '/process' },
+  { name: 'about', href: '/about' },
+  { name: 'contact', href: '/contact' },
 ];
 
 export default function Header() {
@@ -43,7 +43,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="font-display font-bold text-xl text-ink">
-              Pixel Boba
+              pixel boba
               <span className="inline-block w-2 h-2 bg-taro rounded-full ml-1 animate-bounce-subtle" />
             </div>
           </Link>
@@ -65,7 +65,7 @@ export default function Header() {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Button asChild className="bg-taro hover:bg-deep-taro text-white">
-              <Link href="/contact">Start a Project</Link>
+              <Link href="/contact">start a project</Link>
             </Button>
           </div>
 
@@ -101,7 +101,7 @@ export default function Header() {
                 <div className="pt-4">
                   <Button asChild className="bg-taro hover:bg-deep-taro text-white w-full">
                     <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                      Start a Project
+                      start a project
                     </Link>
                   </Button>
                 </div>

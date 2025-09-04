@@ -45,9 +45,9 @@ export default function HeroSection() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Websites that{' '}
+              websites that{' '}
               <span className="relative inline-block">
-                Pop
+                pop
                 <motion.div
                   className="absolute -top-2 -right-2 w-4 h-4 bg-taro rounded-full"
                   animate={
@@ -74,7 +74,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Design-first sites with delightful details and boba-smooth interactions.
+              design-first sites with delightful details and boba-smooth interactions.
             </motion.p>
 
             <motion.div
@@ -88,7 +88,7 @@ export default function HeroSection() {
                 size="lg"
                 className="bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
               >
-                <Link href="/contact">Start a Project</Link>
+                <Link href="/contact">start a project</Link>
               </Button>
 
               <Button
@@ -97,7 +97,7 @@ export default function HeroSection() {
                 size="lg"
                 className="border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
               >
-                <Link href="/work">See Our Work</Link>
+                <Link href="/work">see our work</Link>
               </Button>
             </motion.div>
 

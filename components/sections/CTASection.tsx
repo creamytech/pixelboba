@@ -48,7 +48,7 @@ export default function CTASection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Ready to make it{' '}
+            ready to make it{' '}
             <span className="relative">
               pop?
               <motion.div
@@ -73,7 +73,7 @@ export default function CTASection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Let&apos;s create a digital experience that captures your brand&apos;s essence and
+            let&apos;s create a digital experience that captures your brand&apos;s essence and
             delivers real results for your business.
           </motion.p>
 
@@ -89,7 +89,7 @@ export default function CTASection() {
               size="lg"
               className="bg-white text-taro hover:bg-milk-tea px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105"
             >
-              <Link href="/contact">Start Your Project</Link>
+              <Link href="/contact">start your project</Link>
             </Button>
 
             <Button
@@ -98,7 +98,7 @@ export default function CTASection() {
               size="lg"
               className="border-2 border-white text-white hover:bg-white hover:text-taro px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
             >
-              <Link href="/work">View Our Work</Link>
+              <Link href="/work">view our work</Link>
             </Button>
           </motion.div>
 
@@ -111,7 +111,7 @@ export default function CTASection() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <p>
-              Or drop us a line at{' '}
+              or drop us a line at{' '}
               <a
                 href="mailto:hello@pixelboba.com"
                 className="text-white hover:text-milk-tea transition-colors duration-200 underline"

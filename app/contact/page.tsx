@@ -4,8 +4,8 @@ import Footer from '@/components/layout/Footer';
 import ContactForm from '@/components/ContactForm';
 
 export const metadata: Metadata = {
-  title: 'Contact Us - Start Your Project',
-  description: "Ready to create something amazing? Get in touch and let's discuss your project.",
+  title: 'contact us - start your project',
+  description: "ready to create something amazing? get in touch and let's discuss your project.",
 };
 
 export default function ContactPage() {
@@ -18,10 +18,10 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-6">
-                Let&apos;s Talk
+                let&apos;s talk
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Ready to make your project pop? We&apos;d love to hear about your goals and explore
+                ready to make your project pop? we&apos;d love to hear about your goals and explore
                 how we can bring your vision to life.
               </p>
             </div>
@@ -36,11 +36,11 @@ export default function ContactPage() {
                 {/* Contact Info */}
                 <div className="lg:col-span-1">
                   <div className="sticky top-32">
-                    <h2 className="font-display text-2xl font-bold text-ink mb-6">Get in Touch</h2>
+                    <h2 className="font-display text-2xl font-bold text-ink mb-6">get in touch</h2>
 
                     <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-ink mb-2">Email</h3>
+                        <h3 className="font-semibold text-ink mb-2">email</h3>
                         <a
                           href="mailto:hello@pixelboba.com"
                           className="text-gray-600 hover:text-taro transition-colors duration-200"
@@ -50,16 +50,16 @@ export default function ContactPage() {
                       </div>
 
                       <div>
-                        <h3 className="font-semibold text-ink mb-2">Response Time</h3>
+                        <h3 className="font-semibold text-ink mb-2">response time</h3>
                         <p className="text-gray-600">
-                          We typically respond within 24 hours during business days.
+                          we typically respond within 24 hours during business days.
                         </p>
                       </div>
 
                       <div>
-                        <h3 className="font-semibold text-ink mb-2">Project Timeline</h3>
+                        <h3 className="font-semibold text-ink mb-2">project timeline</h3>
                         <p className="text-gray-600">
-                          Most projects are completed within 4-8 weeks, depending on scope and
+                          most projects are completed within 4-8 weeks, depending on scope and
                           complexity.
                         </p>
                       </div>

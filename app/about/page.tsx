@@ -3,9 +3,9 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'About Us - The Team Behind the Magic',
+  title: 'about us - the team behind the magic',
   description:
-    'Meet the creative minds behind Pixel Boba, passionate about crafting digital experiences that truly pop.',
+    'meet the creative minds behind pixel boba, passionate about crafting digital experiences that truly pop.',
 };
 
 export default function AboutPage() {
@@ -18,10 +18,10 @@ export default function AboutPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-6">
-                About Us
+                about us
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                We&apos;re a passionate team of designers and developers who believe the best
+                we&apos;re a passionate team of designers and developers who believe the best
                 digital experiences combine beautiful design with flawless functionality.
               </p>
             </div>
@@ -34,19 +34,19 @@ export default function AboutPage() {
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
                 <div>
-                  <h2 className="font-display text-4xl font-bold text-ink mb-6">Our Story</h2>
+                  <h2 className="font-display text-4xl font-bold text-ink mb-6">our story</h2>
                   <p className="text-gray-600 mb-6">
-                    Pixel Boba was born from a simple observation: most websites are either
-                    beautiful but slow, or fast but boring. We set out to prove that you don&apos;t
+                    pixel boba was born from a simple observation: most websites are either
+                    beautiful but slow, or fast but boring. we set out to prove that you don&apos;t
                     have to choose.
                   </p>
                   <p className="text-gray-600 mb-6">
-                    Like the perfect boba tea, great websites need the right balance of ingredients.
-                    Beautiful design is the sweet tea base, smooth interactions are the creamy milk,
+                    like the perfect boba tea, great websites need the right balance of ingredients.
+                    beautiful design is the sweet tea base, smooth interactions are the creamy milk,
                     and delightful details are the chewy pearls that make the experience memorable.
                   </p>
                   <p className="text-gray-600">
-                    Today, we work with forward-thinking brands and businesses to create digital
+                    today, we work with forward-thinking brands and businesses to create digital
                     experiences that don&apos;t just look amazing—they perform exceptionally and
                     drive real results.
                   </p>
@@ -57,7 +57,7 @@ export default function AboutPage() {
                     <div className="text-white text-center">
                       <div className="text-6xl font-bold mb-4">🧋</div>
                       <p className="text-lg">
-                        Crafting digital experiences
+                        crafting digital experiences
                         <br />
                         one pixel at a time
                       </p>
@@ -77,9 +77,9 @@ export default function AboutPage() {
                   <div className="w-16 h-16 bg-taro/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <span className="text-2xl">🎨</span>
                   </div>
-                  <h3 className="font-display text-xl font-bold text-ink mb-3">Design First</h3>
+                  <h3 className="font-display text-xl font-bold text-ink mb-3">design first</h3>
                   <p className="text-gray-600">
-                    Every project starts with thoughtful design. We believe beautiful interfaces
+                    every project starts with thoughtful design. we believe beautiful interfaces
                     create better user experiences and stronger emotional connections.
                   </p>
                 </div>
@@ -89,10 +89,10 @@ export default function AboutPage() {
                     <span className="text-2xl">⚡</span>
                   </div>
                   <h3 className="font-display text-xl font-bold text-ink mb-3">
-                    Performance Obsessed
+                    performance obsessed
                   </h3>
                   <p className="text-gray-600">
-                    Beautiful designs mean nothing if they don&apos;t load fast. We optimize every
+                    beautiful designs mean nothing if they don&apos;t load fast. we optimize every
                     pixel and line of code for maximum performance.
                   </p>
                 </div>
@@ -102,10 +102,10 @@ export default function AboutPage() {
                     <span className="text-2xl">🤝</span>
                   </div>
                   <h3 className="font-display text-xl font-bold text-ink mb-3">
-                    Partnership Focused
+                    partnership focused
                   </h3>
                   <p className="text-gray-600">
-                    We&apos;re not just service providers—we&apos;re partners in your success. Your
+                    we&apos;re not just service providers—we&apos;re partners in your success. your
                     goals become our goals from day one.
                   </p>
                 </div>
@@ -119,17 +119,17 @@ export default function AboutPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center text-white">
               <h2 className="font-display text-4xl font-bold mb-6">
-                Let&apos;s Create Something Amazing
+                let&apos;s create something amazing
               </h2>
               <p className="text-xl text-taro-100 mb-8">
-                Ready to see what happens when design meets performance? Let&apos;s start a
+                ready to see what happens when design meets performance? let&apos;s start a
                 conversation about your project.
               </p>
               <a
                 href="/contact"
                 className="inline-block bg-white text-taro px-8 py-3 rounded-lg font-semibold hover:bg-milk-tea transition-colors duration-200"
               >
-                Get In Touch
+                get in touch
               </a>
             </div>
           </div>
