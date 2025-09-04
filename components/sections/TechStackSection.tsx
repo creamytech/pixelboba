@@ -3,14 +3,14 @@
 import { motion } from 'framer-motion';
 
 const techStack = [
-  { name: 'Next.js', description: 'React Framework' },
-  { name: 'Vercel', description: 'Deployment' },
-  { name: 'TypeScript', description: 'Type Safety' },
-  { name: 'Tailwind CSS', description: 'Styling' },
-  { name: 'Framer Motion', description: 'Animations' },
-  { name: 'Three.js', description: '3D Graphics' },
-  { name: 'Resend', description: 'Email API' },
-  { name: 'Google Analytics', description: 'Analytics' },
+  { name: 'next.js', description: 'react framework' },
+  { name: 'vercel', description: 'deployment' },
+  { name: 'typescript', description: 'type safety' },
+  { name: 'tailwind css', description: 'styling' },
+  { name: 'framer motion', description: 'animations' },
+  { name: 'three.js', description: '3d graphics' },
+  { name: 'resend', description: 'email api' },
+  { name: 'google analytics', description: 'analytics' },
 ];
 
 export default function TechStackSection() {
@@ -25,10 +25,10 @@ export default function TechStackSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
-            Built with Modern Tech
+            built with modern tech
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We use cutting-edge technologies to ensure your website is fast, secure, and
+            we use cutting-edge technologies to ensure your website is fast, secure, and
             future-proof.
           </p>
         </motion.div>

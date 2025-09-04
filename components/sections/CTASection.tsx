@@ -48,22 +48,7 @@ export default function CTASection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            ready to make it{' '}
-            <span className="relative">
-              pop?
-              <motion.div
-                className="absolute -top-2 -right-2 w-4 h-4 bg-matcha rounded-full"
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.7, 1, 0.7],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              />
-            </span>
+            ready to make it <span className="relative">pop?</span>
           </motion.h2>
 
           <motion.p

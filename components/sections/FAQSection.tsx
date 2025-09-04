@@ -8,52 +8,52 @@ const faqs = [
   {
     question: "What's included in your web design and development services?",
     answer:
-      'Every project includes custom design, responsive development, SEO optimization, performance optimization, content management setup, and post-launch support. We also provide training so you can manage your site independently.',
+      'every project includes custom design, responsive development, seo optimization, performance optimization, content management setup, and post-launch support. we also provide training so you can manage your site independently.',
   },
   {
     question: 'How long does it typically take to complete a project?',
     answer:
-      "Most projects take 4-8 weeks from start to finish, depending on complexity and scope. Simple websites can be completed in 2-3 weeks, while complex e-commerce or SaaS platforms may take 8-12 weeks. We'll provide a detailed timeline during our initial consultation.",
+      "most projects take 4-8 weeks from start to finish, depending on complexity and scope. simple websites can be completed in 2-3 weeks, while complex e-commerce or saas platforms may take 8-12 weeks. we'll provide a detailed timeline during our initial consultation.",
   },
   {
     question: 'Do you work with businesses of all sizes?',
     answer:
-      'Yes! We work with everyone from solo entrepreneurs and startups to established businesses and enterprises. Our approach scales to match your needs and budget, ensuring you get maximum value regardless of your company size.',
+      'yes! we work with everyone from solo entrepreneurs and startups to established businesses and enterprises. our approach scales to match your needs and budget, ensuring you get maximum value regardless of your company size.',
   },
   {
     question: 'What platforms and technologies do you use?',
     answer:
-      'We specialize in modern technologies like Next.js, React, TypeScript, and Tailwind CSS. For content management, we often use headless CMS solutions or custom-built admin panels. We choose the best tools for each project to ensure optimal performance and scalability.',
+      'we specialize in modern technologies like next.js, react, typescript, and tailwind css. for content management, we often use headless cms solutions or custom-built admin panels. we choose the best tools for each project to ensure optimal performance and scalability.',
   },
   {
     question: 'Can you redesign my existing website?',
     answer:
-      "Absolutely! We can completely redesign your existing site or perform targeted improvements. We'll analyze your current site, identify areas for improvement, and create a strategy that maintains your SEO rankings while dramatically improving user experience.",
+      "absolutely! we can completely redesign your existing site or perform targeted improvements. we'll analyze your current site, identify areas for improvement, and create a strategy that maintains your seo rankings while dramatically improving user experience.",
   },
   {
     question: 'Do you provide ongoing maintenance and support?',
     answer:
-      'Yes, we offer flexible maintenance plans including security updates, content updates, performance monitoring, and technical support. You can choose from monthly retainers or project-based support depending on your needs.',
+      'yes, we offer flexible maintenance plans including security updates, content updates, performance monitoring, and technical support. you can choose from monthly retainers or project-based support depending on your needs.',
   },
   {
     question: 'How do you ensure my website will be fast and SEO-friendly?',
     answer:
-      'We follow industry best practices including optimized images, efficient code, fast hosting, proper meta tags, schema markup, and mobile-first design. Every site is tested for Core Web Vitals and we aim for 95+ Lighthouse scores across all metrics.',
+      'we follow industry best practices including optimized images, efficient code, fast hosting, proper meta tags, schema markup, and mobile-first design. every site is tested for core web vitals and we aim for 95+ lighthouse scores across all metrics.',
   },
   {
     question: 'What happens if I need changes after the website launches?',
     answer:
-      'We include a revision period after launch for minor adjustments. For ongoing changes, we offer flexible hourly rates or monthly retainers. We also provide training so you can make content updates yourself.',
+      'we include a revision period after launch for minor adjustments. for ongoing changes, we offer flexible hourly rates or monthly retainers. we also provide training so you can make content updates yourself.',
   },
   {
     question: 'Do you handle hosting and domain setup?',
     answer:
-      "We can manage everything for you or work with your existing setup. We typically recommend modern hosting solutions like Vercel or Netlify for optimal performance, but we're flexible based on your preferences and requirements.",
+      "we can manage everything for you or work with your existing setup. we typically recommend modern hosting solutions like vercel or netlify for optimal performance, but we're flexible based on your preferences and requirements.",
   },
   {
     question: 'How do we get started?',
     answer:
-      "Simply contact us through our contact form or email. We'll schedule a discovery call to understand your needs, provide a detailed proposal, and create a timeline that works for both parties. Most projects can start within 1-2 weeks of agreement.",
+      "simply contact us through our contact form or email. we'll schedule a discovery call to understand your needs, provide a detailed proposal, and create a timeline that works for both parties. most projects can start within 1-2 weeks of agreement.",
   },
 ];
 
@@ -75,10 +75,10 @@ export default function FAQSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
-            Frequently Asked Questions
+            frequently asked questions
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Got questions? We&apos;ve got answers. If you don&apos;t see what you&apos;re looking
+            got questions? we&apos;ve got answers. if you don&apos;t see what you&apos;re looking
             for, feel free to reach out.
           </p>
         </motion.div>
@@ -145,13 +145,13 @@ export default function FAQSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <p className="text-gray-600 mb-6">
-            Still have questions? We&apos;d love to chat about your project.
+            still have questions? we&apos;d love to chat about your project.
           </p>
           <a
             href="/contact"
             className="inline-block bg-taro text-white px-8 py-3 rounded-lg font-semibold hover:bg-deep-taro transition-colors duration-200"
           >
-            Get In Touch
+            get in touch
           </a>
         </motion.div>
       </div>

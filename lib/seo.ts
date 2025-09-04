@@ -1,15 +1,15 @@
 export const siteConfig = {
-  name: 'Pixel Boba',
+  name: 'pixel boba',
   description:
-    'Design-first websites with delightful details and boba-smooth interactions. Websites that Pop.',
-  tagline: 'Websites that Pop',
+    'design-first websites with delightful details and boba-smooth interactions. websites that pop.',
+  tagline: 'websites that pop',
   url: 'https://pixelboba.com',
   ogImage: 'https://pixelboba.com/og.jpg',
   keywords: [
     'web design',
     'web development',
-    'Next.js',
-    'UI/UX design',
+    'next.js',
+    'ui/ux design',
     'creative agency',
     'digital studio',
     'bespoke websites',

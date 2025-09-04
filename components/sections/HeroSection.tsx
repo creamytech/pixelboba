@@ -45,26 +45,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              websites that{' '}
-              <span className="relative inline-block">
-                pop
-                <motion.div
-                  className="absolute -top-2 -right-2 w-4 h-4 bg-taro rounded-full"
-                  animate={
-                    prefersReducedMotion
-                      ? {}
-                      : {
-                          scale: [1, 1.2, 1],
-                          opacity: [0.8, 1, 0.8],
-                        }
-                  }
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                />
-              </span>
+              websites that <span className="relative inline-block">pop</span>
               <span className="text-taro">.</span>
             </motion.h1>
 

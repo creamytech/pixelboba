@@ -42,10 +42,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="font-display font-bold text-xl text-ink">
-              pixel boba
-              <span className="inline-block w-2 h-2 bg-taro rounded-full ml-1 animate-bounce-subtle" />
-            </div>
+            <div className="font-display font-bold text-xl text-ink">pixel boba</div>
           </Link>
 
           {/* Desktop Navigation */}

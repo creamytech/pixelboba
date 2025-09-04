@@ -61,11 +61,11 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
       structuredData = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: 'Pixel Boba LLC',
+        name: 'pixel boba llc',
         url: 'https://pixelboba.com',
         logo: 'https://pixelboba.com/brand/logo.png',
         description:
-          'Design-first websites with delightful details and boba-smooth interactions. Websites that Pop.',
+          'design-first websites with delightful details and boba-smooth interactions. websites that pop.',
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'customer service',
@@ -83,10 +83,10 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
       structuredData = {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'Pixel Boba',
+        name: 'pixel boba',
         url: 'https://pixelboba.com',
         description:
-          'Design-first websites with delightful details and boba-smooth interactions. Websites that Pop.',
+          'design-first websites with delightful details and boba-smooth interactions. websites that pop.',
         potentialAction: {
           '@type': 'SearchAction',
           target: 'https://pixelboba.com/work?search={search_term_string}',
@@ -99,15 +99,15 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
       structuredData = {
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: 'Web Design and Development Services',
+        name: 'web design and development services',
         description:
-          'Professional web design and development services including Next.js development, UI/UX design, and performance optimization.',
+          'professional web design and development services including next.js development, ui/ux design, and performance optimization.',
         provider: {
           '@type': 'Organization',
-          name: 'Pixel Boba LLC',
+          name: 'pixel boba llc',
         },
-        areaServed: 'Global',
-        serviceType: 'Web Development',
+        areaServed: 'global',
+        serviceType: 'web development',
         ...data,
       };
       break;

@@ -93,10 +93,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="font-display font-bold text-2xl">
-                pixel boba
-                <span className="inline-block w-2 h-2 bg-taro rounded-full ml-1" />
-              </div>
+              <div className="font-display font-bold text-2xl">pixel boba</div>
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
               design-first websites with delightful details and boba-smooth interactions. we create

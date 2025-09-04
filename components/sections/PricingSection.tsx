@@ -7,64 +7,64 @@ import { Button } from '@/components/ui/button';
 
 const packages = [
   {
-    name: 'Starter',
+    name: 'starter',
     price: '$5,000',
     duration: '2-3 weeks',
     description:
-      'Perfect for small businesses and personal brands looking to establish their online presence.',
+      'perfect for small businesses and personal brands looking to establish their online presence.',
     icon: Sparkles,
     features: [
-      'Custom responsive design',
-      'Up to 5 pages',
-      'SEO optimization',
-      'Performance optimization',
-      'Contact form integration',
-      'Mobile-first design',
+      'custom responsive design',
+      'up to 5 pages',
+      'seo optimization',
+      'performance optimization',
+      'contact form integration',
+      'mobile-first design',
       '30 days post-launch support',
-      'Content management training',
+      'content management training',
     ],
     popular: false,
     color: 'from-matcha to-matcha/80',
   },
   {
-    name: 'Professional',
+    name: 'professional',
     price: '$10,000',
     duration: '4-6 weeks',
     description:
-      'Ideal for growing businesses that need advanced functionality and premium design.',
+      'ideal for growing businesses that need advanced functionality and premium design.',
     icon: Zap,
     features: [
-      'Everything in Starter',
-      'Up to 10 pages',
-      'Advanced animations',
-      'CMS integration',
-      'Blog setup',
-      'Analytics integration',
-      'Email marketing setup',
+      'everything in starter',
+      'up to 10 pages',
+      'advanced animations',
+      'cms integration',
+      'blog setup',
+      'analytics integration',
+      'email marketing setup',
       '60 days post-launch support',
-      'Performance monitoring',
+      'performance monitoring',
     ],
     popular: true,
     color: 'from-taro to-deep-taro',
   },
   {
-    name: 'Enterprise',
+    name: 'enterprise',
     price: '$25,000+',
     duration: '8-12 weeks',
     description:
-      'Comprehensive solution for complex projects requiring custom functionality and integrations.',
+      'comprehensive solution for complex projects requiring custom functionality and integrations.',
     icon: Star,
     features: [
-      'Everything in Professional',
-      'Unlimited pages',
-      'Custom functionality',
-      'Third-party integrations',
-      'E-commerce capabilities',
-      'Advanced SEO strategy',
-      'Multi-language support',
+      'everything in professional',
+      'unlimited pages',
+      'custom functionality',
+      'third-party integrations',
+      'e-commerce capabilities',
+      'advanced seo strategy',
+      'multi-language support',
       '90 days post-launch support',
-      'Dedicated project manager',
-      'Priority support',
+      'dedicated project manager',
+      'priority support',
     ],
     popular: false,
     color: 'from-brown-sugar to-brown-sugar/80',
@@ -72,12 +72,12 @@ const packages = [
 ];
 
 const addOns = [
-  { name: 'Logo Design', price: '$1,500' },
-  { name: 'Content Writing', price: '$150/page' },
-  { name: 'Professional Photography', price: '$2,000' },
-  { name: 'Monthly Maintenance', price: '$500/month' },
-  { name: 'Hosting Setup & Management', price: '$100/month' },
-  { name: 'Additional Revisions', price: '$150/hour' },
+  { name: 'logo design', price: '$1,500' },
+  { name: 'content writing', price: '$150/page' },
+  { name: 'professional photography', price: '$2,000' },
+  { name: 'monthly maintenance', price: '$500/month' },
+  { name: 'hosting setup & management', price: '$100/month' },
+  { name: 'additional revisions', price: '$150/hour' },
 ];
 
 export default function PricingSection() {
@@ -92,10 +92,10 @@ export default function PricingSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
-            Transparent Pricing
+            transparent pricing
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Choose the package that best fits your needs. All packages include our signature
+            choose the package that best fits your needs. all packages include our signature
             attention to detail and performance optimization.
           </p>
         </motion.div>

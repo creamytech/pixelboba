@@ -7,23 +7,23 @@ import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 const testimonials = [
   {
     quote:
-      'Pixel Boba transformed our online presence completely. The attention to detail and smooth user experience exceeded all our expectations.',
-    author: 'Sarah Chen',
-    role: 'CEO, EcoFlow Commerce',
+      'pixel boba transformed our online presence completely. the attention to detail and smooth user experience exceeded all our expectations.',
+    author: 'sarah chen',
+    role: 'ceo, ecoflow commerce',
     avatar: 'SC',
   },
   {
     quote:
-      'Working with the Pixel Boba team felt like having an extension of our own team. They truly understood our vision and brought it to life beautifully.',
-    author: 'Marcus Johnson',
-    role: 'Founder, TechStart SaaS',
+      'working with the pixel boba team felt like having an extension of our own team. they truly understood our vision and brought it to life beautifully.',
+    author: 'marcus johnson',
+    role: 'founder, techstart saas',
     avatar: 'MJ',
   },
   {
     quote:
-      'Not only did they create a stunning portfolio site, but the performance improvements increased our inquiries by 40%. Highly recommend!',
-    author: 'Elena Rodriguez',
-    role: 'Owner, Artisan Studio',
+      'not only did they create a stunning portfolio site, but the performance improvements increased our inquiries by 40%. highly recommend!',
+    author: 'elena rodriguez',
+    role: 'owner, artisan studio',
     avatar: 'ER',
   },
 ];
