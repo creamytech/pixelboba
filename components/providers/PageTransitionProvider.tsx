@@ -26,24 +26,42 @@ interface PageTransitionProviderProps {
 
 export default function PageTransitionProvider({ children }: PageTransitionProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
   const pathname = usePathname();
   const [lastPathname, setLastPathname] = useState(pathname);
 
   const startTransition = () => {
+    // Hide page content immediately and show loading
+    setPageVisible(false);
     setIsLoading(true);
   };
 
   const completeTransition = () => {
-    // Keep loading visible for at least 800ms for nice UX
+    // Keep loading visible for at least 600ms for smooth UX
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+      // Show page content after loading disappears
+      setTimeout(() => {
+        setPageVisible(true);
+      }, 100);
+    }, 600);
   };
 
   // Listen for pathname changes to complete transition
   useEffect(() => {
-    if (pathname !== lastPathname && isLoading) {
-      completeTransition();
+    if (pathname !== lastPathname) {
+      if (isLoading) {
+        // Navigation in progress, complete it
+        completeTransition();
+      } else {
+        // Direct navigation (browser back/forward), show brief loading
+        setPageVisible(false);
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          setTimeout(() => setPageVisible(true), 100);
+        }, 400);
+      }
     }
     setLastPathname(pathname);
   }, [pathname, lastPathname, isLoading]);
@@ -51,19 +69,24 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
   // Handle link clicks to start transitions
   useEffect(() => {
     const handleLinkClick = (e: MouseEvent) => {
+      // Only handle left clicks without modifiers
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+
       const target = e.target as HTMLElement;
       const link = target.closest('a[href]') as HTMLAnchorElement;
 
       if (link && link.href) {
-        const url = new URL(link.href);
-        const currentUrl = new URL(window.location.href);
+        try {
+          const url = new URL(link.href);
+          const currentUrl = new URL(window.location.href);
 
-        // Check if it's an internal navigation (same origin, different pathname)
-        if (url.origin === currentUrl.origin && url.pathname !== currentUrl.pathname) {
-          // Don't start transition if it's opening in a new tab
-          if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+          // Check if it's an internal navigation to a different page
+          if (url.origin === currentUrl.origin && url.pathname !== currentUrl.pathname) {
+            // Start transition immediately on click
             startTransition();
           }
+        } catch (e) {
+          // Invalid URL, ignore
         }
       }
     };
@@ -73,11 +96,12 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
       startTransition();
     };
 
-    document.addEventListener('click', handleLinkClick);
+    // Use capture phase to ensure we get the event before Next.js
+    document.addEventListener('click', handleLinkClick, true);
     window.addEventListener('popstate', handlePopState);
 
     return () => {
-      document.removeEventListener('click', handleLinkClick);
+      document.removeEventListener('click', handleLinkClick, true);
       window.removeEventListener('popstate', handlePopState);
     };
   }, []);
@@ -87,6 +111,7 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
     if (isLoading) {
       const fallbackTimer = setTimeout(() => {
         setIsLoading(false);
+        setPageVisible(true);
       }, 3000);
 
       return () => clearTimeout(fallbackTimer);
@@ -101,7 +126,17 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
 
   return (
     <PageTransitionContext.Provider value={contextValue}>
-      {children}
+      <div
+        style={{
+          opacity: pageVisible ? 1 : 0,
+          transition: 'opacity 0.15s ease-in-out',
+          position: pageVisible ? 'static' : 'fixed',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {children}
+      </div>
       <BobaLoader isVisible={isLoading} />
     </PageTransitionContext.Provider>
   );
