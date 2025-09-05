@@ -19,6 +19,8 @@ export default function InvoiceCenter() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<InvoiceStatus | 'ALL'>('ALL');
+  const [paymentLoading, setPaymentLoading] = useState<string | null>(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchInvoices();
@@ -40,18 +42,31 @@ export default function InvoiceCenter() {
 
   const handlePayInvoice = async (invoiceId: string) => {
     try {
+      setPaymentLoading(invoiceId);
+      setError('');
+
       const response = await fetch('/api/portal/invoices/pay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ invoiceId }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        const { url } = await response.json();
-        window.location.href = url; // Redirect to Stripe checkout
+        if (data.url) {
+          window.location.href = data.url; // Redirect to Stripe checkout
+        } else {
+          setError('Payment session created but no URL received');
+        }
+      } else {
+        setError(data.error || 'Failed to initiate payment');
       }
     } catch (error) {
       console.error('Error initiating payment:', error);
+      setError('Network error: Unable to connect to payment service');
+    } finally {
+      setPaymentLoading(null);
     }
   };
 
@@ -101,6 +116,22 @@ export default function InvoiceCenter() {
 
   return (
     <div className="space-y-6">
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex items-center">
+            <X className="w-5 h-5 text-red-600 mr-2" />
+            <span className="text-red-700 text-sm">{error}</span>
+            <button
+              onClick={() => setError('')}
+              className="ml-auto text-red-600 hover:text-red-800"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Summary Cards */}
       <div className="grid sm:grid-cols-3 gap-6">
         <SummaryCard title="total invoiced" amount={totalAmount} icon={DollarSign} color="taro" />
@@ -155,6 +186,7 @@ export default function InvoiceCenter() {
                       onPay={() => handlePayInvoice(invoice.id)}
                       onDownload={() => downloadInvoice(invoice.id)}
                       onView={() => setSelectedInvoice(invoice)}
+                      paymentLoading={paymentLoading === invoice.id}
                     />
                   ))}
                 </AnimatePresence>
@@ -209,11 +241,13 @@ function InvoiceRow({
   onPay,
   onDownload,
   onView,
+  paymentLoading = false,
 }: {
   invoice: Invoice;
   onPay: () => void;
   onDownload: () => void;
   onView: () => void;
+  paymentLoading?: boolean;
 }) {
   const config = statusConfig[invoice.status];
   const StatusIcon = config.icon;
@@ -272,9 +306,17 @@ function InvoiceRow({
           {['SENT', 'OVERDUE'].includes(actualStatus) && (
             <button
               onClick={onPay}
-              className="px-3 py-1 bg-taro text-white text-xs rounded-lg hover:bg-taro/80 transition-colors"
+              disabled={paymentLoading}
+              className="px-3 py-1 bg-taro text-white text-xs rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1"
             >
-              pay now
+              {paymentLoading ? (
+                <>
+                  <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>processing...</span>
+                </>
+              ) : (
+                <span>pay now</span>
+              )}
             </button>
           )}
         </div>

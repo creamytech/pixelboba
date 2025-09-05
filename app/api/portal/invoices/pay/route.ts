@@ -46,6 +46,10 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Invoice is already paid' }, { status: 400 });
       }
 
+      if (!invoice.items || invoice.items.length === 0) {
+        return NextResponse.json({ error: 'Invoice has no items to charge' }, { status: 400 });
+      }
+
       // Create Stripe checkout session
       const stripe = (await import('stripe')).default;
       const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -78,7 +82,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ url: stripeSession.url });
     } catch (dbError) {
       console.error('Database error creating payment session:', dbError);
-      return NextResponse.json({ error: 'Failed to create payment session' }, { status: 500 });
+      return NextResponse.json(
+        {
+          error: 'Database error during payment setup',
+          details: process.env.NODE_ENV === 'development' ? String(dbError) : undefined,
+        },
+        { status: 500 }
+      );
     }
   } catch (error) {
     console.error('Error in portal invoice payment API:', error);
