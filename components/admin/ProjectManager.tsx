@@ -391,8 +391,8 @@ function EditProjectModal({
               <label className="block text-sm font-medium text-ink mb-2">
                 progress ({formData.progress}%)
               </label>
-              <div className="flex items-center space-x-4">
-                <div className="flex-1">
+              <div className="space-y-3">
+                <div>
                   <input
                     type="range"
                     min="0"
@@ -409,13 +409,15 @@ function EditProjectModal({
                     <span>100%</span>
                   </div>
                 </div>
-                <div className="flex-shrink-0">
-                  <BobaProgressIndicator
-                    progress={formData.progress}
-                    status={formData.status as ProjectStatus}
-                    size="small"
-                    showDetails={false}
-                  />
+                <div className="flex justify-center">
+                  <div className="w-16">
+                    <BobaProgressIndicator
+                      progress={formData.progress}
+                      status={formData.status as ProjectStatus}
+                      size="small"
+                      showDetails={false}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
