@@ -12,59 +12,121 @@ export async function GET(request: NextRequest) {
 
     console.log('Portal dashboard API called for user:', session.user.email);
 
-    // For now, return mock data since we're focusing on getting OAuth working
-    // This will be replaced with real database queries once the database is properly connected
-    const mockPortalData = {
-      user: {
-        id: session.user.id || session.user.email,
-        name: session.user.name || 'User',
-        email: session.user.email,
-        role: session.user.role || 'CLIENT',
-        createdAt: new Date(),
-      },
-      projects: [
-        {
-          id: 'mock-project-1',
-          name: 'Website Redesign',
-          description: 'Modern, responsive website with improved UX',
-          status: 'DEVELOPMENT',
-          progress: 75,
-          startDate: new Date('2024-01-15'),
-          deadline: new Date('2024-03-15'),
-          client: {
-            id: session.user.id || session.user.email,
-            name: session.user.name || 'User',
-            email: session.user.email,
-            role: session.user.role || 'CLIENT',
-            createdAt: new Date(),
-          },
-          milestones: [
-            {
-              id: 'milestone-1',
-              title: 'Wireframes Complete',
-              description: 'All wireframes approved',
-              completedAt: new Date('2024-02-01'),
-              projectId: 'mock-project-1',
-            },
-            {
-              id: 'milestone-2',
-              title: 'Design Phase',
-              description: 'Visual designs and mockups',
-              dueDate: new Date('2024-02-15'),
-              projectId: 'mock-project-1',
-            },
-          ],
-          createdAt: new Date('2024-01-15'),
-          updatedAt: new Date(),
-        },
-      ],
-      unreadMessages: 2,
-      pendingInvoices: 1,
-      pendingContracts: 0,
-    };
+    try {
+      // Dynamic import to avoid build-time database connection
+      const { prisma } = await import('@/lib/prisma');
 
-    console.log('Returning mock portal data for:', session.user.email);
-    return NextResponse.json(mockPortalData);
+      // Find or create user
+      let user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        include: {
+          projects: {
+            include: {
+              milestones: true,
+            },
+            orderBy: { createdAt: 'desc' },
+          },
+        },
+      });
+
+      if (!user) {
+        console.log('Creating new user from portal dashboard API');
+        user = await prisma.user.create({
+          data: {
+            email: session.user.email,
+            name: session.user.name || session.user.email,
+            image: session.user.image,
+            role: 'CLIENT',
+            emailVerified: new Date(),
+          },
+          include: {
+            projects: {
+              include: {
+                milestones: true,
+              },
+              orderBy: { createdAt: 'desc' },
+            },
+          },
+        });
+      }
+
+      // Get counts for dashboard stats
+      const [unreadMessages, pendingInvoices, pendingContracts] = await Promise.all([
+        prisma.message.count({
+          where: {
+            project: { clientId: user.id },
+            isRead: false,
+          },
+        }),
+        prisma.invoice.count({
+          where: {
+            clientId: user.id,
+            status: { in: ['SENT', 'OVERDUE'] },
+          },
+        }),
+        prisma.contract.count({
+          where: {
+            clientId: user.id,
+            status: 'SENT',
+          },
+        }),
+      ]);
+
+      const portalData = {
+        user: {
+          id: user.id,
+          name: user.name || 'User',
+          email: user.email,
+          role: user.role,
+          phone: user.phone,
+          company: user.company,
+          image: user.image,
+          createdAt: user.createdAt,
+        },
+        projects: user.projects.map((project) => ({
+          ...project,
+          client: {
+            id: user.id,
+            name: user.name || 'User',
+            email: user.email,
+            role: user.role,
+            createdAt: user.createdAt,
+          },
+        })),
+        unreadMessages,
+        pendingInvoices,
+        pendingContracts,
+      };
+
+      console.log('Returning real portal data for:', session.user.email, {
+        projectCount: user.projects.length,
+        unreadMessages,
+        pendingInvoices,
+        pendingContracts,
+      });
+
+      return NextResponse.json(portalData);
+    } catch (dbError) {
+      console.error('Database error in portal dashboard:', dbError);
+
+      // Fallback to session data if database fails
+      const fallbackData = {
+        user: {
+          id: session.user.id || session.user.email,
+          name: session.user.name || 'User',
+          email: session.user.email,
+          role: session.user.role || 'CLIENT',
+          createdAt: new Date(),
+        },
+        projects: [],
+        unreadMessages: 0,
+        pendingInvoices: 0,
+        pendingContracts: 0,
+      };
+
+      console.log('Returning fallback data due to database error');
+      return NextResponse.json(fallbackData);
+    }
   } catch (error) {
     console.error('Error in portal dashboard API:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
