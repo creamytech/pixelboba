@@ -119,7 +119,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
     { id: 'messages', name: 'messages', icon: MessageSquare, badge: portalData.unreadMessages },
     { id: 'invoices', name: 'invoices', icon: CreditCard, badge: portalData.pendingInvoices },
     { id: 'contracts', name: 'contracts', icon: FileCheck, badge: portalData.pendingContracts },
-    { id: 'files', name: 'files', icon: Upload },
+    { id: 'files', name: 'files', icon: FolderOpen },
     { id: 'notifications', name: 'notifications', icon: Bell },
   ];
 
@@ -254,7 +254,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all duration-300 group ${
+                  className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all duration-300 group overflow-visible ${
                     isActive
                       ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
                       : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
@@ -501,35 +501,13 @@ function DashboardView({ data }: { data: PortalData }) {
           </div>
         </div>
         <div className="space-y-3">
-          {activeProject ? (
-            <>
-              <ActivityItem
-                action="project milestone reached"
-                description={`${activeProject.name} - progress updated to ${activeProject.progress}%`}
-                time="2 hours ago"
-                type="project"
-              />
-              <ActivityItem
-                action="new message received"
-                description="design feedback and next steps"
-                time="1 day ago"
-                type="message"
-              />
-              <ActivityItem
-                action="contract status updated"
-                description="development agreement signed"
-                time="3 days ago"
-                type="contract"
-              />
-              {data.pendingInvoices > 0 && (
-                <ActivityItem
-                  action="invoice pending"
-                  description={`${data.pendingInvoices} invoice${data.pendingInvoices > 1 ? 's' : ''} awaiting payment`}
-                  time="5 days ago"
-                  type="payment"
-                />
-              )}
-            </>
+          {activeProject && data.pendingInvoices > 0 ? (
+            <ActivityItem
+              action="invoice pending"
+              description={`${data.pendingInvoices} invoice${data.pendingInvoices > 1 ? 's' : ''} awaiting payment`}
+              time="pending"
+              type="payment"
+            />
           ) : (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
