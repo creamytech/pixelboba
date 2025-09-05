@@ -230,23 +230,25 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
         {/* Message Input */}
         <div className="p-4 border-t border-ink/10 bg-white/50">
           <div
-            {...getRootProps()}
             className={`flex items-center space-x-3 p-3 border rounded-xl transition-colors ${
               isDragActive ? 'border-taro bg-taro/5' : 'border-ink/20 bg-white/70 hover:bg-white'
             }`}
           >
-            <input {...getInputProps()} />
-
-            <button className="text-ink/60 hover:text-taro transition-colors">
-              <Paperclip size={20} />
-            </button>
+            <div {...getRootProps()} className="cursor-pointer">
+              <input {...getInputProps()} />
+              <button type="button" className="text-ink/60 hover:text-taro transition-colors">
+                <Paperclip size={20} />
+              </button>
+            </div>
 
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-              placeholder={isDragActive ? 'drop files here...' : 'type your message...'}
+              placeholder={
+                isDragActive ? 'drop files here or type your message...' : 'type your message...'
+              }
               className="flex-1 bg-transparent outline-none text-ink placeholder-ink/50"
             />
 
