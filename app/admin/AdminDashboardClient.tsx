@@ -14,12 +14,14 @@ import {
   DollarSign,
   Calendar,
   LogOut,
+  MessageCircle,
 } from 'lucide-react';
 import ProjectManager from '@/components/admin/ProjectManager';
 import ClientManager from '@/components/admin/ClientManager';
 import ContractManager from '@/components/admin/ContractManager';
 import InvoiceManager from '@/components/admin/InvoiceManager';
 import AdminSettings from '@/components/admin/AdminSettings';
+import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
 import { Session } from 'next-auth';
 
 interface AdminStats {
@@ -47,9 +49,12 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   const [activeTab, setActiveTab] = useState('overview');
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showMessageCenter, setShowMessageCenter] = useState(false);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     fetchStats();
+    fetchProjects();
   }, []);
 
   const fetchStats = async () => {
@@ -63,6 +68,18 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
       console.error('Error fetching admin stats:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('/api/admin/projects');
+      if (response.ok) {
+        const data = await response.json();
+        setProjects(data.projects);
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
     }
   };
 
@@ -120,6 +137,14 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
             </div>
 
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setShowMessageCenter(true)}
+                className="flex items-center space-x-2 px-3 py-2 text-taro hover:bg-taro/10 rounded-lg transition-colors"
+                title="Open messaging center"
+              >
+                <MessageCircle size={20} />
+                <span className="text-sm">messages</span>
+              </button>
               <span className="text-ink/70">welcome, {session?.user?.name}</span>
               <button
                 onClick={() => signOut({ callbackUrl: '/' })}
@@ -167,6 +192,11 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
           {renderActiveTab()}
         </motion.div>
       </div>
+
+      {/* Admin Message Center Modal */}
+      {showMessageCenter && (
+        <AdminMessageCenter projects={projects} onClose={() => setShowMessageCenter(false)} />
+      )}
     </div>
   );
 }
@@ -273,10 +303,22 @@ function OverviewTab({ stats }: { stats: AdminStats | null }) {
         <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
           <h3 className="font-display text-lg font-semibold text-ink mb-4">quick actions</h3>
           <div className="grid grid-cols-2 gap-3">
-            <ActionButton icon={Plus} label="new project" onClick={() => {}} />
-            <ActionButton icon={Users} label="add client" onClick={() => {}} />
-            <ActionButton icon={FileText} label="create contract" onClick={() => {}} />
-            <ActionButton icon={CreditCard} label="send invoice" onClick={() => {}} />
+            <ActionButton
+              icon={Plus}
+              label="new project"
+              onClick={() => setActiveTab('projects')}
+            />
+            <ActionButton icon={Users} label="add client" onClick={() => setActiveTab('clients')} />
+            <ActionButton
+              icon={FileText}
+              label="create contract"
+              onClick={() => setActiveTab('contracts')}
+            />
+            <ActionButton
+              icon={CreditCard}
+              label="send invoice"
+              onClick={() => setActiveTab('invoices')}
+            />
           </div>
         </div>
       </div>
