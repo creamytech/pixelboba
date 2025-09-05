@@ -58,6 +58,8 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile }) {
       if (account?.provider === 'google' && profile?.email) {
         try {
+          console.log('Google OAuth signIn attempt for:', profile.email);
+
           // Dynamic import to avoid build-time database connection
           const { prisma } = await import('./prisma');
 
@@ -67,6 +69,7 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (!dbUser) {
+            console.log('Creating new user:', profile.email);
             dbUser = await prisma.user.create({
               data: {
                 email: profile.email,
@@ -76,14 +79,25 @@ export const authOptions: NextAuthOptions = {
                 emailVerified: new Date(),
               },
             });
+            console.log('User created successfully:', dbUser.id);
+          } else {
+            console.log('Existing user found:', dbUser.id);
           }
 
           // Store role in user object for JWT
           user.role = dbUser.role;
           user.id = dbUser.id;
         } catch (error) {
-          console.error('Error creating/finding user:', error);
-          return false;
+          console.error('Database error in signIn callback:', error);
+          console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack,
+          });
+          // Continue without database for now - allow sign in but with limited functionality
+          console.log('Allowing sign in without database connection');
+          user.role = 'CLIENT';
+          user.id = profile.email; // Use email as fallback ID
         }
       }
       return true;
