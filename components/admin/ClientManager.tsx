@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Edit, Trash2, Mail, Phone, Building } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Mail, Phone, Building, Eye } from 'lucide-react';
 import { User } from '@/types/portal';
+import ClientProfileView from './ClientProfileView';
 
 export default function ClientManager() {
   const [clients, setClients] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchClients();
@@ -35,6 +37,13 @@ export default function ClientManager() {
       client.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       client.company?.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Show client profile view if a client is selected
+  if (selectedClientId) {
+    return (
+      <ClientProfileView clientId={selectedClientId} onBack={() => setSelectedClientId(null)} />
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -74,7 +83,11 @@ export default function ClientManager() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
           {filteredClients.map((client) => (
-            <ClientCard key={client.id} client={client} />
+            <ClientCard
+              key={client.id}
+              client={client}
+              onViewProfile={(id) => setSelectedClientId(id)}
+            />
           ))}
         </AnimatePresence>
       </div>
@@ -82,7 +95,13 @@ export default function ClientManager() {
   );
 }
 
-function ClientCard({ client }: { client: User }) {
+function ClientCard({
+  client,
+  onViewProfile,
+}: {
+  client: User;
+  onViewProfile: (id: string) => void;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -126,7 +145,14 @@ function ClientCard({ client }: { client: User }) {
           joined {new Date(client.createdAt).toLocaleDateString()}
         </span>
         <div className="flex space-x-1">
-          <button className="p-1 text-ink/60 hover:text-ink">
+          <button
+            onClick={() => onViewProfile(client.id)}
+            className="p-2 text-ink/60 hover:text-taro hover:bg-taro/10 rounded-lg transition-colors"
+            title="View Profile"
+          >
+            <Eye size={16} />
+          </button>
+          <button className="p-2 text-ink/60 hover:text-ink hover:bg-ink/5 rounded-lg transition-colors">
             <Edit size={14} />
           </button>
           <button className="p-1 text-ink/60 hover:text-red-500">

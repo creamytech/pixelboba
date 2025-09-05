@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
         sender: msg.sender,
         timestamp: msg.createdAt,
         isOwn: msg.senderId === session.user.id,
+        file: msg.file || undefined,
       }));
 
       return NextResponse.json({ messages: formattedMessages });
@@ -195,6 +196,7 @@ export async function POST(request: NextRequest) {
         sender: message.sender,
         timestamp: message.createdAt,
         isOwn: true,
+        file: message.file || undefined,
       };
 
       return NextResponse.json(formattedMessage);

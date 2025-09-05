@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { content, projectId } = body;
+    const { content, projectId, type = 'TEXT' } = body;
 
     if (!content?.trim() || !projectId) {
       return NextResponse.json({ error: 'Content and project ID are required' }, { status: 400 });
@@ -108,6 +108,7 @@ export async function POST(request: NextRequest) {
           projectId,
           senderId: session.user.id,
           isRead: false,
+          type: type as 'TEXT' | 'PROJECT_UPDATE' | 'FILE',
         },
         include: {
           sender: {
@@ -125,8 +126,8 @@ export async function POST(request: NextRequest) {
       // Create activity log
       await prisma.activity.create({
         data: {
-          action: 'message_sent',
-          description: `Message sent to ${project.client.name}`,
+          action: type === 'PROJECT_UPDATE' ? 'project_update_sent' : 'message_sent',
+          description: `${type === 'PROJECT_UPDATE' ? 'Project update' : 'Message'} sent to ${project.client.name || project.client.email}`,
           userId: session.user.id,
           projectId,
         },

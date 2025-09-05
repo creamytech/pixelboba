@@ -93,10 +93,18 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
+      console.log('Files dropped:', acceptedFiles);
       setUploadingFiles((prev) => [...prev, ...acceptedFiles]);
     },
     multiple: true,
     maxSize: 10 * 1024 * 1024, // 10MB
+    accept: {
+      'image/*': [],
+      'application/pdf': [],
+      'text/*': [],
+      'application/msword': [],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [],
+    },
   });
 
   const removeFile = (index: number) => {
@@ -239,9 +247,9 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
           >
             <div {...getRootProps()} className="cursor-pointer">
               <input {...getInputProps()} />
-              <button type="button" className="text-ink/60 hover:text-taro transition-colors">
+              <div className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10">
                 <Paperclip size={20} />
-              </button>
+              </div>
             </div>
 
             <input
