@@ -32,6 +32,8 @@ interface AdminStats {
   averageProjectDuration: number;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();

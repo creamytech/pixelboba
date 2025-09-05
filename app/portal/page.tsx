@@ -30,6 +30,8 @@ interface PortalData {
   pendingContracts: number;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default function ClientPortal() {
   const { data: session, status } = useSession();
   const router = useRouter();
