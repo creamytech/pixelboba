@@ -7,10 +7,10 @@ const featuredProjects = [
   {
     title: 'call on care',
     slug: 'call-on-care',
-    summary: 'healthcare platform focused on patient care and accessibility',
+    summary: 'complete redesign of outdated healthcare platform',
     category: 'healthcare',
     color: 'from-matcha to-matcha/60',
-    stats: { lighthouse: 98, engagement: '+285%', satisfaction: '96%' },
+    highlight: 'Modern patient portal with accessibility focus',
   },
   {
     title: 'techstart saas',
@@ -18,7 +18,7 @@ const featuredProjects = [
     summary: 'modern saas dashboard with real-time analytics',
     category: 'saas',
     color: 'from-taro to-deep-taro',
-    stats: { lighthouse: 98, conversion: '+42%', bounce: '-25%' },
+    highlight: 'Streamlined user experience and interface',
   },
   {
     title: 'artisan studio',
@@ -26,7 +26,7 @@ const featuredProjects = [
     summary: 'creative portfolio showcasing handcrafted works',
     category: 'portfolio',
     color: 'from-brown-sugar to-brown-sugar/60',
-    stats: { lighthouse: 100, conversion: '+28%', bounce: '-15%' },
+    highlight: 'Beautiful gallery and mobile optimization',
   },
 ];
 
@@ -111,30 +111,10 @@ export default function FeaturedWorkSection() {
                       <div className="text-sm text-gray-500">view case study →</div>
                     </div>
 
-                    {/* Results */}
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="text-center">
-                        <div className="font-bold text-matcha text-lg">
-                          {project.stats.lighthouse}
-                        </div>
-                        <div className="text-xs text-gray-500">lighthouse</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="font-bold text-taro text-lg">
-                          {project.stats.conversion || project.stats.engagement}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {project.stats.conversion ? 'conversion' : 'engagement'}
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <div className="font-bold text-brown-sugar text-lg">
-                          {project.stats.bounce || project.stats.satisfaction}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {project.stats.bounce ? 'bounce rate' : 'satisfaction'}
-                        </div>
-                      </div>
+                    {/* Highlight */}
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="flex-shrink-0 w-2 h-2 bg-taro rounded-full"></div>
+                      <p className="font-medium">{project.highlight}</p>
                     </div>
                   </div>
                 </div>
