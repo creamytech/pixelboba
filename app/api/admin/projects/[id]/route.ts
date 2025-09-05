@@ -29,7 +29,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             },
           },
           milestones: {
-            orderBy: { order: 'asc' },
+            orderBy: { createdAt: 'asc' },
           },
           messages: {
             include: {
@@ -119,7 +119,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
             },
           },
           milestones: {
-            orderBy: { order: 'asc' },
+            orderBy: { createdAt: 'asc' },
           },
         },
       });

@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
             },
           },
           milestones: {
-            orderBy: { order: 'asc' },
+            orderBy: { createdAt: 'asc' },
           },
           _count: {
             select: {
