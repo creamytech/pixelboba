@@ -240,14 +240,17 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   }
 
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden min-h-[500px] h-[80vh] max-h-[800px] flex flex-col lg:flex-row">
+    <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 min-h-[500px] h-[80vh] max-h-[800px] flex flex-col lg:flex-row touch-manipulation">
       {/* Project Sidebar */}
       <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col max-h-48 lg:max-h-none lg:h-full">
         <div className="p-4 border-b border-ink/10">
           <h3 className="font-display text-lg font-semibold text-ink">conversations</h3>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div
+          className="flex-1 overflow-y-auto touch-pan-y"
+          style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
+        >
           {projects.map((project) => (
             <button
               key={project.id}
@@ -304,8 +307,12 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
 
         {/* Messages */}
         <div
-          className="flex-1 overflow-y-auto overscroll-contain p-2 sm:p-4 space-y-4"
-          style={{ WebkitOverflowScrolling: 'touch' }}
+          className="flex-1 overflow-y-auto overscroll-contain p-2 sm:p-4 space-y-4 touch-pan-y"
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            touchAction: 'pan-y',
+            overscrollBehavior: 'contain',
+          }}
         >
           {loading ? (
             <div className="flex items-center justify-center h-full">

@@ -94,11 +94,19 @@ export async function POST(request: NextRequest) {
         quantity: item.quantity,
       }));
 
+      // Get base URL from request or environment
+      const baseUrl =
+        process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : `${request.headers.get('x-forwarded-proto') || 'https'}://${request.headers.get('host')}`;
+
+      console.log('Payment setup - Base URL:', baseUrl);
+
       const stripeSession = await stripeClient.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
-        success_url: `${process.env.NEXTAUTH_URL}/portal?payment=success&invoice=${invoice.id}`,
-        cancel_url: `${process.env.NEXTAUTH_URL}/portal?payment=cancelled`,
+        success_url: `${baseUrl}/portal?payment=success&invoice=${invoice.id}`,
+        cancel_url: `${baseUrl}/portal?payment=cancelled`,
         metadata: {
           invoiceId: invoice.id,
           clientId: user.id,

@@ -166,13 +166,19 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-      onClick={onClose}
+      onClick={(e) => {
+        // Only close if clicking the backdrop itself, not child elements
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+      style={{ touchAction: 'none' }} // Allow touch manipulation within children
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-6xl w-full min-h-[500px] h-[90vh] max-h-[900px] flex flex-col lg:flex-row"
+        className="bg-white rounded-xl shadow-xl max-w-6xl w-full min-h-[500px] h-[90vh] max-h-[900px] flex flex-col lg:flex-row touch-manipulation"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Project Sidebar */}
@@ -199,7 +205,10 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto">
+          <div
+            className="flex-1 overflow-y-auto touch-pan-y"
+            style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
+          >
             {projects.map((project) => (
               <button
                 key={project.id}
@@ -240,8 +249,12 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
 
           {/* Messages */}
           <div
-            className="flex-1 overflow-y-auto overscroll-contain p-2 sm:p-4 space-y-4"
-            style={{ WebkitOverflowScrolling: 'touch' }}
+            className="flex-1 overflow-y-auto overscroll-contain p-2 sm:p-4 space-y-4 touch-pan-y"
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y',
+              overscrollBehavior: 'contain',
+            }}
           >
             {loading ? (
               <div className="flex items-center justify-center h-full">
