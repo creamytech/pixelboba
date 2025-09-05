@@ -51,8 +51,9 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Invoice has no items to charge' }, { status: 400 });
       }
 
-      // Get Stripe secret key from settings
-      const stripeSecretKey = await getSettingValue('payments.stripeSecretKey');
+      // Get Stripe secret key from settings or fallback to environment variable
+      const stripeSecretKey =
+        (await getSettingValue('payments.stripeSecretKey')) || process.env.STRIPE_SECRET_KEY;
 
       if (!stripeSecretKey) {
         return NextResponse.json(

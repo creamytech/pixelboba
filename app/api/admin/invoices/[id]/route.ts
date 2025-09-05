@@ -230,14 +230,15 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     try {
       const { prisma } = await import('@/lib/prisma');
 
-      // Get Stripe secret key from settings
-      const stripeSecretKey = await getSettingValue('payments.stripeSecretKey');
+      // Get Stripe secret key from settings or fallback to environment variable
+      const stripeSecretKey =
+        (await getSettingValue('payments.stripeSecretKey')) || process.env.STRIPE_SECRET_KEY;
 
       if (!stripeSecretKey) {
         return NextResponse.json(
           {
             error:
-              'Stripe not configured. Please add your Stripe secret key in Admin Settings > Payments.',
+              'Stripe not configured. Please add your Stripe secret key in Admin Settings > Payments or environment variables.',
           },
           { status: 400 }
         );

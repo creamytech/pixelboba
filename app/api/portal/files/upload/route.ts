@@ -71,6 +71,7 @@ export async function POST(request: NextRequest) {
             mimetype: uploadResult.mimetype,
             size: uploadResult.size,
             url: uploadResult.url,
+            publicId: uploadResult.publicId || null,
             uploaderId: session.user.id,
             projectId: targetProjectId || null,
           },

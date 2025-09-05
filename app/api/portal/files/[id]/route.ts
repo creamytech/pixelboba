@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
-import { unlink } from 'fs/promises';
-import { join } from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -42,14 +48,14 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: 'Permission denied' }, { status: 403 });
     }
 
-    // Delete the physical file
+    // Delete the file from Cloudinary
     try {
-      const uploadsPath = join(process.cwd(), 'uploads');
-      const filePath = join(uploadsPath, file.filename);
-      await unlink(filePath);
+      if (file.publicId) {
+        await cloudinary.uploader.destroy(file.publicId);
+      }
     } catch (fileError) {
-      console.error('Error deleting physical file:', fileError);
-      // Continue with database deletion even if physical file deletion fails
+      console.error('Error deleting file from Cloudinary:', fileError);
+      // Continue with database deletion even if Cloudinary deletion fails
     }
 
     // Delete the file record from database
