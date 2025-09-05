@@ -94,11 +94,6 @@ enum NotificationType {
   SYSTEM
 }
 
-enum VisitorChatStatus {
-  BOT
-  LIVE
-  ENDED
-}
 
 model User {
   id            String    @id @default(cuid())
@@ -132,8 +127,6 @@ model User {
   createdInvites    Invite[]       @relation("InviteCreator")
   usedInvite        Invite?        @relation("InviteUser")
   passwordResets    PasswordReset[]
-  assignedVisitorChats VisitorChat[]
-  visitorChatMessages VisitorChatMessage[]
 }
 
 model Project {
@@ -361,55 +354,3 @@ model AdminSettings {
   updatedAt DateTime @updatedAt
 }
 
-model VisitorChat {
-  id          String            @id @default(cuid())
-  sessionId   String            @unique // Browser session identifier
-  visitorName String?
-  visitorEmail String?
-  status      VisitorChatStatus @default(BOT)
-  assignedAdminId String?       // Admin handling the live chat
-  ipAddress   String?
-  userAgent   String?
-  source      String?           // Which page they started chat from
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  endedAt     DateTime?
-
-  // Relations
-  assignedAdmin User?              @relation(fields: [assignedAdminId], references: [id])
-  messages      VisitorChatMessage[]
-
-  @@index([sessionId])
-  @@index([status])
-  @@index([createdAt])
-}
-
-model VisitorChatMessage {
-  id        String   @id @default(cuid())
-  content   String @db.Text
-  isFromVisitor Boolean @default(true) // false = from admin or bot
-  isFromBot Boolean @default(false)
-  createdAt DateTime @default(now())
-
-  // Relations
-  chatId String
-  chat   VisitorChat @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  senderId String?   // Admin ID if sent by admin
-  sender   User?     @relation(fields: [senderId], references: [id])
-
-  @@index([chatId])
-  @@index([createdAt])
-}
-
-model BotResponse {
-  id         String   @id @default(cuid())
-  trigger    String   // Keyword or phrase that triggers this response
-  response   String @db.Text
-  isActive   Boolean  @default(true)
-  order      Int      @default(0) // For ordering responses
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@index([trigger])
-  @@index([isActive])
-}
