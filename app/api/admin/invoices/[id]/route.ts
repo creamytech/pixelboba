@@ -287,6 +287,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       const stripeInvoice = await stripe.invoices.create({
         customer: stripeCustomerId,
         description: invoice.title,
+        collection_method: 'send_invoice',
         due_date: Math.floor(invoice.dueDate.getTime() / 1000),
         metadata: {
           invoiceId: invoice.id,

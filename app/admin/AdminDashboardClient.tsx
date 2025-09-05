@@ -241,7 +241,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <motion.nav
-            className="flex flex-wrap gap-2 sm:space-x-2 sm:gap-0 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
+            className="flex flex-wrap justify-center gap-2 sm:space-x-2 sm:gap-0 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
