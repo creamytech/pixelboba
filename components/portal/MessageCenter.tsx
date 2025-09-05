@@ -240,9 +240,9 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   }
 
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden h-[700px] md:h-[600px] flex flex-col lg:flex-row">
+    <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden min-h-[500px] h-[80vh] max-h-[800px] flex flex-col lg:flex-row">
       {/* Project Sidebar */}
-      <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col lg:h-full h-48 lg:h-auto">
+      <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col max-h-48 lg:max-h-none lg:h-full">
         <div className="p-4 border-b border-ink/10">
           <h3 className="font-display text-lg font-semibold text-ink">conversations</h3>
         </div>
@@ -303,7 +303,10 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div
+          className="flex-1 overflow-y-auto overscroll-contain p-2 sm:p-4 space-y-4"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
           {loading ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-ink/50">loading messages...</div>
@@ -332,11 +335,29 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
                         <p className="text-sm">{message.content}</p>
                       </div>
                       <div
-                        className={`text-xs text-ink/40 mt-1 ${
-                          message.isOwn ? 'text-right' : 'text-left'
+                        className={`text-xs text-ink/40 mt-1 flex items-center gap-1 ${
+                          message.isOwn ? 'justify-end' : 'justify-start'
                         }`}
                       >
-                        {message.sender.name} • {new Date(message.timestamp).toLocaleTimeString()}
+                        {!message.isOwn && (
+                          <>
+                            {(() => {
+                              const senderStatus = adminUsers.find(
+                                (u) => u.id === message.sender.id
+                              );
+                              return senderStatus ? (
+                                <OnlineStatusIndicator
+                                  isOnline={senderStatus.isOnline}
+                                  lastActiveAt={senderStatus.lastActiveAt}
+                                  size="sm"
+                                />
+                              ) : null;
+                            })()}
+                          </>
+                        )}
+                        <span>
+                          {message.sender.name} • {new Date(message.timestamp).toLocaleTimeString()}
+                        </span>
                       </div>
                     </div>
 

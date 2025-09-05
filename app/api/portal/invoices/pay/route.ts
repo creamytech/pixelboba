@@ -19,14 +19,20 @@ export async function POST(request: NextRequest) {
     try {
       const { prisma } = await import('@/lib/prisma');
 
+      console.log('Payment setup - Finding user for email:', session.user.email);
+
       // Find user
       const user: any = await prisma.user.findUnique({
         where: { email: session.user.email! },
       });
 
+      console.log('Payment setup - User found:', user ? user.id : 'null');
+
       if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
       }
+
+      console.log('Payment setup - Finding invoice:', invoiceId, 'for client:', user.id);
 
       // Verify invoice belongs to this client
       const invoice = await prisma.invoice.findFirst({
@@ -38,6 +44,13 @@ export async function POST(request: NextRequest) {
           items: true,
         },
       });
+
+      console.log(
+        'Payment setup - Invoice found:',
+        invoice ? invoice.id : 'null',
+        'status:',
+        invoice?.status
+      );
 
       if (!invoice) {
         return NextResponse.json({ error: 'Invoice not found or access denied' }, { status: 404 });

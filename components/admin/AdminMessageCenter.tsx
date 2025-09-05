@@ -172,11 +172,11 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-6xl w-full h-[80vh] flex flex-col lg:flex-row"
+        className="bg-white rounded-xl shadow-xl max-w-6xl w-full min-h-[500px] h-[90vh] max-h-[900px] flex flex-col lg:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Project Sidebar */}
-        <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col lg:h-full h-48 lg:h-auto">
+        <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col max-h-64 lg:max-h-none lg:h-full">
           <div className="p-4 border-b border-ink/10">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-2">
@@ -239,7 +239,10 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div
+            className="flex-1 overflow-y-auto overscroll-contain p-2 sm:p-4 space-y-4"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
             {loading ? (
               <div className="flex items-center justify-center h-full">
                 <div className="text-ink/50">loading messages...</div>
