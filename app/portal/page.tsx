@@ -1,7 +1,6 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-import { ThemeProvider } from '@/contexts/ThemeContext';
 import ClientPortalClient from './ClientPortalClient';
 import { motion } from 'framer-motion';
 import {
@@ -37,9 +36,5 @@ export default async function ClientPortal() {
     redirect('/auth/signin');
   }
 
-  return (
-    <ThemeProvider>
-      <ClientPortalClient session={session} />
-    </ThemeProvider>
-  );
+  return <ClientPortalClient session={session} />;
 }

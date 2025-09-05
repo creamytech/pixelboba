@@ -18,6 +18,8 @@ import {
   ExternalLink,
   User,
   Activity,
+  Target,
+  CheckCircle,
 } from 'lucide-react';
 import BobaProgressIndicator from '@/components/portal/BobaProgressIndicator';
 
@@ -144,6 +146,7 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
 
   const tabs = [
     { id: 'overview', name: 'overview', icon: User },
+    { id: 'milestones', name: 'milestones', icon: Target },
     { id: 'projects', name: 'projects', icon: FolderOpen },
     { id: 'messages', name: 'messages', icon: MessageCircle },
     { id: 'files', name: 'files', icon: Upload },
@@ -269,6 +272,9 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
         transition={{ duration: 0.3 }}
       >
         {activeTab === 'overview' && <OverviewTab data={data} onSendUpdate={sendProjectUpdate} />}
+        {activeTab === 'milestones' && (
+          <MilestonesTab projects={data.projects} onSendUpdate={sendProjectUpdate} />
+        )}
         {activeTab === 'projects' && (
           <ProjectsTab projects={data.projects} onSendUpdate={sendProjectUpdate} />
         )}
@@ -609,6 +615,198 @@ function InvoicesTab({ invoices }: { invoices: ClientProfileData['invoices'] }) 
           <div className="text-center py-8 text-ink/50">
             <CreditCard className="w-12 h-12 mx-auto mb-2 opacity-50" />
             <p>No invoices yet</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MilestonesTab({
+  projects,
+  onSendUpdate,
+}: {
+  projects: ClientProfileData['projects'];
+  onSendUpdate: (projectId: string, content: string) => void;
+}) {
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [milestoneContent, setMilestoneContent] = useState('');
+  const [milestoneType, setMilestoneType] = useState<'MILESTONE' | 'UPDATE'>('MILESTONE');
+
+  const sendMilestone = () => {
+    if (selectedProject && milestoneContent.trim()) {
+      const content = `🎯 ${milestoneType}: ${milestoneContent}`;
+      onSendUpdate(selectedProject, content);
+      setMilestoneContent('');
+      setSelectedProject(null);
+    }
+  };
+
+  const getProjectProgress = (progress: number) => {
+    if (progress >= 100)
+      return { status: 'Completed', color: 'bg-green-500', textColor: 'text-green-700' };
+    if (progress >= 75)
+      return { status: 'Near Completion', color: 'bg-blue-500', textColor: 'text-blue-700' };
+    if (progress >= 50)
+      return { status: 'In Progress', color: 'bg-yellow-500', textColor: 'text-yellow-700' };
+    if (progress >= 25)
+      return { status: 'Getting Started', color: 'bg-orange-500', textColor: 'text-orange-700' };
+    return { status: 'Just Started', color: 'bg-gray-500', textColor: 'text-gray-700' };
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Milestone Creation */}
+      <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="font-display text-xl font-bold text-ink lowercase">
+            send milestone update
+          </h3>
+          <button
+            onClick={() => setSelectedProject(projects[0]?.id || '')}
+            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all text-sm"
+          >
+            <Target size={16} />
+            <span>Create Milestone</span>
+          </button>
+        </div>
+
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="bg-white/70 rounded-lg p-4 border border-brown-sugar/20"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-ink/70 mb-2">Project</label>
+                <select
+                  value={selectedProject}
+                  onChange={(e) => setSelectedProject(e.target.value)}
+                  className="w-full p-2 border border-brown-sugar/20 rounded-lg bg-white/70"
+                >
+                  {projects.map((project) => (
+                    <option key={project.id} value={project.id}>
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink/70 mb-2">Type</label>
+                <select
+                  value={milestoneType}
+                  onChange={(e) => setMilestoneType(e.target.value as 'MILESTONE' | 'UPDATE')}
+                  className="w-full p-2 border border-brown-sugar/20 rounded-lg bg-white/70"
+                >
+                  <option value="MILESTONE">🎯 Milestone Achieved</option>
+                  <option value="UPDATE">📢 Progress Update</option>
+                </select>
+              </div>
+            </div>
+
+            <textarea
+              value={milestoneContent}
+              onChange={(e) => setMilestoneContent(e.target.value)}
+              placeholder={
+                milestoneType === 'MILESTONE'
+                  ? "Describe the milestone achieved (e.g., 'Design phase completed', 'First prototype delivered')"
+                  : 'Write a progress update for the client...'
+              }
+              className="w-full h-24 p-3 border border-brown-sugar/20 rounded-lg bg-white/70 resize-none"
+            />
+
+            <div className="flex justify-end space-x-2 mt-3">
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="px-4 py-2 text-ink/60 hover:text-ink"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={sendMilestone}
+                disabled={!milestoneContent.trim()}
+                className="px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
+              >
+                Send {milestoneType === 'MILESTONE' ? 'Milestone' : 'Update'}
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Project Milestones Overview */}
+      <div className="grid gap-6">
+        {projects.map((project) => {
+          const progressInfo = getProjectProgress(project.progress);
+          return (
+            <div
+              key={project.id}
+              className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-4">
+                  <div className={`w-4 h-4 ${progressInfo.color} rounded-full`}></div>
+                  <div>
+                    <h4 className="font-display text-lg font-bold text-ink">{project.name}</h4>
+                    <p className="text-sm text-ink/60">{project.description}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-taro">{project.progress}%</div>
+                  <div className={`text-xs ${progressInfo.textColor} font-medium`}>
+                    {progressInfo.status}
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-4 mb-4 relative overflow-hidden">
+                <motion.div
+                  className="bg-gradient-to-r from-taro to-brown-sugar h-4 rounded-full transition-all"
+                  style={{ width: `${project.progress}%` }}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${project.progress}%` }}
+                  transition={{ duration: 1, ease: 'easeOut' }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xs font-medium text-white drop-shadow-sm">
+                    {project.progress}% Complete
+                  </span>
+                </div>
+              </div>
+
+              {/* Milestone Actions */}
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex space-x-4">
+                  <span className="text-ink/60">
+                    Started: {new Date(project.startDate).toLocaleDateString()}
+                  </span>
+                  {project.deadline && (
+                    <span className="text-ink/60">
+                      Due: {new Date(project.deadline).toLocaleDateString()}
+                    </span>
+                  )}
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedProject(project.id);
+                    setMilestoneType('MILESTONE');
+                  }}
+                  className="flex items-center space-x-1 px-3 py-1 bg-taro/10 text-taro rounded-lg hover:bg-taro/20 transition-colors"
+                >
+                  <Target size={14} />
+                  <span>Add Milestone</span>
+                </button>
+              </div>
+            </div>
+          );
+        })}
+
+        {projects.length === 0 && (
+          <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 text-center">
+            <Target className="w-12 h-12 mx-auto mb-2 opacity-50 text-ink/50" />
+            <p className="text-ink/50">No projects to track milestones for</p>
           </div>
         )}
       </div>

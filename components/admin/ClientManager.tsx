@@ -12,6 +12,7 @@ export default function ClientManager() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [editingClient, setEditingClient] = useState<User | null>(null);
 
   useEffect(() => {
     fetchClients();
@@ -29,6 +30,28 @@ export default function ClientManager() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateClient = async (clientId: string, updateData: Partial<User>) => {
+    try {
+      const response = await fetch(`/api/admin/clients/${clientId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData),
+      });
+
+      if (response.ok) {
+        const updatedClient = await response.json();
+        setClients((prev) =>
+          prev.map((client) => (client.id === clientId ? updatedClient : client))
+        );
+        setEditingClient(null);
+        return true;
+      }
+    } catch (error) {
+      console.error('Error updating client:', error);
+    }
+    return false;
   };
 
   const filteredClients = clients.filter(
@@ -87,10 +110,20 @@ export default function ClientManager() {
               key={client.id}
               client={client}
               onViewProfile={(id) => setSelectedClientId(id)}
+              onEditClient={(client) => setEditingClient(client)}
             />
           ))}
         </AnimatePresence>
       </div>
+
+      {/* Edit Client Modal */}
+      {editingClient && (
+        <EditClientModal
+          client={editingClient}
+          onClose={() => setEditingClient(null)}
+          onUpdate={updateClient}
+        />
+      )}
     </div>
   );
 }
@@ -98,9 +131,11 @@ export default function ClientManager() {
 function ClientCard({
   client,
   onViewProfile,
+  onEditClient,
 }: {
   client: User;
   onViewProfile: (id: string) => void;
+  onEditClient: (client: User) => void;
 }) {
   return (
     <motion.div
@@ -152,7 +187,11 @@ function ClientCard({
           >
             <Eye size={16} />
           </button>
-          <button className="p-2 text-ink/60 hover:text-ink hover:bg-ink/5 rounded-lg transition-colors">
+          <button
+            onClick={() => onEditClient(client)}
+            className="p-2 text-ink/60 hover:text-ink hover:bg-ink/5 rounded-lg transition-colors"
+            title="Edit Client"
+          >
             <Edit size={14} />
           </button>
           <button className="p-1 text-ink/60 hover:text-red-500">
@@ -161,5 +200,124 @@ function ClientCard({
         </div>
       </div>
     </motion.div>
+  );
+}
+
+function EditClientModal({
+  client,
+  onClose,
+  onUpdate,
+}: {
+  client: User;
+  onClose: () => void;
+  onUpdate: (clientId: string, data: Partial<User>) => Promise<boolean>;
+}) {
+  const [formData, setFormData] = useState({
+    name: client.name || '',
+    email: client.email,
+    phone: client.phone || '',
+    company: client.company || '',
+    role: client.role,
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const success = await onUpdate(client.id, formData);
+    setLoading(false);
+
+    if (success) {
+      onClose();
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white rounded-xl shadow-xl max-w-md w-full"
+      >
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900">Edit Client</h3>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+            <input
+              type="text"
+              value={formData.company}
+              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <select
+              value={formData.role}
+              onChange={(e) =>
+                setFormData({ ...formData, role: e.target.value as 'CLIENT' | 'ADMIN' | 'OWNER' })
+              }
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+            >
+              <option value="CLIENT">Client</option>
+              <option value="ADMIN">Admin</option>
+              <option value="OWNER">Owner</option>
+            </select>
+          </div>
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
+            >
+              {loading ? 'Updating...' : 'Update Client'}
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
   );
 }

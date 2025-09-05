@@ -23,7 +23,6 @@ import ContractCenter from '@/components/portal/ContractCenter';
 import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
-import ThemeToggle from '@/components/ui/ThemeToggle';
 import { Project, User as UserType } from '@/types/portal';
 import { Session } from 'next-auth';
 
@@ -146,12 +145,12 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
       <DashboardPearlField />
 
       {/* Enhanced Header with Motion */}
       <motion.div
-        className="border-b border-brown-sugar/20 dark:border-gray-600/20 bg-milk-tea/80 dark:bg-gray-800/80 backdrop-blur-lg sticky top-0 z-50 shadow-lg"
+        className="border-b border-brown-sugar/20 bg-milk-tea/80 backdrop-blur-lg sticky top-0 z-50 shadow-lg"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'backOut' }}
@@ -222,15 +221,9 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                 </motion.button>
               )}
 
-              <ThemeToggle size="md" />
-
               <div className="hidden sm:block text-right">
-                <p className="font-display text-sm font-medium text-ink dark:text-gray-200 lowercase">
-                  welcome back!
-                </p>
-                <p className="font-display text-xs text-ink/60 dark:text-gray-400 lowercase">
-                  {portalData.user.name}
-                </p>
+                <p className="font-display text-sm font-medium text-ink lowercase">welcome back!</p>
+                <p className="font-display text-xs text-ink/60 lowercase">{portalData.user.name}</p>
               </div>
               <div className="flex items-center space-x-2">
                 {portalData.user.image && (
@@ -270,7 +263,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           transition={{ duration: 0.4, delay: 0.6 }}
         >
           <motion.nav
-            className="flex space-x-2 bg-milk-tea/60 dark:bg-gray-700/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 dark:border-gray-600/20 shadow-lg"
+            className="flex flex-wrap gap-2 sm:space-x-2 sm:gap-0 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
@@ -282,10 +275,10 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 group overflow-visible ${
+                  className={`relative flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 group overflow-visible ${
                     isActive
                       ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
-                      : 'text-ink/70 dark:text-gray-300/70 hover:text-ink dark:hover:text-gray-200 hover:bg-milk-tea/80 dark:hover:bg-gray-600/80 hover:shadow-md'
+                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
                   }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -302,7 +295,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                       className={`transition-transform ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}
                     />
                   </motion.div>
-                  <span className="font-medium lowercase">{tab.name}</span>
+                  <span className="font-medium lowercase hidden sm:inline">{tab.name}</span>
                   {tab.badge !== undefined && tab.badge > 0 && (
                     <motion.span
                       className={`absolute -top-3 -right-3 min-w-6 h-6 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg z-10 ${

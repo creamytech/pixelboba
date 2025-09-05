@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 
     // Verify admin access
-    if (session.user.role !== 'ADMIN') {
+    if (session.user.role !== 'ADMIN' && session.user.role !== 'OWNER') {
       return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
     }
 
