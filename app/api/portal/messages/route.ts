@@ -104,19 +104,23 @@ export async function POST(request: NextRequest) {
     const content = formData.get('content') as string;
     const projectId = formData.get('projectId') as string;
     const fileCount = parseInt((formData.get('fileCount') as string) || '0');
+    const existingFileCount = parseInt((formData.get('existingFileCount') as string) || '0');
 
     console.log('Portal message POST received:', {
       content: content?.trim(),
       projectId,
       fileCount,
+      existingFileCount,
       hasContent: !!content?.trim(),
       hasFiles: fileCount > 0,
+      hasExistingFiles: existingFileCount > 0,
     });
 
-    if ((!content?.trim() && fileCount === 0) || !projectId) {
+    if ((!content?.trim() && fileCount === 0 && existingFileCount === 0) || !projectId) {
       console.log('Validation failed:', {
         contentEmpty: !content?.trim(),
         noFiles: fileCount === 0,
+        noExistingFiles: existingFileCount === 0,
         noProjectId: !projectId,
       });
       return NextResponse.json(
@@ -149,11 +153,11 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Project not found or access denied' }, { status: 404 });
       }
 
-      // Handle multiple file uploads if present
+      // Handle multiple file uploads and existing files
       const createdMessages = [];
 
+      // Handle new file uploads
       if (fileCount > 0) {
-        // Create a message for each file
         for (let i = 0; i < fileCount; i++) {
           const file = formData.get(`file_${i}`) as File;
           if (file) {
@@ -211,7 +215,77 @@ export async function POST(request: NextRequest) {
             }
           }
         }
-      } else if (content?.trim()) {
+      }
+
+      // Handle existing files from library
+      if (existingFileCount > 0) {
+        for (let i = 0; i < existingFileCount; i++) {
+          const existingFileId = formData.get(`existingFileId_${i}`) as string;
+          if (existingFileId) {
+            try {
+              // Verify file exists and user has access
+              const existingFile = await prisma.file.findFirst({
+                where: {
+                  id: existingFileId,
+                  OR: [
+                    { uploaderId: session.user.id }, // User owns the file
+                    {
+                      project: {
+                        OR: [
+                          { clientId: session.user.id }, // User owns the project
+                          ...(session.user.role === 'ADMIN' || session.user.role === 'OWNER'
+                            ? [{}]
+                            : []), // Admin/Owner can access all
+                        ],
+                      },
+                    },
+                  ],
+                },
+              });
+
+              if (existingFile) {
+                // Create message for this existing file
+                const fileMessage = await prisma.message.create({
+                  data: {
+                    content: i === 0 && content?.trim() ? content.trim() : '', // Only add text to first file message
+                    projectId,
+                    senderId: session.user.id,
+                    isRead: false,
+                    fileId: existingFile.id,
+                    type: 'FILE',
+                  },
+                  include: {
+                    sender: {
+                      select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        role: true,
+                        image: true,
+                      },
+                    },
+                    file: {
+                      select: {
+                        originalName: true,
+                        url: true,
+                        mimetype: true,
+                      },
+                    },
+                  },
+                });
+
+                createdMessages.push(fileMessage);
+              }
+            } catch (existingFileError) {
+              console.error('Error using existing file:', existingFileError);
+              // Continue with other files instead of failing completely
+            }
+          }
+        }
+      }
+
+      // Create text-only message if no files
+      if (content?.trim() && fileCount === 0 && existingFileCount === 0) {
         // Create text-only message
         const textMessage = await prisma.message.create({
           data: {

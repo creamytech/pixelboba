@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Paperclip, Image, FileText, X } from 'lucide-react';
+import { Send, Paperclip, Image, FileText, X, FolderOpen, Plus } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
-import { Project, Message } from '@/types/portal';
+import { Project, Message, File as PortalFile } from '@/types/portal';
 
 interface MessageCenterProps {
   projects: Project[];
@@ -34,6 +34,10 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [uploadingFiles, setUploadingFiles] = useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<PortalFile[]>([]);
+  const [showFileLibrary, setShowFileLibrary] = useState(false);
+  const [userFiles, setUserFiles] = useState<PortalFile[]>([]);
+  const [loadingFiles, setLoadingFiles] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -61,35 +65,88 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
     }
   };
 
+  const fetchUserFiles = async () => {
+    setLoadingFiles(true);
+    try {
+      const url =
+        selectedProject === 'all'
+          ? '/api/portal/files'
+          : `/api/portal/files?projectId=${selectedProject}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setUserFiles(data.files);
+      }
+    } catch (error) {
+      console.error('Error fetching files:', error);
+    } finally {
+      setLoadingFiles(false);
+    }
+  };
+
+  const handleFileLibraryOpen = () => {
+    setShowFileLibrary(true);
+    fetchUserFiles();
+  };
+
+  const handleFileSelect = (file: PortalFile) => {
+    setSelectedFiles((prev) => {
+      const isSelected = prev.some((f) => f.id === file.id);
+      if (isSelected) {
+        return prev.filter((f) => f.id !== file.id);
+      } else {
+        return [...prev, file];
+      }
+    });
+  };
+
+  const handleFileLibraryConfirm = () => {
+    setShowFileLibrary(false);
+    // selectedFiles will be used in sendMessage
+  };
+
+  const removeSelectedFile = (fileId: string) => {
+    setSelectedFiles((prev) => prev.filter((f) => f.id !== fileId));
+  };
+
   const sendMessage = async () => {
-    if (!newMessage.trim() && uploadingFiles.length === 0) return;
+    if (!newMessage.trim() && uploadingFiles.length === 0 && selectedFiles.length === 0) return;
 
     try {
       const formData = new FormData();
       formData.append('content', newMessage.trim());
       formData.append('projectId', selectedProject);
 
-      // Add files to FormData
+      // Add new file uploads to FormData
       uploadingFiles.forEach((file, index) => {
         formData.append(`file_${index}`, file);
       });
       formData.append('fileCount', uploadingFiles.length.toString());
 
+      // Add selected existing file IDs
+      selectedFiles.forEach((file, index) => {
+        formData.append(`existingFileId_${index}`, file.id);
+      });
+      formData.append('existingFileCount', selectedFiles.length.toString());
+
       console.log('Sending message with:', {
         content: newMessage.trim(),
-        fileCount: uploadingFiles.length,
-        files: uploadingFiles.map((f) => f.name),
+        newFileCount: uploadingFiles.length,
+        existingFileCount: selectedFiles.length,
+        newFiles: uploadingFiles.map((f) => f.name),
+        existingFiles: selectedFiles.map((f) => f.originalName),
       });
 
       const response = await fetch('/api/portal/messages', {
         method: 'POST',
-        body: formData, // No content-type header for FormData
+        body: formData,
       });
 
       if (response.ok) {
         setNewMessage('');
         setUploadingFiles([]);
-        // Refetch messages to get all new messages (in case multiple files created multiple messages)
+        setSelectedFiles([]);
+        // Refetch messages to get all new messages
         fetchMessages(selectedProject);
       } else {
         const errorData = await response.json();
@@ -258,17 +315,37 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
         </div>
 
         {/* File Upload Area */}
-        {uploadingFiles.length > 0 && (
+        {(uploadingFiles.length > 0 || selectedFiles.length > 0) && (
           <div className="p-4 border-t border-ink/10 bg-milk-tea/10">
             <div className="flex flex-wrap gap-2">
+              {/* New uploaded files */}
               {uploadingFiles.map((file, index) => (
                 <div
-                  key={index}
+                  key={`upload-${index}`}
                   className="flex items-center space-x-2 bg-white/70 rounded-lg p-2 text-sm"
                 >
                   <FileText size={16} className="text-ink/60" />
                   <span className="text-ink">{file.name}</span>
+                  <span className="text-xs text-taro bg-taro/10 px-1 rounded">new</span>
                   <button onClick={() => removeFile(index)} className="text-ink/40 hover:text-ink">
+                    <X size={14} />
+                  </button>
+                </div>
+              ))}
+
+              {/* Selected existing files */}
+              {selectedFiles.map((file) => (
+                <div
+                  key={`selected-${file.id}`}
+                  className="flex items-center space-x-2 bg-white/70 rounded-lg p-2 text-sm"
+                >
+                  <FileText size={16} className="text-ink/60" />
+                  <span className="text-ink">{file.originalName}</span>
+                  <span className="text-xs text-blue-600 bg-blue-100 px-1 rounded">library</span>
+                  <button
+                    onClick={() => removeSelectedFile(file.id)}
+                    className="text-ink/40 hover:text-ink"
+                  >
                     <X size={14} />
                   </button>
                 </div>
@@ -284,11 +361,24 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
               isDragActive ? 'border-taro bg-taro/5' : 'border-ink/20 bg-white/70 hover:bg-white'
             }`}
           >
-            <div {...getRootProps()} className="cursor-pointer">
-              <input {...getInputProps()} />
-              <div className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10">
-                <Paperclip size={20} />
+            <div className="flex items-center space-x-2">
+              <div {...getRootProps()} className="cursor-pointer">
+                <input {...getInputProps()} />
+                <div
+                  className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10"
+                  title="Upload new files"
+                >
+                  <Plus size={20} />
+                </div>
               </div>
+
+              <button
+                onClick={handleFileLibraryOpen}
+                className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10"
+                title="Select from file library"
+              >
+                <FolderOpen size={20} />
+              </button>
             </div>
 
             <input
@@ -305,13 +395,29 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
             <button
               onClick={sendMessage}
               className="text-taro hover:text-taro/80 transition-colors disabled:opacity-50"
-              disabled={!newMessage.trim() && uploadingFiles.length === 0}
+              disabled={
+                !newMessage.trim() && uploadingFiles.length === 0 && selectedFiles.length === 0
+              }
             >
               <Send size={20} />
             </button>
           </div>
         </div>
       </div>
+
+      {/* File Library Modal */}
+      <AnimatePresence>
+        {showFileLibrary && (
+          <FileLibraryModal
+            files={userFiles}
+            selectedFiles={selectedFiles}
+            loadingFiles={loadingFiles}
+            onFileSelect={handleFileSelect}
+            onConfirm={handleFileLibraryConfirm}
+            onCancel={() => setShowFileLibrary(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -337,5 +443,152 @@ function FilePreview({ file }: { file: { originalName: string; url: string; mime
         </div>
       )}
     </div>
+  );
+}
+
+interface FileLibraryModalProps {
+  files: PortalFile[];
+  selectedFiles: PortalFile[];
+  loadingFiles: boolean;
+  onFileSelect: (file: PortalFile) => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+function FileLibraryModal({
+  files,
+  selectedFiles,
+  loadingFiles,
+  onFileSelect,
+  onConfirm,
+  onCancel,
+}: FileLibraryModalProps) {
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  const getFileIcon = (mimetype: string) => {
+    if (mimetype.startsWith('image/')) return Image;
+    return FileText;
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        className="bg-white rounded-xl shadow-lg max-w-4xl w-full max-h-[80vh] flex flex-col"
+      >
+        {/* Header */}
+        <div className="p-6 border-b border-ink/10">
+          <div className="flex items-center justify-between">
+            <h3 className="font-display text-xl font-semibold text-ink">
+              Select Files from Library
+            </h3>
+            <button onClick={onCancel} className="text-ink/40 hover:text-ink transition-colors">
+              <X size={24} />
+            </button>
+          </div>
+          <p className="text-ink/60 mt-1">Choose files to attach to your message</p>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-auto p-6">
+          {loadingFiles ? (
+            <div className="flex items-center justify-center h-32">
+              <div className="text-ink/50">Loading files...</div>
+            </div>
+          ) : files.length === 0 ? (
+            <div className="flex items-center justify-center h-32">
+              <div className="text-ink/50">No files found</div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {files.map((file) => {
+                const FileIcon = getFileIcon(file.mimetype);
+                const isSelected = selectedFiles.some((f) => f.id === file.id);
+                const isImage = file.mimetype.startsWith('image/');
+
+                return (
+                  <div
+                    key={file.id}
+                    onClick={() => onFileSelect(file)}
+                    className={`cursor-pointer rounded-lg border-2 transition-all p-4 ${
+                      isSelected
+                        ? 'border-taro bg-taro/5'
+                        : 'border-ink/10 hover:border-ink/20 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      {isImage ? (
+                        <img
+                          src={file.url}
+                          alt={file.originalName}
+                          className="w-12 h-12 object-cover rounded"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 flex items-center justify-center bg-ink/5 rounded">
+                          <FileIcon size={24} className="text-ink/60" />
+                        </div>
+                      )}
+
+                      <div className="flex-1 min-w-0">
+                        <p
+                          className="font-medium text-ink text-sm truncate"
+                          title={file.originalName}
+                        >
+                          {file.originalName}
+                        </p>
+                        <p className="text-xs text-ink/60">{formatFileSize(file.size)}</p>
+                        {file.project && <p className="text-xs text-taro">{file.project.name}</p>}
+                      </div>
+
+                      {isSelected && (
+                        <div className="w-5 h-5 bg-taro rounded-full flex items-center justify-center">
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 border-t border-ink/10 flex items-center justify-between">
+          <p className="text-sm text-ink/60">
+            {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} selected
+          </p>
+
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={onCancel}
+              className="px-4 py-2 text-ink/60 hover:text-ink transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onConfirm}
+              disabled={selectedFiles.length === 0}
+              className="px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Add {selectedFiles.length} File{selectedFiles.length !== 1 ? 's' : ''}
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
