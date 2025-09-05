@@ -307,88 +307,100 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
 
         {/* Messages */}
         <div
-          className="flex-1 overflow-y-auto overscroll-contain p-2 sm:p-4 space-y-4 touch-pan-y"
+          className="flex-1 relative touch-pan-y"
           style={{
-            WebkitOverflowScrolling: 'touch',
             touchAction: 'pan-y',
-            overscrollBehavior: 'contain',
+            overscrollBehavior: 'none',
           }}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
         >
-          {loading ? (
-            <div className="flex items-center justify-center h-full">
-              <div className="text-ink/50">loading messages...</div>
-            </div>
-          ) : (
-            <>
-              <AnimatePresence>
-                {messages.map((message) => (
-                  <motion.div
-                    key={message.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-xs lg:max-w-md ${message.isOwn ? 'order-2' : 'order-1'}`}
+          <div
+            className="absolute inset-0 overflow-y-auto p-2 sm:p-4 space-y-4"
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              transform: 'translateZ(0)',
+              willChange: 'transform',
+              height: 'calc(100% - 0px)',
+            }}
+          >
+            {loading ? (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-ink/50">loading messages...</div>
+              </div>
+            ) : (
+              <>
+                <AnimatePresence>
+                  {messages.map((message) => (
+                    <motion.div
+                      key={message.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`rounded-2xl p-3 ${
-                          message.isOwn
-                            ? 'bg-taro text-white rounded-br-sm'
-                            : 'bg-milk-tea/30 text-ink rounded-bl-sm'
-                        }`}
+                        className={`max-w-xs lg:max-w-md ${message.isOwn ? 'order-2' : 'order-1'}`}
                       >
-                        {message.file && <FilePreview file={message.file} />}
-                        <p className="text-sm">{message.content}</p>
-                      </div>
-                      <div
-                        className={`text-xs text-ink/40 mt-1 flex items-center gap-1 ${
-                          message.isOwn ? 'justify-end' : 'justify-start'
-                        }`}
-                      >
-                        {!message.isOwn && (
-                          <>
-                            {(() => {
-                              const senderStatus = adminUsers.find(
-                                (u) => u.id === message.sender.id
-                              );
-                              return senderStatus ? (
-                                <OnlineStatusIndicator
-                                  isOnline={senderStatus.isOnline}
-                                  lastActiveAt={senderStatus.lastActiveAt}
-                                  size="sm"
-                                />
-                              ) : null;
-                            })()}
-                          </>
-                        )}
-                        <span>
-                          {message.sender.name} • {new Date(message.timestamp).toLocaleTimeString()}
-                        </span>
-                      </div>
-                    </div>
-
-                    {!message.isOwn && (
-                      <div className="w-8 h-8 rounded-full bg-taro/20 flex items-center justify-center order-1 mr-3 mt-1">
-                        {message.sender.image ? (
-                          <img
-                            src={message.sender.image}
-                            alt={message.sender.name}
-                            className="w-8 h-8 rounded-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-xs font-medium text-taro">
-                            {message.sender.name.charAt(0).toUpperCase()}
+                        <div
+                          className={`rounded-2xl p-3 ${
+                            message.isOwn
+                              ? 'bg-taro text-white rounded-br-sm'
+                              : 'bg-milk-tea/30 text-ink rounded-bl-sm'
+                          }`}
+                        >
+                          {message.file && <FilePreview file={message.file} />}
+                          <p className="text-sm">{message.content}</p>
+                        </div>
+                        <div
+                          className={`text-xs text-ink/40 mt-1 flex items-center gap-1 ${
+                            message.isOwn ? 'justify-end' : 'justify-start'
+                          }`}
+                        >
+                          {!message.isOwn && (
+                            <>
+                              {(() => {
+                                const senderStatus = adminUsers.find(
+                                  (u) => u.id === message.sender.id
+                                );
+                                return senderStatus ? (
+                                  <OnlineStatusIndicator
+                                    isOnline={senderStatus.isOnline}
+                                    lastActiveAt={senderStatus.lastActiveAt}
+                                    size="sm"
+                                  />
+                                ) : null;
+                              })()}
+                            </>
+                          )}
+                          <span>
+                            {message.sender.name} •{' '}
+                            {new Date(message.timestamp).toLocaleTimeString()}
                           </span>
-                        )}
+                        </div>
                       </div>
-                    )}
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-              <div ref={messagesEndRef} />
-            </>
-          )}
+
+                      {!message.isOwn && (
+                        <div className="w-8 h-8 rounded-full bg-taro/20 flex items-center justify-center order-1 mr-3 mt-1">
+                          {message.sender.image ? (
+                            <img
+                              src={message.sender.image}
+                              alt={message.sender.name}
+                              className="w-8 h-8 rounded-full object-cover"
+                            />
+                          ) : (
+                            <span className="text-xs font-medium text-taro">
+                              {message.sender.name.charAt(0).toUpperCase()}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+                <div ref={messagesEndRef} />
+              </>
+            )}
+          </div>
         </div>
 
         {/* File Upload Area */}
