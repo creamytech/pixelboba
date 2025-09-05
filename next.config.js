@@ -14,7 +14,6 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     domains: [],
   },
-  output: 'standalone',
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
