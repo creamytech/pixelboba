@@ -116,12 +116,29 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 
   const tabs = [
     { id: 'dashboard', name: 'dashboard', icon: User },
-    { id: 'messages', name: 'messages', icon: MessageSquare, badge: portalData.unreadMessages },
-    { id: 'invoices', name: 'invoices', icon: CreditCard, badge: portalData.pendingInvoices },
-    { id: 'contracts', name: 'contracts', icon: FileCheck, badge: portalData.pendingContracts },
+    {
+      id: 'messages',
+      name: 'messages',
+      icon: MessageSquare,
+      badge: portalData.unreadMessages || 5,
+    },
+    { id: 'invoices', name: 'invoices', icon: CreditCard, badge: portalData.pendingInvoices || 3 },
+    {
+      id: 'contracts',
+      name: 'contracts',
+      icon: FileCheck,
+      badge: portalData.pendingContracts || 2,
+    },
     { id: 'files', name: 'files', icon: FolderOpen },
     { id: 'notifications', name: 'notifications', icon: Bell },
   ];
+
+  // Debug logging
+  console.log('Portal data:', portalData);
+  console.log(
+    'Tabs with badges:',
+    tabs.map((tab) => ({ name: tab.name, badge: tab.badge }))
+  );
 
   const renderActiveTab = () => {
     switch (activeTab) {
