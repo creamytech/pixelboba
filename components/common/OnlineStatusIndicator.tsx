@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 interface OnlineStatusIndicatorProps {
   isOnline?: boolean;
-  lastActiveAt?: Date | null;
+  lastActiveAt?: Date | null | undefined;
   size?: 'sm' | 'md' | 'lg';
   showLabel?: boolean;
   className?: string;
@@ -17,7 +17,7 @@ export default function OnlineStatusIndicator({
   showLabel = false,
   className = '',
 }: OnlineStatusIndicatorProps) {
-  const getTimeAgo = (date: Date | null) => {
+  const getTimeAgo = (date: Date | null | undefined) => {
     if (!date) return 'Never';
 
     const now = new Date();

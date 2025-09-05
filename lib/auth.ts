@@ -91,7 +91,7 @@ export const authOptions: NextAuthOptions = {
               },
             });
 
-            let userRole = 'CLIENT'; // default
+            let userRole: 'CLIENT' | 'ADMIN' | 'OWNER' = 'CLIENT'; // default
 
             if (invite) {
               console.log('Found valid invite for user:', invite.role);
