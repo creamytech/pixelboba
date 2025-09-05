@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import AdminDashboardClient from './AdminDashboardClient';
 import { motion } from 'framer-motion';
 import {
@@ -42,5 +43,9 @@ export default async function AdminDashboard() {
     redirect('/portal');
   }
 
-  return <AdminDashboardClient session={session} />;
+  return (
+    <ThemeProvider>
+      <AdminDashboardClient session={session} />
+    </ThemeProvider>
+  );
 }

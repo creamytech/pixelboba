@@ -4,7 +4,6 @@ import './globals.css';
 import { siteConfig } from '@/lib/seo';
 import StructuredData from '@/components/StructuredData';
 import PageTransitionProvider from '@/components/providers/PageTransitionProvider';
-import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -63,9 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData type="website" />
       </head>
       <body className="min-h-screen bg-background antialiased">
-        <ThemeProvider>
-          <PageTransitionProvider>{children}</PageTransitionProvider>
-        </ThemeProvider>
+        <PageTransitionProvider>{children}</PageTransitionProvider>
       </body>
     </html>
   );
