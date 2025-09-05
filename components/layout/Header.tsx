@@ -46,9 +46,9 @@ export default function Header() {
             <Image
               src="/brand/Pixel_Boba_Logo_Black.svg"
               alt="pixel boba"
-              width={200}
-              height={67}
-              className="h-16 w-auto"
+              width={240}
+              height={80}
+              className="h-20 w-auto"
               priority
             />
           </Link>

@@ -81,7 +81,7 @@ export default function CTASection() {
               asChild
               variant="outline"
               size="lg"
-              className="border-2 border-white text-white hover:bg-white hover:text-taro px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
+              className="border-2 border-white bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-taro px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
             >
               <Link href="/work">view our work</Link>
             </Button>

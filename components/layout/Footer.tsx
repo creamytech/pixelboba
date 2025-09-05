@@ -97,9 +97,9 @@ export default function Footer() {
               <Image
                 src="/brand/Pixel_Boba_Logo_White.svg"
                 alt="pixel boba"
-                width={220}
-                height={73}
-                className="h-18 w-auto"
+                width={200}
+                height={67}
+                className="h-16 w-auto"
               />
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">

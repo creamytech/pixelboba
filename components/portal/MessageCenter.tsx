@@ -75,6 +75,12 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
       });
       formData.append('fileCount', uploadingFiles.length.toString());
 
+      console.log('Sending message with:', {
+        content: newMessage.trim(),
+        fileCount: uploadingFiles.length,
+        files: uploadingFiles.map((f) => f.name),
+      });
+
       const response = await fetch('/api/portal/messages', {
         method: 'POST',
         body: formData, // No content-type header for FormData
@@ -85,6 +91,9 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
         setMessages((prev) => [...prev, newMsg]);
         setNewMessage('');
         setUploadingFiles([]);
+      } else {
+        const errorData = await response.json();
+        console.error('API Error:', response.status, errorData);
       }
     } catch (error) {
       console.error('Error sending message:', error);

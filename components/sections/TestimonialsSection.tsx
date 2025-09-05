@@ -7,10 +7,10 @@ import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 const testimonials = [
   {
     quote:
-      'pixel boba transformed our online presence completely. the attention to detail and smooth user experience exceeded all our expectations.',
-    author: 'sarah chen',
-    role: 'ceo, ecoflow commerce',
-    avatar: 'SC',
+      'pixel boba created a healthcare platform that truly puts patients first. their focus on accessibility and user experience has transformed how we deliver care.',
+    author: 'dr. maria rodriguez',
+    role: 'founder, call on care',
+    avatar: 'MR',
   },
   {
     quote:

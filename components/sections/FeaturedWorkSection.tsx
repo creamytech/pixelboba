@@ -5,12 +5,12 @@ import Link from 'next/link';
 
 const featuredProjects = [
   {
-    title: 'ecoflow commerce',
-    slug: 'ecoflow-commerce',
-    summary: 'sustainable e-commerce platform with seamless checkout',
-    category: 'e-commerce',
+    title: 'call on care',
+    slug: 'call-on-care',
+    summary: 'healthcare platform focused on patient care and accessibility',
+    category: 'healthcare',
     color: 'from-matcha to-matcha/60',
-    stats: { lighthouse: 99, conversion: '+34%', bounce: '-18%' },
+    stats: { lighthouse: 98, engagement: '+285%', satisfaction: '96%' },
   },
   {
     title: 'techstart saas',
@@ -121,15 +121,19 @@ export default function FeaturedWorkSection() {
                       </div>
                       <div className="text-center">
                         <div className="font-bold text-taro text-lg">
-                          {project.stats.conversion}
+                          {project.stats.conversion || project.stats.engagement}
                         </div>
-                        <div className="text-xs text-gray-500">conversion</div>
+                        <div className="text-xs text-gray-500">
+                          {project.stats.conversion ? 'conversion' : 'engagement'}
+                        </div>
                       </div>
                       <div className="text-center">
                         <div className="font-bold text-brown-sugar text-lg">
-                          {project.stats.bounce}
+                          {project.stats.bounce || project.stats.satisfaction}
                         </div>
-                        <div className="text-xs text-gray-500">bounce rate</div>
+                        <div className="text-xs text-gray-500">
+                          {project.stats.bounce ? 'bounce rate' : 'satisfaction'}
+                        </div>
                       </div>
                     </div>
                   </div>

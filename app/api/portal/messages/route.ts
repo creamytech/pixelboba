@@ -97,7 +97,20 @@ export async function POST(request: NextRequest) {
     const projectId = formData.get('projectId') as string;
     const fileCount = parseInt((formData.get('fileCount') as string) || '0');
 
+    console.log('Portal message POST received:', {
+      content: content?.trim(),
+      projectId,
+      fileCount,
+      hasContent: !!content?.trim(),
+      hasFiles: fileCount > 0,
+    });
+
     if ((!content?.trim() && fileCount === 0) || !projectId) {
+      console.log('Validation failed:', {
+        contentEmpty: !content?.trim(),
+        noFiles: fileCount === 0,
+        noProjectId: !projectId,
+      });
       return NextResponse.json(
         { error: 'Content or files and project ID are required' },
         { status: 400 }
