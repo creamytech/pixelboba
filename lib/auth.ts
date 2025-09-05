@@ -89,11 +89,20 @@ export const authOptions: NextAuthOptions = {
           user.id = dbUser.id;
         } catch (error) {
           console.error('Database error in signIn callback:', error);
-          console.error('Error details:', {
-            message: error.message,
-            code: error.code,
-            stack: error.stack,
-          });
+
+          // Safe error details extraction
+          const errorDetails =
+            error instanceof Error
+              ? {
+                  message: error.message,
+                  name: error.name,
+                  stack: error.stack,
+                  code: (error as any).code,
+                }
+              : { message: String(error) };
+
+          console.error('Error details:', errorDetails);
+
           // Continue without database for now - allow sign in but with limited functionality
           console.log('Allowing sign in without database connection');
           user.role = 'CLIENT';
