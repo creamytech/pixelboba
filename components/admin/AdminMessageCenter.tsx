@@ -284,11 +284,29 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
                           <p className="text-sm">{message.content}</p>
                         </div>
                         <div
-                          className={`text-xs text-ink/40 mt-1 ${
-                            message.isOwn ? 'text-right' : 'text-left'
+                          className={`text-xs text-ink/40 mt-1 flex items-center gap-1 ${
+                            message.isOwn ? 'justify-end' : 'justify-start'
                           }`}
                         >
-                          {message.sender.name} • {message.timestamp.toLocaleTimeString()}
+                          {!message.isOwn && (
+                            <>
+                              {(() => {
+                                const clientStatus = clients.find(
+                                  (c) => c.id === message.sender.id
+                                );
+                                return clientStatus ? (
+                                  <OnlineStatusIndicator
+                                    isOnline={clientStatus.isOnline}
+                                    lastActiveAt={clientStatus.lastActiveAt}
+                                    size="sm"
+                                  />
+                                ) : null;
+                              })()}
+                            </>
+                          )}
+                          <span>
+                            {message.sender.name} • {message.timestamp.toLocaleTimeString()}
+                          </span>
                         </div>
                       </div>
 
