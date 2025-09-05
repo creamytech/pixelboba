@@ -102,10 +102,6 @@ export default function Footer() {
                 className="h-16 w-auto"
               />
             </Link>
-            <p className="text-gray-400 mb-6 max-w-md">
-              design-first websites with delightful details and boba-smooth interactions. we create
-              digital experiences that truly pop.
-            </p>
 
             {/* Social Links */}
             <div className="flex space-x-4">

@@ -94,13 +94,13 @@ export default function BeforeAfterSlider({
     <div className={`relative w-full max-w-[90rem] mx-auto ${className}`}>
       <div
         ref={containerRef}
-        className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden cursor-col-resize select-none"
+        className="relative h-[600px] md:h-[700px] lg:h-[800px] bg-gray-200 rounded-lg overflow-hidden cursor-col-resize select-none"
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
       >
         {/* Before Image (shown on left) */}
         <div className="absolute inset-0">
-          <Image src={beforeImage} alt={beforeLabel} fill className="object-cover" priority />
+          <Image src={beforeImage} alt={beforeLabel} fill className="object-contain" priority />
           <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
             {beforeLabel}
           </div>
@@ -113,7 +113,7 @@ export default function BeforeAfterSlider({
             clipPath: `inset(0 0 0 ${sliderPosition}%)`,
           }}
         >
-          <Image src={afterImage} alt={afterLabel} fill className="object-cover" priority />
+          <Image src={afterImage} alt={afterLabel} fill className="object-contain" priority />
           <div className="absolute top-4 right-4 bg-taro text-white px-3 py-1 rounded-full text-sm font-medium">
             {afterLabel}
           </div>

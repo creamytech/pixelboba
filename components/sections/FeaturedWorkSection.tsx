@@ -5,12 +5,12 @@ import Link from 'next/link';
 
 const featuredProjects = [
   {
-    title: 'call on care',
-    slug: 'call-on-care',
-    summary: 'complete redesign of outdated healthcare platform',
+    title: 'care on call home healthcare',
+    slug: 'care-on-call',
+    summary: 'fort lauderdale home healthcare digital transformation',
     category: 'healthcare',
     color: 'from-matcha to-matcha/60',
-    highlight: 'Modern patient portal with accessibility focus',
+    highlight: 'Medicare-certified HomeCare Elite agency platform',
   },
   {
     title: 'techstart saas',
