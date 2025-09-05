@@ -1,12 +1,10 @@
 import { NextAuthOptions } from 'next-auth';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { compare } from 'bcryptjs';
 import { prisma } from './prisma';
 
 export const authOptions: NextAuthOptions = {
-  adapter: process.env.DATABASE_URL ? PrismaAdapter(prisma) : undefined,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -50,15 +48,46 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   callbacks: {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === 'google' && profile?.email) {
+        try {
+          // Check if user exists, create if not
+          let dbUser = await prisma.user.findUnique({
+            where: { email: profile.email },
+          });
+
+          if (!dbUser) {
+            dbUser = await prisma.user.create({
+              data: {
+                email: profile.email,
+                name: profile.name || profile.email,
+                image: (profile as any)?.picture,
+                role: 'CLIENT',
+                emailVerified: new Date(),
+              },
+            });
+          }
+
+          // Store role in user object for JWT
+          user.role = dbUser.role;
+          user.id = dbUser.id;
+        } catch (error) {
+          console.error('Error creating/finding user:', error);
+          return false;
+        }
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.sub!;
+        session.user.id = token.id as string;
         session.user.role = token.role as 'CLIENT' | 'ADMIN' | 'OWNER';
       }
       return session;
