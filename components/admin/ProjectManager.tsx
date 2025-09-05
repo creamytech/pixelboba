@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search, Filter, Edit, Trash2, Eye, Calendar, User } from 'lucide-react';
 import { Project, ProjectStatus } from '@/types/portal';
@@ -330,19 +331,19 @@ function EditProjectModal({
     }
   };
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[95vh] overflow-y-auto mx-4"
+        className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto mx-4 transform scale-100"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSubmit} className="p-6">
@@ -451,7 +452,8 @@ function EditProjectModal({
           </div>
         </form>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 
@@ -512,19 +514,19 @@ function CreateProjectModal({
     }
   };
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[95vh] overflow-y-auto mx-4"
+        className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto mx-4 transform scale-100"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSubmit} className="p-6">
@@ -613,6 +615,7 @@ function CreateProjectModal({
           </div>
         </form>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
