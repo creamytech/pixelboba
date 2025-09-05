@@ -56,7 +56,30 @@ export async function GET(request: NextRequest) {
         data: { isRead: true },
       });
 
-      return NextResponse.json({ messages });
+      // Override sender name with display name for admin users in existing messages
+      let displayName: string | null = null;
+      try {
+        const { getSettingValue } = await import('@/lib/settings');
+        displayName = await getSettingValue('company.displayName');
+      } catch (error) {
+        console.error('Error fetching display name:', error);
+      }
+
+      // Apply display name override to admin/owner messages
+      const formattedMessages = messages.map((msg) => {
+        if ((msg.sender.role === 'ADMIN' || msg.sender.role === 'OWNER') && displayName) {
+          return {
+            ...msg,
+            sender: {
+              ...msg.sender,
+              name: displayName,
+            },
+          };
+        }
+        return msg;
+      });
+
+      return NextResponse.json({ messages: formattedMessages });
     } catch (dbError) {
       console.error('Database error fetching messages:', dbError);
       return NextResponse.json({ messages: [] });
