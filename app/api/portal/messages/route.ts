@@ -20,12 +20,20 @@ export async function GET(request: NextRequest) {
       const { prisma } = await import('@/lib/prisma');
 
       // Verify user has access to this project
-      const project = await prisma.project.findFirst({
-        where: {
-          id: projectId,
-          clientId: session.user.id,
-        },
-      });
+      let project;
+      if (session.user.role === 'CLIENT') {
+        project = await prisma.project.findFirst({
+          where: {
+            id: projectId,
+            clientId: session.user.id,
+          },
+        });
+      } else {
+        // Admin/Owner can access any project
+        project = await prisma.project.findUnique({
+          where: { id: projectId },
+        });
+      }
 
       if (!project) {
         return NextResponse.json({ error: 'Project not found or access denied' }, { status: 404 });
@@ -122,77 +130,113 @@ export async function POST(request: NextRequest) {
       const { uploadFile } = await import('@/lib/upload');
 
       // Verify user has access to this project
-      const project = await prisma.project.findFirst({
-        where: {
-          id: projectId,
-          clientId: session.user.id,
-        },
-      });
+      let project;
+      if (session.user.role === 'CLIENT') {
+        project = await prisma.project.findFirst({
+          where: {
+            id: projectId,
+            clientId: session.user.id,
+          },
+        });
+      } else {
+        // Admin/Owner can send messages to any project
+        project = await prisma.project.findUnique({
+          where: { id: projectId },
+        });
+      }
 
       if (!project) {
         return NextResponse.json({ error: 'Project not found or access denied' }, { status: 404 });
       }
 
-      let fileId: string | undefined;
+      // Handle multiple file uploads if present
+      const createdMessages = [];
 
-      // Handle file upload if present
       if (fileCount > 0) {
-        const file = formData.get('file_0') as File;
-        if (file) {
-          try {
-            const uploadResult = await uploadFile(file, projectId);
+        // Create a message for each file
+        for (let i = 0; i < fileCount; i++) {
+          const file = formData.get(`file_${i}`) as File;
+          if (file) {
+            try {
+              const uploadResult = await uploadFile(file, projectId);
 
-            // Save file to database
-            const savedFile = await prisma.file.create({
-              data: {
-                filename: uploadResult.filename,
-                originalName: uploadResult.originalName,
-                mimetype: uploadResult.mimetype,
-                size: uploadResult.size,
-                url: uploadResult.url,
-                uploaderId: session.user.id,
-                projectId: projectId,
-              },
-            });
+              // Save file to database
+              const savedFile = await prisma.file.create({
+                data: {
+                  filename: uploadResult.filename,
+                  originalName: uploadResult.originalName,
+                  mimetype: uploadResult.mimetype,
+                  size: uploadResult.size,
+                  url: uploadResult.url,
+                  uploaderId: session.user.id,
+                  projectId: projectId,
+                },
+              });
 
-            fileId = savedFile.id;
-          } catch (uploadError) {
-            console.error('File upload error:', uploadError);
-            return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
+              // Create message for this file
+              const fileMessage = await prisma.message.create({
+                data: {
+                  content: i === 0 && content?.trim() ? content.trim() : '', // Only add text to first file message
+                  projectId,
+                  senderId: session.user.id,
+                  isRead: false,
+                  fileId: savedFile.id,
+                  type: 'FILE',
+                },
+                include: {
+                  sender: {
+                    select: {
+                      id: true,
+                      name: true,
+                      email: true,
+                      role: true,
+                      image: true,
+                    },
+                  },
+                  file: {
+                    select: {
+                      originalName: true,
+                      url: true,
+                      mimetype: true,
+                    },
+                  },
+                },
+              });
+
+              createdMessages.push(fileMessage);
+            } catch (uploadError) {
+              console.error('File upload error:', uploadError);
+              return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
+            }
           }
         }
+      } else if (content?.trim()) {
+        // Create text-only message
+        const textMessage = await prisma.message.create({
+          data: {
+            content: content.trim(),
+            projectId,
+            senderId: session.user.id,
+            isRead: false,
+            type: 'TEXT',
+          },
+          include: {
+            sender: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                image: true,
+              },
+            },
+          },
+        });
+
+        createdMessages.push(textMessage);
       }
 
-      const message = await prisma.message.create({
-        data: {
-          content: content?.trim() || '',
-          projectId,
-          senderId: session.user.id,
-          isRead: false,
-          fileId: fileId,
-          type: fileId ? 'FILE' : 'TEXT',
-        },
-        include: {
-          sender: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              role: true,
-              image: true,
-            },
-          },
-          file: {
-            select: {
-              originalName: true,
-              url: true,
-              mimetype: true,
-            },
-          },
-        },
-      });
-
-      // Create activity log
+      // Create activity log for the message(s)
       await prisma.activity.create({
         data: {
           action: 'message_sent',
@@ -202,17 +246,19 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      // Format message for the client
-      const formattedMessage = {
+      // Format messages for the client and return the first one (for compatibility)
+      const formattedMessages = createdMessages.map((message) => ({
         id: message.id,
         content: message.content,
         sender: message.sender,
         timestamp: message.createdAt,
         isOwn: true,
         file: message.file || undefined,
-      };
+      }));
 
-      return NextResponse.json(formattedMessage);
+      // Return the first message for compatibility with existing frontend
+      // The frontend will refetch all messages anyway
+      return NextResponse.json(formattedMessages[0] || { success: true });
     } catch (dbError) {
       console.error('Database error sending portal message:', dbError);
       return NextResponse.json({ error: 'Failed to send message' }, { status: 500 });

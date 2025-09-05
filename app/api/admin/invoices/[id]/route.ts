@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-08-27.basil',
-});
+import { getSettingValue } from '@/lib/settings';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -232,6 +229,24 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     try {
       const { prisma } = await import('@/lib/prisma');
+
+      // Get Stripe secret key from settings
+      const stripeSecretKey = await getSettingValue('payments.stripeSecretKey');
+
+      if (!stripeSecretKey) {
+        return NextResponse.json(
+          {
+            error:
+              'Stripe not configured. Please add your Stripe secret key in Admin Settings > Payments.',
+          },
+          { status: 400 }
+        );
+      }
+
+      // Initialize Stripe with the secret key from settings
+      const stripe = new Stripe(stripeSecretKey, {
+        apiVersion: '2025-08-27.basil',
+      });
 
       const invoice = await prisma.invoice.findUnique({
         where: { id: params.id },

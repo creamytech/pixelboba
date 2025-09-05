@@ -87,10 +87,10 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
       });
 
       if (response.ok) {
-        const newMsg = await response.json();
-        setMessages((prev) => [...prev, newMsg]);
         setNewMessage('');
         setUploadingFiles([]);
+        // Refetch messages to get all new messages (in case multiple files created multiple messages)
+        fetchMessages(selectedProject);
       } else {
         const errorData = await response.json();
         console.error('API Error:', response.status, errorData);

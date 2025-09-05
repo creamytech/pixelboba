@@ -104,25 +104,31 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
     }
   };
 
-  const sendProjectUpdate = async (projectId: string, updateContent: string) => {
+  const sendMilestoneNotification = async (projectId: string, title: string, message: string) => {
     try {
-      const response = await fetch('/api/admin/messages', {
+      // Get project details to find the client
+      const project = data?.projects.find((p) => p.id === projectId);
+      if (!project) return false;
+
+      const response = await fetch('/api/portal/notifications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          content: updateContent,
-          projectId,
+          title,
+          message,
           type: 'PROJECT_UPDATE',
+          recipientId: data.client.id,
         }),
       });
 
       if (response.ok) {
-        // Refresh data to show new message
-        fetchClientProfile();
+        // Optionally refresh data or show success message
+        return true;
       }
     } catch (error) {
-      console.error('Error sending update:', error);
+      console.error('Error sending milestone notification:', error);
     }
+    return false;
   };
 
   if (loading) {
@@ -271,12 +277,14 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {activeTab === 'overview' && <OverviewTab data={data} onSendUpdate={sendProjectUpdate} />}
+        {activeTab === 'overview' && (
+          <OverviewTab data={data} onSendMilestone={sendMilestoneNotification} />
+        )}
         {activeTab === 'milestones' && (
-          <MilestonesTab projects={data.projects} onSendUpdate={sendProjectUpdate} />
+          <MilestonesTab projects={data.projects} onSendMilestone={sendMilestoneNotification} />
         )}
         {activeTab === 'projects' && (
-          <ProjectsTab projects={data.projects} onSendUpdate={sendProjectUpdate} />
+          <ProjectsTab projects={data.projects} onSendMilestone={sendMilestoneNotification} />
         )}
         {activeTab === 'messages' && <MessagesTab messages={data.messages} />}
         {activeTab === 'files' && <FilesTab files={data.files} />}
@@ -289,10 +297,10 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
 
 function OverviewTab({
   data,
-  onSendUpdate,
+  onSendMilestone,
 }: {
   data: ClientProfileData;
-  onSendUpdate: (projectId: string, content: string) => void;
+  onSendMilestone: (projectId: string, title: string, message: string) => Promise<boolean>;
 }) {
   const activeProjects = data.projects.filter(
     (p) => !['COMPLETED', 'CANCELLED'].includes(p.status)
@@ -373,19 +381,26 @@ function OverviewTab({
 
 function ProjectsTab({
   projects,
-  onSendUpdate,
+  onSendMilestone,
 }: {
   projects: ClientProfileData['projects'];
-  onSendUpdate: (projectId: string, content: string) => void;
+  onSendMilestone: (projectId: string, title: string, message: string) => Promise<boolean>;
 }) {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [updateContent, setUpdateContent] = useState('');
 
-  const sendUpdate = () => {
+  const sendUpdate = async () => {
     if (selectedProject && updateContent.trim()) {
-      onSendUpdate(selectedProject, updateContent);
-      setUpdateContent('');
-      setSelectedProject(null);
+      const projectName = projects.find((p) => p.id === selectedProject)?.name || 'Project';
+      const success = await onSendMilestone(
+        selectedProject,
+        `Project Update: ${projectName}`,
+        updateContent
+      );
+      if (success) {
+        setUpdateContent('');
+        setSelectedProject(null);
+      }
     }
   };
 
@@ -624,21 +639,28 @@ function InvoicesTab({ invoices }: { invoices: ClientProfileData['invoices'] }) 
 
 function MilestonesTab({
   projects,
-  onSendUpdate,
+  onSendMilestone,
 }: {
   projects: ClientProfileData['projects'];
-  onSendUpdate: (projectId: string, content: string) => void;
+  onSendMilestone: (projectId: string, title: string, message: string) => Promise<boolean>;
 }) {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [milestoneContent, setMilestoneContent] = useState('');
   const [milestoneType, setMilestoneType] = useState<'MILESTONE' | 'UPDATE'>('MILESTONE');
 
-  const sendMilestone = () => {
+  const sendMilestone = async () => {
     if (selectedProject && milestoneContent.trim()) {
-      const content = `🎯 ${milestoneType}: ${milestoneContent}`;
-      onSendUpdate(selectedProject, content);
-      setMilestoneContent('');
-      setSelectedProject(null);
+      const projectName = projects.find((p) => p.id === selectedProject)?.name || 'Project';
+      const title =
+        milestoneType === 'MILESTONE'
+          ? `🎯 Milestone Achieved: ${projectName}`
+          : `📢 Progress Update: ${projectName}`;
+
+      const success = await onSendMilestone(selectedProject, title, milestoneContent);
+      if (success) {
+        setMilestoneContent('');
+        setSelectedProject(null);
+      }
     }
   };
 

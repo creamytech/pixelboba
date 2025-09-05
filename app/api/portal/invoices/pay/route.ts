@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
+import { getSettingValue } from '@/lib/settings';
 
 export async function POST(request: NextRequest) {
   try {
@@ -50,9 +51,21 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Invoice has no items to charge' }, { status: 400 });
       }
 
+      // Get Stripe secret key from settings
+      const stripeSecretKey = await getSettingValue('payments.stripeSecretKey');
+
+      if (!stripeSecretKey) {
+        return NextResponse.json(
+          {
+            error: 'Payment processing is not available. Please contact support.',
+          },
+          { status: 400 }
+        );
+      }
+
       // Create Stripe checkout session
       const stripe = (await import('stripe')).default;
-      const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY!, {
+      const stripeClient = new stripe(stripeSecretKey, {
         apiVersion: '2025-08-27.basil',
       });
 
