@@ -4,6 +4,7 @@ import './globals.css';
 import { siteConfig } from '@/lib/seo';
 import StructuredData from '@/components/StructuredData';
 import Providers from '@/components/providers/Providers';
+import ChatWidget from '@/components/chat/ChatWidget';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -62,7 +63,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData type="website" />
       </head>
       <body className="min-h-screen bg-background antialiased">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <ChatWidget />
+        </Providers>
       </body>
     </html>
   );
