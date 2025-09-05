@@ -79,46 +79,63 @@ export const authOptions: NextAuthOptions = {
               (req as any)?.query?.invite ||
               (typeof window !== 'undefined' ? localStorage.getItem('inviteToken') : null);
 
-            if (!inviteToken) {
-              console.log('No invite token provided for new Google user:', profile.email);
-              return false; // Reject sign-in
+            if (inviteToken) {
+              // Validate invite
+              const invite = await prisma.invite.findUnique({
+                where: { token: inviteToken },
+              });
+
+              if (
+                !invite ||
+                invite.usedAt ||
+                invite.expiresAt < new Date() ||
+                invite.email !== profile.email
+              ) {
+                console.log('Invalid invite for Google user:', profile.email);
+                return false; // Reject sign-in
+              }
+
+              // Create user with invite validation
+              console.log('Creating new user with invite:', profile.email);
+              dbUser = await prisma.user.create({
+                data: {
+                  email: profile.email,
+                  name: profile.name || profile.email,
+                  image: (profile as any)?.picture,
+                  role: invite.role,
+                  emailVerified: new Date(),
+                },
+              });
+            } else {
+              // No invite token - create user with default CLIENT role
+              console.log('Creating new user without invite (default CLIENT role):', profile.email);
+              dbUser = await prisma.user.create({
+                data: {
+                  email: profile.email,
+                  name: profile.name || profile.email,
+                  image: (profile as any)?.picture,
+                  role: 'CLIENT',
+                  emailVerified: new Date(),
+                },
+              });
             }
 
-            // Validate invite
-            const invite = await prisma.invite.findUnique({
-              where: { token: inviteToken },
-            });
+            // Mark invite as used (only if there was an invite)
+            if (inviteToken) {
+              const invite = await prisma.invite.findUnique({
+                where: { token: inviteToken },
+              });
 
-            if (
-              !invite ||
-              invite.usedAt ||
-              invite.expiresAt < new Date() ||
-              invite.email !== profile.email
-            ) {
-              console.log('Invalid invite for Google user:', profile.email);
-              return false; // Reject sign-in
+              if (invite) {
+                await prisma.invite.update({
+                  where: { id: invite.id },
+                  data: {
+                    usedAt: new Date(),
+                    usedById: dbUser.id,
+                  },
+                });
+              }
             }
-
-            // Create user with invite validation
-            console.log('Creating new user with invite:', profile.email);
-            dbUser = await prisma.user.create({
-              data: {
-                email: profile.email,
-                name: profile.name || profile.email,
-                image: (profile as any)?.picture,
-                role: invite.role,
-                emailVerified: new Date(),
-              },
-            });
-
-            // Mark invite as used
-            await prisma.invite.update({
-              where: { id: invite.id },
-              data: {
-                usedAt: new Date(),
-                usedById: dbUser.id,
-              },
-            });
 
             console.log('User created successfully with invite:', dbUser.id);
           } else {
@@ -166,12 +183,19 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // If redirecting after signup/signin, redirect based on role
-      if (url.startsWith('/') || url === baseUrl) {
-        return baseUrl;
+      // If it's a relative URL, use the baseUrl
+      if (url.startsWith('/')) {
+        return `${baseUrl}${url}`;
       }
-      // Default redirect to appropriate dashboard
-      return url;
+
+      // If it's the same domain
+      if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+
+      // Default fallback - redirect to portal for now
+      // The role-based redirection will happen in the signIn callback
+      return `${baseUrl}/portal`;
     },
   },
   pages: {

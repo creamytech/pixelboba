@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { remark } from 'remark';
+import html from 'remark-html';
 
 const contentDirectory = path.join(process.cwd(), 'content');
 const workDirectory = path.join(contentDirectory, 'work');
@@ -39,17 +41,23 @@ export async function getAllWork(): Promise<WorkPost[]> {
 
     const files = fs.readdirSync(workDirectory).filter((file) => file.endsWith('.mdx'));
 
-    const works = files.map((file) => {
-      const filePath = path.join(workDirectory, file);
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      const { data, content } = matter(fileContent);
+    const works = await Promise.all(
+      files.map(async (file) => {
+        const filePath = path.join(workDirectory, file);
+        const fileContent = fs.readFileSync(filePath, 'utf-8');
+        const { data, content } = matter(fileContent);
 
-      return {
-        slug: file.replace('.mdx', ''),
-        frontmatter: data as WorkFrontmatter,
-        content,
-      };
-    });
+        // Process markdown to HTML
+        const processedContent = await remark().use(html).process(content);
+        const htmlContent = processedContent.toString();
+
+        return {
+          slug: file.replace('.mdx', ''),
+          frontmatter: data as WorkFrontmatter,
+          content: htmlContent,
+        };
+      })
+    );
 
     // Sort by publishedAt date, newest first
     return works.sort(
@@ -74,10 +82,14 @@ export async function getWorkBySlug(slug: string): Promise<WorkPost | null> {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const { data, content } = matter(fileContent);
 
+    // Process markdown to HTML
+    const processedContent = await remark().use(html).process(content);
+    const htmlContent = processedContent.toString();
+
     return {
       slug,
       frontmatter: data as WorkFrontmatter,
-      content,
+      content: htmlContent,
     };
   } catch (error) {
     console.error(`Error loading work post ${slug}:`, error);

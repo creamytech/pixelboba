@@ -91,31 +91,31 @@ export default function BeforeAfterSlider({
   }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
   return (
-    <div className={`relative w-full max-w-7xl mx-auto ${className}`}>
+    <div className={`relative w-full max-w-[90rem] mx-auto ${className}`}>
       <div
         ref={containerRef}
         className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden cursor-col-resize select-none"
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
       >
-        {/* After Image (now shown first/left) */}
+        {/* Before Image (shown on left) */}
         <div className="absolute inset-0">
-          <Image src={afterImage} alt={afterLabel} fill className="object-cover" priority />
-          <div className="absolute top-4 left-4 bg-taro text-white px-3 py-1 rounded-full text-sm font-medium">
-            {afterLabel}
+          <Image src={beforeImage} alt={beforeLabel} fill className="object-cover" priority />
+          <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
+            {beforeLabel}
           </div>
         </div>
 
-        {/* Before Image with Clip Path (now revealed from right) */}
+        {/* After Image with Clip Path (revealed from right) */}
         <div
           className="absolute inset-0 transition-all duration-75 ease-out"
           style={{
             clipPath: `inset(0 0 0 ${sliderPosition}%)`,
           }}
         >
-          <Image src={beforeImage} alt={beforeLabel} fill className="object-cover" priority />
-          <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
-            {beforeLabel}
+          <Image src={afterImage} alt={afterLabel} fill className="object-cover" priority />
+          <div className="absolute top-4 right-4 bg-taro text-white px-3 py-1 rounded-full text-sm font-medium">
+            {afterLabel}
           </div>
         </div>
 
