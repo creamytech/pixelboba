@@ -44,7 +44,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="/brand/Pixel_Boba_Logo_White.png"
+              src="/brand/Pixel_Boba_Logo_White.svg"
               alt="pixel boba"
               width={160}
               height={53}

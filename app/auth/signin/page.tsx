@@ -36,10 +36,10 @@ export default function SignIn() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <Image
-                src="/brand/Pixel_Boba_Logo_White.png"
+                src="/brand/Pixel_Boba_Logo_Black.svg"
                 alt="pixel boba"
-                width={140}
-                height={47}
+                width={160}
+                height={53}
                 className="h-12 w-auto"
                 priority
               />

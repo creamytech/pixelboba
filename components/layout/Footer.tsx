@@ -95,7 +95,7 @@ export default function Footer() {
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <Image
-                src="/brand/Pixel_Boba_Logo_White.png"
+                src="/brand/Pixel_Boba_Logo_White.svg"
                 alt="pixel boba"
                 width={180}
                 height={60}

@@ -63,7 +63,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         '@type': 'Organization',
         name: 'pixel boba llc',
         url: 'https://pixelboba.com',
-        logo: 'https://pixelboba.com/brand/Pixel_Boba_Logo_White.png',
+        logo: 'https://pixelboba.com/brand/Pixel_Boba_Logo_White.svg',
         description:
           'design-first websites with delightful details and boba-smooth interactions. websites that pop.',
         contactPoint: {
