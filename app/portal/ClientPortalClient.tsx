@@ -57,7 +57,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-milk-tea/10 via-background to-taro/10 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
         <DashboardPearlField />
         <motion.div
           className="relative z-10 flex items-center justify-center min-h-screen"
@@ -65,7 +65,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="text-center bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/30 shadow-xl">
+          <div className="text-center bg-milk-tea/70 backdrop-blur-lg rounded-xl p-8 border border-brown-sugar/20 shadow-xl">
             <motion.div
               className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-4"
               animate={{ rotate: 360 }}
@@ -86,7 +86,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 
   if (!portalData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-milk-tea/10 via-background to-taro/10 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
         <DashboardPearlField />
         <motion.div
           className="relative z-10 flex items-center justify-center min-h-screen"
@@ -94,7 +94,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="text-center bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/30 shadow-xl">
+          <div className="text-center bg-milk-tea/70 backdrop-blur-lg rounded-xl p-8 border border-brown-sugar/20 shadow-xl">
             <p className="font-display text-ink mb-4 lowercase">unable to load portal data</p>
             <motion.button
               onClick={fetchPortalData}
@@ -143,12 +143,12 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea/10 via-background to-taro/10 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
       <DashboardPearlField />
 
       {/* Enhanced Header with Motion */}
       <motion.div
-        className="border-b border-white/20 bg-white/70 backdrop-blur-lg sticky top-0 z-50 shadow-lg"
+        className="border-b border-brown-sugar/20 bg-milk-tea/80 backdrop-blur-lg sticky top-0 z-50 shadow-lg"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'backOut' }}
@@ -242,7 +242,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           transition={{ duration: 0.4, delay: 0.6 }}
         >
           <motion.nav
-            className="flex space-x-2 bg-white/60 backdrop-blur-lg rounded-xl p-2 border border-white/30 shadow-lg"
+            className="flex space-x-2 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
@@ -257,7 +257,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                   className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all duration-300 group ${
                     isActive
                       ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
-                      : 'text-ink/70 hover:text-ink hover:bg-white/80 hover:shadow-md'
+                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
                   }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -332,7 +332,7 @@ function DashboardView({ data }: { data: PortalData }) {
       {/* Enhanced Active Project Section */}
       {activeProject ? (
         <motion.div
-          className="bg-white/70 backdrop-blur-lg rounded-xl p-6 border border-white/30 shadow-lg hover:shadow-xl transition-shadow"
+          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -425,7 +425,7 @@ function DashboardView({ data }: { data: PortalData }) {
         </motion.div>
       ) : (
         <motion.div
-          className="bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/30 shadow-lg text-center"
+          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-8 border border-brown-sugar/20 shadow-lg text-center"
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -492,7 +492,7 @@ function DashboardView({ data }: { data: PortalData }) {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10 hover:shadow-lg transition-shadow">
+      <div className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20 hover:shadow-lg transition-shadow">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-display text-lg font-semibold text-ink">recent activity</h3>
           <div className="flex items-center space-x-2">
@@ -561,7 +561,7 @@ function DashboardView({ data }: { data: PortalData }) {
 
 function StatCard({ title, value, icon }: { title: string; value: number; icon: string }) {
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10 hover:shadow-lg transition-all duration-300 hover:scale-105">
+    <div className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20 hover:shadow-lg transition-all duration-300 hover:scale-105">
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <p className="text-ink/60 text-sm font-medium uppercase tracking-wide">{title}</p>

@@ -86,7 +86,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-milk-tea/20 via-background to-taro/10 flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 flex items-center justify-center relative overflow-hidden">
         <DashboardPearlField />
         <motion.div
           className="text-center relative z-10"
@@ -140,12 +140,12 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea/20 via-background to-taro/10 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
       <DashboardPearlField />
 
       {/* Header */}
       <motion.div
-        className="border-b border-ink/10 bg-white/70 backdrop-blur-lg sticky top-0 z-50 shadow-sm"
+        className="border-b border-brown-sugar/20 bg-milk-tea/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'backOut' }}
@@ -242,7 +242,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <motion.nav
-            className="flex space-x-2 bg-white/60 backdrop-blur-lg rounded-xl p-2 border border-white/30 shadow-lg"
+            className="flex space-x-2 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
@@ -257,7 +257,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
                   className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all duration-300 group ${
                     isActive
                       ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
-                      : 'text-ink/70 hover:text-ink hover:bg-white/80 hover:shadow-md'
+                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
                   }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -317,7 +317,7 @@ function OverviewTab({
   if (!stats) {
     return (
       <motion.div
-        className="min-h-[400px] bg-white/70 backdrop-blur-lg rounded-xl border border-white/30 shadow-lg flex items-center justify-center"
+        className="min-h-[400px] bg-milk-tea/70 backdrop-blur-lg rounded-xl border border-brown-sugar/20 shadow-lg flex items-center justify-center"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
@@ -424,7 +424,7 @@ function OverviewTab({
       >
         {/* Recent Activity */}
         <motion.div
-          className="bg-white/70 backdrop-blur-lg rounded-xl p-6 border border-white/30 shadow-lg hover:shadow-xl transition-shadow"
+          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
           whileHover={{ y: -2, transition: { duration: 0.2 } }}
         >
           <motion.h3
@@ -487,7 +487,7 @@ function OverviewTab({
 
         {/* Quick Actions */}
         <motion.div
-          className="bg-white/70 backdrop-blur-lg rounded-xl p-6 border border-white/30 shadow-lg hover:shadow-xl transition-shadow"
+          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
           whileHover={{ y: -2, transition: { duration: 0.2 } }}
         >
           <motion.h3
@@ -594,10 +594,10 @@ function StatCard({
 
   return (
     <motion.div
-      className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/30 shadow-lg hover:shadow-xl transition-shadow"
+      className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
       whileHover={{
         scale: 1.02,
-        backgroundColor: 'rgba(255,255,255,0.8)',
+        backgroundColor: 'rgba(245, 233, 218, 0.9)',
         transition: { duration: 0.2 },
       }}
       whileTap={{ scale: 0.98 }}
@@ -671,9 +671,9 @@ function ActivityItem({
 
   return (
     <motion.div
-      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/30 backdrop-blur-sm transition-colors border border-transparent hover:border-white/20"
+      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-milk-tea/40 backdrop-blur-sm transition-colors border border-transparent hover:border-brown-sugar/20"
       whileHover={{
-        backgroundColor: 'rgba(255,255,255,0.4)',
+        backgroundColor: 'rgba(245, 233, 218, 0.6)',
         scale: 1.01,
         transition: { duration: 0.2 },
       }}
@@ -709,7 +709,7 @@ function ActionButton({
   return (
     <motion.button
       onClick={onClick}
-      className="flex items-center space-x-2 p-3 bg-gradient-to-r from-taro/15 to-brown-sugar/15 hover:from-taro/25 hover:to-brown-sugar/25 rounded-lg transition-colors group border border-white/20 backdrop-blur-sm shadow-sm"
+      className="flex items-center space-x-2 p-3 bg-gradient-to-r from-taro/15 to-brown-sugar/15 hover:from-taro/25 hover:to-brown-sugar/25 rounded-lg transition-colors group border border-brown-sugar/20 backdrop-blur-sm shadow-sm"
       whileHover={{
         scale: 1.02,
         backgroundColor: 'rgba(167, 139, 250, 0.15)',

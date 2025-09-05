@@ -22,18 +22,18 @@ export default function DashboardPearlField({ className }: { className?: string 
   const mouseSpringX = useSpring(mouseX, springConfig);
   const mouseSpringY = useSpring(mouseY, springConfig);
 
-  // More subtle pearls for dashboard backgrounds
+  // Dashboard pearls matching main site brand colors
   const pearls: DashboardPearlData[] = [
-    { id: 1, x: 10, y: 20, size: 40, color: '#A78BFA', opacity: 0.15, delay: 0 },
-    { id: 2, x: 85, y: 15, size: 30, color: '#8B5E3C', opacity: 0.12, delay: 0.3 },
-    { id: 3, x: 25, y: 70, size: 45, color: '#F5E9DA', opacity: 0.18, delay: 0.6 },
-    { id: 4, x: 70, y: 60, size: 35, color: '#84CC16', opacity: 0.1, delay: 0.9 },
-    { id: 5, x: 5, y: 85, size: 25, color: '#A78BFA', opacity: 0.08, delay: 1.2 },
-    { id: 6, x: 90, y: 80, size: 38, color: '#8B5E3C', opacity: 0.14, delay: 1.5 },
-    { id: 7, x: 45, y: 25, size: 28, color: '#F5E9DA', opacity: 0.11, delay: 1.8 },
-    { id: 8, x: 60, y: 85, size: 32, color: '#84CC16', opacity: 0.13, delay: 2.1 },
-    { id: 9, x: 15, y: 50, size: 22, color: '#A78BFA', opacity: 0.09, delay: 2.4 },
-    { id: 10, x: 80, y: 35, size: 26, color: '#8B5E3C', opacity: 0.16, delay: 2.7 },
+    { id: 1, x: 15, y: 25, size: 50, color: '#A78BFA', opacity: 0.25, delay: 0 }, // taro
+    { id: 2, x: 75, y: 15, size: 35, color: '#8B5E3C', opacity: 0.2, delay: 0.3 }, // brown-sugar
+    { id: 3, x: 45, y: 65, size: 60, color: '#84CC16', opacity: 0.3, delay: 0.6 }, // matcha
+    { id: 4, x: 25, y: 80, size: 30, color: '#F5E9DA', opacity: 0.35, delay: 0.9 }, // milk-tea
+    { id: 5, x: 85, y: 50, size: 45, color: '#A78BFA', opacity: 0.22, delay: 1.2 }, // taro
+    { id: 6, x: 10, y: 75, size: 32, color: '#8B5E3C', opacity: 0.18, delay: 1.5 }, // brown-sugar
+    { id: 7, x: 65, y: 85, size: 55, color: '#84CC16', opacity: 0.28, delay: 1.8 }, // matcha
+    { id: 8, x: 90, y: 30, size: 28, color: '#F5E9DA', opacity: 0.32, delay: 2.1 }, // milk-tea
+    { id: 9, x: 35, y: 40, size: 38, color: '#7C3AED', opacity: 0.25, delay: 2.4 }, // deep-taro
+    { id: 10, x: 70, y: 20, size: 42, color: '#7C3AED', opacity: 0.2, delay: 2.7 }, // deep-taro
   ];
 
   useEffect(() => {
