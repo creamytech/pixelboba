@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { signOut } from 'next-auth/react';
 import {
   MessageSquare,
   FileText,
@@ -123,7 +124,11 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 
             <div className="flex items-center space-x-4">
               <span className="text-ink/70">welcome, {portalData.user.name}</span>
-              <button className="p-2 text-ink/60 hover:text-ink transition-colors">
+              <button
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="p-2 text-ink/60 hover:text-ink transition-colors"
+                title="Sign out"
+              >
                 <LogOut size={20} />
               </button>
             </div>

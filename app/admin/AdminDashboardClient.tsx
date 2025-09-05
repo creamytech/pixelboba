@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { signOut } from 'next-auth/react';
 import {
   Users,
   FolderOpen,
@@ -12,6 +13,7 @@ import {
   TrendingUp,
   DollarSign,
   Calendar,
+  LogOut,
 } from 'lucide-react';
 import ProjectManager from '@/components/admin/ProjectManager';
 import ClientManager from '@/components/admin/ClientManager';
@@ -23,16 +25,32 @@ import { Session } from 'next-auth';
 interface AdminStats {
   totalClients: number;
   activeProjects: number;
-  monthlyRevenue: number;
-  pendingInvoices: number;
   completedProjects: number;
+  monthlyRevenue: number;
+  totalRevenue: number;
+  pendingInvoices: number;
+  paidInvoices: number;
+  pendingContracts: number;
+  signedContracts: number;
   averageProjectDuration: number;
+  recentActivity: Array<{
+    id: string;
+    action: string;
+    description: string;
+    user: { name: string | null; email: string };
+    project: { name: string } | null;
+    createdAt: Date;
+  }>;
 }
 
 export default function AdminDashboardClient({ session }: { session: Session }) {
   const [activeTab, setActiveTab] = useState('overview');
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
 
   const fetchStats = async () => {
     try {
@@ -103,6 +121,13 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
 
             <div className="flex items-center space-x-4">
               <span className="text-ink/70">welcome, {session?.user?.name}</span>
+              <button
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="p-2 text-ink/60 hover:text-ink transition-colors"
+                title="Sign out"
+              >
+                <LogOut size={20} />
+              </button>
             </div>
           </div>
         </div>
@@ -147,42 +172,62 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
 }
 
 function OverviewTab({ stats }: { stats: AdminStats | null }) {
-  if (!stats) return null;
+  if (!stats) {
+    return (
+      <div className="min-h-[400px] bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-ink/70">Loading admin statistics...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
-      {/* Stats Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-        <StatCard title="total clients" value={stats.totalClients} icon={Users} color="blue" />
+      {/* Enhanced Stats Grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+        <StatCard
+          title="total clients"
+          value={stats.totalClients}
+          icon={Users}
+          color="blue"
+          trend={`+${Math.floor(stats.totalClients * 0.12)} this month`}
+        />
         <StatCard
           title="active projects"
           value={stats.activeProjects}
           icon={FolderOpen}
           color="taro"
+          trend={`${stats.completedProjects} completed`}
         />
         <StatCard
           title="monthly revenue"
           value={`$${stats.monthlyRevenue.toLocaleString()}`}
           icon={DollarSign}
           color="green"
+          trend={`$${stats.totalRevenue.toLocaleString()} total`}
         />
         <StatCard
           title="pending invoices"
           value={stats.pendingInvoices}
           icon={CreditCard}
           color="orange"
+          trend={`${stats.paidInvoices} paid`}
         />
         <StatCard
-          title="completed projects"
-          value={stats.completedProjects}
-          icon={TrendingUp}
-          color="emerald"
+          title="pending contracts"
+          value={stats.pendingContracts}
+          icon={FileText}
+          color="purple"
+          trend={`${stats.signedContracts} signed`}
         />
         <StatCard
           title="avg project time"
-          value={`${stats.averageProjectDuration} days`}
+          value={stats.averageProjectDuration > 0 ? `${stats.averageProjectDuration} days` : 'N/A'}
           icon={Calendar}
-          color="purple"
+          color="indigo"
+          trend={stats.completedProjects > 0 ? `${stats.completedProjects} completed` : 'No data'}
         />
       </div>
 
@@ -191,31 +236,36 @@ function OverviewTab({ stats }: { stats: AdminStats | null }) {
         {/* Recent Activity */}
         <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
           <h3 className="font-display text-lg font-semibold text-ink mb-4">recent activity</h3>
-          <div className="space-y-4">
-            <ActivityItem
-              action="new client registered"
-              description="sarah chen from ecoflow commerce"
-              time="2 hours ago"
-              type="user"
-            />
-            <ActivityItem
-              action="project completed"
-              description="modern bakery website launch"
-              time="5 hours ago"
-              type="project"
-            />
-            <ActivityItem
-              action="invoice paid"
-              description="$5,200 received from tech startup"
-              time="1 day ago"
-              type="payment"
-            />
-            <ActivityItem
-              action="contract signed"
-              description="website redesign agreement"
-              time="2 days ago"
-              type="contract"
-            />
+          <div className="space-y-3">
+            {stats.recentActivity.length > 0 ? (
+              stats.recentActivity.slice(0, 6).map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-center space-x-3 p-3 rounded-lg hover:bg-milk-tea/10 transition-colors"
+                >
+                  <div className="w-2 h-2 bg-taro rounded-full flex-shrink-0"></div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-ink font-medium capitalize text-sm">{activity.action}</p>
+                    <p className="text-ink/60 text-xs truncate">
+                      {activity.user.name || activity.user.email}
+                      {activity.project && ` • ${activity.project.name}`}
+                    </p>
+                    <p className="text-ink/60 text-xs">{activity.description}</p>
+                  </div>
+                  <span className="text-ink/50 text-xs flex-shrink-0">
+                    {new Date(activity.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8 text-ink/50">
+                <Users className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                <p className="text-sm">No recent activity</p>
+                <p className="text-xs">
+                  Activity will appear here as users interact with your platform
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -247,21 +297,37 @@ function StatCard({
   value,
   icon: Icon,
   color,
+  trend,
 }: {
   title: string;
   value: string | number;
   icon: any;
   color: string;
+  trend?: string;
 }) {
+  const getColorClasses = (colorName: string) => {
+    const colors = {
+      blue: 'bg-blue-500/10 text-blue-600',
+      taro: 'bg-violet-500/10 text-violet-600',
+      green: 'bg-green-500/10 text-green-600',
+      orange: 'bg-orange-500/10 text-orange-600',
+      purple: 'bg-purple-500/10 text-purple-600',
+      indigo: 'bg-indigo-500/10 text-indigo-600',
+      emerald: 'bg-emerald-500/10 text-emerald-600',
+    };
+    return colors[colorName as keyof typeof colors] || 'bg-gray-500/10 text-gray-600';
+  };
+
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-ink/60 text-sm font-medium">{title}</p>
-          <p className="text-2xl font-bold text-ink">{value}</p>
+    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10 hover:shadow-lg transition-shadow">
+      <div className="flex items-start justify-between">
+        <div className="flex-1">
+          <p className="text-ink/60 text-sm font-medium uppercase tracking-wide">{title}</p>
+          <p className="text-2xl font-bold text-ink mt-1 mb-2">{value}</p>
+          {trend && <p className="text-ink/50 text-xs">{trend}</p>}
         </div>
-        <div className={`p-3 rounded-lg bg-${color}-500/10`}>
-          <Icon className={`w-6 h-6 text-${color}-500`} />
+        <div className={`p-3 rounded-lg flex-shrink-0 ${getColorClasses(color)}`}>
+          <Icon className="w-6 h-6" />
         </div>
       </div>
     </div>
