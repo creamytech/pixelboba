@@ -44,11 +44,11 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="/brand/Pixel_Boba_Logo_White.svg"
+              src="/brand/Pixel_Boba_Logo_Black.svg"
               alt="pixel boba"
-              width={160}
-              height={53}
-              className="h-12 w-auto"
+              width={200}
+              height={67}
+              className="h-16 w-auto"
               priority
             />
           </Link>

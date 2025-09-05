@@ -38,9 +38,9 @@ export default function SignIn() {
               <Image
                 src="/brand/Pixel_Boba_Logo_Black.svg"
                 alt="pixel boba"
-                width={160}
-                height={53}
-                className="h-12 w-auto"
+                width={200}
+                height={67}
+                className="h-16 w-auto"
                 priority
               />
             </div>
