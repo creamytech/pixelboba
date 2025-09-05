@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
           _count: {
             select: {
               projects: true,
-              sentMessages: true,
+              messages: true,
             },
           },
           projects: {
