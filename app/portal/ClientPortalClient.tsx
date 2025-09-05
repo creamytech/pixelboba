@@ -275,14 +275,15 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                     />
                   </motion.div>
                   <span className="font-medium lowercase">{tab.name}</span>
-                  {tab.badge && tab.badge > 0 && (
+                  {tab.badge !== undefined && tab.badge > 0 && (
                     <motion.span
-                      className={`absolute -top-2 -right-2 min-w-5 h-5 px-1 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg ${
-                        isActive ? 'bg-white/20 backdrop-blur-sm' : 'bg-brown-sugar'
+                      className={`absolute -top-3 -right-3 min-w-6 h-6 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg z-10 ${
+                        isActive ? 'bg-red-500' : 'bg-red-600'
                       }`}
                       animate={isActive ? { scale: [1, 1.1, 1] } : {}}
                       transition={{ duration: 2, repeat: Infinity }}
                       whileHover={{ scale: 1.1 }}
+                      style={{ transform: 'translate(50%, -50%)' }}
                     >
                       {tab.badge > 99 ? '99+' : tab.badge}
                     </motion.span>
