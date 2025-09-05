@@ -118,6 +118,15 @@ export default function SignIn() {
                   </div>
                 </div>
 
+                <div className="flex items-center justify-between">
+                  <a
+                    href="/forgot-password"
+                    className="text-sm text-taro hover:text-taro/80 font-medium"
+                  >
+                    Forgot password?
+                  </a>
+                </div>
+
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-taro to-brown-sugar hover:from-taro/90 hover:to-brown-sugar/90 text-white font-medium py-3 px-4 rounded-lg transition-all transform hover:scale-[1.02]"

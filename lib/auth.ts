@@ -32,11 +32,16 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          // For simplicity, we'll create a password hash method later
-          // const isPasswordValid = await compare(credentials.password, user.password);
-          // if (!isPasswordValid) {
-          //   return null;
-          // }
+          // Verify password if user has one (manual signup)
+          if (user.password) {
+            const isPasswordValid = await compare(credentials.password, user.password);
+            if (!isPasswordValid) {
+              return null;
+            }
+          } else {
+            // No password set - probably OAuth user trying credentials login
+            return null;
+          }
 
           return {
             id: user.id,
@@ -55,7 +60,7 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account, profile, ...req }) {
       if (account?.provider === 'google' && profile?.email) {
         try {
           console.log('Google OAuth signIn attempt for:', profile.email);
@@ -63,23 +68,59 @@ export const authOptions: NextAuthOptions = {
           // Dynamic import to avoid build-time database connection
           const { prisma } = await import('./prisma');
 
-          // Check if user exists, create if not
+          // Check if user exists
           let dbUser = await prisma.user.findUnique({
             where: { email: profile.email },
           });
 
           if (!dbUser) {
-            console.log('Creating new user:', profile.email);
+            // User doesn't exist, check for valid invite
+            const inviteToken =
+              (req as any)?.query?.invite ||
+              (typeof window !== 'undefined' ? localStorage.getItem('inviteToken') : null);
+
+            if (!inviteToken) {
+              console.log('No invite token provided for new Google user:', profile.email);
+              return false; // Reject sign-in
+            }
+
+            // Validate invite
+            const invite = await prisma.invite.findUnique({
+              where: { token: inviteToken },
+            });
+
+            if (
+              !invite ||
+              invite.usedAt ||
+              invite.expiresAt < new Date() ||
+              invite.email !== profile.email
+            ) {
+              console.log('Invalid invite for Google user:', profile.email);
+              return false; // Reject sign-in
+            }
+
+            // Create user with invite validation
+            console.log('Creating new user with invite:', profile.email);
             dbUser = await prisma.user.create({
               data: {
                 email: profile.email,
                 name: profile.name || profile.email,
                 image: (profile as any)?.picture,
-                role: 'CLIENT',
+                role: invite.role,
                 emailVerified: new Date(),
               },
             });
-            console.log('User created successfully:', dbUser.id);
+
+            // Mark invite as used
+            await prisma.invite.update({
+              where: { id: invite.id },
+              data: {
+                usedAt: new Date(),
+                usedById: dbUser.id,
+              },
+            });
+
+            console.log('User created successfully with invite:', dbUser.id);
           } else {
             console.log('Existing user found:', dbUser.id);
           }
@@ -103,10 +144,9 @@ export const authOptions: NextAuthOptions = {
 
           console.error('Error details:', errorDetails);
 
-          // Continue without database for now - allow sign in but with limited functionality
-          console.log('Allowing sign in without database connection');
-          user.role = 'CLIENT';
-          user.id = profile.email; // Use email as fallback ID
+          // Don't allow sign in on database error for security
+          console.log('Rejecting sign in due to database error');
+          return false;
         }
       }
       return true;

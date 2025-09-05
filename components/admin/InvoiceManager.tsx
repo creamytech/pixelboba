@@ -417,7 +417,7 @@ function CreateInvoiceModal({
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
                   placeholder="Website Development Services"
                 />
               </div>
@@ -428,7 +428,7 @@ function CreateInvoiceModal({
                   required
                   value={formData.clientId}
                   onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
-                  className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
                 >
                   <option value="">select client...</option>
                   {clients.map((client: any) => (
@@ -446,7 +446,7 @@ function CreateInvoiceModal({
                 <select
                   value={formData.projectId}
                   onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
-                  className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
                 >
                   <option value="">no project</option>
                   {projects.map((project: any) => (
@@ -464,7 +464,7 @@ function CreateInvoiceModal({
                   required
                   value={formData.dueDate}
                   onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                  className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
                 />
               </div>
             </div>
@@ -494,7 +494,7 @@ function CreateInvoiceModal({
                         placeholder="Description"
                         value={item.description}
                         onChange={(e) => updateItem(index, 'description', e.target.value)}
-                        className="w-full px-2 py-1 text-sm border border-ink/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20"
+                        className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
                       />
                     </div>
                     <div className="col-span-2">
@@ -504,7 +504,7 @@ function CreateInvoiceModal({
                         min="1"
                         value={item.quantity}
                         onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value))}
-                        className="w-full px-2 py-1 text-sm border border-ink/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20"
+                        className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
                       />
                     </div>
                     <div className="col-span-3">
@@ -515,7 +515,7 @@ function CreateInvoiceModal({
                         step="0.01"
                         value={item.rate}
                         onChange={(e) => updateItem(index, 'rate', parseFloat(e.target.value))}
-                        className="w-full px-2 py-1 text-sm border border-ink/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20"
+                        className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
                       />
                     </div>
                     <div className="col-span-1">
@@ -548,7 +548,7 @@ function CreateInvoiceModal({
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
-              className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
               placeholder="Payment terms, additional notes..."
             />
           </div>

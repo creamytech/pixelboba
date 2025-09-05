@@ -35,6 +35,13 @@ export async function GET(request: NextRequest) {
               image: true,
             },
           },
+          file: {
+            select: {
+              originalName: true,
+              url: true,
+              mimetype: true,
+            },
+          },
         },
         orderBy: { createdAt: 'asc' },
       });

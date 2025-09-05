@@ -22,9 +22,9 @@ interface ChatMessage {
   timestamp: Date;
   isOwn: boolean;
   file?: {
-    name: string;
+    originalName: string;
     url: string;
-    type: string;
+    mimetype: string;
   };
 }
 
@@ -64,17 +64,20 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   const sendMessage = async () => {
     if (!newMessage.trim() && uploadingFiles.length === 0) return;
 
-    const messageData = {
-      content: newMessage.trim(),
-      projectId: selectedProject,
-      files: uploadingFiles,
-    };
-
     try {
+      const formData = new FormData();
+      formData.append('content', newMessage.trim());
+      formData.append('projectId', selectedProject);
+
+      // Add files to FormData
+      uploadingFiles.forEach((file, index) => {
+        formData.append(`file_${index}`, file);
+      });
+      formData.append('fileCount', uploadingFiles.length.toString());
+
       const response = await fetch('/api/portal/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(messageData),
+        body: formData, // No content-type header for FormData
       });
 
       if (response.ok) {
@@ -266,17 +269,24 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   );
 }
 
-function FilePreview({ file }: { file: { name: string; url: string; type: string } }) {
-  const isImage = file.type.startsWith('image/');
+function FilePreview({ file }: { file: { originalName: string; url: string; mimetype: string } }) {
+  const isImage = file.mimetype.startsWith('image/');
 
   return (
     <div className="mb-2">
       {isImage ? (
-        <img src={file.url} alt={file.name} className="max-w-full h-auto rounded-lg" />
+        <img src={file.url} alt={file.originalName} className="max-w-full h-auto rounded-lg" />
       ) : (
         <div className="flex items-center space-x-2 p-2 bg-white/20 rounded-lg">
           <FileText size={16} />
-          <span className="text-sm">{file.name}</span>
+          <a
+            href={file.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm hover:underline text-taro"
+          >
+            {file.originalName}
+          </a>
         </div>
       )}
     </div>

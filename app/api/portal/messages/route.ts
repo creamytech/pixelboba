@@ -43,6 +43,13 @@ export async function GET(request: NextRequest) {
               image: true,
             },
           },
+          file: {
+            select: {
+              originalName: true,
+              url: true,
+              mimetype: true,
+            },
+          },
         },
         orderBy: { createdAt: 'asc' },
       });
@@ -84,15 +91,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await request.json();
-    const { content, projectId } = body;
+    const formData = await request.formData();
+    const content = formData.get('content') as string;
+    const projectId = formData.get('projectId') as string;
+    const fileCount = parseInt((formData.get('fileCount') as string) || '0');
 
-    if (!content?.trim() || !projectId) {
-      return NextResponse.json({ error: 'Content and project ID are required' }, { status: 400 });
+    if ((!content?.trim() && fileCount === 0) || !projectId) {
+      return NextResponse.json(
+        { error: 'Content or files and project ID are required' },
+        { status: 400 }
+      );
     }
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { uploadFile } = await import('@/lib/upload');
 
       // Verify user has access to this project
       const project = await prisma.project.findFirst({
@@ -106,12 +119,44 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Project not found or access denied' }, { status: 404 });
       }
 
+      let fileId: string | undefined;
+
+      // Handle file upload if present
+      if (fileCount > 0) {
+        const file = formData.get('file_0') as File;
+        if (file) {
+          try {
+            const uploadResult = await uploadFile(file, projectId);
+
+            // Save file to database
+            const savedFile = await prisma.file.create({
+              data: {
+                filename: uploadResult.filename,
+                originalName: uploadResult.originalName,
+                mimetype: uploadResult.mimetype,
+                size: uploadResult.size,
+                url: uploadResult.url,
+                uploaderId: session.user.id,
+                projectId: projectId,
+              },
+            });
+
+            fileId = savedFile.id;
+          } catch (uploadError) {
+            console.error('File upload error:', uploadError);
+            return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
+          }
+        }
+      }
+
       const message = await prisma.message.create({
         data: {
-          content: content.trim(),
+          content: content?.trim() || '',
           projectId,
           senderId: session.user.id,
           isRead: false,
+          fileId: fileId,
+          type: fileId ? 'FILE' : 'TEXT',
         },
         include: {
           sender: {
@@ -121,6 +166,13 @@ export async function POST(request: NextRequest) {
               email: true,
               role: true,
               image: true,
+            },
+          },
+          file: {
+            select: {
+              originalName: true,
+              url: true,
+              mimetype: true,
             },
           },
         },

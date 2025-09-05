@@ -21,6 +21,7 @@ import ClientManager from '@/components/admin/ClientManager';
 import ContractManager from '@/components/admin/ContractManager';
 import InvoiceManager from '@/components/admin/InvoiceManager';
 import AdminSettings from '@/components/admin/AdminSettings';
+import InviteManager from '@/components/admin/InviteManager';
 import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
 import { Session } from 'next-auth';
@@ -117,6 +118,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
     { id: 'clients', name: 'clients', icon: Users },
     { id: 'contracts', name: 'contracts', icon: FileText },
     { id: 'invoices', name: 'invoices', icon: CreditCard },
+    { id: 'invites', name: 'invites', icon: Plus },
     { id: 'settings', name: 'settings', icon: Settings },
   ];
 
@@ -132,6 +134,8 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         return <ContractManager />;
       case 'invoices':
         return <InvoiceManager />;
+      case 'invites':
+        return <InviteManager />;
       case 'settings':
         return <AdminSettings />;
       default:
