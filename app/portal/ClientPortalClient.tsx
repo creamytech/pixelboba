@@ -116,29 +116,12 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 
   const tabs = [
     { id: 'dashboard', name: 'dashboard', icon: User },
-    {
-      id: 'messages',
-      name: 'messages',
-      icon: MessageSquare,
-      badge: portalData.unreadMessages || 5,
-    },
-    { id: 'invoices', name: 'invoices', icon: CreditCard, badge: portalData.pendingInvoices || 3 },
-    {
-      id: 'contracts',
-      name: 'contracts',
-      icon: FileCheck,
-      badge: portalData.pendingContracts || 2,
-    },
+    { id: 'messages', name: 'messages', icon: MessageSquare, badge: portalData.unreadMessages },
+    { id: 'invoices', name: 'invoices', icon: CreditCard, badge: portalData.pendingInvoices },
+    { id: 'contracts', name: 'contracts', icon: FileCheck, badge: portalData.pendingContracts },
     { id: 'files', name: 'files', icon: FolderOpen },
     { id: 'notifications', name: 'notifications', icon: Bell },
   ];
-
-  // Debug logging
-  console.log('Portal data:', portalData);
-  console.log(
-    'Tabs with badges:',
-    tabs.map((tab) => ({ name: tab.name, badge: tab.badge }))
-  );
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -295,12 +278,11 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                   {tab.badge !== undefined && tab.badge > 0 && (
                     <motion.span
                       className={`absolute -top-3 -right-3 min-w-6 h-6 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg z-10 ${
-                        isActive ? 'bg-red-500' : 'bg-red-600'
+                        isActive ? 'bg-white/20 backdrop-blur-sm' : 'bg-brown-sugar'
                       }`}
                       animate={isActive ? { scale: [1, 1.1, 1] } : {}}
                       transition={{ duration: 2, repeat: Infinity }}
                       whileHover={{ scale: 1.1 }}
-                      style={{ transform: 'translate(50%, -50%)' }}
                     >
                       {tab.badge > 99 ? '99+' : tab.badge}
                     </motion.span>
