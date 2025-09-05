@@ -67,8 +67,15 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center space-x-3">
+            <Button
+              asChild
+              variant="ghost"
+              className="text-taro hover:text-deep-taro hover:bg-taro/10"
+            >
+              <Link href="/login">client sign in</Link>
+            </Button>
             <Button asChild className="bg-taro hover:bg-deep-taro text-white">
               <Link href="/contact">start a project</Link>
             </Button>
@@ -103,7 +110,16 @@ export default function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <div className="pt-4">
+                <div className="pt-4 space-y-3">
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="text-taro hover:text-deep-taro hover:bg-taro/10 w-full"
+                  >
+                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      client sign in
+                    </Link>
+                  </Button>
                   <Button asChild className="bg-taro hover:bg-deep-taro text-white w-full">
                     <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                       start a project

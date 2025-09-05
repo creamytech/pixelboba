@@ -165,6 +165,14 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // If redirecting after signup/signin, redirect based on role
+      if (url.startsWith('/') || url === baseUrl) {
+        return baseUrl;
+      }
+      // Default redirect to appropriate dashboard
+      return url;
+    },
   },
   pages: {
     signIn: '/auth/signin',

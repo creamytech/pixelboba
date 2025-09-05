@@ -31,6 +31,9 @@ export interface Milestone {
   dueDate?: Date;
   completedAt?: Date;
   projectId: string;
+  order?: number;
+  createdAt?: Date;
+  targetDate?: Date;
 }
 
 export interface Message {

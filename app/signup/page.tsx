@@ -86,8 +86,21 @@ export default function SignupPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Account created successfully, redirect to login
-        router.push('/login?message=Account created successfully. Please sign in.');
+        // Account created successfully, now sign them in automatically
+        const signInResult = await signIn('credentials', {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        });
+
+        if (signInResult?.ok) {
+          // Redirect based on role
+          const redirectUrl = data.user.role === 'CLIENT' ? '/portal' : '/admin';
+          router.push(redirectUrl);
+        } else {
+          // If auto-signin fails, redirect to login with success message
+          router.push('/login?message=Account created successfully. Please sign in.');
+        }
       } else {
         setError(data.error);
       }
@@ -106,10 +119,18 @@ export default function SignupPage() {
         localStorage.setItem('inviteToken', inviteToken);
       }
 
-      await signIn('google', {
-        callbackUrl: `/api/auth/callback/google?invite=${inviteToken}`,
-        redirect: true,
+      const result = await signIn('google', {
+        redirect: false,
       });
+
+      if (result?.ok) {
+        // After successful Google sign-in, redirect to the appropriate portal
+        // The role will be determined by the auth callback from the invite
+        window.location.href = '/portal';
+      } else if (result?.error) {
+        setError('Failed to sign up with Google: ' + result.error);
+        setLoading(false);
+      }
     } catch (error) {
       setError('Failed to sign up with Google');
       setLoading(false);

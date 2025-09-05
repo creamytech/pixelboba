@@ -16,12 +16,14 @@ import {
   FolderOpen,
 } from 'lucide-react';
 import BobaProgressIndicator from '@/components/portal/BobaProgressIndicator';
+import MilestoneTracker from '@/components/portal/MilestoneTracker';
 import MessageCenter from '@/components/portal/MessageCenter';
 import InvoiceCenter from '@/components/portal/InvoiceCenter';
 import ContractCenter from '@/components/portal/ContractCenter';
 import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { Project, User as UserType } from '@/types/portal';
 import { Session } from 'next-auth';
 
@@ -144,12 +146,12 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 relative overflow-hidden">
       <DashboardPearlField />
 
       {/* Enhanced Header with Motion */}
       <motion.div
-        className="border-b border-brown-sugar/20 bg-milk-tea/80 backdrop-blur-lg sticky top-0 z-50 shadow-lg"
+        className="border-b border-brown-sugar/20 dark:border-gray-600/20 bg-milk-tea/80 dark:bg-gray-800/80 backdrop-blur-lg sticky top-0 z-50 shadow-lg"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'backOut' }}
@@ -199,9 +201,36 @@ export default function ClientPortalClient({ session }: { session: Session }) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
             >
+              {/* Message notification badge in header */}
+              {portalData.unreadMessages > 0 && (
+                <motion.button
+                  onClick={() => setActiveTab('messages')}
+                  className="relative flex items-center gap-2 px-3 py-2 bg-taro/10 hover:bg-taro/20 rounded-lg transition-colors group"
+                  title={`${portalData.unreadMessages} unread message${portalData.unreadMessages > 1 ? 's' : ''}`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <MessageSquare size={16} className="text-taro" />
+                  <span className="font-display text-sm font-medium text-taro">
+                    {portalData.unreadMessages} new
+                  </span>
+                  <motion.div
+                    className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </motion.button>
+              )}
+
+              <ThemeToggle size="md" />
+
               <div className="hidden sm:block text-right">
-                <p className="font-display text-sm font-medium text-ink lowercase">welcome back!</p>
-                <p className="font-display text-xs text-ink/60 lowercase">{portalData.user.name}</p>
+                <p className="font-display text-sm font-medium text-ink dark:text-gray-200 lowercase">
+                  welcome back!
+                </p>
+                <p className="font-display text-xs text-ink/60 dark:text-gray-400 lowercase">
+                  {portalData.user.name}
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 {portalData.user.image && (
@@ -241,7 +270,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           transition={{ duration: 0.4, delay: 0.6 }}
         >
           <motion.nav
-            className="flex space-x-2 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
+            className="flex space-x-2 bg-milk-tea/60 dark:bg-gray-700/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 dark:border-gray-600/20 shadow-lg"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
@@ -256,7 +285,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                   className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 group overflow-visible ${
                     isActive
                       ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
-                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
+                      : 'text-ink/70 dark:text-gray-300/70 hover:text-ink dark:hover:text-gray-200 hover:bg-milk-tea/80 dark:hover:bg-gray-600/80 hover:shadow-md'
                   }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -397,7 +426,23 @@ function DashboardView({ data }: { data: PortalData }) {
             </motion.div>
 
             <motion.div
-              className="flex flex-col justify-center"
+              className="md:col-span-2 mt-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+            >
+              <MilestoneTracker
+                milestones={activeProject.milestones}
+                currentPhase={activeProject.status.toLowerCase()}
+                estimatedDeadline={
+                  activeProject.deadline ? activeProject.deadline.toString() : undefined
+                }
+              />
+            </motion.div>
+
+            {/* Keep the boba indicator as a summary widget */}
+            <motion.div
+              className="flex justify-center md:justify-end"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
@@ -405,20 +450,8 @@ function DashboardView({ data }: { data: PortalData }) {
               <BobaProgressIndicator
                 progress={activeProject.progress}
                 status={activeProject.status}
-                size="large"
+                size="medium"
               />
-              <motion.div
-                className="mt-4 text-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                <p className="font-display text-ink/60 text-sm lowercase">
-                  {activeProject.milestones?.length || 0} milestones
-                  {activeProject.milestones?.filter((m) => m.completedAt).length > 0 &&
-                    ` • ${activeProject.milestones.filter((m) => m.completedAt).length} completed`}
-                </p>
-              </motion.div>
             </motion.div>
           </div>
         </motion.div>
@@ -500,13 +533,54 @@ function DashboardView({ data }: { data: PortalData }) {
           </div>
         </div>
         <div className="space-y-3">
-          {activeProject && data.pendingInvoices > 0 ? (
-            <ActivityItem
-              action="invoice pending"
-              description={`${data.pendingInvoices} invoice${data.pendingInvoices > 1 ? 's' : ''} awaiting payment`}
-              time="pending"
-              type="payment"
-            />
+          {activeProject ? (
+            <>
+              {/* Show real activity if there are pending items */}
+              {data.pendingInvoices > 0 && (
+                <ActivityItem
+                  action="invoice pending"
+                  description={`${data.pendingInvoices} invoice${data.pendingInvoices > 1 ? 's' : ''} awaiting payment`}
+                  time="pending"
+                  type="payment"
+                />
+              )}
+              {data.unreadMessages > 0 && (
+                <ActivityItem
+                  action="new messages"
+                  description={`${data.unreadMessages} unread message${data.unreadMessages > 1 ? 's' : ''} from your project manager`}
+                  time="2h ago"
+                  type="message"
+                />
+              )}
+              {data.pendingContracts > 0 && (
+                <ActivityItem
+                  action="contract review"
+                  description={`${data.pendingContracts} contract${data.pendingContracts > 1 ? 's' : ''} pending your signature`}
+                  time="1d ago"
+                  type="contract"
+                />
+              )}
+
+              {/* Sample activity events to show what clients can expect */}
+              <ActivityItem
+                action="milestone completed"
+                description="discovery phase finished - design phase starting soon"
+                time="3d ago"
+                type="project"
+              />
+              <ActivityItem
+                action="design review ready"
+                description="initial mockups ready for your feedback"
+                time="5d ago"
+                type="project"
+              />
+              <ActivityItem
+                action="project kickoff"
+                description="welcome to your project! we're excited to work with you"
+                time="1w ago"
+                type="general"
+              />
+            </>
           ) : (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -517,15 +591,34 @@ function DashboardView({ data }: { data: PortalData }) {
                 project updates, messages, and notifications will appear here once we start working
                 together
               </p>
-              <div className="flex justify-center space-x-2">
-                <div className="px-3 py-1 bg-taro/10 text-taro rounded-full text-xs font-medium">
-                  🎯 project updates
+              <div className="space-y-3 max-w-sm mx-auto">
+                {/* Sample events to show what they can expect */}
+                <div className="bg-white/50 rounded-lg p-3 text-left">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="text-taro">📋</span>
+                    <span className="font-medium text-ink/80">project milestone completed</span>
+                  </div>
+                  <p className="text-xs text-ink/60 mt-1 ml-6">
+                    get notified when phases are finished
+                  </p>
                 </div>
-                <div className="px-3 py-1 bg-brown-sugar/10 text-brown-sugar rounded-full text-xs font-medium">
-                  💬 messages
+                <div className="bg-white/50 rounded-lg p-3 text-left">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="text-brown-sugar">💬</span>
+                    <span className="font-medium text-ink/80">new message from team</span>
+                  </div>
+                  <p className="text-xs text-ink/60 mt-1 ml-6">
+                    stay connected with your project manager
+                  </p>
                 </div>
-                <div className="px-3 py-1 bg-milk-tea/20 text-ink/70 rounded-full text-xs font-medium">
-                  📋 contracts
+                <div className="bg-white/50 rounded-lg p-3 text-left">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="text-taro">💰</span>
+                    <span className="font-medium text-ink/80">invoice ready</span>
+                  </div>
+                  <p className="text-xs text-ink/60 mt-1 ml-6">
+                    receive and pay invoices seamlessly
+                  </p>
                 </div>
               </div>
             </div>

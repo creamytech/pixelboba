@@ -122,6 +122,36 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
 
   const selectedProjectData = projects.find((p) => p.id === selectedProject);
 
+  // Show empty state if no projects
+  if (projects.length === 0) {
+    return (
+      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden h-[600px] flex items-center justify-center">
+        <div className="text-center p-8">
+          <div className="w-16 h-16 bg-taro/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Send className="w-8 h-8 text-taro/60" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase">
+            no projects yet
+          </h3>
+          <p className="text-ink/60 mb-6 max-w-md">
+            Once you have active projects, you&apos;ll be able to communicate with your project
+            manager here.
+          </p>
+          <div className="bg-milk-tea/50 rounded-lg p-4 max-w-md">
+            <h4 className="font-display font-semibold text-ink mb-2 lowercase">
+              what happens next?
+            </h4>
+            <ul className="text-sm text-ink/70 space-y-1 text-left">
+              <li>• Your project manager will create your first project</li>
+              <li>• You&apos;ll receive a notification when it&apos;s ready</li>
+              <li>• Then you can start messaging about your project</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden h-[600px] flex">
       {/* Project Sidebar */}

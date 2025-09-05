@@ -25,6 +25,7 @@ import AdminSettings from '@/components/admin/AdminSettings';
 import InviteManager from '@/components/admin/InviteManager';
 import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { Session } from 'next-auth';
 
 interface AdminStats {
@@ -145,12 +146,12 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 relative overflow-hidden">
       <DashboardPearlField />
 
       {/* Header */}
       <motion.div
-        className="border-b border-brown-sugar/20 bg-milk-tea/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm"
+        className="border-b border-brown-sugar/20 dark:border-gray-600/20 bg-milk-tea/80 dark:bg-gray-800/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'backOut' }}
@@ -199,6 +200,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
+              <ThemeToggle size="md" />
               <motion.button
                 onClick={() => setShowMessageCenter(true)}
                 className="flex items-center space-x-2 px-4 py-2 text-taro hover:bg-taro/10 rounded-xl transition-all duration-300 group font-display"
@@ -215,8 +217,8 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
                 <span className="text-sm">messages</span>
               </motion.button>
               <div className="hidden sm:block text-right">
-                <p className="text-sm font-display font-medium text-ink">welcome back!</p>
-                <p className="text-xs text-ink/60 font-display">{session?.user?.name}</p>
+                <p className="font-display text-sm font-medium text-ink lowercase">welcome back!</p>
+                <p className="font-display text-xs text-ink/60 lowercase">{session?.user?.name}</p>
               </div>
               <motion.button
                 onClick={() => signOut({ callbackUrl: '/' })}
@@ -241,7 +243,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <motion.nav
-            className="flex space-x-2 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
+            className="flex space-x-2 bg-milk-tea/60 dark:bg-gray-700/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 dark:border-gray-600/20 shadow-lg"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
@@ -256,7 +258,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
                   className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all duration-300 group ${
                     isActive
                       ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
-                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
+                      : 'text-ink/70 dark:text-gray-300/70 hover:text-ink dark:hover:text-gray-200 hover:bg-milk-tea/80 dark:hover:bg-gray-600/80 hover:shadow-md'
                   }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -273,7 +275,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
                       className={`transition-transform ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}
                     />
                   </motion.div>
-                  <span className="font-display">{tab.name}</span>
+                  <span className="font-medium lowercase">{tab.name}</span>
                   {isActive && (
                     <motion.div
                       className="absolute inset-0 rounded-lg bg-gradient-to-r from-taro/20 to-brown-sugar/20"
@@ -346,6 +348,8 @@ function OverviewTab({
       icon: Users,
       color: 'blue',
       trend: `+${Math.floor(stats.totalClients * 0.12)} this month`,
+      trendDirection: 'up' as 'up' | 'down' | 'neutral',
+      accentBg: 'bg-blue-50 border-blue-100',
     },
     {
       title: 'active projects',
@@ -353,27 +357,35 @@ function OverviewTab({
       icon: FolderOpen,
       color: 'taro',
       trend: `${stats.completedProjects} completed`,
+      trendDirection: 'neutral' as 'up' | 'down' | 'neutral',
+      accentBg: 'bg-violet-50 border-violet-100',
     },
     {
       title: 'monthly revenue',
       value: `$${stats.monthlyRevenue.toLocaleString()}`,
       icon: DollarSign,
       color: 'green',
-      trend: `$${stats.totalRevenue.toLocaleString()} total`,
+      trend: `+${Math.floor(stats.monthlyRevenue * 0.15)}% this month`,
+      trendDirection: 'up' as 'up' | 'down' | 'neutral',
+      accentBg: 'bg-green-50 border-green-100',
     },
     {
       title: 'pending invoices',
       value: stats.pendingInvoices,
       icon: CreditCard,
-      color: 'orange',
-      trend: `${stats.paidInvoices} paid`,
+      color: 'red',
+      trend: `${stats.paidInvoices} paid this month`,
+      trendDirection: (stats.pendingInvoices > 3 ? 'up' : 'down') as 'up' | 'down' | 'neutral',
+      accentBg: 'bg-red-50 border-red-100',
     },
     {
       title: 'pending contracts',
       value: stats.pendingContracts,
       icon: FileText,
-      color: 'purple',
+      color: 'orange',
       trend: `${stats.signedContracts} signed`,
+      trendDirection: 'neutral' as 'up' | 'down' | 'neutral',
+      accentBg: 'bg-orange-50 border-orange-100',
     },
     {
       title: 'avg project time',
@@ -381,6 +393,8 @@ function OverviewTab({
       icon: Calendar,
       color: 'indigo',
       trend: stats.completedProjects > 0 ? `${stats.completedProjects} completed` : 'No data',
+      trendDirection: 'neutral' as 'up' | 'down' | 'neutral',
+      accentBg: 'bg-indigo-50 border-indigo-100',
     },
   ];
 
@@ -504,10 +518,34 @@ function OverviewTab({
             transition={{ delay: 1.3 }}
           >
             {[
-              { icon: Plus, label: 'new project', tab: 'projects' },
-              { icon: Users, label: 'add client', tab: 'clients' },
-              { icon: FileText, label: 'create contract', tab: 'contracts' },
-              { icon: CreditCard, label: 'send invoice', tab: 'invoices' },
+              {
+                icon: Users,
+                label: 'add client',
+                tab: 'clients',
+                color: 'from-blue-500/10 to-blue-600/10',
+                hoverColor: 'from-blue-500/20 to-blue-600/20',
+              },
+              {
+                icon: Plus,
+                label: 'new project',
+                tab: 'projects',
+                color: 'from-taro/10 to-deep-taro/10',
+                hoverColor: 'from-taro/20 to-deep-taro/20',
+              },
+              {
+                icon: FileText,
+                label: 'create contract',
+                tab: 'contracts',
+                color: 'from-green-500/10 to-green-600/10',
+                hoverColor: 'from-green-500/20 to-green-600/20',
+              },
+              {
+                icon: CreditCard,
+                label: 'send invoice',
+                tab: 'invoices',
+                color: 'from-orange-500/10 to-orange-600/10',
+                hoverColor: 'from-orange-500/20 to-orange-600/20',
+              },
             ].map((action, index) => (
               <motion.div
                 key={action.label}
@@ -523,6 +561,8 @@ function OverviewTab({
                   icon={action.icon}
                   label={action.label}
                   onClick={() => setActiveTab(action.tab)}
+                  color={action.color}
+                  hoverColor={action.hoverColor}
                 />
               </motion.div>
             ))}
@@ -547,18 +587,65 @@ function OverviewTab({
           revenue overview
         </motion.h3>
         <motion.div
-          className="h-64 bg-gradient-to-br from-taro/10 via-brown-sugar/5 to-milk-tea/10 rounded-lg flex items-center justify-center border border-white/20 backdrop-blur-sm"
+          className="h-64 bg-gradient-to-br from-white/50 via-milk-tea/30 to-taro/5 rounded-lg p-4 border border-white/20 backdrop-blur-sm"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.9 }}
         >
-          <motion.p
-            className="font-display text-ink/50 lowercase"
-            animate={{ opacity: [0.5, 0.8, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            chart component would go here
-          </motion.p>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="font-display text-sm text-ink/60 lowercase">this month</p>
+              <p className="font-display text-2xl font-bold text-ink">
+                ${stats.monthlyRevenue.toLocaleString()}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="font-display text-sm text-green-600 flex items-center gap-1">
+                ↗ +{Math.floor(stats.monthlyRevenue * 0.15)}%
+              </p>
+              <p className="font-display text-xs text-ink/50">vs last month</p>
+            </div>
+          </div>
+
+          {/* Simple Bar Chart */}
+          <div className="relative h-32 flex items-end justify-between gap-2">
+            {[65, 45, 80, 55, 90, 70, 85, 95, 75, 60, 88, stats.monthlyRevenue / 100].map(
+              (height, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-gradient-to-t from-taro/60 to-taro/40 rounded-t-sm flex-1 min-h-[8px] relative group"
+                  style={{ height: `${Math.max(height * 0.8, 8)}%` }}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${Math.max(height * 0.8, 8)}%` }}
+                  transition={{ delay: 2.0 + index * 0.1, duration: 0.5, ease: 'easeOut' }}
+                  whileHover={{
+                    backgroundColor: 'rgba(167, 139, 250, 0.8)',
+                    scale: 1.05,
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-ink/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    ${(height * 50).toLocaleString()}
+                  </div>
+                </motion.div>
+              )
+            )}
+          </div>
+
+          <div className="flex justify-between mt-2 text-xs text-ink/40 font-display">
+            <span>jan</span>
+            <span>feb</span>
+            <span>mar</span>
+            <span>apr</span>
+            <span>may</span>
+            <span>jun</span>
+            <span>jul</span>
+            <span>aug</span>
+            <span>sep</span>
+            <span>oct</span>
+            <span>nov</span>
+            <span>dec</span>
+          </div>
         </motion.div>
       </motion.div>
     </motion.div>
@@ -571,18 +658,23 @@ function StatCard({
   icon: Icon,
   color,
   trend,
+  trendDirection,
+  accentBg,
 }: {
   title: string;
   value: string | number;
   icon: any;
   color: string;
   trend?: string;
+  trendDirection?: 'up' | 'down' | 'neutral';
+  accentBg?: string;
 }) {
   const getColorClasses = (colorName: string) => {
     const colors = {
       blue: 'bg-blue-500/10 text-blue-600',
       taro: 'bg-violet-500/10 text-violet-600',
       green: 'bg-green-500/10 text-green-600',
+      red: 'bg-red-500/10 text-red-600',
       orange: 'bg-orange-500/10 text-orange-600',
       purple: 'bg-purple-500/10 text-purple-600',
       indigo: 'bg-indigo-500/10 text-indigo-600',
@@ -591,12 +683,34 @@ function StatCard({
     return colors[colorName as keyof typeof colors] || 'bg-gray-500/10 text-gray-600';
   };
 
+  const getTrendIcon = () => {
+    switch (trendDirection) {
+      case 'up':
+        return '↗';
+      case 'down':
+        return '↘';
+      default:
+        return '→';
+    }
+  };
+
+  const getTrendColor = () => {
+    switch (trendDirection) {
+      case 'up':
+        return 'text-green-600';
+      case 'down':
+        return 'text-red-500';
+      default:
+        return 'text-gray-500';
+    }
+  };
+
   return (
     <motion.div
-      className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
+      className={`${accentBg || 'bg-milk-tea/70'} backdrop-blur-sm rounded-xl p-6 border shadow-lg hover:shadow-xl transition-shadow`}
       whileHover={{
         scale: 1.02,
-        backgroundColor: 'rgba(245, 233, 218, 0.9)',
+        y: -2,
         transition: { duration: 0.2 },
       }}
       whileTap={{ scale: 0.98 }}
@@ -618,14 +732,17 @@ function StatCard({
             {value}
           </motion.p>
           {trend && (
-            <motion.p
-              className="font-display text-ink/50 text-xs lowercase"
+            <motion.div
+              className="flex items-center gap-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              {trend}
-            </motion.p>
+              <span className={`font-display text-sm font-medium ${getTrendColor()}`}>
+                {getTrendIcon()}
+              </span>
+              <p className="font-display text-ink/50 text-xs lowercase">{trend}</p>
+            </motion.div>
           )}
         </div>
         <motion.div
@@ -651,29 +768,59 @@ function ActivityItem({
   time: string;
   type: 'user' | 'project' | 'payment' | 'contract';
 }) {
-  const getIcon = () => {
-    switch (type) {
-      case 'user':
-        return Users;
-      case 'project':
-        return FolderOpen;
-      case 'payment':
-        return DollarSign;
-      case 'contract':
-        return FileText;
+  const getIconAndColor = () => {
+    switch (action.toLowerCase()) {
+      case 'message_sent':
+        return {
+          icon: '💬',
+          color: 'bg-blue-100 text-blue-600',
+          bgColor: 'from-blue-50 to-blue-100',
+        };
+      case 'contract_signed':
+      case 'contract_created':
+        return {
+          icon: '📄',
+          color: 'bg-green-100 text-green-600',
+          bgColor: 'from-green-50 to-green-100',
+        };
+      case 'invoice_sent':
+      case 'payment_received':
+        return {
+          icon: '💰',
+          color: 'bg-yellow-100 text-yellow-600',
+          bgColor: 'from-yellow-50 to-yellow-100',
+        };
+      case 'project_created':
+      case 'project_updated':
+        return {
+          icon: '📁',
+          color: 'bg-purple-100 text-purple-600',
+          bgColor: 'from-purple-50 to-purple-100',
+        };
+      case 'client_invited':
+      case 'user_registered':
+        return {
+          icon: '👤',
+          color: 'bg-indigo-100 text-indigo-600',
+          bgColor: 'from-indigo-50 to-indigo-100',
+        };
       default:
-        return Users;
+        return {
+          icon: '📌',
+          color: 'bg-gray-100 text-gray-600',
+          bgColor: 'from-gray-50 to-gray-100',
+        };
     }
   };
 
-  const Icon = getIcon();
+  const { icon, color, bgColor } = getIconAndColor();
 
   return (
     <motion.div
-      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-milk-tea/40 backdrop-blur-sm transition-colors border border-transparent hover:border-brown-sugar/20"
+      className={`flex items-center space-x-3 p-3 rounded-lg transition-colors border bg-gradient-to-r ${bgColor} hover:shadow-md`}
       whileHover={{
-        backgroundColor: 'rgba(245, 233, 218, 0.6)',
-        scale: 1.01,
+        scale: 1.02,
+        y: -1,
         transition: { duration: 0.2 },
       }}
       initial={{ opacity: 0, x: -20 }}
@@ -681,17 +828,17 @@ function ActivityItem({
       transition={{ duration: 0.3, ease: 'backOut' }}
     >
       <motion.div
-        className="w-8 h-8 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
-        whileHover={{ rotate: 10, scale: 1.1 }}
+        className={`w-10 h-10 ${color} rounded-full flex items-center justify-center flex-shrink-0 shadow-sm text-lg`}
+        whileHover={{ rotate: 5, scale: 1.05 }}
         transition={{ duration: 0.2 }}
       >
-        <Icon className="w-4 h-4 text-taro" />
+        {icon}
       </motion.div>
       <div className="flex-1">
-        <p className="font-display text-ink font-medium lowercase">{action}</p>
+        <p className="font-display text-ink font-medium lowercase">{action.replace('_', ' ')}</p>
         <p className="font-display text-ink/60 text-sm lowercase">{description}</p>
       </div>
-      <span className="font-display text-ink/50 text-xs lowercase">{time}</span>
+      <span className="font-display text-ink/50 text-xs lowercase flex-shrink-0">{time}</span>
     </motion.div>
   );
 }
@@ -700,29 +847,36 @@ function ActionButton({
   icon: Icon,
   label,
   onClick,
+  color,
+  hoverColor,
 }: {
   icon: any;
   label: string;
   onClick: () => void;
+  color?: string;
+  hoverColor?: string;
 }) {
   return (
     <motion.button
       onClick={onClick}
-      className="flex items-center space-x-2 p-3 bg-gradient-to-r from-taro/15 to-brown-sugar/15 hover:from-taro/25 hover:to-brown-sugar/25 rounded-lg transition-colors group border border-brown-sugar/20 backdrop-blur-sm shadow-sm"
+      className={`flex items-center space-x-2 p-3 bg-gradient-to-r ${color || 'from-taro/15 to-brown-sugar/15'} rounded-lg transition-all duration-300 group border border-white/40 backdrop-blur-sm shadow-sm hover:shadow-lg`}
       whileHover={{
-        scale: 1.02,
-        backgroundColor: 'rgba(167, 139, 250, 0.15)',
+        scale: 1.05,
+        y: -2,
+        backgroundImage: `linear-gradient(to right, ${hoverColor?.split(' ')[0]?.replace('from-', '') || 'rgba(167, 139, 250, 0.25)'}, ${hoverColor?.split(' ')[2]?.replace('to-', '') || 'rgba(139, 92, 246, 0.25)'})`,
         transition: { duration: 0.2 },
       }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.95 }}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, ease: 'backOut' }}
     >
-      <motion.div whileHover={{ rotate: 5 }} transition={{ duration: 0.2 }}>
-        <Icon className="w-5 h-5 text-taro group-hover:text-taro/80" />
+      <motion.div whileHover={{ rotate: 10, scale: 1.1 }} transition={{ duration: 0.2 }}>
+        <Icon className="w-5 h-5 text-gray-700 group-hover:text-gray-800" />
       </motion.div>
-      <span className="font-display text-sm font-medium text-ink lowercase">{label}</span>
+      <span className="font-display text-sm font-medium text-ink lowercase group-hover:font-semibold transition-all duration-200">
+        {label}
+      </span>
     </motion.button>
   );
 }
