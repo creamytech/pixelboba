@@ -254,7 +254,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all duration-300 group overflow-visible ${
+                  className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 group overflow-visible ${
                     isActive
                       ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
                       : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
@@ -274,10 +274,10 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                       className={`transition-transform ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}
                     />
                   </motion.div>
-                  <span className="font-display lowercase">{tab.name}</span>
+                  <span className="font-medium lowercase">{tab.name}</span>
                   {tab.badge && tab.badge > 0 && (
                     <motion.span
-                      className={`absolute -top-1 -right-1 w-6 h-6 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg font-display ${
+                      className={`absolute -top-2 -right-2 min-w-5 h-5 px-1 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg ${
                         isActive ? 'bg-white/20 backdrop-blur-sm' : 'bg-brown-sugar'
                       }`}
                       animate={isActive ? { scale: [1, 1.1, 1] } : {}}
