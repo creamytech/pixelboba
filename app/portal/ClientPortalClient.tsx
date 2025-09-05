@@ -173,9 +173,9 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                   <Image
                     src="/brand/Pixel_Boba_Logo_White.png"
                     alt="pixel boba"
-                    width={120}
-                    height={40}
-                    className="h-8 w-auto"
+                    width={160}
+                    height={53}
+                    className="h-12 w-auto"
                     priority
                   />
                 </motion.div>
