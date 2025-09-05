@@ -25,9 +25,9 @@ export default function BobaProgressIndicator({
   const config = statusConfig[status];
 
   const sizeConfig = {
-    small: { container: 'w-24 h-24', text: 'text-sm', details: 'text-xs' },
-    medium: { container: 'w-32 h-32', text: 'text-base', details: 'text-sm' },
-    large: { container: 'w-40 h-40', text: 'text-lg', details: 'text-base' },
+    small: { container: 'w-16 h-16', text: 'text-xs', details: 'text-xs' },
+    medium: { container: 'w-24 h-24', text: 'text-sm', details: 'text-xs' },
+    large: { container: 'w-32 h-32', text: 'text-base', details: 'text-sm' },
   };
 
   const { container, text, details } = sizeConfig[size];
@@ -96,7 +96,7 @@ export default function BobaProgressIndicator({
         {/* Floating Pearls Around Circle */}
         {pearls.map((pearl, index) => {
           const angle = (index / pearls.length) * 2 * Math.PI + (progress / 100) * Math.PI * 0.5;
-          const radius = size === 'small' ? 35 : size === 'medium' ? 45 : 55;
+          const radius = size === 'small' ? 25 : size === 'medium' ? 35 : 45;
           const x = Math.cos(angle) * radius;
           const y = Math.sin(angle) * radius;
 
