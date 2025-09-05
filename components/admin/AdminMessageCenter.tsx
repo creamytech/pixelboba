@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Paperclip, FileText, X, MessageCircle } from 'lucide-react';
+import { Send, Paperclip, FileText, X, MessageCircle, Plus } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { Project } from '@/types/portal';
+import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
 
 interface AdminMessage {
   id: string;
@@ -35,12 +36,23 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [uploadingFiles, setUploadingFiles] = useState<File[]>([]);
+  const [showNewConversation, setShowNewConversation] = useState(false);
+  const [clients, setClients] = useState<
+    Array<{
+      id: string;
+      name: string | null;
+      email: string;
+      isOnline: boolean;
+      lastActiveAt: Date | null;
+    }>
+  >([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (selectedProject) {
       fetchMessages(selectedProject);
     }
+    fetchClients();
   }, [selectedProject]);
 
   useEffect(() => {
@@ -65,6 +77,18 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
       console.error('Error fetching messages:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchClients = async () => {
+    try {
+      const response = await fetch('/api/admin/clients');
+      if (response.ok) {
+        const data = await response.json();
+        setClients(data.clients || []);
+      }
+    } catch (error) {
+      console.error('Error fetching clients:', error);
     }
   };
 
@@ -116,6 +140,26 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
 
   const selectedProjectData = projects.find((p) => p.id === selectedProject);
 
+  if (showNewConversation) {
+    return (
+      <NewConversationModal
+        clients={clients}
+        onClientSelect={async (clientId) => {
+          // Find or create project with the client
+          const clientData = clients.find((c) => c.id === clientId);
+          if (clientData) {
+            // For now, just close the modal - in a full implementation,
+            // you'd create a new project or find an existing one
+            setShowNewConversation(false);
+            // Could add logic here to create a new project or select an existing one
+            console.log('Starting conversation with client:', clientData.email);
+          }
+        }}
+        onCancel={() => setShowNewConversation(false)}
+      />
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -128,18 +172,30 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-6xl w-full h-[80vh] flex"
+        className="bg-white rounded-xl shadow-xl max-w-6xl w-full h-[80vh] flex flex-col lg:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Project Sidebar */}
-        <div className="w-80 border-r border-ink/10 flex flex-col">
-          <div className="p-4 border-b border-ink/10 flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <MessageCircle className="w-5 h-5 text-taro" />
-              <h3 className="font-display text-lg font-semibold text-ink">admin messaging</h3>
+        <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col lg:h-full h-48 lg:h-auto">
+          <div className="p-4 border-b border-ink/10">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center space-x-2">
+                <MessageCircle className="w-5 h-5 text-taro" />
+                <h3 className="font-display text-lg font-semibold text-ink">admin messaging</h3>
+              </div>
+              <button
+                onClick={onClose}
+                className="p-2 text-ink/60 hover:text-ink transition-colors"
+              >
+                <X size={20} />
+              </button>
             </div>
-            <button onClick={onClose} className="p-2 text-ink/60 hover:text-ink transition-colors">
-              <X size={20} />
+            <button
+              onClick={() => setShowNewConversation(true)}
+              className="w-full flex items-center justify-center space-x-2 py-2 px-3 bg-taro hover:bg-taro/80 text-white rounded-lg transition-colors text-sm"
+            >
+              <Plus size={16} />
+              <span>New Conversation</span>
             </button>
           </div>
 
@@ -329,5 +385,90 @@ function FilePreview({ file }: { file: { originalName: string; url: string; mime
         </div>
       )}
     </div>
+  );
+}
+
+interface NewConversationModalProps {
+  clients: Array<{
+    id: string;
+    name: string | null;
+    email: string;
+    isOnline: boolean;
+    lastActiveAt: Date | null;
+  }>;
+  onClientSelect: (clientId: string) => void;
+  onCancel: () => void;
+}
+
+function NewConversationModal({ clients, onClientSelect, onCancel }: NewConversationModalProps) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredClients = clients.filter(
+    (client) =>
+      client.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      onClick={onCancel}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-4 border-b border-ink/10">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-display text-lg font-semibold text-ink">Start New Conversation</h3>
+            <button onClick={onCancel} className="p-2 text-ink/60 hover:text-ink transition-colors">
+              <X size={20} />
+            </button>
+          </div>
+          <input
+            type="text"
+            placeholder="Search clients..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/50"
+          />
+        </div>
+
+        <div className="max-h-96 overflow-y-auto">
+          {filteredClients.length === 0 ? (
+            <div className="p-4 text-center text-ink/60">No clients found</div>
+          ) : (
+            <div className="space-y-1 p-2">
+              {filteredClients.map((client) => (
+                <button
+                  key={client.id}
+                  onClick={() => onClientSelect(client.id)}
+                  className="w-full p-3 text-left hover:bg-milk-tea/20 rounded-lg transition-colors flex items-center justify-between"
+                >
+                  <div>
+                    <div className="font-medium text-ink">
+                      {client.name || client.email.split('@')[0]}
+                    </div>
+                    <div className="text-sm text-ink/60">{client.email}</div>
+                  </div>
+                  <OnlineStatusIndicator
+                    isOnline={client.isOnline}
+                    lastActiveAt={client.lastActiveAt}
+                    size="sm"
+                    showLabel={false}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }

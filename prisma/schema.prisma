@@ -104,6 +104,8 @@ model User {
   role          Role      @default(CLIENT)
   phone         String?
   company       String?
+  lastActiveAt  DateTime? // Last time user was active
+  isOnline      Boolean   @default(false) // Current online status
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 

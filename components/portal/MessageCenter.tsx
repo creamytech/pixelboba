@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Paperclip, Image, FileText, X, FolderOpen, Plus } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { Project, Message, File as PortalFile } from '@/types/portal';
+import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
 
 interface MessageCenterProps {
   projects: Project[];
@@ -38,17 +39,34 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   const [showFileLibrary, setShowFileLibrary] = useState(false);
   const [userFiles, setUserFiles] = useState<PortalFile[]>([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
+  const [adminUsers, setAdminUsers] = useState<
+    Array<{
+      id: string;
+      name: string | null;
+      email: string;
+      role: string;
+      isOnline: boolean;
+      lastActiveAt: Date | null;
+    }>
+  >([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (selectedProject) {
       fetchMessages(selectedProject);
     }
+    fetchUserStatus();
   }, [selectedProject]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    // Refresh user status every 30 seconds
+    const interval = setInterval(fetchUserStatus, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchMessages = async (projectId: string) => {
     setLoading(true);
@@ -62,6 +80,18 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
       console.error('Error fetching messages:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchUserStatus = async () => {
+    try {
+      const response = await fetch('/api/user/status');
+      if (response.ok) {
+        const data = await response.json();
+        setAdminUsers(data.users || []);
+      }
+    } catch (error) {
+      console.error('Error fetching user status:', error);
     }
   };
 
@@ -210,9 +240,9 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   }
 
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden h-[600px] flex">
+    <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden h-[700px] md:h-[600px] flex flex-col lg:flex-row">
       {/* Project Sidebar */}
-      <div className="w-80 border-r border-ink/10 flex flex-col">
+      <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col lg:h-full h-48 lg:h-auto">
         <div className="p-4 border-b border-ink/10">
           <h3 className="font-display text-lg font-semibold text-ink">conversations</h3>
         </div>
@@ -249,7 +279,26 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
               </h3>
               <p className="text-sm text-ink/60">{selectedProjectData?.description}</p>
             </div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            <div className="text-right">
+              <div className="text-xs text-ink/60 mb-1">Team Status</div>
+              <div className="space-y-1">
+                {adminUsers.slice(0, 2).map((user) => (
+                  <div key={user.id} className="flex items-center space-x-2">
+                    <OnlineStatusIndicator
+                      isOnline={user.isOnline}
+                      lastActiveAt={user.lastActiveAt}
+                      size="sm"
+                    />
+                    <span className="text-xs text-ink/60">
+                      {user.name || user.email.split('@')[0]}
+                    </span>
+                  </div>
+                ))}
+                {adminUsers.length > 2 && (
+                  <div className="text-xs text-ink/40">+{adminUsers.length - 2} more</div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 

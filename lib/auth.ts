@@ -64,6 +64,7 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === 'google' && profile?.email) {
         try {
           console.log('Google OAuth signIn attempt for:', profile.email);
+          console.log('Full req object keys:', Object.keys(req));
 
           // Dynamic import to avoid build-time database connection
           const { prisma } = await import('./prisma');
@@ -74,77 +75,65 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (!dbUser) {
-            // User doesn't exist, check for valid invite
-            const inviteToken =
-              (req as any)?.query?.invite ||
-              (typeof window !== 'undefined' ? localStorage.getItem('inviteToken') : null);
+            console.log('User does not exist in database, checking invites...');
 
-            if (inviteToken) {
-              // Validate invite
-              const invite = await prisma.invite.findUnique({
-                where: { token: inviteToken },
-              });
-
-              if (
-                !invite ||
-                invite.usedAt ||
-                invite.expiresAt < new Date() ||
-                invite.email !== profile.email
-              ) {
-                console.log('Invalid invite for Google user:', profile.email);
-                return false; // Reject sign-in
-              }
-
-              // Create user with invite validation
-              console.log('Creating new user with invite:', profile.email);
-              dbUser = await prisma.user.create({
-                data: {
-                  email: profile.email,
-                  name: profile.name || profile.email,
-                  image: (profile as any)?.picture,
-                  role: invite.role,
-                  emailVerified: new Date(),
+            // Find any pending invite for this email (don't rely on token in URL)
+            const invite = await prisma.invite.findFirst({
+              where: {
+                email: profile.email,
+                usedAt: null,
+                expiresAt: {
+                  gt: new Date(),
                 },
-              });
+              },
+              orderBy: {
+                createdAt: 'desc',
+              },
+            });
+
+            let userRole = 'CLIENT'; // default
+
+            if (invite) {
+              console.log('Found valid invite for user:', invite.role);
+              userRole = invite.role;
             } else {
-              // No invite token - create user with default CLIENT role
-              console.log('Creating new user without invite (default CLIENT role):', profile.email);
-              dbUser = await prisma.user.create({
+              console.log('No valid invite found, using default CLIENT role');
+            }
+
+            // Create user
+            console.log('Creating new user with role:', userRole);
+            dbUser = await prisma.user.create({
+              data: {
+                email: profile.email,
+                name: profile.name || profile.email,
+                image: (profile as any)?.picture,
+                role: userRole,
+                emailVerified: new Date(),
+              },
+            });
+
+            // Mark invite as used if it exists
+            if (invite) {
+              await prisma.invite.update({
+                where: { id: invite.id },
                 data: {
-                  email: profile.email,
-                  name: profile.name || profile.email,
-                  image: (profile as any)?.picture,
-                  role: 'CLIENT',
-                  emailVerified: new Date(),
+                  usedAt: new Date(),
+                  usedById: dbUser.id,
                 },
               });
+              console.log('Invite marked as used');
             }
 
-            // Mark invite as used (only if there was an invite)
-            if (inviteToken) {
-              const invite = await prisma.invite.findUnique({
-                where: { token: inviteToken },
-              });
-
-              if (invite) {
-                await prisma.invite.update({
-                  where: { id: invite.id },
-                  data: {
-                    usedAt: new Date(),
-                    usedById: dbUser.id,
-                  },
-                });
-              }
-            }
-
-            console.log('User created successfully with invite:', dbUser.id);
+            console.log('User created successfully:', dbUser.id);
           } else {
-            console.log('Existing user found:', dbUser.id);
+            console.log('Existing user found:', dbUser.id, 'Role:', dbUser.role);
           }
 
           // Store role in user object for JWT
           user.role = dbUser.role;
           user.id = dbUser.id;
+
+          console.log('SignIn successful for user:', user.id, 'with role:', user.role);
         } catch (error) {
           console.error('Database error in signIn callback:', error);
 
@@ -170,16 +159,24 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
+        console.log('JWT callback - adding user data to token:', user.id, user.role);
         token.role = user.role;
         token.id = user.id;
       }
+      console.log('JWT callback - token:', { id: token.id, role: token.role, email: token.email });
       return token;
     },
     async session({ session, token }) {
       if (token) {
+        console.log('Session callback - token data:', { id: token.id, role: token.role });
         session.user.id = token.id as string;
         session.user.role = token.role as 'CLIENT' | 'ADMIN' | 'OWNER';
       }
+      console.log('Session callback - final session:', {
+        id: session.user.id,
+        role: session.user.role,
+        email: session.user.email,
+      });
       return session;
     },
     async redirect({ url, baseUrl }) {

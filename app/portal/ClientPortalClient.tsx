@@ -23,6 +23,8 @@ import ContractCenter from '@/components/portal/ContractCenter';
 import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
+import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Project, User as UserType } from '@/types/portal';
 import { Session } from 'next-auth';
 
@@ -38,6 +40,9 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [portalData, setPortalData] = useState<PortalData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Initialize online status tracking
+  useOnlineStatus();
 
   useEffect(() => {
     fetchPortalData();
@@ -155,7 +160,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'backOut' }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-6">
               <motion.div
@@ -222,8 +227,17 @@ export default function ClientPortalClient({ session }: { session: Session }) {
               )}
 
               <div className="hidden sm:block text-right">
-                <p className="font-display text-sm font-medium text-ink lowercase">welcome back!</p>
-                <p className="font-display text-xs text-ink/60 lowercase">{portalData.user.name}</p>
+                <div className="flex items-center justify-end space-x-2">
+                  <div>
+                    <p className="font-display text-sm font-medium text-ink lowercase">
+                      welcome back!
+                    </p>
+                    <p className="font-display text-xs text-ink/60 lowercase">
+                      {portalData.user.name}
+                    </p>
+                  </div>
+                  <OnlineStatusIndicator isOnline={true} size="sm" />
+                </div>
               </div>
               <div className="flex items-center space-x-2">
                 {portalData.user.image && (
@@ -254,7 +268,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         </div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8 relative z-10 overflow-hidden">
         {/* Enhanced Navigation Tabs with Motion */}
         <motion.div
           className="mb-8"

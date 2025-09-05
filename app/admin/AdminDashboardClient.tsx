@@ -25,6 +25,8 @@ import AdminSettings from '@/components/admin/AdminSettings';
 import InviteManager from '@/components/admin/InviteManager';
 import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
+import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Session } from 'next-auth';
 
 interface AdminStats {
@@ -54,6 +56,9 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   const [loading, setLoading] = useState(true);
   const [showMessageCenter, setShowMessageCenter] = useState(false);
   const [projects, setProjects] = useState([]);
+
+  // Initialize online status tracking
+  useOnlineStatus();
 
   useEffect(() => {
     fetchStats();
@@ -155,7 +160,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'backOut' }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <motion.div
               className="flex items-center space-x-4"
@@ -232,7 +237,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         </div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8 relative z-10 overflow-hidden">
         {/* Navigation Tabs */}
         <motion.div
           className="mb-8"

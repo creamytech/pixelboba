@@ -29,6 +29,8 @@ export async function GET(request: NextRequest) {
           company: true,
           image: true,
           emailVerified: true,
+          isOnline: true,
+          lastActiveAt: true,
           createdAt: true,
           _count: {
             select: {

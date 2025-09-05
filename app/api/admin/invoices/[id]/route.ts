@@ -303,7 +303,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
           invoice: stripeInvoice.id,
           description: item.description,
           quantity: item.quantity,
-          amount: Math.round(Number(item.rate) * 100), // Convert to cents
+          unit_amount: Math.round(Number(item.rate) * 100), // Convert to cents
         });
       }
 

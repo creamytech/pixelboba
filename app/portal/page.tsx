@@ -32,9 +32,17 @@ interface PortalData {
 export default async function ClientPortal() {
   const session = await getServerSession(authOptions);
 
+  console.log('Portal page - session check:', {
+    exists: !!session,
+    user: session?.user,
+    timestamp: new Date().toISOString(),
+  });
+
   if (!session) {
+    console.log('Portal page - no session found, redirecting to signin');
     redirect('/auth/signin');
   }
 
+  console.log('Portal page - session valid, rendering client portal');
   return <ClientPortalClient session={session} />;
 }
