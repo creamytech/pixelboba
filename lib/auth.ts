@@ -2,7 +2,6 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { compare } from 'bcryptjs';
-import { prisma } from './prisma';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,26 +20,34 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
+        try {
+          // Dynamic import to avoid build-time database connection
+          const { prisma } = await import('./prisma');
 
-        if (!user) {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+          });
+
+          if (!user) {
+            return null;
+          }
+
+          // For simplicity, we'll create a password hash method later
+          // const isPasswordValid = await compare(credentials.password, user.password);
+          // if (!isPasswordValid) {
+          //   return null;
+          // }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name || user.email,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error('Error finding user:', error);
           return null;
         }
-
-        // For simplicity, we'll create a password hash method later
-        // const isPasswordValid = await compare(credentials.password, user.password);
-        // if (!isPasswordValid) {
-        //   return null;
-        // }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name || user.email,
-          role: user.role,
-        };
       },
     }),
   ],
@@ -51,6 +58,9 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile }) {
       if (account?.provider === 'google' && profile?.email) {
         try {
+          // Dynamic import to avoid build-time database connection
+          const { prisma } = await import('./prisma');
+
           // Check if user exists, create if not
           let dbUser = await prisma.user.findUnique({
             where: { email: profile.email },
