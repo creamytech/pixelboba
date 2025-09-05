@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
+  apiVersion: '2025-08-27.basil',
 });
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -84,7 +84,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
 
       // Calculate new total amount if items provided
-      let totalAmount = currentInvoice.totalAmount;
+      let totalAmount = Number(currentInvoice.totalAmount);
       if (items && Array.isArray(items)) {
         totalAmount = items.reduce((sum: number, item: any) => {
           return sum + item.quantity * item.rate;
@@ -250,21 +250,12 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         return NextResponse.json({ error: 'Invoice has already been sent' }, { status: 400 });
       }
 
-      // Create Stripe customer if doesn't exist
-      let stripeCustomerId = invoice.client.stripeCustomerId;
-      if (!stripeCustomerId) {
-        const customer = await stripe.customers.create({
-          email: invoice.client.email,
-          name: invoice.client.name || undefined,
-        });
-        stripeCustomerId = customer.id;
-
-        // Update user with Stripe customer ID
-        await prisma.user.update({
-          where: { id: invoice.clientId },
-          data: { stripeCustomerId },
-        });
-      }
+      // Create Stripe customer - always create new for now since User model doesn't have stripeCustomerId
+      const customer = await stripe.customers.create({
+        email: invoice.client.email,
+        name: invoice.client.name || undefined,
+      });
+      const stripeCustomerId = customer.id;
 
       // Create Stripe invoice
       const stripeInvoice = await stripe.invoices.create({
@@ -284,13 +275,16 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
           invoice: stripeInvoice.id,
           description: item.description,
           quantity: item.quantity,
-          unit_amount: Math.round(item.rate * 100), // Convert to cents
+          amount: Math.round(Number(item.rate) * 100), // Convert to cents
         });
       }
 
       // Finalize and send the invoice
-      const finalizedInvoice = await stripe.invoices.finalizeInvoice(stripeInvoice.id);
-      await stripe.invoices.sendInvoice(stripeInvoice.id);
+      let finalizedInvoice = null;
+      if (stripeInvoice.id) {
+        finalizedInvoice = await stripe.invoices.finalizeInvoice(stripeInvoice.id);
+        await stripe.invoices.sendInvoice(stripeInvoice.id);
+      }
 
       // Update our database
       const updatedInvoice = await prisma.invoice.update({
@@ -298,7 +292,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         data: {
           status: 'SENT',
           stripeInvoiceId: stripeInvoice.id,
-          sentAt: new Date(),
         },
         include: {
           client: {
@@ -330,7 +323,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
       return NextResponse.json({
         invoice: updatedInvoice,
-        stripeInvoiceUrl: finalizedInvoice.hosted_invoice_url,
+        stripeInvoiceUrl: finalizedInvoice?.hosted_invoice_url,
       });
     } catch (dbError) {
       console.error('Database error sending invoice:', dbError);

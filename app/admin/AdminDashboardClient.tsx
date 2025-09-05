@@ -106,7 +106,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'overview':
-        return <OverviewTab stats={stats} />;
+        return <OverviewTab stats={stats} setActiveTab={setActiveTab} />;
       case 'projects':
         return <ProjectManager />;
       case 'clients':
@@ -118,7 +118,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
       case 'settings':
         return <AdminSettings />;
       default:
-        return <OverviewTab stats={stats} />;
+        return <OverviewTab stats={stats} setActiveTab={setActiveTab} />;
     }
   };
 
@@ -201,7 +201,13 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   );
 }
 
-function OverviewTab({ stats }: { stats: AdminStats | null }) {
+function OverviewTab({
+  stats,
+  setActiveTab,
+}: {
+  stats: AdminStats | null;
+  setActiveTab: (tab: string) => void;
+}) {
   if (!stats) {
     return (
       <div className="min-h-[400px] bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 flex items-center justify-center">
