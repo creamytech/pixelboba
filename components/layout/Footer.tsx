@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Instagram, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -93,7 +94,13 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="font-display font-bold text-2xl">pixel boba</div>
+              <Image
+                src="/brand/Pixel_Boba_Logo_White.png"
+                alt="pixel boba"
+                width={140}
+                height={47}
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
               design-first websites with delightful details and boba-smooth interactions. we create

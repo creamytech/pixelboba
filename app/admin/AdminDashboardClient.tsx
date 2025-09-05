@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { signOut } from 'next-auth/react';
 import {
@@ -164,7 +165,6 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
             >
               <div className="flex items-center space-x-3">
                 <motion.div
-                  className="w-10 h-10 bg-gradient-to-br from-taro via-brown-sugar to-milk-tea rounded-xl shadow-lg flex items-center justify-center"
                   whileHover={{ scale: 1.05, rotate: 5 }}
                   animate={{
                     boxShadow: [
@@ -177,20 +177,15 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
                     boxShadow: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
                   }}
                 >
-                  <div className="w-6 h-6 bg-white rounded-md opacity-90"></div>
+                  <Image
+                    src="/brand/Pixel_Boba_Logo_White.png"
+                    alt="pixel boba"
+                    width={120}
+                    height={40}
+                    className="h-8 w-auto"
+                    priority
+                  />
                 </motion.div>
-                <div className="flex flex-col">
-                  <motion.span
-                    className="font-display font-bold text-xl text-ink leading-none"
-                    animate={{ opacity: [0.8, 1, 0.8] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                  >
-                    pixel boba
-                  </motion.span>
-                  <span className="text-xs text-ink/50 font-display font-medium">
-                    design & development
-                  </span>
-                </div>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-1 h-6 bg-gradient-to-b from-taro to-brown-sugar rounded-full"></div>

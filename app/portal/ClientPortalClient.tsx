@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { signOut } from 'next-auth/react';
 import {
@@ -163,23 +164,21 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                 transition={{ duration: 0.4, delay: 0.2 }}
               >
                 <motion.div
-                  className="w-10 h-10 bg-gradient-to-br from-taro via-brown-sugar to-milk-tea rounded-xl shadow-lg flex items-center justify-center"
                   whileHover={{
                     rotate: 5,
                     scale: 1.05,
                     transition: { duration: 0.2 },
                   }}
                 >
-                  <div className="w-6 h-6 bg-white rounded-md opacity-90"></div>
+                  <Image
+                    src="/brand/Pixel_Boba_Logo_White.png"
+                    alt="pixel boba"
+                    width={120}
+                    height={40}
+                    className="h-8 w-auto"
+                    priority
+                  />
                 </motion.div>
-                <div className="flex flex-col">
-                  <span className="font-display font-bold text-xl text-ink leading-none lowercase">
-                    pixel boba
-                  </span>
-                  <span className="font-display text-xs text-ink/50 font-medium lowercase">
-                    design & development
-                  </span>
-                </div>
               </motion.div>
               <motion.div
                 className="hidden sm:flex items-center space-x-2"

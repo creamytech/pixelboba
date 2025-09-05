@@ -2,6 +2,7 @@
 
 import { signIn, getProviders } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Chrome, Mail, Lock } from 'lucide-react';
 
@@ -34,8 +35,14 @@ export default function SignIn() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-taro to-brown-sugar rounded-full"></div>
-              <span className="font-display font-bold text-2xl text-ink">pixel boba</span>
+              <Image
+                src="/brand/Pixel_Boba_Logo_White.png"
+                alt="pixel boba"
+                width={140}
+                height={47}
+                className="h-12 w-auto"
+                priority
+              />
             </div>
             <h1 className="text-xl font-semibold text-ink mb-2">welcome back</h1>
             <p className="text-ink/60">sign in to access your portal</p>

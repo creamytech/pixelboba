@@ -25,171 +25,101 @@ export default function BobaProgressIndicator({
   const config = statusConfig[status];
 
   const sizeConfig = {
-    small: { cupHeight: 120, cupWidth: 80, text: 'text-xs', details: 'text-xs' },
-    medium: { cupHeight: 150, cupWidth: 100, text: 'text-sm', details: 'text-xs' },
-    large: { cupHeight: 180, cupWidth: 120, text: 'text-base', details: 'text-sm' },
+    small: { cupWidth: 60, cupHeight: 80, text: 'text-xs', details: 'text-xs' },
+    medium: { cupWidth: 80, cupHeight: 100, text: 'text-sm', details: 'text-xs' },
+    large: { cupWidth: 96, cupHeight: 128, text: 'text-base', details: 'text-sm' },
   };
 
-  const { cupHeight, cupWidth, text, details } = sizeConfig[size];
+  const { cupWidth, cupHeight, text, details } = sizeConfig[size];
 
-  // Calculate liquid height based on progress
-  const liquidHeight = (progress / 100) * (cupHeight * 0.7);
+  // Calculate liquid height based on progress (20% minimum, 80% maximum)
+  const liquidHeight = Math.max(20, Math.min(80, 20 + (progress / 100) * 60));
 
   // Create boba pearls based on progress
-  const maxPearls = 12;
-  const pearlCount = Math.floor((progress / 100) * maxPearls);
+  const maxPearls = 5;
+  const pearlCount = Math.max(1, Math.floor((progress / 100) * maxPearls));
   const pearls = Array.from({ length: pearlCount }, (_, i) => ({
     id: i,
-    x: 20 + Math.random() * (cupWidth - 40),
-    y: cupHeight - 30 - i * (liquidHeight / pearlCount),
-    size: 8 + Math.random() * 4,
-    delay: i * 0.1,
-    color: i % 3 === 0 ? '#8B5E3C' : i % 3 === 1 ? '#A78BFA' : '#7C3AED',
-  }));
-
-  // Bubble effects for the liquid
-  const bubbles = Array.from({ length: 6 }, (_, i) => ({
-    id: i,
-    x: 25 + Math.random() * (cupWidth - 50),
-    y: cupHeight - liquidHeight + 10 + Math.random() * (liquidHeight - 20),
-    size: 3 + Math.random() * 3,
+    color: i % 2 === 0 ? config.color : '#8B5E3C',
+    size: 12 + Math.random() * 6,
     delay: i * 0.3,
   }));
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      {/* Boba Cup Container */}
+      {/* Boba Cup Container - Similar to BobaLoader */}
       <motion.div
-        className="relative"
-        style={{ width: cupWidth + 20, height: cupHeight + 40 }}
+        className="relative flex flex-col items-center"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, ease: 'backOut' }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
-        {/* Cup Shadow */}
-        <div
-          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-brown-sugar/20 rounded-full blur-sm"
-          style={{ width: cupWidth * 0.8, height: 12 }}
-        />
-
-        {/* Main Cup */}
-        <motion.div
-          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 rounded-b-3xl rounded-t-lg overflow-hidden border-2 border-brown-sugar/30"
-          style={{
-            width: cupWidth,
-            height: cupHeight,
-            background:
-              'linear-gradient(180deg, rgba(245, 233, 218, 0.9), rgba(245, 233, 218, 0.7))',
-            backdropFilter: 'blur(10px)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.1), inset 0 2px 8px rgba(255,255,255,0.2)',
-          }}
-          initial={{ height: 0 }}
-          animate={{ height: cupHeight }}
-          transition={{ duration: 1, delay: 0.3 }}
-        >
-          {/* Liquid */}
-          <motion.div
-            className="absolute bottom-0 left-0 right-0 rounded-b-3xl"
-            style={{
-              background: `linear-gradient(180deg, ${config.color}60, ${config.color}80, ${config.color})`,
-              boxShadow: `inset 0 4px 8px ${config.color}40`,
-            }}
-            initial={{ height: 0 }}
-            animate={{ height: liquidHeight }}
-            transition={{ duration: 1.5, delay: 0.8, ease: 'easeOut' }}
+        {/* Cup */}
+        <div className="relative" style={{ width: cupWidth, height: cupHeight }}>
+          <div
+            className="absolute bottom-0 bg-white/20 backdrop-blur-sm border-2 border-taro/30 rounded-b-3xl rounded-t-lg"
+            style={{ width: cupWidth, height: cupHeight - 16 }}
           >
-            {/* Liquid Surface Shimmer */}
+            {/* Liquid */}
             <motion.div
-              className="absolute top-0 left-2 right-2 h-1 rounded-full"
+              className="absolute bottom-0 left-0 right-0 rounded-b-3xl"
               style={{
-                background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)`,
+                background: `linear-gradient(180deg, ${config.color}40, ${config.color}60, ${config.color}80)`,
+                height: `${liquidHeight}%`,
               }}
-              animate={{ x: [-20, cupWidth + 20] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              initial={{ height: '20%' }}
+              animate={{ height: `${liquidHeight}%` }}
+              transition={{
+                duration: 1.5,
+                ease: 'easeOut',
+              }}
             />
 
-            {/* Liquid Bubbles */}
-            {bubbles.map((bubble) => (
+            {/* Floating pearls inside cup */}
+            {pearls.map((pearl, index) => (
               <motion.div
-                key={bubble.id}
+                key={pearl.id}
                 className="absolute rounded-full"
                 style={{
-                  left: bubble.x,
-                  bottom: bubble.y,
-                  width: bubble.size,
-                  height: bubble.size,
-                  background: 'rgba(255,255,255,0.3)',
-                  boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.5)',
+                  backgroundColor: pearl.color,
+                  width: pearl.size,
+                  height: pearl.size,
+                  left: `${15 + index * 15}%`,
+                  bottom: '10%',
                 }}
                 animate={{
-                  y: [-5, -15, -5],
-                  opacity: [0.3, 0.7, 0.3],
-                  scale: [1, 1.2, 1],
+                  y: [-3, -15, -3],
+                  x: [-1, 1, -1],
+                  scale: [1, 1.1, 1],
+                  opacity: [0.7, 1, 0.7],
                 }}
                 transition={{
-                  duration: 3 + bubble.id * 0.5,
+                  duration: 2 + pearl.delay,
                   repeat: Infinity,
-                  delay: bubble.delay,
+                  delay: pearl.delay,
                   ease: 'easeInOut',
                 }}
               />
             ))}
-          </motion.div>
+          </div>
 
-          {/* Boba Pearls */}
-          {pearls.map((pearl) => (
-            <motion.div
-              key={pearl.id}
-              className="absolute rounded-full"
-              style={{
-                left: pearl.x,
-                bottom: Math.max(5, pearl.y),
-                width: pearl.size,
-                height: pearl.size,
-                background: `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), ${pearl.color})`,
-                boxShadow: `0 2px 4px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)`,
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.8, 1, 0.8],
-                y: [0, -2, 0],
-              }}
-              transition={{
-                scale: { duration: 0.8, delay: pearl.delay },
-                opacity: { duration: 2 + pearl.id * 0.2, repeat: Infinity, delay: pearl.delay },
-                y: { duration: 4, repeat: Infinity, delay: pearl.delay, ease: 'easeInOut' },
-              }}
-            />
-          ))}
-
-          {/* Cup Highlight */}
+          {/* Straw */}
           <div
-            className="absolute top-4 left-2 w-3 h-8 rounded-full bg-white/20"
-            style={{ filter: 'blur(1px)' }}
+            className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-2 bg-taro/40 rounded-full"
+            style={{ height: cupHeight / 2 }}
           />
-        </motion.div>
-
-        {/* Straw */}
-        <motion.div
-          className="absolute top-0 right-4 w-2 bg-gradient-to-b from-taro to-deep-taro rounded-full shadow-sm"
-          style={{ height: cupHeight + 20 }}
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: cupHeight + 20, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-        >
-          {/* Straw bend */}
-          <div className="absolute -top-1 -right-3 w-6 h-4 border-2 border-taro rounded-full border-b-transparent border-l-transparent transform rotate-45" />
-          {/* Straw highlight */}
-          <div className="absolute top-0 left-0.5 w-0.5 h-full bg-white/30 rounded-full" />
-        </motion.div>
+          <div
+            className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-1 bg-taro/60 rounded-full"
+            style={{ height: cupHeight / 4 }}
+          />
+        </div>
 
         {/* Progress Percentage */}
         <motion.div
-          className={`absolute top-2 left-1/2 transform -translate-x-1/2 ${text} font-bold text-ink bg-milk-tea/80 px-3 py-1 rounded-full border border-brown-sugar/20 shadow-sm`}
+          className={`mt-3 ${text} font-bold text-ink bg-milk-tea/80 px-3 py-1 rounded-full border border-brown-sugar/20 shadow-sm`}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.5 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
         >
           {progress}%
         </motion.div>
@@ -199,9 +129,9 @@ export default function BobaProgressIndicator({
       {showDetails && (
         <motion.div
           className="text-center space-y-3"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8 }}
+          transition={{ delay: 1.0 }}
         >
           {/* Status Badge */}
           <motion.div
@@ -223,6 +153,34 @@ export default function BobaProgressIndicator({
           </div>
         </motion.div>
       )}
+
+      {/* Ambient floating pearls - similar to BobaLoader */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 rounded-full"
+            style={{
+              backgroundColor: config.color,
+              left: `${20 + i * 30}%`,
+              top: `${30 + i * 20}%`,
+              opacity: 0.3,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              x: [0, Math.random() * 10 - 5, 0],
+              opacity: [0.2, 0.5, 0.2],
+              scale: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
