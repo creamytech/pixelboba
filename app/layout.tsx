@@ -3,7 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/lib/seo';
 import StructuredData from '@/components/StructuredData';
-import PageTransitionProvider from '@/components/providers/PageTransitionProvider';
+import Providers from '@/components/providers/Providers';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData type="website" />
       </head>
       <body className="min-h-screen bg-background antialiased">
-        <PageTransitionProvider>{children}</PageTransitionProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

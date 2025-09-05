@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 
 export function useOnlineStatus() {
-  const { data: session } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
   const heartbeatInterval = useRef<NodeJS.Timeout | null>(null);
   const isOnlineRef = useRef(false);
 
