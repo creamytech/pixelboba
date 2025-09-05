@@ -25,9 +25,9 @@ export default function BobaProgressIndicator({
   const config = statusConfig[status];
 
   const sizeConfig = {
-    small: { container: 'w-16 h-16', text: 'text-xs', details: 'text-xs' },
-    medium: { container: 'w-24 h-24', text: 'text-sm', details: 'text-xs' },
-    large: { container: 'w-32 h-32', text: 'text-base', details: 'text-sm' },
+    small: { container: 'w-full max-w-16 aspect-square', text: 'text-xs', details: 'text-xs' },
+    medium: { container: 'w-full max-w-24 aspect-square', text: 'text-sm', details: 'text-xs' },
+    large: { container: 'w-full max-w-32 aspect-square', text: 'text-base', details: 'text-sm' },
   };
 
   const { container, text, details } = sizeConfig[size];
@@ -96,9 +96,10 @@ export default function BobaProgressIndicator({
         {/* Floating Pearls Around Circle */}
         {pearls.map((pearl, index) => {
           const angle = (index / pearls.length) * 2 * Math.PI + (progress / 100) * Math.PI * 0.5;
-          const radius = size === 'small' ? 25 : size === 'medium' ? 35 : 45;
-          const x = Math.cos(angle) * radius;
-          const y = Math.sin(angle) * radius;
+          // Use percentage-based radius that scales with container
+          const radiusPercent = size === 'small' ? 30 : size === 'medium' ? 35 : 40;
+          const x = Math.cos(angle) * radiusPercent;
+          const y = Math.sin(angle) * radiusPercent;
 
           return (
             <motion.div
@@ -163,7 +164,7 @@ export default function BobaProgressIndicator({
           </motion.div>
 
           {/* Modern Progress Bar */}
-          <div className="w-48 bg-milk-tea/40 rounded-full h-2 overflow-hidden shadow-inner">
+          <div className="w-full max-w-48 bg-milk-tea/40 rounded-full h-2 overflow-hidden shadow-inner">
             <motion.div
               className="h-full rounded-full shadow-sm"
               style={{
