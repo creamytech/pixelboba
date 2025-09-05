@@ -25,140 +25,153 @@ export default function BobaProgressIndicator({
   const config = statusConfig[status];
 
   const sizeConfig = {
-    small: { cup: 'w-20 h-24', pearl: 3, text: 'text-sm', container: 'p-3' },
-    medium: { cup: 'w-28 h-36', pearl: 4, text: 'text-base', container: 'p-4' },
-    large: { cup: 'w-36 h-44', pearl: 5, text: 'text-lg', container: 'p-6' },
+    small: { container: 'w-24 h-24', text: 'text-sm', details: 'text-xs' },
+    medium: { container: 'w-32 h-32', text: 'text-base', details: 'text-sm' },
+    large: { container: 'w-40 h-40', text: 'text-lg', details: 'text-base' },
   };
 
-  const { cup, pearl, text, container } = sizeConfig[size];
-  const liquidHeight = Math.max(15, (progress / 100) * 75);
+  const { container, text, details } = sizeConfig[size];
 
-  // Cleaner pearl arrangement - fixed positions instead of random
-  const pearlPositions = [
-    { x: 25, y: 15 },
-    { x: 50, y: 25 },
-    { x: 75, y: 18 },
-    { x: 35, y: 35 },
-    { x: 65, y: 40 },
-    { x: 40, y: 55 },
-    { x: 60, y: 60 },
-    { x: 45, y: 70 },
-  ];
-
-  const visiblePearlCount = Math.min(Math.floor((progress / 100) * 6) + 2, 8);
-  const visiblePearls = pearlPositions.slice(0, visiblePearlCount);
+  // Create floating pearls based on progress
+  const pearlCount = Math.floor((progress / 100) * 8) + 1;
+  const pearls = Array.from({ length: pearlCount }, (_, i) => ({
+    id: i,
+    delay: i * 0.2,
+    size: 4 + (i % 3),
+    color:
+      i % 4 === 0 ? '#F5E9DA' : i % 4 === 1 ? '#8B5E3C' : i % 4 === 2 ? config.color : '#A78BFA',
+  }));
 
   return (
     <div className="flex flex-col items-center space-y-6">
-      {/* Cleaner Boba Cup Design */}
+      {/* Modern Circular Progress */}
       <motion.div
-        className={`relative ${cup} ${container}`}
+        className={`relative ${container} flex items-center justify-center`}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'backOut' }}
+        transition={{ duration: 0.8, ease: 'backOut' }}
       >
-        {/* Cup Container with better styling */}
-        <div className="relative w-full h-full bg-gradient-to-b from-milk-tea/40 to-milk-tea/60 backdrop-blur-sm border-2 border-brown-sugar/30 rounded-t-lg rounded-b-3xl overflow-hidden shadow-lg">
-          {/* Liquid with smoother gradient */}
-          <motion.div
-            className="absolute bottom-0 left-0 right-0 rounded-b-3xl"
-            style={{
-              background: `linear-gradient(to top, ${config.color}, ${config.color}80, ${config.color}40)`,
-            }}
-            initial={{ height: '10%' }}
-            animate={{ height: `${liquidHeight}%` }}
-            transition={{ duration: 1.5, ease: 'easeOut' }}
-          />
+        {/* Background Circle */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-milk-tea/60 to-milk-tea/30 backdrop-blur-sm border border-brown-sugar/20 shadow-lg"></div>
 
-          {/* Cleaner, positioned pearls */}
-          {visiblePearls.map((pearlPos, index) => (
+        {/* Progress Ring */}
+        <svg className="absolute inset-2 w-auto h-auto transform -rotate-90" viewBox="0 0 100 100">
+          {/* Background Ring */}
+          <circle
+            cx="50"
+            cy="50"
+            r="40"
+            fill="none"
+            stroke="rgba(139, 94, 60, 0.15)"
+            strokeWidth="6"
+          />
+          {/* Progress Ring */}
+          <motion.circle
+            cx="50"
+            cy="50"
+            r="40"
+            fill="none"
+            stroke={config.color}
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeDasharray={`${2 * Math.PI * 40}`}
+            initial={{ strokeDashoffset: 2 * Math.PI * 40 }}
+            animate={{ strokeDashoffset: 2 * Math.PI * 40 * (1 - progress / 100) }}
+            transition={{ duration: 2, ease: 'easeOut', delay: 0.5 }}
+          />
+        </svg>
+
+        {/* Center Content */}
+        <div className="relative z-10 text-center">
+          <motion.div
+            className={`font-bold ${text} text-ink mb-1`}
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            {progress}%
+          </motion.div>
+          <div className={`${details} text-ink/60 font-medium lowercase`}>{config.label}</div>
+        </div>
+
+        {/* Floating Pearls Around Circle */}
+        {pearls.map((pearl, index) => {
+          const angle = (index / pearls.length) * 2 * Math.PI + (progress / 100) * Math.PI * 0.5;
+          const radius = size === 'small' ? 35 : size === 'medium' ? 45 : 55;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+
+          return (
             <motion.div
-              key={index}
+              key={pearl.id}
               className="absolute rounded-full shadow-sm"
               style={{
-                backgroundColor:
-                  index % 3 === 0 ? '#F5E9DA' : index % 3 === 1 ? '#8B5E3C' : config.color,
-                width: pearl + (index % 2),
-                height: pearl + (index % 2),
-                left: `${pearlPos.x}%`,
-                bottom: `${Math.min(pearlPos.y, liquidHeight - 8)}%`,
-                border: '1px solid rgba(139, 94, 60, 0.2)',
+                backgroundColor: pearl.color,
+                width: pearl.size,
+                height: pearl.size,
+                left: '50%',
+                top: '50%',
+                marginLeft: x,
+                marginTop: y,
+                boxShadow: `0 2px 8px rgba(0,0,0,0.15), inset 0 1px 3px rgba(255,255,255,0.3)`,
               }}
               initial={{ scale: 0, opacity: 0 }}
               animate={{
-                scale: 1,
-                opacity: [0.7, 0.9, 0.7],
-                y: [-1, -3, -1],
+                scale: [1, 1.2, 1],
+                opacity: [0.6, 0.9, 0.6],
+                y: [-2, -6, -2],
               }}
               transition={{
-                scale: { duration: 0.4, delay: index * 0.1 },
-                opacity: { duration: 3, repeat: Infinity, delay: index * 0.2 },
-                y: { duration: 2.5, repeat: Infinity, delay: index * 0.3, ease: 'easeInOut' },
+                scale: { duration: 0.6, delay: pearl.delay },
+                opacity: { duration: 4, repeat: Infinity, delay: pearl.delay },
+                y: { duration: 3, repeat: Infinity, delay: pearl.delay, ease: 'easeInOut' },
               }}
             />
-          ))}
+          );
+        })}
 
-          {/* Subtle foam/bubble effect at top */}
-          <motion.div
-            className="absolute top-2 left-2 right-2 h-3 bg-white/20 rounded-lg blur-sm"
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
-
-        {/* Better straw design */}
+        {/* Subtle Glow Effect */}
         <motion.div
-          className="absolute -top-3 left-1/2 transform -translate-x-1/2"
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <div
-            className="rounded-full"
-            style={{
-              backgroundColor: '#8B5E3C',
-              width: '3px',
-              height: size === 'small' ? '16px' : size === 'medium' ? '20px' : '24px',
-            }}
-          />
-          <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rounded-full bg-brown-sugar/80" />
-        </motion.div>
+          className="absolute inset-0 rounded-full opacity-30"
+          style={{
+            background: `radial-gradient(circle at center, ${config.color}20, transparent 70%)`,
+          }}
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        />
       </motion.div>
 
-      {/* Cleaner Progress Details */}
+      {/* Enhanced Progress Details */}
       {showDetails && (
         <motion.div
-          className="text-center space-y-3"
-          initial={{ opacity: 0, y: 15 }}
+          className="text-center space-y-4"
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
+          transition={{ delay: 0.8 }}
         >
-          <div className="space-y-1">
-            <motion.div
-              className={`font-display font-bold ${text}`}
-              style={{ color: config.color }}
-              animate={{ scale: [1, 1.02, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              {progress}% complete
-            </motion.div>
-            <div
-              className={`text-ink/70 font-display font-medium ${size === 'small' ? 'text-xs' : 'text-sm'} lowercase`}
-            >
-              {config.label}
-            </div>
-          </div>
+          {/* Status Badge */}
+          <motion.div
+            className="inline-flex items-center px-4 py-2 rounded-full border border-brown-sugar/20 shadow-sm"
+            style={{
+              backgroundColor: `${config.color}15`,
+              color: config.color,
+            }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: config.color }} />
+            <span className="font-medium text-sm lowercase">{config.phase}</span>
+          </motion.div>
 
-          {/* Prettier Progress Bar */}
-          <div className="w-32 h-2 bg-milk-tea/30 rounded-full overflow-hidden shadow-inner">
+          {/* Modern Progress Bar */}
+          <div className="w-48 bg-milk-tea/40 rounded-full h-2 overflow-hidden shadow-inner">
             <motion.div
               className="h-full rounded-full shadow-sm"
               style={{
-                background: `linear-gradient(90deg, ${config.color}, ${config.color}80)`,
+                background: `linear-gradient(90deg, ${config.color}, ${config.color}80, ${config.color}60)`,
               }}
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: `${progress}%`, opacity: 1 }}
+              transition={{ duration: 2, delay: 1, ease: 'easeOut' }}
             />
           </div>
         </motion.div>
