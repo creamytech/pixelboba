@@ -6,7 +6,7 @@ import { compare } from 'bcryptjs';
 import { prisma } from './prisma';
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: process.env.DATABASE_URL ? PrismaAdapter(prisma) : undefined,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',

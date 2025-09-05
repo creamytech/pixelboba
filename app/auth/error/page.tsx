@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 const errorMessages = {
   Configuration: 'There is a problem with the server configuration.',
@@ -12,12 +13,25 @@ const errorMessages = {
   Default: 'An error occurred during authentication.',
 };
 
-export default function AuthError() {
+function ErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error') as keyof typeof errorMessages;
 
   const message = errorMessages[error] || errorMessages.Default;
 
+  return (
+    <>
+      <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <AlertCircle className="w-8 h-8 text-red-500" />
+      </div>
+
+      <h1 className="text-xl font-semibold text-ink mb-2">Authentication Error</h1>
+      <p className="text-ink/70">{message}</p>
+    </>
+  );
+}
+
+export default function AuthError() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-milk-tea/5 via-background to-taro/5 flex items-center justify-center px-4">
       <motion.div
@@ -34,12 +48,19 @@ export default function AuthError() {
               <span className="font-display font-bold text-2xl text-ink">pixel boba</span>
             </div>
 
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <AlertCircle className="w-8 h-8 text-red-500" />
-            </div>
-
-            <h1 className="text-xl font-semibold text-ink mb-2">Authentication Error</h1>
-            <p className="text-ink/70">{message}</p>
+            <Suspense
+              fallback={
+                <>
+                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <AlertCircle className="w-8 h-8 text-red-500" />
+                  </div>
+                  <h1 className="text-xl font-semibold text-ink mb-2">Authentication Error</h1>
+                  <p className="text-ink/70">An error occurred during authentication.</p>
+                </>
+              }
+            >
+              <ErrorContent />
+            </Suspense>
           </div>
 
           {/* Action */}
