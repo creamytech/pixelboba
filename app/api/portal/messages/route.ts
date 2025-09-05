@@ -72,15 +72,33 @@ export async function GET(request: NextRequest) {
         data: { isRead: true },
       });
 
+      // Override sender name with display name for admin users
+      let displayName: string | null = null;
+      try {
+        const { getSettingValue } = await import('@/lib/settings');
+        displayName = await getSettingValue('company.displayName');
+      } catch (error) {
+        console.error('Error fetching display name:', error);
+      }
+
       // Format messages for the client
-      const formattedMessages = messages.map((msg) => ({
-        id: msg.id,
-        content: msg.content,
-        sender: msg.sender,
-        timestamp: msg.createdAt,
-        isOwn: msg.senderId === session.user.id,
-        file: msg.file || undefined,
-      }));
+      const formattedMessages = messages.map((msg) => {
+        const sender = { ...msg.sender };
+
+        // Override sender name if it's an admin/owner and we have a display name
+        if ((sender.role === 'ADMIN' || sender.role === 'OWNER') && displayName) {
+          sender.name = displayName;
+        }
+
+        return {
+          id: msg.id,
+          content: msg.content,
+          sender: sender,
+          timestamp: msg.createdAt,
+          isOwn: msg.senderId === session.user.id,
+          file: msg.file || undefined,
+        };
+      });
 
       return NextResponse.json({ messages: formattedMessages });
     } catch (dbError) {
@@ -316,6 +334,21 @@ export async function POST(request: NextRequest) {
         });
 
         createdMessages.push(textMessage);
+      }
+
+      // Override sender name with display name for admin users in all messages
+      for (const message of createdMessages) {
+        if (message.sender.role === 'ADMIN' || message.sender.role === 'OWNER') {
+          try {
+            const { getSettingValue } = await import('@/lib/settings');
+            const displayName = await getSettingValue('company.displayName');
+            if (displayName) {
+              message.sender.name = displayName;
+            }
+          } catch (error) {
+            console.error('Error fetching display name:', error);
+          }
+        }
       }
 
       // Create activity log for the message(s)

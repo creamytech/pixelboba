@@ -11,6 +11,7 @@ interface Settings {
     phone: string;
     address: string;
     logo: string;
+    displayName: string;
   };
   email: {
     provider: string;
@@ -41,6 +42,7 @@ export default function AdminSettings() {
       phone: '',
       address: '',
       logo: '',
+      displayName: 'pixel boba team',
     },
     email: {
       provider: 'resend',
@@ -250,6 +252,27 @@ function CompanySettings({
             }
             className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-ink mb-2">
+            display name for clients
+          </label>
+          <input
+            type="text"
+            value={settings.company.displayName}
+            onChange={(e) =>
+              setSettings({
+                ...settings,
+                company: { ...settings.company, displayName: e.target.value },
+              })
+            }
+            placeholder="How you want to appear to clients in messages"
+            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+          />
+          <p className="text-xs text-ink/50 mt-1">
+            This is the name clients will see when you send messages
+          </p>
         </div>
       </div>
 

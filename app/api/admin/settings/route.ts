@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
           phone: '',
           address: '',
           logo: '',
+          displayName: 'pixel boba team',
         },
         email: {
           provider: 'resend',

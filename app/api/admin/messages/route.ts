@@ -123,6 +123,19 @@ export async function POST(request: NextRequest) {
         },
       });
 
+      // Override sender name with display name for admin users
+      if (message.sender.role === 'ADMIN' || message.sender.role === 'OWNER') {
+        try {
+          const { getSettingValue } = await import('@/lib/settings');
+          const displayName = await getSettingValue('company.displayName');
+          if (displayName) {
+            message.sender.name = displayName;
+          }
+        } catch (error) {
+          console.error('Error fetching display name:', error);
+        }
+      }
+
       // Create activity log
       await prisma.activity.create({
         data: {
