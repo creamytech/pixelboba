@@ -41,9 +41,14 @@ export default function VisitorChatManager() {
 
   const fetchChats = useCallback(async () => {
     try {
+      console.log('Fetching visitor chats...');
       const response = await fetch('/api/admin/visitor-chats');
+      console.log('Fetch response status:', response.status);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('Received chat data:', data);
+        console.log('Number of chats:', data.chats?.length || 0);
         setChats(data.chats);
 
         // Update selected chat if it exists
@@ -53,6 +58,8 @@ export default function VisitorChatManager() {
             setSelectedChat(updatedChat);
           }
         }
+      } else {
+        console.error('Failed to fetch chats:', response.status, await response.text());
       }
     } catch (error) {
       console.error('Failed to fetch chats:', error);

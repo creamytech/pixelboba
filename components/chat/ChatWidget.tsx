@@ -62,6 +62,7 @@ export default function ChatWidget() {
       if (response.ok) {
         const data = await response.json();
         setIsConnected(true);
+        console.log('Chat initialized successfully:', data);
 
         // Add welcome message
         const welcomeMessage: ChatMessage = {
@@ -74,6 +75,9 @@ export default function ChatWidget() {
           senderName: '🧋 Boba Bot',
         };
         setMessages([welcomeMessage]);
+        console.log('Welcome message added:', welcomeMessage);
+      } else {
+        console.error('Failed to initialize chat:', response.status, await response.text());
       }
     } catch (error) {
       console.error('Failed to initialize chat:', error);
@@ -104,10 +108,17 @@ export default function ChatWidget() {
       timestamp: new Date(),
       senderName: visitorName || 'You',
     };
-    setMessages((prev) => [...prev, userMessage]);
+    console.log('Adding user message:', userMessage);
+    setMessages((prev) => {
+      console.log('Current messages before adding user message:', prev);
+      const newMessages = [...prev, userMessage];
+      console.log('Messages after adding user message:', newMessages);
+      return newMessages;
+    });
 
     // Send to API
     try {
+      console.log('Sending message:', { sessionId, message, visitorName, visitorEmail });
       const response = await fetch('/api/chat/message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -119,8 +130,11 @@ export default function ChatWidget() {
         }),
       });
 
+      console.log('Response status:', response.status);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('Response data:', data);
 
         // Add bot/admin response
         if (data.response) {
@@ -132,8 +146,17 @@ export default function ChatWidget() {
             timestamp: new Date(),
             senderName: data.senderName || (data.isFromBot ? '🧋 Boba Bot' : '✨ Pixel Boba Team'),
           };
-          setMessages((prev) => [...prev, responseMessage]);
+          console.log('Adding response message:', responseMessage);
+          setMessages((prev) => {
+            console.log('Previous messages:', prev);
+            const newMessages = [...prev, responseMessage];
+            console.log('New messages:', newMessages);
+            return newMessages;
+          });
         }
+      } else {
+        const errorText = await response.text();
+        console.error('Failed to send message:', response.status, errorText);
       }
     } catch (error) {
       console.error('Failed to send message:', error);

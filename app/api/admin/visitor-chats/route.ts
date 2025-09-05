@@ -40,6 +40,18 @@ export async function GET(request: NextRequest) {
         take: 50, // Limit to recent chats
       });
 
+      console.log('Found visitor chats:', chats.length);
+      console.log(
+        'Chat details:',
+        chats.map((c) => ({
+          id: c.id,
+          sessionId: c.sessionId,
+          status: c.status,
+          visitorName: c.visitorName,
+          messageCount: c.messages.length,
+        }))
+      );
+
       return NextResponse.json({ chats });
     } catch (dbError) {
       console.error('Database error fetching visitor chats:', dbError);
