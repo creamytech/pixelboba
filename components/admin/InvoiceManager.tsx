@@ -200,6 +200,10 @@ function InvoiceRow({ invoice, onUpdate }: { invoice: Invoice; onUpdate: () => v
         const result = await response.json();
         onUpdate();
         alert(`Invoice sent successfully! Stripe URL: ${result.stripeInvoiceUrl}`);
+      } else {
+        const errorData = await response.json();
+        console.error('Invoice send error:', errorData);
+        alert(`Failed to send invoice: ${errorData.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Error sending invoice:', error);

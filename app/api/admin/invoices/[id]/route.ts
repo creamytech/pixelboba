@@ -234,7 +234,14 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       const stripeSecretKey =
         (await getSettingValue('payments.stripeSecretKey')) || process.env.STRIPE_SECRET_KEY;
 
+      console.log('Debug - Stripe key check:', {
+        hasSettingsKey: !!(await getSettingValue('payments.stripeSecretKey')),
+        hasEnvKey: !!process.env.STRIPE_SECRET_KEY,
+        finalKey: stripeSecretKey ? `${stripeSecretKey.substring(0, 7)}...` : 'none',
+      });
+
       if (!stripeSecretKey) {
+        console.log('Debug - No Stripe key found');
         return NextResponse.json(
           {
             error:
@@ -267,13 +274,16 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       }
 
       // Create Stripe customer - always create new for now since User model doesn't have stripeCustomerId
+      console.log('Debug - Creating Stripe customer for:', invoice.client.email);
       const customer = await stripe.customers.create({
         email: invoice.client.email,
         name: invoice.client.name || undefined,
       });
       const stripeCustomerId = customer.id;
+      console.log('Debug - Stripe customer created:', stripeCustomerId);
 
       // Create Stripe invoice
+      console.log('Debug - Creating Stripe invoice');
       const stripeInvoice = await stripe.invoices.create({
         customer: stripeCustomerId,
         description: invoice.title,
@@ -283,6 +293,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
           projectId: invoice.projectId || '',
         },
       });
+      console.log('Debug - Stripe invoice created:', stripeInvoice.id);
 
       // Add invoice items to Stripe
       for (const item of invoice.items) {
@@ -343,10 +354,14 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       });
     } catch (dbError) {
       console.error('Database error sending invoice:', dbError);
-      return NextResponse.json({ error: 'Failed to send invoice' }, { status: 500 });
+      return NextResponse.json({ error: `Database error: ${dbError}` }, { status: 500 });
     }
   } catch (error) {
     console.error('Error in send invoice API:', error);
+    // Check if it's a Stripe error
+    if (error instanceof Error) {
+      return NextResponse.json({ error: `Stripe/API error: ${error.message}` }, { status: 500 });
+    }
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
