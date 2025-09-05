@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { signOut } from 'next-auth/react';
 import {
   MessageSquare,
@@ -20,6 +20,7 @@ import InvoiceCenter from '@/components/portal/InvoiceCenter';
 import ContractCenter from '@/components/portal/ContractCenter';
 import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
+import DashboardPearlField from '@/components/animations/DashboardPearlField';
 import { Project, User as UserType } from '@/types/portal';
 import { Session } from 'next-auth';
 
@@ -56,27 +57,59 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-ink/70">brewing your portal...</p>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-milk-tea/10 via-background to-taro/10 relative overflow-hidden">
+        <DashboardPearlField />
+        <motion.div
+          className="relative z-10 flex items-center justify-center min-h-screen"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="text-center bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/30 shadow-xl">
+            <motion.div
+              className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-4"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            />
+            <motion.p
+              className="font-display text-ink/70 lowercase"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              brewing your portal...
+            </motion.p>
+          </div>
+        </motion.div>
       </div>
     );
   }
 
   if (!portalData) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-ink mb-4">unable to load portal data</p>
-          <button
-            onClick={fetchPortalData}
-            className="px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
-          >
-            try again
-          </button>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-milk-tea/10 via-background to-taro/10 relative overflow-hidden">
+        <DashboardPearlField />
+        <motion.div
+          className="relative z-10 flex items-center justify-center min-h-screen"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="text-center bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/30 shadow-xl">
+            <p className="font-display text-ink mb-4 lowercase">unable to load portal data</p>
+            <motion.button
+              onClick={fetchPortalData}
+              className="px-6 py-3 bg-gradient-to-r from-taro to-brown-sugar text-white font-display rounded-lg shadow-lg border border-white/20 backdrop-blur-sm lowercase"
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: 'rgba(167, 139, 250, 0.9)',
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              try again
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
     );
   }
@@ -110,106 +143,175 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea/5 via-background to-taro/5">
-      {/* Header */}
-      <div className="border-b border-ink/10 bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-milk-tea/10 via-background to-taro/10 relative overflow-hidden">
+      <DashboardPearlField />
+
+      {/* Enhanced Header with Motion */}
+      <motion.div
+        className="border-b border-white/20 bg-white/70 backdrop-blur-lg sticky top-0 z-50 shadow-lg"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: 'backOut' }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-taro via-brown-sugar to-milk-tea rounded-xl shadow-lg flex items-center justify-center">
+              <motion.div
+                className="flex items-center space-x-3"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              >
+                <motion.div
+                  className="w-10 h-10 bg-gradient-to-br from-taro via-brown-sugar to-milk-tea rounded-xl shadow-lg flex items-center justify-center"
+                  whileHover={{
+                    rotate: 5,
+                    scale: 1.05,
+                    transition: { duration: 0.2 },
+                  }}
+                >
                   <div className="w-6 h-6 bg-white rounded-md opacity-90"></div>
-                </div>
+                </motion.div>
                 <div className="flex flex-col">
-                  <span className="font-display font-bold text-xl text-ink leading-none">
+                  <span className="font-display font-bold text-xl text-ink leading-none lowercase">
                     pixel boba
                   </span>
-                  <span className="text-xs text-ink/50 font-medium">design & development</span>
+                  <span className="font-display text-xs text-ink/50 font-medium lowercase">
+                    design & development
+                  </span>
                 </div>
-              </div>
-              <div className="hidden sm:flex items-center space-x-2">
+              </motion.div>
+              <motion.div
+                className="hidden sm:flex items-center space-x-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              >
                 <div className="w-1 h-6 bg-gradient-to-b from-taro to-brown-sugar rounded-full"></div>
-                <span className="text-ink/70 font-medium">client portal</span>
-              </div>
+                <span className="font-display text-ink/70 font-medium lowercase">
+                  client portal
+                </span>
+              </motion.div>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <motion.div
+              className="flex items-center space-x-4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
               <div className="hidden sm:block text-right">
-                <p className="text-sm font-medium text-ink">welcome back!</p>
-                <p className="text-xs text-ink/60">{portalData.user.name}</p>
+                <p className="font-display text-sm font-medium text-ink lowercase">welcome back!</p>
+                <p className="font-display text-xs text-ink/60 lowercase">{portalData.user.name}</p>
               </div>
               <div className="flex items-center space-x-2">
                 {portalData.user.image && (
-                  <img
+                  <motion.img
                     src={portalData.user.image}
                     alt={portalData.user.name || 'User'}
                     className="w-8 h-8 rounded-full border-2 border-taro/20"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
                   />
                 )}
-                <button
+                <motion.button
                   onClick={() => signOut({ callbackUrl: '/' })}
                   className="p-2 text-ink/60 hover:text-taro hover:bg-taro/10 rounded-lg transition-all duration-200 group"
                   title="Sign out"
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: 'rgba(167, 139, 250, 0.1)',
+                    transition: { duration: 0.2 },
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <LogOut size={18} className="group-hover:scale-110 transition-transform" />
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Navigation Tabs */}
-        <div className="mb-8">
-          <nav className="flex space-x-2 bg-white/60 backdrop-blur-sm rounded-xl p-2 border border-ink/5 shadow-sm">
-            {tabs.map((tab) => {
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        {/* Enhanced Navigation Tabs with Motion */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
+        >
+          <motion.nav
+            className="flex space-x-2 bg-white/60 backdrop-blur-lg rounded-xl p-2 border border-white/30 shadow-lg"
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
+          >
+            {tabs.map((tab, index) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
               return (
-                <button
+                <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 group ${
+                  className={`relative flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all duration-300 group ${
                     isActive
-                      ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg transform scale-105'
-                      : 'text-ink/70 hover:text-ink hover:bg-white/80 hover:shadow-md hover:scale-102'
+                      ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
+                      : 'text-ink/70 hover:text-ink hover:bg-white/80 hover:shadow-md'
                   }`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <Icon
-                    size={18}
-                    className={`transition-transform ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}
-                  />
-                  <span className="capitalize">{tab.name}</span>
+                  <motion.div
+                    animate={isActive ? { rotate: [0, 5, 0] } : {}}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Icon
+                      size={18}
+                      className={`transition-transform ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}
+                    />
+                  </motion.div>
+                  <span className="font-display lowercase">{tab.name}</span>
                   {tab.badge && tab.badge > 0 && (
-                    <span
-                      className={`absolute -top-1 -right-1 w-6 h-6 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg transition-all ${
-                        isActive
-                          ? 'bg-white/20 backdrop-blur-sm animate-pulse'
-                          : 'bg-brown-sugar group-hover:scale-110'
+                    <motion.span
+                      className={`absolute -top-1 -right-1 w-6 h-6 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg font-display ${
+                        isActive ? 'bg-white/20 backdrop-blur-sm' : 'bg-brown-sugar'
                       }`}
+                      animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      whileHover={{ scale: 1.1 }}
                     >
                       {tab.badge > 99 ? '99+' : tab.badge}
-                    </span>
+                    </motion.span>
                   )}
                   {isActive && (
-                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-taro/20 to-brown-sugar/20 animate-pulse"></div>
+                    <motion.div
+                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-taro/20 to-brown-sugar/20"
+                      animate={{ opacity: [0.3, 0.6, 0.3] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    />
                   )}
-                </button>
+                </motion.button>
               );
             })}
-          </nav>
-        </div>
-
-        {/* Content */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          {renderActiveTab()}
+          </motion.nav>
         </motion.div>
+
+        {/* Enhanced Content with Staggered Animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -30, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: 'backOut' }}
+          >
+            {renderActiveTab()}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -221,80 +323,160 @@ function DashboardView({ data }: { data: PortalData }) {
     data.projects[0];
 
   return (
-    <div className="space-y-8">
-      {/* Active Project */}
+    <motion.div
+      className="space-y-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      {/* Enhanced Active Project Section */}
       {activeProject ? (
-        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10 hover:shadow-lg transition-shadow">
-          <h2 className="font-display text-2xl font-bold text-ink mb-6">current project</h2>
+        <motion.div
+          className="bg-white/70 backdrop-blur-lg rounded-xl p-6 border border-white/30 shadow-lg hover:shadow-xl transition-shadow"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          whileHover={{ y: -2, transition: { duration: 0.2 } }}
+        >
+          <motion.h2
+            className="font-display text-2xl font-bold text-ink mb-6 lowercase"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            current project
+          </motion.h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="font-display text-xl font-semibold text-ink mb-2">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase">
                 {activeProject.name}
               </h3>
-              <p className="text-ink/70 mb-4">
-                {activeProject.description || 'No description available'}
+              <p className="font-display text-ink/70 mb-4 lowercase">
+                {activeProject.description || 'no description available'}
               </p>
 
               <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-ink/60">status:</span>
-                  <span className="font-medium text-ink capitalize bg-taro/10 text-taro px-3 py-1 rounded-full text-sm">
-                    {activeProject.status.toLowerCase().replace('_', ' ')}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-ink/60">deadline:</span>
-                  <span className="font-medium text-ink">
-                    {activeProject.deadline
+                {[
+                  {
+                    label: 'status',
+                    value: (
+                      <span className="font-display font-medium text-ink bg-gradient-to-r from-taro/15 to-brown-sugar/15 text-taro px-3 py-1 rounded-full text-sm border border-taro/20 lowercase">
+                        {activeProject.status.toLowerCase().replace('_', ' ')}
+                      </span>
+                    ),
+                  },
+                  {
+                    label: 'deadline',
+                    value: activeProject.deadline
                       ? new Date(activeProject.deadline).toLocaleDateString()
-                      : 'TBD'}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-ink/60">started:</span>
-                  <span className="font-medium text-ink">
-                    {new Date(activeProject.startDate).toLocaleDateString()}
-                  </span>
-                </div>
+                      : 'TBD',
+                  },
+                  {
+                    label: 'started',
+                    value: new Date(activeProject.startDate).toLocaleDateString(),
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    className="flex justify-between items-center"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 + index * 0.1 }}
+                  >
+                    <span className="font-display text-ink/60 lowercase">{item.label}:</span>
+                    <span className="font-display font-medium text-ink lowercase">
+                      {typeof item.value === 'string' ? item.value : item.value}
+                    </span>
+                  </motion.div>
+                ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col justify-center">
+            <motion.div
+              className="flex flex-col justify-center"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
               <BobaProgressIndicator
                 progress={activeProject.progress}
                 status={activeProject.status}
                 size="large"
               />
-              <div className="mt-4 text-center">
-                <p className="text-ink/60 text-sm">
+              <motion.div
+                className="mt-4 text-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                <p className="font-display text-ink/60 text-sm lowercase">
                   {activeProject.milestones?.length || 0} milestones
                   {activeProject.milestones?.filter((m) => m.completedAt).length > 0 &&
                     ` • ${activeProject.milestones.filter((m) => m.completedAt).length} completed`}
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       ) : (
-        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-8 border border-ink/10 text-center">
-          <div className="w-16 h-16 bg-taro/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <motion.div
+          className="bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/30 shadow-lg text-center"
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <motion.div
+            className="w-16 h-16 bg-gradient-to-br from-taro/15 to-brown-sugar/15 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
             <FileText className="w-8 h-8 text-taro" />
-          </div>
-          <h2 className="font-display text-2xl font-bold text-ink mb-2">Welcome to your portal!</h2>
-          <p className="text-ink/70 mb-6">
-            Your projects will appear here once we start working together. In the meantime, feel
+          </motion.div>
+          <motion.h2
+            className="font-display text-2xl font-bold text-ink mb-2 lowercase"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            welcome to your portal!
+          </motion.h2>
+          <motion.p
+            className="font-display text-ink/70 mb-6 lowercase"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            your projects will appear here once we start working together. in the meantime, feel
             free to explore the different sections.
-          </p>
-          <div className="flex justify-center space-x-3">
-            <div className="px-4 py-2 bg-taro/10 text-taro rounded-lg text-sm font-medium">
-              🎨 Design & Development
-            </div>
-            <div className="px-4 py-2 bg-brown-sugar/10 text-brown-sugar rounded-lg text-sm font-medium">
-              📱 Digital Solutions
-            </div>
-          </div>
-        </div>
+          </motion.p>
+          <motion.div
+            className="flex justify-center space-x-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            {[
+              { emoji: '🎨', text: 'design & development', color: 'taro' },
+              { emoji: '📱', text: 'digital solutions', color: 'brown-sugar' },
+            ].map((tag, index) => (
+              <motion.div
+                key={tag.text}
+                className={`px-4 py-2 bg-${tag.color}/15 text-${tag.color} rounded-lg text-sm font-display font-medium border border-${tag.color}/20 lowercase`}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                {tag.emoji} {tag.text}
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
       )}
 
       {/* Stats Grid */}
@@ -373,7 +555,7 @@ function DashboardView({ data }: { data: PortalData }) {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
