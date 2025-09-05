@@ -47,13 +47,6 @@ export default function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Initialize chat when opened
-  useEffect(() => {
-    if (isOpen && !isConnected && sessionId) {
-      initializeChat();
-    }
-  }, [isOpen, isConnected, sessionId, initializeChat]);
-
   const initializeChat = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -88,6 +81,13 @@ export default function ChatWidget() {
       setIsLoading(false);
     }
   }, [sessionId]);
+
+  // Initialize chat when opened
+  useEffect(() => {
+    if (isOpen && !isConnected && sessionId) {
+      initializeChat();
+    }
+  }, [isOpen, isConnected, sessionId, initializeChat]);
 
   const sendMessage = async () => {
     if (!newMessage.trim() || !sessionId) return;

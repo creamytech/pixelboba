@@ -39,17 +39,6 @@ export default function VisitorChatManager() {
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    fetchChats();
-    // Set up polling for new messages
-    const interval = setInterval(fetchChats, 5000);
-    return () => clearInterval(interval);
-  }, [fetchChats]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [selectedChat?.messages]);
-
   const fetchChats = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/visitor-chats');
@@ -71,6 +60,17 @@ export default function VisitorChatManager() {
       setLoading(false);
     }
   }, [selectedChat]);
+
+  useEffect(() => {
+    fetchChats();
+    // Set up polling for new messages
+    const interval = setInterval(fetchChats, 5000);
+    return () => clearInterval(interval);
+  }, [fetchChats]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [selectedChat?.messages]);
 
   const takeOverChat = async (chatId: string) => {
     try {
