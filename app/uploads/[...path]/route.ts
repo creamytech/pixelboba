@@ -26,7 +26,7 @@ export async function GET(request: NextRequest, { params }: { params: { path: st
       const extension = path[path.length - 1].split('.').pop()?.toLowerCase();
       const contentType = getContentType(extension || '');
 
-      return new NextResponse(fileBuffer, {
+      return new Response(new Uint8Array(fileBuffer), {
         headers: {
           'Content-Type': contentType,
           'Cache-Control': 'public, max-age=31536000',

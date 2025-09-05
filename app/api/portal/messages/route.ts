@@ -230,6 +230,13 @@ export async function POST(request: NextRequest) {
                 image: true,
               },
             },
+            file: {
+              select: {
+                originalName: true,
+                url: true,
+                mimetype: true,
+              },
+            },
           },
         });
 

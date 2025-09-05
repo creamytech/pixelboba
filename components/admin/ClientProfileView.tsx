@@ -108,7 +108,7 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
     try {
       // Get project details to find the client
       const project = data?.projects.find((p) => p.id === projectId);
-      if (!project) return false;
+      if (!project || !data?.client?.id) return false;
 
       const response = await fetch('/api/portal/notifications', {
         method: 'POST',
