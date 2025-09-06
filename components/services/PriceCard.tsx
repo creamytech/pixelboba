@@ -54,23 +54,6 @@ export default function PriceCard({ title, price, features, highlighted = false 
           </li>
         ))}
       </ul>
-
-      <motion.a
-        href="#start-project"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className={`
-          block w-full text-center py-3 px-4 rounded-lg font-semibold
-          transition-colors duration-200 lowercase
-          ${
-            highlighted
-              ? 'bg-taro text-white hover:bg-taro/90'
-              : 'bg-taro/10 text-taro hover:bg-taro/20 border border-taro/20'
-          }
-        `}
-      >
-        get started
-      </motion.a>
     </motion.div>
   );
 }

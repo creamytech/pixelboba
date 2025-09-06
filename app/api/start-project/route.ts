@@ -214,6 +214,115 @@ Reply directly to this email to respond to ${sanitizedData.name}.
         });
 
         console.log('Project form email sent successfully:', result);
+
+        // Send confirmation email to user
+        const confirmationResult = await resend.emails.send({
+          from: `${fromName} <${fromEmail}>`,
+          to: [sanitizedData.email],
+          subject: `🧋 We received your project details!`,
+          html: `
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Project Confirmation - Pixel Boba</title>
+            </head>
+            <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 0; background-color: #fefefe;">
+              
+              <!-- Header with branding -->
+              <div style="background: linear-gradient(135deg, #8B5CF6, #A78BFA); padding: 40px 30px; text-align: center; border-radius: 0;">
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; backdrop-filter: blur(10px);">
+                  <div style="width: 60px; height: 60px; background: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                    🧋
+                  </div>
+                  <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 700;">pixel boba</h1>
+                  <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">websites that pop</p>
+                </div>
+              </div>
+              
+              <!-- Main content -->
+              <div style="background: white; padding: 40px 30px;">
+                <h2 style="color: #374151; margin: 0 0 20px 0; font-size: 24px; font-weight: 600;">thanks ${sanitizedData.name}! 🎉</h2>
+                
+                <p style="color: #6B7280; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
+                  we've received your project details and we're excited to work with you. here's what happens next:
+                </p>
+
+                <!-- Timeline steps -->
+                <div style="background: #f8fafc; padding: 24px; border-radius: 12px; border-left: 4px solid #8B5CF6; margin: 24px 0;">
+                  <div style="margin-bottom: 16px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                      <div style="width: 24px; height: 24px; background: #8B5CF6; border-radius: 50%; color: white; text-align: center; line-height: 24px; font-size: 12px; font-weight: 600; margin-right: 12px;">1</div>
+                      <strong style="color: #374151;">review (happening now)</strong>
+                    </div>
+                    <p style="margin: 0 0 0 36px; color: #6B7280; font-size: 14px;">our team is reviewing your project requirements</p>
+                  </div>
+                  
+                  <div style="margin-bottom: 16px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                      <div style="width: 24px; height: 24px; background: #10b981; border-radius: 50%; color: white; text-align: center; line-height: 24px; font-size: 12px; font-weight: 600; margin-right: 12px;">2</div>
+                      <strong style="color: #374151;">custom proposal (within 24 hours)</strong>
+                    </div>
+                    <p style="margin: 0 0 0 36px; color: #6B7280; font-size: 14px;">we'll send you a detailed proposal with pricing and timeline</p>
+                  </div>
+                  
+                  <div>
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                      <div style="width: 24px; height: 24px; background: #f59e0b; border-radius: 50%; color: white; text-align: center; line-height: 24px; font-size: 12px; font-weight: 600; margin-right: 12px;">3</div>
+                      <strong style="color: #374151;">project kick-off</strong>
+                    </div>
+                    <p style="margin: 0 0 0 36px; color: #6B7280; font-size: 14px;">once approved, we start building your dream website</p>
+                  </div>
+                </div>
+
+                <!-- Project summary -->
+                <div style="margin: 32px 0;">
+                  <h3 style="color: #374151; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">your project summary:</h3>
+                  <div style="background: #f1f5f9; padding: 20px; border-radius: 8px;">
+                    <p style="margin: 0 0 8px 0; color: #374151;"><strong>services:</strong> ${sanitizedData.services.join(', ')}</p>
+                    <p style="margin: 0 0 8px 0; color: #374151;"><strong>budget:</strong> ${sanitizedData.budget}</p>
+                    ${sanitizedData.timeline ? `<p style="margin: 0; color: #374151;"><strong>timeline:</strong> ${sanitizedData.timeline}</p>` : ''}
+                  </div>
+                </div>
+
+                <!-- Questions section -->
+                <div style="background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 24px 0;">
+                  <h4 style="color: #92400e; margin: 0 0 8px 0; font-size: 16px; font-weight: 600;">have questions?</h4>
+                  <p style="color: #92400e; margin: 0; font-size: 14px;">
+                    simply reply to this email and we'll get back to you quickly. no phone calls needed!
+                  </p>
+                </div>
+
+                <p style="color: #6B7280; font-size: 16px; line-height: 1.6; margin: 32px 0 0 0;">
+                  thanks for choosing pixel boba. we can't wait to make your website pop! 🚀
+                </p>
+
+                <p style="color: #374151; font-size: 16px; font-weight: 600; margin: 24px 0 0 0;">
+                  the pixel boba team
+                </p>
+              </div>
+              
+              <!-- Footer -->
+              <div style="background: #f8fafc; padding: 30px; text-align: center; border-radius: 0;">
+                <div style="margin-bottom: 20px;">
+                  <p style="margin: 0 0 8px 0; color: #6B7280; font-size: 14px; font-weight: 600;">pixel boba</p>
+                  <p style="margin: 0; color: #9CA3AF; font-size: 12px;">websites that pop</p>
+                </div>
+                
+                <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
+                  <p style="margin: 0; color: #9CA3AF; font-size: 12px;">
+                    submitted ${new Date().toLocaleString()}<br>
+                    <a href="https://pixelboba.com" style="color: #8B5CF6; text-decoration: none;">pixelboba.com</a>
+                  </p>
+                </div>
+              </div>
+            </body>
+            </html>
+          `,
+        });
+
+        console.log('Confirmation email sent successfully:', confirmationResult);
         emailSent = true;
       } else {
         console.log('No email API key configured for project form');

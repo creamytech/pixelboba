@@ -170,11 +170,16 @@ export default function StartProjectForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-green-50 border border-green-200 rounded-xl p-8 text-center"
+        className="bg-white rounded-2xl p-12 shadow-xl border border-gray-100 text-center relative overflow-hidden"
       >
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        {/* Decorative elements */}
+        <div className="absolute top-4 right-6 w-3 h-3 bg-taro/20 rounded-full"></div>
+        <div className="absolute bottom-6 left-6 w-4 h-4 bg-matcha/20 rounded-full"></div>
+        <div className="absolute top-1/2 right-4 w-2 h-2 bg-taro/30 rounded-full"></div>
+
+        <div className="w-20 h-20 bg-gradient-to-br from-taro to-taro/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
           <svg
-            className="w-8 h-8 text-green-600"
+            className="w-10 h-10 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -182,8 +187,37 @@ export default function StartProjectForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-green-800 mb-2 lowercase">thanks!</h3>
-        <p className="text-green-700 lowercase">we&apos;ll email you a custom proposal shortly.</p>
+        <h3 className="text-3xl font-bold text-ink mb-4 lowercase">project submitted! 🧋</h3>
+        <p className="text-gray-600 mb-6 lowercase max-w-md mx-auto leading-relaxed">
+          thanks! we&apos;ve received your project details and sent you a confirmation email.
+          we&apos;ll review everything and send you a custom proposal within 24 hours.
+        </p>
+        <div className="bg-milk-tea/20 rounded-xl p-4 mb-6">
+          <p className="text-sm text-gray-600 lowercase">
+            💌 check your inbox for confirmation details
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            setSubmitStatus('idle');
+            setFormData({
+              name: '',
+              email: '',
+              company: '',
+              services: [],
+              pages: '',
+              budget: '',
+              timeline: '',
+              links: '',
+              additional: '',
+              honeypot: '',
+            });
+          }}
+          className="text-taro hover:text-deep-taro transition-colors duration-200 font-medium lowercase"
+        >
+          submit another project →
+        </button>
       </motion.div>
     );
   }
@@ -194,8 +228,18 @@ export default function StartProjectForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       onSubmit={handleSubmit}
-      className="bg-white rounded-xl p-8 shadow-sm border border-ink/10"
+      className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 relative overflow-hidden"
     >
+      {/* Decorative elements */}
+      <div className="absolute top-4 right-6 w-3 h-3 bg-taro/20 rounded-full"></div>
+      <div className="absolute bottom-6 left-6 w-4 h-4 bg-matcha/20 rounded-full"></div>
+      <div className="absolute top-1/2 right-4 w-2 h-2 bg-taro/30 rounded-full"></div>
+
+      {/* Header */}
+      <div className="text-center mb-8">
+        <h3 className="text-2xl font-bold text-ink mb-2 lowercase">tell us about your project</h3>
+        <p className="text-gray-600 lowercase">we&apos;ll craft a custom proposal just for you</p>
+      </div>
       {/* Honeypot field - hidden from users */}
       <input
         type="text"
