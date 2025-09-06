@@ -40,7 +40,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
-              className="font-display text-6xl md:text-8xl font-bold text-ink mb-6"
+              className="font-display text-6xl md:text-8xl font-bold text-ink mb-6 lowercase"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -50,12 +50,13 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto"
+              className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto lowercase"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              design-first sites with delightful details and boba-smooth interactions.
+              custom websites built with code-first quality. no meetings, no calls, just clean
+              builds and quick turnarounds.
             </motion.p>
 
             <motion.div
@@ -67,18 +68,18 @@ export default function HeroSection() {
               <Button
                 asChild
                 size="lg"
-                className="bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className="bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg lowercase"
               >
-                <Link href="/contact">start a project</Link>
+                <Link href="/services#start">start your project</Link>
               </Button>
 
               <Button
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
+                className="border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 lowercase"
               >
-                <Link href="/work">see our work</Link>
+                <Link href="/process">see our process</Link>
               </Button>
             </motion.div>
 

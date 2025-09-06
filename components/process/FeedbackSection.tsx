@@ -14,7 +14,7 @@ const feedbackSteps = [
   },
   {
     icon: FileText,
-    text: 'no meetings required — everything in writing for clarity',
+    text: 'no meetings required, everything in writing for clarity',
   },
 ];
 

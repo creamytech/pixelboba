@@ -73,7 +73,7 @@ export default function HowItWorks() {
             className="text-center mt-12"
           >
             <p className="text-sm text-gray-500 lowercase">
-              💡 no phone calls, no meetings, no pressure — just clear communication via email
+              💡 no phone calls, no meetings, no pressure, just clear communication via email
             </p>
           </motion.div>
         </div>

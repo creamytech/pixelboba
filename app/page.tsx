@@ -1,14 +1,41 @@
-import dynamic from 'next/dynamic';
+import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
-import ValuePropsSection from '@/components/sections/ValuePropsSection';
-import MarqueeSection from '@/components/sections/MarqueeSection';
-import FeaturedWorkSection from '@/components/sections/FeaturedWorkSection';
+import ServicesPreview from '@/components/sections/ServicesPreview';
+import CodeFirstSection from '@/components/sections/CodeFirstSection';
 import ProcessSection from '@/components/sections/ProcessSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import TechStackSection from '@/components/sections/TechStackSection';
 import CTASection from '@/components/sections/CTASection';
+
+export const metadata: Metadata = {
+  title: 'pixel boba — websites that pop',
+  description:
+    'custom websites built with code-first quality. no meetings, no calls, just clean builds and quick turnarounds.',
+  openGraph: {
+    title: 'pixel boba — websites that pop',
+    description:
+      'custom websites built with code-first quality. no meetings, no calls, just clean builds and quick turnarounds.',
+    url: 'https://pixelboba.com',
+    siteName: 'pixel boba',
+    images: [
+      {
+        url: 'https://pixelboba.com/og-image.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'pixel boba — websites that pop',
+    description:
+      'custom websites built with code-first quality. no meetings, no calls, just clean builds and quick turnarounds.',
+    images: ['https://pixelboba.com/og-image.png'],
+  },
+};
 
 export default function HomePage() {
   return (
@@ -16,12 +43,10 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
-        <ValuePropsSection />
-        <MarqueeSection />
-        <FeaturedWorkSection />
+        <ServicesPreview />
+        <CodeFirstSection />
         <ProcessSection />
         <TestimonialsSection />
-        <TechStackSection />
         <CTASection />
       </main>
       <Footer />

@@ -177,7 +177,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
                 attention to detail and results-driven approach.
               </p>
               <Button asChild size="lg" className="bg-white text-taro hover:bg-milk-tea">
-                <Link href="/contact">start your project</Link>
+                <Link href="/services#start">start your project</Link>
               </Button>
             </div>
           </div>

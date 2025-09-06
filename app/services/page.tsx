@@ -10,11 +10,11 @@ import ScrollToCTAButton from '@/components/services/ScrollToCTAButton';
 export const metadata: Metadata = {
   title: 'pixel boba — services & pricing (starting at)',
   description:
-    'custom web design and redesigns with starting-at pricing. no calls needed — tell us what you need and get a custom proposal by email.',
+    'custom web design and redesigns with starting-at pricing. no calls needed, tell us what you need and get a custom proposal by email.',
   openGraph: {
     title: 'pixel boba — services & pricing',
     description:
-      'custom web design and redesigns with starting-at pricing. no calls needed — tell us what you need and get a custom proposal by email.',
+      'custom web design and redesigns with starting-at pricing. no calls needed, tell us what you need and get a custom proposal by email.',
     url: 'https://pixelboba.com/services',
     siteName: 'pixel boba',
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'pixel boba — services & pricing',
     description:
-      'custom web design and redesigns with starting-at pricing. no calls needed — tell us what you need and get a custom proposal by email.',
+      'custom web design and redesigns with starting-at pricing. no calls needed, tell us what you need and get a custom proposal by email.',
     images: ['https://pixelboba.com/og-image.png'],
   },
 };
@@ -46,7 +46,7 @@ export default function ServicesPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-8 lowercase">
-                services — websites that pop
+                services - websites that pop
               </h1>
               <CTABanner />
             </div>
@@ -139,7 +139,7 @@ export default function ServicesPage() {
                   start your project
                 </h2>
                 <p className="text-lg text-gray-600 lowercase">
-                  tell us what you need — no calls, just a quick form
+                  tell us what you need, no calls, just a quick form
                 </p>
               </div>
               <StartProjectForm />

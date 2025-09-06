@@ -9,11 +9,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'pixel boba — our process',
   description:
-    'a simple, async workflow that keeps things moving. no meetings, no calls — just clear steps, clean builds, and quick turnarounds.',
+    'a simple, async workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
   openGraph: {
     title: 'pixel boba — our process',
     description:
-      'a simple, async workflow that keeps things moving. no meetings, no calls — just clear steps, clean builds, and quick turnarounds.',
+      'a simple, async workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
     url: 'https://pixelboba.com/process',
     siteName: 'pixel boba',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'pixel boba — our process',
     description:
-      'a simple, async workflow that keeps things moving. no meetings, no calls — just clear steps, clean builds, and quick turnarounds.',
+      'a simple, async workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
     images: ['https://pixelboba.com/og-image.png'],
   },
 };
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 const processSteps = [
   {
     stepNumber: '1',
-    title: '1) shake — discovery, but async',
+    title: '1) shake - discovery, but async',
     whatWeDo:
       'turn your project form into a short written brief; align on goals, audience, and scope.',
     whatWeNeed: 'brand assets, links, must-have features, examples you like.',
@@ -47,7 +47,7 @@ const processSteps = [
   },
   {
     stepNumber: '2',
-    title: '2) brew — architecture & prototype',
+    title: '2) brew - architecture & prototype',
     whatWeDo: 'site map, low-fi wireframes, and a tech plan for cms, integrations, and hosting.',
     whatWeNeed: 'confirm pages/features; share any compliance or legal requirements.',
     deliverables: 'site map, clickable wireframe prototype, technical outline.',
@@ -55,7 +55,7 @@ const processSteps = [
   },
   {
     stepNumber: '3',
-    title: '3) layer — visual design',
+    title: '3) layer - visual design',
     whatWeDo: 'design system, page designs, and interaction previews.',
     whatWeNeed: 'async comments in figma; choose between a/b explorations.',
     deliverables: 'figma files, design tokens, motion previews.',
@@ -63,7 +63,7 @@ const processSteps = [
   },
   {
     stepNumber: '4',
-    title: '4) pop — build & performance',
+    title: '4) pop - build & performance',
     whatWeDo: 'develop in next.js/vercel with accessibility, seo, and speed baked in.',
     whatWeNeed: 'final copy, images, and access for integrations.',
     deliverables: 'staging url, lighthouse report, accessibility checks.',
@@ -71,7 +71,7 @@ const processSteps = [
   },
   {
     stepNumber: '5',
-    title: '5) launch — go live (no drama)',
+    title: '5) launch - go live (no drama)',
     whatWeDo: 'deploy, connect domain, set up analytics, forms, and error monitoring.',
     whatWeNeed: 'dns access or a temporary token; a thumbs-up to ship.',
     deliverables: 'production site, analytics dashboard, handoff notes.',
@@ -79,7 +79,7 @@ const processSteps = [
   },
   {
     stepNumber: '6',
-    title: '6) refill — iterate & care',
+    title: '6) refill - iterate & care',
     whatWeDo: 'track, tweak, and improve with monthly updates, bug fixes, and small enhancements.',
     whatWeNeed: 'backlog items via the client portal; we&apos;ll ship in weekly batches.',
     deliverables: 'monthly change log + performance deltas.',
@@ -100,8 +100,8 @@ export default function ProcessPage() {
                 our process
               </h1>
               <p className="text-xl text-gray-600 mb-12 lowercase">
-                a simple, async workflow that keeps things moving. no meetings, no calls — just
-                clear steps, clean builds, and quick turnarounds.
+                a simple, async workflow that keeps things moving. no meetings, no calls, just clear
+                steps, clean builds, and quick turnarounds.
               </p>
 
               {/* Quick nav links */}
@@ -160,8 +160,8 @@ export default function ProcessPage() {
                 ready to start moving?
               </h2>
               <p className="text-xl text-gray-600 mb-8 lowercase">
-                no phone calls, no discovery meetings — just fill out our project form and
-                we&apos;ll get brewing.
+                no phone calls, no discovery meetings, just fill out our project form and we&apos;ll
+                get brewing.
               </p>
               <a
                 href="/services#start"
