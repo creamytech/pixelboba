@@ -7,23 +7,23 @@ import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 const testimonials = [
   {
     quote:
-      'pixel boba created a healthcare platform that truly puts patients first. their focus on accessibility and user experience has transformed how we deliver care.',
-    author: 'dr. maria rodriguez',
-    role: 'founder, call on care',
+      'Pixel Boba created a healthcare platform that truly puts patients first. Their focus on accessibility and user experience has transformed how we deliver care.',
+    author: 'Dr. Maria Rodriguez',
+    role: 'Founder, Care On Call',
     avatar: 'MR',
   },
   {
     quote:
-      'working with the pixel boba team felt like having an extension of our own team. they truly understood our vision and brought it to life beautifully.',
-    author: 'marcus johnson',
-    role: 'founder, techstart saas',
+      'Working with the Pixel Boba team felt like having an extension of our own team. They truly understood our vision and brought it to life beautifully.',
+    author: 'Marcus Johnson',
+    role: 'Founder, TechStart SaaS',
     avatar: 'MJ',
   },
   {
     quote:
-      'not only did they create a stunning portfolio site, but the performance improvements increased our inquiries by 40%. highly recommend!',
-    author: 'elena rodriguez',
-    role: 'owner, artisan studio',
+      'Not only did they create a stunning portfolio site, but the performance improvements increased our inquiries by 40%. Highly recommend!',
+    author: 'Elena Rodriguez',
+    role: 'Owner, Artisan Studio',
     avatar: 'ER',
   },
 ];
@@ -50,11 +50,11 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
-            what our clients say
+            What Our Clients Say
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            don&apos;t just take our word for it, hear from the amazing businesses we&apos;ve had
-            the pleasure of working with.
+            Don&apos;t just take our word for it—hear from the amazing businesses we&apos;ve had the
+            pleasure of working with.
           </p>
         </motion.div>
 
