@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,7 @@ const navigation = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,16 +57,27 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-gray-600 hover:text-ink transition-colors duration-200 relative group"
-              >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-taro transition-all duration-200 group-hover:w-full" />
-              </Link>
-            ))}
+            {navigation.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    'text-sm font-medium transition-colors duration-200 relative group lowercase',
+                    isActive ? 'text-taro' : 'text-gray-600 hover:text-ink'
+                  )}
+                >
+                  {item.name}
+                  <span
+                    className={cn(
+                      'absolute -bottom-1 left-0 h-0.5 bg-taro transition-all duration-200',
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    )}
+                  />
+                </Link>
+              );
+            })}
           </nav>
 
           {/* CTA Buttons */}
@@ -100,16 +113,22 @@ export default function Header() {
           >
             <div className="container mx-auto px-4 py-6">
               <nav className="flex flex-col space-y-4">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="text-lg font-medium text-gray-600 hover:text-ink transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+                {navigation.map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={cn(
+                        'text-lg font-medium transition-colors duration-200 lowercase',
+                        isActive ? 'text-taro' : 'text-gray-600 hover:text-ink'
+                      )}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
                 <div className="pt-4 space-y-3">
                   <Button
                     asChild
