@@ -210,7 +210,7 @@ Reply directly to this email to respond to ${name}.
                         <!-- Header -->
                         <tr>
                           <td style="background: linear-gradient(135deg, #8B5CF6, #A78BFA); padding: 30px; text-align: center;">
-                            <img src="https://pixelboba.com/brand/Pixel_Boba_Logo_White.svg" alt="Pixel Boba" style="height: 50px; margin-bottom: 20px;" />
+                            <img src="https://www.pixelboba.com/brand/Pixel_Boba_Logo_White.svg" alt="Pixel Boba" style="height: 50px; margin-bottom: 20px;" />
                             <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 600;">Thanks for reaching out!</h1>
                             <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">we're mixing up the perfect response ✨</p>
                           </td>
