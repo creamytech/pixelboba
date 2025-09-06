@@ -42,7 +42,7 @@ export default function Header() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between lg:grid lg:grid-cols-3 lg:gap-8">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image
@@ -56,7 +56,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center justify-center space-x-8">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -81,7 +81,7 @@ export default function Header() {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center justify-end space-x-3">
             <Button
               asChild
               variant="ghost"
@@ -91,6 +91,38 @@ export default function Header() {
             </Button>
             <Button asChild className="bg-taro hover:bg-deep-taro text-white">
               <Link href="/services#start">start a project</Link>
+            </Button>
+          </div>
+
+          {/* Medium screen navigation (hidden on lg+ where grid takes over) */}
+          <nav className="hidden md:flex lg:hidden items-center space-x-6">
+            {navigation.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    'text-sm font-medium transition-colors duration-200 relative group lowercase',
+                    isActive ? 'text-taro' : 'text-gray-600 hover:text-ink'
+                  )}
+                >
+                  {item.name}
+                  <span
+                    className={cn(
+                      'absolute -bottom-1 left-0 h-0.5 bg-taro transition-all duration-200',
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    )}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Medium screen CTA buttons */}
+          <div className="hidden md:flex lg:hidden items-center space-x-3">
+            <Button asChild className="bg-taro hover:bg-deep-taro text-white text-xs px-3 py-2">
+              <Link href="/services#start">start project</Link>
             </Button>
           </div>
 
