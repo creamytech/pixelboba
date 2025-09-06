@@ -1,66 +1,89 @@
 import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { ShoppingBag, Coffee, Layers, Zap, Rocket, RotateCcw } from 'lucide-react';
+import StepCard from '@/components/process/StepCard';
+import FeedbackSection from '@/components/process/FeedbackSection';
+import QualityChecklist from '@/components/process/QualityChecklist';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
-  title: 'our process - how we work',
+  title: 'pixel boba — our process',
   description:
-    'our proven 6-step process ensures every project is delivered on time, on budget, and exceeds expectations.',
+    'a simple, async workflow that keeps things moving. no meetings, no calls — just clear steps, clean builds, and quick turnarounds.',
+  openGraph: {
+    title: 'pixel boba — our process',
+    description:
+      'a simple, async workflow that keeps things moving. no meetings, no calls — just clear steps, clean builds, and quick turnarounds.',
+    url: 'https://pixelboba.com/process',
+    siteName: 'pixel boba',
+    images: [
+      {
+        url: 'https://pixelboba.com/og-image.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'pixel boba — our process',
+    description:
+      'a simple, async workflow that keeps things moving. no meetings, no calls — just clear steps, clean builds, and quick turnarounds.',
+    images: ['https://pixelboba.com/og-image.png'],
+  },
 };
 
 const processSteps = [
   {
-    icon: ShoppingBag,
-    title: 'shake',
-    description:
-      'we start by understanding your goals, audience, and challenges. this discovery phase helps us create a tailored strategy.',
-    details: ['stakeholder interviews', 'competitive analysis', 'user research', 'goal definition'],
+    stepNumber: '1',
+    title: '1) shake — discovery, but async',
+    whatWeDo:
+      'turn your project form into a short written brief; align on goals, audience, and scope.',
+    whatWeNeed: 'brand assets, links, must-have features, examples you like.',
+    deliverables: '1–2 page project brief + success metrics.',
+    timing: '1–3 days.',
   },
   {
-    icon: Coffee,
-    title: 'brew',
-    description:
-      'with insights gathered, we develop a comprehensive plan including sitemap, wireframes, and technical architecture.',
-    details: ['information architecture', 'wireframing', 'technical planning', 'content strategy'],
+    stepNumber: '2',
+    title: '2) brew — architecture & prototype',
+    whatWeDo: 'site map, low-fi wireframes, and a tech plan for cms, integrations, and hosting.',
+    whatWeNeed: 'confirm pages/features; share any compliance or legal requirements.',
+    deliverables: 'site map, clickable wireframe prototype, technical outline.',
+    timing: '3–5 days.',
   },
   {
-    icon: Layers,
-    title: 'layer',
-    description:
-      'our design phase brings your brand to life with beautiful, user-centered interfaces and engaging experiences.',
-    details: ['visual design', 'ui components', 'interaction design', 'design system'],
+    stepNumber: '3',
+    title: '3) layer — visual design',
+    whatWeDo: 'design system, page designs, and interaction previews.',
+    whatWeNeed: 'async comments in figma; choose between a/b explorations.',
+    deliverables: 'figma files, design tokens, motion previews.',
+    timing: '5–10 days (depends on page count).',
   },
   {
-    icon: Zap,
-    title: 'pop',
-    description:
-      'development begins with clean, efficient code and attention to performance, accessibility, and seo.',
-    details: [
-      'front-end development',
-      'back-end integration',
-      'performance optimization',
-      'quality assurance',
-    ],
+    stepNumber: '4',
+    title: '4) pop — build & performance',
+    whatWeDo: 'develop in next.js/vercel with accessibility, seo, and speed baked in.',
+    whatWeNeed: 'final copy, images, and access for integrations.',
+    deliverables: 'staging url, lighthouse report, accessibility checks.',
+    timing: '5–14 days (scope dependent).',
   },
   {
-    icon: Rocket,
-    title: 'launch',
-    description:
-      'we handle deployment, testing, and launch coordination to ensure everything goes smoothly from day one.',
-    details: ['deployment setup', 'final testing', 'launch coordination', 'monitoring setup'],
+    stepNumber: '5',
+    title: '5) launch — go live (no drama)',
+    whatWeDo: 'deploy, connect domain, set up analytics, forms, and error monitoring.',
+    whatWeNeed: 'dns access or a temporary token; a thumbs-up to ship.',
+    deliverables: 'production site, analytics dashboard, handoff notes.',
+    timing: '1–2 days.',
   },
   {
-    icon: RotateCcw,
-    title: 'iterate',
-    description:
-      'post-launch, we monitor performance and gather feedback to continuously improve your digital experience.',
-    details: [
-      'performance monitoring',
-      'user feedback analysis',
-      'ongoing optimization',
-      'support & maintenance',
-    ],
+    stepNumber: '6',
+    title: '6) refill — iterate & care',
+    whatWeDo: 'track, tweak, and improve with monthly updates, bug fixes, and small enhancements.',
+    whatWeNeed: 'backlog items via the client portal; we&apos;ll ship in weekly batches.',
+    deliverables: 'monthly change log + performance deltas.',
+    timing: 'ongoing (care plans start at $99/mo).',
   },
 ];
 
@@ -72,14 +95,31 @@ export default function ProcessPage() {
         {/* Hero Section */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-6">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-8 lowercase">
                 our process
               </h1>
-              <p className="text-xl text-gray-600 mb-8">
-                like crafting the perfect boba tea, creating exceptional digital experiences
-                requires the right ingredients, technique, and timing. here&apos;s how we do it.
+              <p className="text-xl text-gray-600 mb-12 lowercase">
+                a simple, async workflow that keeps things moving. no meetings, no calls — just
+                clear steps, clean builds, and quick turnarounds.
               </p>
+
+              {/* Quick nav links */}
+              <div className="flex flex-wrap justify-center gap-4 mb-8">
+                <a
+                  href="/services"
+                  className="text-taro hover:text-deep-taro transition-colors duration-200 lowercase font-medium"
+                >
+                  → services & pricing
+                </a>
+                <span className="text-gray-300">|</span>
+                <a
+                  href="/work"
+                  className="text-taro hover:text-deep-taro transition-colors duration-200 lowercase font-medium"
+                >
+                  → see our work
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -88,91 +128,55 @@ export default function ProcessPage() {
         <section className="pb-20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              {processSteps.map((step, index) => {
-                const Icon = step.icon;
-                const isEven = index % 2 === 0;
-
-                return (
-                  <div key={step.title} className="relative">
-                    {/* Connector Line */}
-                    {index < processSteps.length - 1 && (
-                      <div className="absolute left-1/2 transform -translate-x-1/2 w-px h-20 bg-gradient-to-b from-taro to-transparent mt-20 z-0" />
-                    )}
-
-                    <div
-                      className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 mb-20 ${isEven ? '' : 'lg:flex-row-reverse'}`}
-                    >
-                      {/* Content */}
-                      <div className="flex-1">
-                        <div className="bg-white p-8 rounded-lg shadow-lg">
-                          <div className="flex items-center mb-6">
-                            <div className="w-12 h-12 bg-taro/10 rounded-lg flex items-center justify-center mr-4">
-                              <Icon className="w-6 h-6 text-taro" />
-                            </div>
-                            <div>
-                              <span className="text-sm text-gray-500 font-medium">
-                                step {index + 1}
-                              </span>
-                              <h3 className="font-display text-2xl font-bold text-ink">
-                                {step.title}
-                              </h3>
-                            </div>
-                          </div>
-
-                          <p className="text-gray-600 mb-6">{step.description}</p>
-
-                          <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            {step.details.map((detail) => (
-                              <li key={detail} className="flex items-center text-sm text-gray-500">
-                                <div className="w-2 h-2 bg-matcha rounded-full mr-3 flex-shrink-0" />
-                                {detail}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Visual Element */}
-                      <div className="w-32 h-32 lg:w-40 lg:h-40 bg-gradient-to-br from-taro to-deep-taro rounded-full flex items-center justify-center relative">
-                        <Icon className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
-
-                        {/* Decorative pearls */}
-                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-matcha rounded-full opacity-80" />
-                        <div className="absolute -bottom-3 -left-1 w-4 h-4 bg-brown-sugar rounded-full opacity-60" />
-                        {index % 3 === 0 && (
-                          <div className="absolute top-1/2 -right-4 w-3 h-3 bg-milk-tea rounded-full opacity-70" />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {processSteps.map((step, index) => (
+                  <StepCard
+                    key={step.stepNumber}
+                    stepNumber={step.stepNumber}
+                    title={step.title}
+                    whatWeDo={step.whatWeDo}
+                    whatWeNeed={step.whatWeNeed}
+                    deliverables={step.deliverables}
+                    timing={step.timing}
+                    delay={index * 0.1}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-20 bg-milk-tea">
+        {/* Feedback Section */}
+        <FeedbackSection />
+
+        {/* Quality Checklist */}
+        <QualityChecklist />
+
+        {/* Bottom CTA Section */}
+        <section className="py-20 bg-gradient-to-r from-taro/10 to-matcha/10">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="font-display text-4xl font-bold text-ink mb-6">
-                ready to start your project?
+              <h2 className="font-display text-4xl font-bold text-ink mb-6 lowercase">
+                ready to start moving?
               </h2>
-              <p className="text-xl text-brown-sugar mb-8">
-                let&apos;s begin with a conversation about your goals and how we can help you
-                achieve them.
+              <p className="text-xl text-gray-600 mb-8 lowercase">
+                no phone calls, no discovery meetings — just fill out our project form and
+                we&apos;ll get brewing.
               </p>
               <a
-                href="/contact"
-                className="inline-block bg-taro text-white px-8 py-3 rounded-lg font-semibold hover:bg-deep-taro transition-colors duration-200"
+                href="/services#start"
+                className="inline-block bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-taro/90 transition-colors duration-200 lowercase shadow-lg"
               >
-                let&apos;s talk
+                start your project
               </a>
             </div>
           </div>
         </section>
       </main>
       <Footer />
+
+      {/* Sticky CTA */}
+      <StickyCTA />
     </div>
   );
 }

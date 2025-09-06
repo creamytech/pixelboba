@@ -131,6 +131,7 @@ export default function ServicesPage() {
 
         {/* Project Form */}
         <section id="start-project" className="py-20 bg-milk-tea/20">
+          <div id="start"></div>
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-12">
