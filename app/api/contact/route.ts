@@ -183,6 +183,147 @@ Reply directly to this email to respond to ${name}.
         });
 
         console.log('Contact form email sent successfully:', result);
+
+        // Send confirmation email to the user
+        try {
+          const confirmationResult = await resend.emails.send({
+            from: `${fromName} <hello@pixelboba.com>`,
+            to: [email],
+            subject: `🧋 Thanks for reaching out, ${name}! We're brewing up a response`,
+            headers: {
+              'X-Priority': '3',
+              'X-Mailer': 'Pixel Boba Contact Form',
+            },
+            html: `
+              <!DOCTYPE html>
+              <html lang="en">
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Thanks for contacting us!</title>
+              </head>
+              <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+                <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                  <tr>
+                    <td align="center" style="padding: 40px 0;">
+                      <table role="presentation" style="width: 600px; max-width: 90%; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <!-- Header -->
+                        <tr>
+                          <td style="background: linear-gradient(135deg, #8B5CF6, #A78BFA); padding: 30px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">🧋</div>
+                            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 600;">Thanks for reaching out!</h1>
+                            <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">we're brewing up the perfect response ✨</p>
+                          </td>
+                        </tr>
+                        
+                        <!-- Content -->
+                        <tr>
+                          <td style="padding: 40px 30px;">
+                            <div style="text-align: center; margin-bottom: 30px;">
+                              <h2 style="color: #333; font-size: 20px; margin-bottom: 15px;">hey ${name}! 👋</h2>
+                              <p style="color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+                                thanks for reaching out to pixel boba! your message has safely landed in our digital tea cup 🫖 
+                                and our team is already brewing up the perfect response.
+                              </p>
+                              <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                                we typically serve up responses within <strong style="color: #8B5CF6;">24 hours</strong> during business days. 
+                                if your project is bubbling with urgency, feel free to ping us directly at 
+                                <a href="mailto:hello@pixelboba.com" style="color: #8B5CF6; text-decoration: none;">hello@pixelboba.com</a> ☕
+                              </p>
+                            </div>
+                            
+                            <!-- Message Summary -->
+                            <div style="background: #f8f9fa; border-left: 4px solid #8B5CF6; padding: 20px; border-radius: 4px; margin: 25px 0;">
+                              <h3 style="color: #333; font-size: 16px; margin-bottom: 15px;">your message (safely steeped in our inbox): 💌</h3>
+                              <p style="color: #666; font-size: 14px; line-height: 1.6; margin: 0; font-style: italic;">
+                                "${message.replace(/\n/g, '<br>')}"
+                              </p>
+                            </div>
+                            
+                            <!-- What's Next -->
+                            <div style="text-align: center; margin: 30px 0;">
+                              <h3 style="color: #333; font-size: 18px; margin-bottom: 15px;">the boba brewing process 🧋</h3>
+                              <div style="text-align: left; max-width: 420px; margin: 0 auto;">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px; padding: 10px; background: rgba(139, 92, 246, 0.05); border-radius: 6px;">
+                                  <span style="color: #8B5CF6; font-size: 18px; margin-right: 15px;">🫖</span>
+                                  <span style="color: #666; font-size: 14px;">our digital tea masters review your project</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 15px; padding: 10px; background: rgba(139, 92, 246, 0.05); border-radius: 6px;">
+                                  <span style="color: #8B5CF6; font-size: 18px; margin-right: 15px;">💭</span>
+                                  <span style="color: #666; font-size: 14px;">we craft thoughtful questions & next steps</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 15px; padding: 10px; background: rgba(139, 92, 246, 0.05); border-radius: 6px;">
+                                  <span style="color: #8B5CF6; font-size: 18px; margin-right: 15px;">🎯</span>
+                                  <span style="color: #666; font-size: 14px;">if it's a perfect blend, we'll schedule a call</span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <!-- CTA -->
+                            <div style="text-align: center; margin: 30px 0;">
+                              <p style="color: #666; font-size: 14px; margin-bottom: 20px;">
+                                while we're brewing, why not check out our freshest digital creations? 👀
+                              </p>
+                              <a href="https://pixelboba.com/work" 
+                                 style="display: inline-block; background: linear-gradient(135deg, #8B5CF6, #A78BFA); color: white; padding: 14px 28px; text-decoration: none; border-radius: 25px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);">
+                                🎨 peek at our portfolio
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        
+                        <!-- Footer -->
+                        <tr>
+                          <td style="background: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #eee;">
+                            <div style="font-size: 20px; margin-bottom: 10px;">🧋</div>
+                            <p style="margin: 0 0 10px 0; color: #666; font-size: 14px; font-weight: 600;">
+                              pixel boba - digital experiences that matter
+                            </p>
+                            <p style="margin: 0; color: #999; font-size: 12px; line-height: 1.5;">
+                              ☕ <a href="mailto:hello@pixelboba.com" style="color: #8B5CF6;">hello@pixelboba.com</a> • 
+                              🌐 <a href="https://pixelboba.com" style="color: #8B5CF6;">pixelboba.com</a><br>
+                              this is an automated confirmation email brewed fresh just for you ✨
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </body>
+              </html>
+            `,
+            text: `
+🧋 hey ${name}!
+
+thanks for reaching out to pixel boba! your message has safely landed in our digital tea cup and our team is already brewing up the perfect response.
+
+your message (safely steeped in our inbox):
+"${message}"
+
+the boba brewing process:
+🫖 our digital tea masters review your project
+💭 we craft thoughtful questions & next steps  
+🎯 if it's a perfect blend, we'll schedule a call
+
+we typically serve up responses within 24 hours during business days. if your project is bubbling with urgency, ping us directly at hello@pixelboba.com
+
+while we're brewing, check out our freshest digital creations: https://pixelboba.com/work
+
+---
+🧋 pixel boba - digital experiences that matter
+☕ hello@pixelboba.com • 🌐 pixelboba.com
+
+this is an automated confirmation email brewed fresh just for you ✨
+            `.trim(),
+          });
+
+          console.log('Confirmation email sent to user:', confirmationResult);
+        } catch (confirmationError) {
+          console.error('Failed to send confirmation email to user:', confirmationError);
+          // Don't fail the main request if confirmation email fails
+        }
+
         emailSent = true;
       } else {
         console.log('No email API key configured - email not sent');
