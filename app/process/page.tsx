@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import StepCard from '@/components/process/StepCard';
+import DashboardMockup from '@/components/process/DashboardMockup';
 import FeedbackSection from '@/components/process/FeedbackSection';
 import QualityChecklist from '@/components/process/QualityChecklist';
 import StickyCTA from '@/components/common/StickyCTA';
@@ -141,6 +142,82 @@ export default function ProcessPage() {
                     delay={index * 0.1}
                   />
                 ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Client Dashboard Section */}
+        <section className="py-20 bg-gradient-to-b from-white to-milk-tea/10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              {/* Section Header */}
+              <div className="text-center mb-16">
+                <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-8 lowercase">
+                  your dashboard
+                </h2>
+                <div className="max-w-3xl mx-auto">
+                  <p className="text-xl text-gray-600 mb-8 lowercase">
+                    once we kick off, you&apos;ll get access to your own pixel boba dashboard. no
+                    messy email chains or lost files—everything lives in one place:
+                  </p>
+
+                  {/* Feature List */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-3 h-3 bg-taro rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
+                        <p className="text-gray-600 leading-relaxed lowercase">
+                          <strong className="text-ink">progress tracking</strong> → see where your
+                          site is at in real time.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-4">
+                      <div className="w-3 h-3 bg-matcha rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
+                        <p className="text-gray-600 leading-relaxed lowercase">
+                          <strong className="text-ink">messaging</strong> → drop feedback and
+                          questions directly inside the project space.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-4">
+                      <div className="w-3 h-3 bg-milk-tea rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
+                        <p className="text-gray-600 leading-relaxed lowercase">
+                          <strong className="text-ink">invoices & payments</strong> → simple,
+                          transparent, and always available.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-4">
+                      <div className="w-3 h-3 bg-taro/60 rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
+                        <p className="text-gray-600 leading-relaxed lowercase">
+                          <strong className="text-ink">live previews</strong> → click through your
+                          site as it&apos;s being built, not weeks later.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-lg text-gray-600 lowercase">
+                    the dashboard keeps the whole process smooth and stress-free, so you always know
+                    what&apos;s happening without chasing updates.
+                  </p>
+                </div>
+              </div>
+
+              {/* Dashboard Mockup */}
+              <DashboardMockup />
+
+              {/* Additional Context */}
+              <div className="text-center mt-12">
+                <p className="text-sm text-gray-500 lowercase max-w-2xl mx-auto">
+                  this is a real client dashboard from a recent project. your dashboard will look
+                  similar with your project details, timeline, and team messages.
+                </p>
               </div>
             </div>
           </div>
