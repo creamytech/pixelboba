@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         const resend = new Resend(apiKey);
 
         const result = await resend.emails.send({
-          from: `${fromName} <noreply@pixelboba.com>`, // Use noreply for better deliverability
+          from: `${fromName} <hello@pixelboba.com>`, // Use actual monitored inbox
           to: ['hello@pixelboba.com'],
           replyTo: email, // Allow replying directly to the contact
           subject: `New Contact Inquiry from ${name}`, // Removed emoji, more professional

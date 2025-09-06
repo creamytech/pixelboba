@@ -41,7 +41,7 @@ const defaultSettings: AdminSettings = {
     provider: 'resend',
     apiKey: '',
     fromName: 'pixel boba',
-    fromEmail: 'noreply@pixelboba.com',
+    fromEmail: 'hello@pixelboba.com',
   },
   payments: {
     stripePublishableKey: '',
