@@ -5,6 +5,7 @@ import PriceCard from '@/components/services/PriceCard';
 import CTABanner from '@/components/services/CTABanner';
 import HowItWorks from '@/components/services/HowItWorks';
 import StartProjectForm from '@/components/form/StartProjectForm';
+import ScrollToCTAButton from '@/components/services/ScrollToCTAButton';
 
 export const metadata: Metadata = {
   title: 'pixel boba — services & pricing (starting at)',
@@ -148,12 +149,7 @@ export default function ServicesPage() {
         {/* Bottom CTA */}
         <section className="py-12 text-center">
           <div className="container mx-auto px-4">
-            <a
-              href="#start-project"
-              className="inline-block bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-taro/90 transition-colors duration-200 lowercase"
-            >
-              start your project
-            </a>
+            <ScrollToCTAButton />
           </div>
         </section>
       </main>

@@ -13,8 +13,12 @@ export default function CTABanner() {
       <p className="text-lg text-gray-600 mb-6 lowercase">
         transparent pricing, no surprise costs, no discovery calls needed
       </p>
-      <motion.a
-        href="#start-project"
+      <motion.button
+        onClick={() => {
+          document.getElementById('start-project')?.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-taro/90 transition-colors duration-200 lowercase shadow-lg"
@@ -29,7 +33,7 @@ export default function CTABanner() {
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
-      </motion.a>
+      </motion.button>
 
       {/* Decorative pearls */}
       <div className="absolute top-4 right-8 flex space-x-2">
