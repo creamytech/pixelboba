@@ -90,7 +90,7 @@ export default function Header() {
               <Link href="/login">client sign in</Link>
             </Button>
             <Button asChild className="bg-taro hover:bg-deep-taro text-white">
-              <Link href="/contact">start a project</Link>
+              <Link href="/services#start">start a project</Link>
             </Button>
           </div>
 
@@ -140,7 +140,7 @@ export default function Header() {
                     </Link>
                   </Button>
                   <Button asChild className="bg-taro hover:bg-deep-taro text-white w-full">
-                    <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link href="/services#start" onClick={() => setIsMobileMenuOpen(false)}>
                       start a project
                     </Link>
                   </Button>
