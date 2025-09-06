@@ -37,31 +37,149 @@ export async function POST(request: NextRequest) {
         const resend = new Resend(apiKey);
 
         const result = await resend.emails.send({
-          from: `${fromName} <${fromEmail}>`,
+          from: `${fromName} <noreply@pixelboba.com>`, // Use noreply for better deliverability
           to: ['hello@pixelboba.com'],
-          subject: `🌟 New Contact Form Submission from ${name}`,
+          replyTo: email, // Allow replying directly to the contact
+          subject: `New Contact Inquiry from ${name}`, // Removed emoji, more professional
+          headers: {
+            'X-Priority': '3',
+            'X-Mailer': 'Pixel Boba Contact Form',
+          },
           html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <h2 style="color: #8B5CF6;">🌟 New Contact Form Submission</h2>
-              <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-                ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
-                ${budget ? `<p><strong>Budget:</strong> ${budget}</p>` : ''}
-                ${timeline ? `<p><strong>Timeline:</strong> ${timeline}</p>` : ''}
-              </div>
-              <div style="margin: 20px 0;">
-                <p><strong>Message:</strong></p>
-                <div style="background: white; padding: 15px; border-left: 4px solid #8B5CF6; border-radius: 4px;">
-                  ${message.replace(/\n/g, '<br>')}
-                </div>
-              </div>
-              <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-              <p style="color: #666; font-size: 12px;">
-                This message was sent via the Pixel Boba contact form at ${new Date().toLocaleString()}
-              </p>
-            </div>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>New Contact Form Submission</title>
+            </head>
+            <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+              <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td align="center" style="padding: 40px 0;">
+                    <table role="presentation" style="width: 600px; max-width: 90%; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                      <!-- Header -->
+                      <tr>
+                        <td style="background: linear-gradient(135deg, #8B5CF6, #A78BFA); padding: 30px; text-align: center;">
+                          <h1 style="color: white; margin: 0; font-size: 24px; font-weight: 600;">New Contact Inquiry</h1>
+                          <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0; font-size: 14px;">From your website contact form</p>
+                        </td>
+                      </tr>
+                      
+                      <!-- Content -->
+                      <tr>
+                        <td style="padding: 30px;">
+                          <!-- Contact Details -->
+                          <table role="presentation" style="width: 100%; margin-bottom: 25px;">
+                            <tr>
+                              <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                                <strong style="color: #333; font-size: 14px;">Name:</strong>
+                                <span style="color: #666; font-size: 14px; margin-left: 10px;">${name}</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                                <strong style="color: #333; font-size: 14px;">Email:</strong>
+                                <a href="mailto:${email}" style="color: #8B5CF6; text-decoration: none; margin-left: 10px;">${email}</a>
+                              </td>
+                            </tr>
+                            ${
+                              company
+                                ? `
+                            <tr>
+                              <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                                <strong style="color: #333; font-size: 14px;">Company:</strong>
+                                <span style="color: #666; font-size: 14px; margin-left: 10px;">${company}</span>
+                              </td>
+                            </tr>
+                            `
+                                : ''
+                            }
+                            ${
+                              budget
+                                ? `
+                            <tr>
+                              <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                                <strong style="color: #333; font-size: 14px;">Budget:</strong>
+                                <span style="color: #666; font-size: 14px; margin-left: 10px;">${budget}</span>
+                              </td>
+                            </tr>
+                            `
+                                : ''
+                            }
+                            ${
+                              timeline
+                                ? `
+                            <tr>
+                              <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                                <strong style="color: #333; font-size: 14px;">Timeline:</strong>
+                                <span style="color: #666; font-size: 14px; margin-left: 10px;">${timeline}</span>
+                              </td>
+                            </tr>
+                            `
+                                : ''
+                            }
+                          </table>
+                          
+                          <!-- Message -->
+                          <div style="margin-top: 25px;">
+                            <h3 style="color: #333; font-size: 16px; margin-bottom: 15px;">Message:</h3>
+                            <div style="background: #f8f9fa; border-left: 4px solid #8B5CF6; padding: 20px; border-radius: 4px; font-size: 14px; line-height: 1.6; color: #555;">
+                              ${message.replace(/\n/g, '<br>')}
+                            </div>
+                          </div>
+                          
+                          <!-- Call to Action -->
+                          <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 4px;">
+                            <p style="margin: 0 0 15px 0; color: #666; font-size: 14px;">Reply directly to this email to respond to ${name}</p>
+                            <a href="mailto:${email}?subject=Re: Your inquiry to Pixel Boba" 
+                               style="display: inline-block; background: #8B5CF6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px;">
+                              Reply to ${name}
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      <!-- Footer -->
+                      <tr>
+                        <td style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #eee;">
+                          <p style="margin: 0; color: #999; font-size: 12px; line-height: 1.5;">
+                            This inquiry was submitted on ${new Date().toLocaleString('en-US', {
+                              weekday: 'long',
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              timeZoneName: 'short',
+                            })}<br>
+                            via the contact form at <a href="https://pixelboba.com/contact" style="color: #8B5CF6;">pixelboba.com/contact</a>
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </body>
+            </html>
           `,
+          text: `
+New Contact Inquiry
+
+Name: ${name}
+Email: ${email}
+${company ? `Company: ${company}` : ''}
+${budget ? `Budget: ${budget}` : ''}
+${timeline ? `Timeline: ${timeline}` : ''}
+
+Message:
+${message}
+
+---
+Submitted: ${new Date().toLocaleString()}
+Reply directly to this email to respond to ${name}.
+          `.trim(),
         });
 
         console.log('Contact form email sent successfully:', result);
