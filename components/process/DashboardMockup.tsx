@@ -2,12 +2,14 @@
 
 import { motion } from 'framer-motion';
 import {
-  CheckCircle,
-  Clock,
-  MessageCircle,
-  CreditCard,
-  ExternalLink,
+  User,
+  MessageSquare,
+  Receipt,
   FileText,
+  Folder,
+  Bell,
+  Calendar,
+  CheckCircle2,
 } from 'lucide-react';
 
 export default function DashboardMockup() {
@@ -27,249 +29,243 @@ export default function DashboardMockup() {
         </div>
         <div className="flex-1 mx-4">
           <div className="bg-white rounded-md px-3 py-1 text-xs text-gray-600">
-            client.pixelboba.com/projects/artisan-studio
+            client.pixelboba.com
           </div>
         </div>
       </div>
 
       {/* Dashboard Content */}
-      <div className="bg-white rounded-b-xl shadow-2xl border border-gray-200 overflow-hidden">
+      <div className="bg-gray-50 rounded-b-xl shadow-2xl border border-gray-200 overflow-hidden min-h-[600px]">
         {/* Header */}
-        <div className="bg-gradient-to-r from-taro to-deep-taro text-white p-6">
+        <div className="bg-white border-b border-gray-200 p-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold lowercase">artisan studio redesign</h1>
-              <p className="text-taro-100 lowercase">launched 2 weeks ago</p>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-lg">🧋</span>
+              </div>
+              <div>
+                <div className="font-semibold text-gray-900">client portal</div>
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full lowercase">
-                live
-              </span>
-              <button className="bg-white/20 text-white px-3 py-1 rounded-md text-sm lowercase flex items-center space-x-1">
-                <ExternalLink className="w-4 h-4" />
-                <span>view site</span>
-              </button>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-600">welcome back!</span>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">scott b</span>
+                <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-white" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Stats Bar */}
-        <div className="bg-milk-tea/10 p-4 grid grid-cols-4 gap-4 text-center">
-          <div>
-            <div className="text-2xl font-bold text-taro">100%</div>
-            <div className="text-xs text-gray-600 lowercase">progress</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-matcha">95</div>
-            <div className="text-xs text-gray-600 lowercase">lighthouse</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-ink">12</div>
-            <div className="text-xs text-gray-600 lowercase">messages</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-taro">$2.4k</div>
-            <div className="text-xs text-gray-600 lowercase">paid</div>
+        {/* Navigation Tabs */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="flex space-x-0">
+            <div className="px-6 py-3 bg-purple-500 text-white text-sm font-medium flex items-center space-x-2">
+              <User className="w-4 h-4" />
+              <span>dashboard</span>
+            </div>
+            <div className="px-6 py-3 text-gray-600 text-sm font-medium flex items-center space-x-2 hover:bg-gray-50">
+              <MessageSquare className="w-4 h-4" />
+              <span>messages</span>
+            </div>
+            <div className="px-6 py-3 text-gray-600 text-sm font-medium flex items-center space-x-2 hover:bg-gray-50 relative">
+              <Receipt className="w-4 h-4" />
+              <span>invoices</span>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full text-xs text-white flex items-center justify-center">
+                1
+              </div>
+            </div>
+            <div className="px-6 py-3 text-gray-600 text-sm font-medium flex items-center space-x-2 hover:bg-gray-50">
+              <FileText className="w-4 h-4" />
+              <span>contracts</span>
+            </div>
+            <div className="px-6 py-3 text-gray-600 text-sm font-medium flex items-center space-x-2 hover:bg-gray-50">
+              <Folder className="w-4 h-4" />
+              <span>files</span>
+            </div>
+            <div className="px-6 py-3 text-gray-600 text-sm font-medium flex items-center space-x-2 hover:bg-gray-50">
+              <Bell className="w-4 h-4" />
+              <span>notifications</span>
+            </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
-          {/* Progress Section */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Progress Tracking */}
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-ink mb-4 lowercase flex items-center">
-                <Clock className="w-5 h-5 mr-2 text-taro" />
-                progress tracking
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-sm lowercase">1) shake - discovery</span>
+        <div className="p-6">
+          {/* Current Project Section */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+            <div className="mb-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">current project</h2>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">artisan coffee redesign</h3>
+              <p className="text-gray-600 mb-4">
+                redesign and rebuild of existing coffee shop website
+              </p>
+
+              <div className="grid grid-cols-3 gap-6 text-sm">
+                <div>
+                  <span className="text-gray-500">status:</span>
+                  <div className="mt-1">
+                    <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">
+                      design
+                    </span>
                   </div>
-                  <span className="text-xs text-gray-500">completed</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-sm lowercase">2) brew - architecture</span>
-                  </div>
-                  <span className="text-xs text-gray-500">completed</span>
+                <div>
+                  <span className="text-gray-500">deadline:</span>
+                  <div className="mt-1 font-medium">tbd</div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-sm lowercase">3) layer - visual design</span>
-                  </div>
-                  <span className="text-xs text-gray-500">completed</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-sm lowercase">4) pop - build</span>
-                  </div>
-                  <span className="text-xs text-gray-500">completed</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-sm lowercase">5) launch</span>
-                  </div>
-                  <span className="text-xs text-gray-500">completed</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-5 h-5 bg-taro rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
-                    <span className="text-sm lowercase">6) refill - ongoing care</span>
-                  </div>
-                  <span className="text-xs text-taro font-medium">active</span>
+                <div>
+                  <span className="text-gray-500">started:</span>
+                  <div className="mt-1 font-medium">9/4/2025</div>
                 </div>
               </div>
             </div>
 
-            {/* Recent Messages */}
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-ink mb-4 lowercase flex items-center">
-                <MessageCircle className="w-5 h-5 mr-2 text-matcha" />
-                recent messages
-              </h3>
-              <div className="space-y-3">
-                <div className="bg-white rounded-lg p-3 border-l-4 border-matcha">
-                  <div className="flex justify-between items-start mb-1">
-                    <span className="text-sm font-medium text-ink">Scott</span>
-                    <span className="text-xs text-gray-500">2 days ago</span>
+            {/* Project Progress */}
+            <div className="mb-6">
+              <h4 className="text-base font-semibold text-gray-900 mb-4">project milestones</h4>
+
+              <div className="flex items-center justify-center mb-4">
+                <div className="relative">
+                  {/* Progress Circle */}
+                  <svg className="w-24 h-24 transform -rotate-90">
+                    <circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="8" fill="none" />
+                    <circle
+                      cx="48"
+                      cy="48"
+                      r="40"
+                      stroke="#8b5cf6"
+                      strokeWidth="8"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeDasharray={`${22 * 2.51} ${100 * 2.51}`}
+                      className="transition-all duration-500"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-lg font-bold text-gray-900">22%</span>
                   </div>
-                  <p className="text-sm text-gray-600 lowercase">
-                    site is live! analytics and monitoring are all set up. let me know if you notice
-                    any issues.
-                  </p>
                 </div>
-                <div className="bg-white rounded-lg p-3 border-l-4 border-gray-200">
-                  <div className="flex justify-between items-start mb-1">
-                    <span className="text-sm font-medium text-ink">You</span>
-                    <span className="text-xs text-gray-500">3 days ago</span>
-                  </div>
-                  <p className="text-sm text-gray-600 lowercase">
-                    looks amazing! can we add a small contact form to the services page?
-                  </p>
-                </div>
-                <div className="bg-white rounded-lg p-3 border-l-4 border-taro">
-                  <div className="flex justify-between items-start mb-1">
-                    <span className="text-sm font-medium text-ink">Joel</span>
-                    <span className="text-xs text-gray-500">1 week ago</span>
-                  </div>
-                  <p className="text-sm text-gray-600 lowercase">
-                    final design files uploaded. mobile version looks perfect now.
-                  </p>
-                </div>
+              </div>
+
+              <div className="text-center mb-4">
+                <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                  design
+                </span>
+                <p className="text-sm text-gray-600 mt-2">designing visuals</p>
               </div>
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Live Preview */}
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-ink mb-4 lowercase flex items-center">
-                <ExternalLink className="w-5 h-5 mr-2 text-taro" />
-                live previews
-              </h3>
-              <div className="space-y-3">
-                <a
-                  href="#"
-                  className="block bg-white rounded-lg p-3 hover:bg-gray-50 transition-colors border"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-medium text-sm lowercase">staging site</div>
-                      <div className="text-xs text-gray-500">updated 2 days ago</div>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-gray-400" />
-                  </div>
-                </a>
-                <a
-                  href="#"
-                  className="block bg-white rounded-lg p-3 hover:bg-gray-50 transition-colors border"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-medium text-sm lowercase">production site</div>
-                      <div className="text-xs text-gray-500">live version</div>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-gray-400" />
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            {/* Invoices */}
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-ink mb-4 lowercase flex items-center">
-                <CreditCard className="w-5 h-5 mr-2 text-matcha" />
-                invoices & payments
-              </h3>
-              <div className="space-y-2">
-                <div className="bg-white rounded-lg p-3 flex items-center justify-between border">
-                  <div>
-                    <div className="text-sm font-medium">$1,200.00</div>
-                    <div className="text-xs text-gray-500">deposit - paid</div>
-                  </div>
-                  <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                    paid
-                  </span>
-                </div>
-                <div className="bg-white rounded-lg p-3 flex items-center justify-between border">
-                  <div>
-                    <div className="text-sm font-medium">$1,200.00</div>
-                    <div className="text-xs text-gray-500">final - paid</div>
-                  </div>
-                  <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                    paid
-                  </span>
-                </div>
-                <div className="bg-white rounded-lg p-3 flex items-center justify-between border">
-                  <div>
-                    <div className="text-sm font-medium">$99.00</div>
-                    <div className="text-xs text-gray-500">care plan - monthly</div>
-                  </div>
-                  <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                    active
-                  </span>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white rounded-lg border border-gray-200 p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-600">ACTIVE PROJECTS</span>
+                <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <span className="text-orange-600">🔥</span>
                 </div>
               </div>
+              <div className="text-2xl font-bold text-gray-900">1</div>
             </div>
 
-            {/* Files */}
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-ink mb-4 lowercase flex items-center">
-                <FileText className="w-5 h-5 mr-2 text-ink" />
-                project files
-              </h3>
-              <div className="space-y-2">
-                <div className="bg-white rounded-lg p-2 flex items-center space-x-3 border">
-                  <FileText className="w-4 h-4 text-gray-400" />
-                  <div className="flex-1">
-                    <div className="text-sm lowercase">final-designs.zip</div>
-                    <div className="text-xs text-gray-500">2.1 MB</div>
-                  </div>
+            <div className="bg-white rounded-lg border border-gray-200 p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-600">UNREAD MESSAGES</span>
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <MessageSquare className="w-4 h-4 text-blue-600" />
                 </div>
-                <div className="bg-white rounded-lg p-2 flex items-center space-x-3 border">
-                  <FileText className="w-4 h-4 text-gray-400" />
-                  <div className="flex-1">
-                    <div className="text-sm lowercase">brand-assets.zip</div>
-                    <div className="text-xs text-gray-500">4.8 MB</div>
-                  </div>
+              </div>
+              <div className="text-2xl font-bold text-gray-900">0</div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-600">PENDING INVOICES</span>
+                <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                  <span className="text-yellow-600">💰</span>
                 </div>
-                <div className="bg-white rounded-lg p-2 flex items-center space-x-3 border">
-                  <FileText className="w-4 h-4 text-gray-400" />
-                  <div className="flex-1">
-                    <div className="text-sm lowercase">lighthouse-report.pdf</div>
-                    <div className="text-xs text-gray-500">156 KB</div>
+              </div>
+              <div className="text-2xl font-bold text-gray-900">1</div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-600">PENDING CONTRACTS</span>
+                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <FileText className="w-4 h-4 text-gray-600" />
+                </div>
+              </div>
+              <div className="text-2xl font-bold text-gray-900">0</div>
+            </div>
+          </div>
+
+          {/* Recent Activity */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">recent activity</h3>
+              <span className="text-sm text-gray-500">live updates</span>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Receipt className="w-4 h-4 text-orange-600" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-gray-900">Invoice Pending</span>
+                    <span className="text-xs text-gray-500">pending</span>
                   </div>
+                  <p className="text-sm text-gray-600">1 invoice awaiting payment</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 className="w-4 h-4 text-purple-600" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-gray-900">Milestone Completed</span>
+                    <span className="text-xs text-gray-500">3d ago</span>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    discovery phase finished - design phase starting soon
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-4 h-4 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-gray-900">Design Review Ready</span>
+                    <span className="text-xs text-gray-500">5d ago</span>
+                  </div>
+                  <p className="text-sm text-gray-600">initial mockups ready for your feedback</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 className="w-4 h-4 text-green-600" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-gray-900">Project Kickoff</span>
+                    <span className="text-xs text-gray-500">1w ago</span>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    welcome to your project! we&apos;re excited to work with you
+                  </p>
                 </div>
               </div>
             </div>
@@ -278,7 +274,7 @@ export default function DashboardMockup() {
       </div>
 
       {/* Subtle glow effect */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-taro/5 to-matcha/5 rounded-xl blur-xl transform scale-105"></div>
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/5 to-purple-600/5 rounded-xl blur-xl transform scale-105"></div>
     </motion.div>
   );
 }
