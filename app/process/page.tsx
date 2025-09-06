@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import StepCard from '@/components/process/StepCard';
-import ProcessFlow from '@/components/process/ProcessFlow';
 import DashboardMockup from '@/components/process/DashboardMockup';
 import FeedbackSection from '@/components/process/FeedbackSection';
 import QualityChecklist from '@/components/process/QualityChecklist';
@@ -126,10 +125,7 @@ export default function ProcessPage() {
           </div>
         </section>
 
-        {/* Process Flow Overview */}
-        <ProcessFlow />
-
-        {/* Detailed Process Steps */}
+        {/* Process Steps */}
         <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
