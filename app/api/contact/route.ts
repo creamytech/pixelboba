@@ -189,7 +189,7 @@ Reply directly to this email to respond to ${name}.
           const confirmationResult = await resend.emails.send({
             from: `${fromName} <hello@pixelboba.com>`,
             to: [email],
-            subject: `🧋 Thanks for reaching out, ${name}! We're mixing up something special`,
+            subject: `🧋 thanks for reaching out, ${name.toLowerCase()}! we're mixing up something special`,
             headers: {
               'X-Priority': '3',
               'X-Mailer': 'Pixel Boba Contact Form',
@@ -220,7 +220,7 @@ Reply directly to this email to respond to ${name}.
                         <tr>
                           <td style="padding: 40px 30px;">
                             <div style="text-align: center; margin-bottom: 30px;">
-                              <h2 style="color: #333; font-size: 20px; margin-bottom: 15px;">hey ${name}! 👋</h2>
+                              <h2 style="color: #333; font-size: 20px; margin-bottom: 15px;">hey ${name.toLowerCase()}! 👋</h2>
                               <p style="color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
                                 thanks for reaching out to pixel boba! your message has landed safely in our digital cup 🥤 
                                 and our team is already shaking up the perfect response with all the right ingredients.
@@ -254,7 +254,7 @@ Reply directly to this email to respond to ${name}.
                                 </div>
                                 <div style="display: flex; align-items: center; margin-bottom: 15px; padding: 10px; background: rgba(139, 92, 246, 0.05); border-radius: 6px;">
                                   <span style="color: #8B5CF6; font-size: 18px; margin-right: 15px;">✨</span>
-                                  <span style="color: #666; font-size: 14px;">if the flavor profile is perfect, we'll schedule a taste test call</span>
+                                  <span style="color: #666; font-size: 14px;">if the flavor profile is perfect, we'll craft your custom project blend</span>
                                 </div>
                               </div>
                             </div>
@@ -294,7 +294,7 @@ Reply directly to this email to respond to ${name}.
               </html>
             `,
             text: `
-🧋 hey ${name}!
+🧋 hey ${name.toLowerCase()}!
 
 thanks for reaching out to pixel boba! your message has landed safely in our digital cup and our team is already shaking up the perfect response with all the right ingredients.
 
@@ -304,7 +304,7 @@ your message (now blending in our inbox):
 the boba creation process:
 🥤 our digital mixologists review your project ingredients
 🧪 we mix up the perfect questions & next steps  
-✨ if the flavor profile is perfect, we'll schedule a taste test call
+✨ if the flavor profile is perfect, we'll craft your custom project blend
 
 we typically deliver fresh responses within 24 hours during business days. if your project needs extra sweetness or urgency, ping us directly at hello@pixelboba.com
 
