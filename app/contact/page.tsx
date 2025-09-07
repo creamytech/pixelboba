@@ -34,14 +34,29 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: 'do you do discovery calls?',
+    question: 'what information do you need to get started?',
     answer:
-      'nope! our project form captures everything we need. you get a custom proposal by email within 24 hours.',
+      'just fill out our project form with your goals, timeline, and any examples you like. we handle the rest through email.',
+  },
+  {
+    question: 'can you work with our existing branding?',
+    answer:
+      "absolutely! send us your brand guidelines, logos, and color schemes. we'll make sure everything stays on-brand.",
+  },
+  {
+    question: 'do you offer payment plans?',
+    answer:
+      'yes, we typically split projects into 2-3 payments: deposit, midpoint, and final. larger projects can be broken down further.',
   },
   {
     question: 'how long does a typical project take?',
     answer:
       '2-6 weeks depending on scope. website redesigns take 1-3 weeks, custom builds take 3-5 weeks, advanced builds take 4-6 weeks.',
+  },
+  {
+    question: "what if we're not happy with the design?",
+    answer:
+      'we share working previews throughout the process so there are no surprises. most issues get resolved during our regular check-ins via email.',
   },
   {
     question: 'what if I need changes during the project?',

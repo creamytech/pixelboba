@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Instagram, Mail } from 'lucide-react';
+import { Instagram, Mail, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { siteConfig } from '@/lib/seo';
+import { useState } from 'react';
 
 // Custom X (Twitter) Icon Component
 const XIcon = ({ className }: { className?: string }) => (
@@ -28,12 +29,51 @@ const footerNavigation = {
     { name: 'terms of service', href: '/legal/terms' },
   ],
   social: [
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/108532043', icon: Linkedin },
     { name: 'X', href: siteConfig.links.twitter, icon: XIcon },
     { name: 'Instagram', href: siteConfig.links.instagram, icon: Instagram },
   ],
 };
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email || !email.includes('@')) {
+      setSubmitStatus('error');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setEmail('');
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="bg-slate-bg text-white">
       {/* Newsletter Section */}
@@ -52,16 +92,40 @@ export default function Footer() {
                 content.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <Input
-                  type="email"
-                  placeholder="enter your email"
-                  className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                />
-                <Button className="bg-taro hover:bg-deep-taro text-white whitespace-nowrap">
-                  subscribe
-                </Button>
-              </div>
+              {submitStatus === 'success' ? (
+                <div className="bg-taro/20 border border-taro/30 rounded-lg p-4 mb-6">
+                  <p className="text-white font-medium">thanks for subscribing! 🧋</p>
+                  <p className="text-gray-300 text-sm">check your email for a welcome message.</p>
+                </div>
+              ) : (
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+                >
+                  <Input
+                    type="email"
+                    placeholder="enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
+                    disabled={isSubmitting}
+                    required
+                  />
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-taro hover:bg-deep-taro text-white whitespace-nowrap disabled:opacity-50"
+                  >
+                    {isSubmitting ? 'subscribing...' : 'subscribe'}
+                  </Button>
+                </form>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mt-4 text-red-400 text-sm">
+                  something went wrong. please try again or email hello@pixelboba.com
+                </div>
+              )}
 
               {/* Floating pearls animation */}
               <div className="relative mt-8 h-16 overflow-hidden">

@@ -59,27 +59,40 @@ export default function ServicesPage() {
               <PriceCard
                 title="website redesign"
                 price="starting at $750"
-                features={['fresh new design & layout', 'mobile responsive', 'speed + seo tune-up']}
+                features={[
+                  'modern design refresh',
+                  'mobile optimization',
+                  'speed & seo improvements',
+                  'basic accessibility fixes',
+                  '1-2 week delivery',
+                  '30 days of tweaks included',
+                ]}
               />
               <PriceCard
                 title="custom website build"
                 price="starting at $1,500"
                 features={[
-                  '4–6 fully designed pages',
-                  'custom ui with animations',
-                  'cms setup (sanity, wordpress, or similar)',
-                  'launch support',
+                  'custom design system',
+                  '4-6 fully designed pages',
+                  'smooth animations & interactions',
+                  'cms setup + training',
+                  'basic seo optimization',
+                  '3-4 week delivery',
+                  'launch support included',
                 ]}
               />
               <PriceCard
                 title="advanced website build"
                 price="starting at $4,000"
                 features={[
-                  '6–12 pages',
-                  'advanced animations & interactions',
-                  'blog / cms setup with training',
-                  'integrations (booking, payments, analytics)',
-                  'post-launch support',
+                  'full design system + brand guide',
+                  '6-12 custom pages',
+                  'complex animations & interactions',
+                  'third-party integrations',
+                  'advanced cms + training',
+                  'comprehensive seo setup',
+                  '4-6 week delivery',
+                  '60 days support included',
                 ]}
                 highlighted={true}
               />
@@ -92,9 +105,11 @@ export default function ServicesPage() {
                   title="ongoing care plans"
                   price="starting at $99/month"
                   features={[
-                    'monthly updates',
-                    'security & performance checks',
+                    'content updates & tweaks',
+                    'security & performance monitoring',
                     'priority bug fixes',
+                    'monthly backup & reports',
+                    'no long-term contracts',
                   ]}
                 />
                 <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm">

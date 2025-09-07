@@ -55,8 +55,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              custom websites built with code-first quality. no meetings, no calls, just clean
-              builds and quick turnarounds.
+              fresh designs with clean code. previews from day one, no endless meetings.
             </motion.p>
 
             <motion.div

@@ -93,7 +93,7 @@ Reply directly to this email to respond to ${sanitizedData.name}.
           .replace(/---/g, '<hr>');
 
         const result = await resend.emails.send({
-          from: `${fromName} <${fromEmail}>`,
+          from: `${fromName} <hello@pixelboba.com>`,
           to: ['hello@pixelboba.com'],
           replyTo: sanitizedData.email,
           subject: `🧋 New Project Inquiry — ${sanitizedData.name}`,

@@ -7,19 +7,22 @@ const services = [
   {
     title: 'website redesign',
     price: 'starting at $750',
-    description: 'fresh layout and visuals with mobile responsive design',
+    description:
+      'modernize your existing site with fresh design, mobile optimization, and speed improvements',
     popular: false,
   },
   {
     title: 'custom website build',
     price: 'starting at $1,500',
-    description: '4-6 pages with tasteful animations and cms setup',
+    description:
+      'custom-designed site with 4-6 pages, smooth animations, and easy content management',
     popular: true,
   },
   {
     title: 'advanced website build',
     price: 'starting at $4,000',
-    description: '6-12 pages with advanced interactions and integrations',
+    description:
+      'complex functionality with 6-12 pages, advanced interactions, and third-party integrations',
     popular: false,
   },
 ];

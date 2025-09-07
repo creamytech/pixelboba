@@ -276,7 +276,7 @@ export default function AboutPage() {
                       <p className="text-gray-600 text-lg leading-relaxed lowercase">
                         <strong className="text-ink">scott benjamin</strong> — founder & developer,
                         fort lauderdale. coding since middle school, still fueled by curiosity (and
-                        boba).
+                        boba). specializes in react, next.js, and making complex things simple.
                       </p>
                     </div>
                   </div>
@@ -293,9 +293,10 @@ export default function AboutPage() {
 
                     <div className="space-y-3">
                       <p className="text-gray-600 text-lg leading-relaxed lowercase">
-                        <strong className="text-ink">joel armenta</strong> — artist, ciudad obregón.
-                        the creative eye behind the visuals, blending illustration with design that
-                        feels alive.
+                        <strong className="text-ink">joel armenta</strong> — artist & designer,
+                        ciudad obregón. the creative eye behind the visuals, blending illustration
+                        with design that feels alive. specializes in brand identity and bringing
+                        personality to digital experiences.
                       </p>
                       <div className="pt-2">
                         <a
