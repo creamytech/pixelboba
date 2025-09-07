@@ -138,6 +138,7 @@ model Project {
   startDate   DateTime
   deadline    DateTime?
   completedAt DateTime?
+  websiteUrl  String?       // URL for real-time progress viewing
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
@@ -183,16 +184,17 @@ model Message {
 }
 
 model Contract {
-  id          String         @id @default(cuid())
-  title       String
-  content     String @db.Text
-  status      ContractStatus @default(DRAFT)
-  sentAt      DateTime?
-  signedAt    DateTime?
-  expiresAt   DateTime?
-  templateId  String?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id                  String         @id @default(cuid())
+  title               String
+  content             String @db.Text
+  status              ContractStatus @default(DRAFT)
+  sentAt              DateTime?
+  signedAt            DateTime?
+  expiresAt           DateTime?
+  templateId          String?
+  docusignEnvelopeId  String?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
 
   // Relations
   clientId   String

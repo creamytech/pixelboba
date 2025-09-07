@@ -14,11 +14,6 @@ const DEFAULT_EMAIL_PREFERENCES: EmailPreferences = {
   weeklyDigest: true,
   marketingEmails: false,
   frequency: 'instant',
-  quietHours: {
-    start: '22:00',
-    end: '08:00',
-    timezone: 'America/New_York',
-  },
 };
 
 // Get user's email preferences

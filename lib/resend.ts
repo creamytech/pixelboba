@@ -22,6 +22,9 @@ export const EMAIL_TEMPLATES = {
   MILESTONE_COMPLETED: 'milestone-completed',
   INVOICE_READY: 'invoice-ready',
   CONTRACT_PENDING: 'contract-pending',
+  CONTRACT_COMPLETED: 'contract-completed',
+  CONTRACT_EXPIRED: 'contract-expired',
+  CONTRACT_UPDATE: 'contract-update',
   FILES_UPLOADED: 'files-uploaded',
   WEEKLY_DIGEST: 'weekly-digest',
   DEADLINE_REMINDER: 'deadline-reminder',
@@ -367,6 +370,89 @@ function generateEmailTemplate(template: EmailTemplate, data: Record<string, any
           </div>
           <a href="${data.portalUrl}/files" class="button">Download Files →</a>
           <p style="font-size: 14px; color: #6B7280;">Files are available for download for 30 days. Need an extension? Let us know!</p>
+        </div>
+      `;
+      break;
+
+    case 'contract-pending':
+      content = `
+        <div class="content">
+          <h2 style="color: #1F2937; margin-bottom: 16px;">contract ready for signature 📋</h2>
+          <p>Hi ${data.clientName},</p>
+          <p>Your contract for <strong>${data.projectName}</strong> is ready for your signature:</p>
+          <div class="highlight">
+            <h3 style="margin: 0 0 8px 0; color: #A78BFA;">📋 ${data.contractTitle}</h3>
+            <p style="margin: 0; font-size: 14px; color: #6B7280;">Status: Awaiting Your Signature</p>
+          </div>
+          <p><strong>Next Steps:</strong></p>
+          <ul>
+            <li>Review the contract terms carefully</li>
+            <li>Sign electronically via DocuSign or manual signature</li>
+            <li>Contact us if you have any questions</li>
+          </ul>
+          <a href="${data.portalUrl}" class="button">Review & Sign Contract →</a>
+          <p style="font-size: 14px; color: #6B7280;">Secure signing powered by DocuSign. Questions? Just reply to this email.</p>
+        </div>
+      `;
+      break;
+
+    case 'contract-completed':
+      content = `
+        <div class="content">
+          <h2 style="color: #1F2937; margin-bottom: 16px;">contract signed successfully! ✅</h2>
+          <p>Hi ${data.clientName},</p>
+          <p>Great news! Your contract <strong>${data.contractTitle}</strong> has been successfully signed and is now active.</p>
+          <div class="highlight">
+            <h3 style="margin: 0 0 8px 0; color: #10B981;">✅ ${data.contractTitle}</h3>
+            <p style="margin: 0; font-size: 14px; color: #6B7280;">Status: Signed & Active</p>
+            <p style="margin: 8px 0 0 0; font-size: 14px; color: #6B7280;">
+              Project: ${data.projectName}
+            </p>
+          </div>
+          <p><strong>What happens next:</strong></p>
+          <ul>
+            <li>We'll begin work as outlined in the contract</li>
+            <li>You'll receive regular project updates</li>
+            <li>A signed copy is available in your portal</li>
+          </ul>
+          <a href="${data.portalUrl}" class="button">View Contract →</a>
+        </div>
+      `;
+      break;
+
+    case 'contract-expired':
+      content = `
+        <div class="content">
+          <h2 style="color: #1F2937; margin-bottom: 16px;">contract has expired ⏰</h2>
+          <p>Hi ${data.clientName},</p>
+          <p>The contract <strong>${data.contractTitle}</strong> for <strong>${data.projectName}</strong> has expired without being signed.</p>
+          <div class="highlight">
+            <h3 style="margin: 0 0 8px 0; color: #EF4444;">⏰ ${data.contractTitle}</h3>
+            <p style="margin: 0; font-size: 14px; color: #6B7280;">Status: Expired</p>
+          </div>
+          <p><strong>Next Steps:</strong></p>
+          <ul>
+            <li>Contact us if you still want to proceed</li>
+            <li>We can create a new contract with updated terms</li>
+            <li>No action needed if you've decided not to proceed</li>
+          </ul>
+          <a href="mailto:hello@pixelboba.com" class="button">Contact Us →</a>
+        </div>
+      `;
+      break;
+
+    case 'contract-update':
+      content = `
+        <div class="content">
+          <h2 style="color: #1F2937; margin-bottom: 16px;">contract status update 📋</h2>
+          <p>Hi ${data.clientName},</p>
+          <p>There's an update on your contract <strong>${data.contractTitle}</strong> for <strong>${data.projectName}</strong>.</p>
+          <div class="highlight">
+            <h3 style="margin: 0 0 8px 0; color: #8B5CF6;">📋 ${data.contractTitle}</h3>
+            <p style="margin: 0; font-size: 14px; color: #6B7280;">Status: ${data.status}</p>
+          </div>
+          <p>You can view the full contract details in your portal.</p>
+          <a href="${data.portalUrl}" class="button">View Contract →</a>
         </div>
       `;
       break;

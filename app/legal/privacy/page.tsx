@@ -18,7 +18,7 @@ export default function PrivacyPage() {
 
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-600 mb-6">
-                <strong>last updated:</strong> {new Date().toLocaleDateString()}
+                <strong>last updated:</strong> september 7, 2025
               </p>
 
               <section className="mb-8">
@@ -33,6 +33,10 @@ export default function PrivacyPage() {
                   <li>• project details and requirements</li>
                   <li>• communication preferences</li>
                   <li>• technical information about your current website</li>
+                  <li>
+                    • payment details (if applicable, processed securely through third-party
+                    providers)
+                  </li>
                 </ul>
               </section>
 
@@ -45,7 +49,8 @@ export default function PrivacyPage() {
                   <li>• respond to your inquiries and provide quotes</li>
                   <li>• deliver our design and development services</li>
                   <li>• communicate project updates and deliverables</li>
-                  <li>• send occasional updates about our services (with your consent)</li>
+                  <li>• process payments securely</li>
+                  <li>• send occasional updates about our services (only with your consent)</li>
                 </ul>
               </section>
 
@@ -54,14 +59,34 @@ export default function PrivacyPage() {
                   information sharing
                 </h2>
                 <p className="text-gray-600 mb-4">
-                  we do not sell, trade, or otherwise transfer your personal information to third
-                  parties without your consent, except:
+                  we do not sell, rent, or trade your personal information. we may share information
+                  only in the following situations:
                 </p>
                 <ul className="text-gray-600 mb-4 space-y-2">
-                  <li>• when required by law</li>
-                  <li>• to trusted service providers who assist in our operations</li>
-                  <li>• with your explicit permission</li>
+                  <li>• when required by law or legal processes</li>
+                  <li>
+                    • with trusted service providers who assist in our business operations (e.g.,
+                    hosting, payment processing), bound by confidentiality agreements
+                  </li>
+                  <li>• with your explicit consent</li>
                 </ul>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="font-display text-2xl font-bold text-ink mb-4">data security</h2>
+                <p className="text-gray-600 mb-4">
+                  we take reasonable measures to protect your information. however, no method of
+                  transmission over the internet is 100% secure, and we cannot guarantee absolute
+                  security.
+                </p>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="font-display text-2xl font-bold text-ink mb-4">your rights</h2>
+                <p className="text-gray-600 mb-4">
+                  you may request access, correction, or deletion of your personal data at any time
+                  by contacting us. you may also opt out of marketing communications.
+                </p>
               </section>
 
               <section className="mb-8">

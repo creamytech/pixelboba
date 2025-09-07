@@ -4,8 +4,10 @@ import {
   sendProjectUpdate,
   sendInvoiceReady,
   sendFilesUploaded,
+  EmailQueue,
+  EMAIL_TEMPLATES,
 } from '@/lib/resend';
-import { User, Project, Message, Milestone, Invoice } from '@/types/portal';
+import { User, Project, Message, Milestone, Invoice, Contract } from '@/types/portal';
 
 // Helper to check if user wants this type of notification
 const shouldSendNotification = (
@@ -275,5 +277,60 @@ export const sendTestNotification = async (recipient: User, type: string) => {
       break;
     default:
       console.error('Unknown test notification type:', type);
+  }
+};
+
+// Contract email triggers
+export const triggerContractUpdateEmail = async (
+  recipient: User,
+  contract: Contract,
+  status: string
+) => {
+  if (!shouldSendNotification(recipient, 'contractReminders')) {
+    console.log('User has disabled contract notifications');
+    return;
+  }
+
+  const emailData = {
+    clientName: recipient.name,
+    contractTitle: contract.title,
+    projectName: contract.project?.name || 'General',
+    status: status,
+    contractId: contract.id,
+    portalUrl: process.env.NEXTAUTH_URL + '/portal?tab=contracts',
+  };
+
+  let subject = '';
+  let template = '';
+
+  switch (status) {
+    case 'SENT':
+      subject = `📋 Contract ready for signature: ${contract.title}`;
+      template = EMAIL_TEMPLATES.CONTRACT_PENDING;
+      break;
+    case 'SIGNED':
+      subject = `✅ Contract signed: ${contract.title}`;
+      template = EMAIL_TEMPLATES.CONTRACT_COMPLETED;
+      break;
+    case 'EXPIRED':
+      subject = `⏰ Contract expired: ${contract.title}`;
+      template = EMAIL_TEMPLATES.CONTRACT_EXPIRED;
+      break;
+    default:
+      subject = `📋 Contract update: ${contract.title}`;
+      template = EMAIL_TEMPLATES.CONTRACT_UPDATE;
+  }
+
+  try {
+    EmailQueue.add({
+      to: recipient.email,
+      template: template as any,
+      subject,
+      data: emailData,
+      priority: 'high',
+    });
+    console.log(`Contract email triggered for ${recipient.email}: ${status}`);
+  } catch (error) {
+    console.error('Failed to trigger contract email:', error);
   }
 };
