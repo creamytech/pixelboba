@@ -14,6 +14,7 @@ import {
   User,
   LogOut,
   FolderOpen,
+  Settings,
 } from 'lucide-react';
 import BobaProgressIndicator from '@/components/portal/BobaProgressIndicator';
 import MilestoneTracker from '@/components/portal/MilestoneTracker';
@@ -22,6 +23,7 @@ import InvoiceCenter from '@/components/portal/InvoiceCenter';
 import ContractCenter from '@/components/portal/ContractCenter';
 import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
+import NotificationPreferences from '@/components/portal/NotificationPreferences';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
 import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
@@ -128,6 +130,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
     { id: 'contracts', name: 'contracts', icon: FileCheck, badge: portalData.pendingContracts },
     { id: 'files', name: 'files', icon: FolderOpen },
     { id: 'notifications', name: 'notifications', icon: Bell },
+    { id: 'preferences', name: 'preferences', icon: Settings },
   ];
 
   const renderActiveTab = () => {
@@ -144,6 +147,8 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         return <FileCenter projects={portalData.projects} />;
       case 'notifications':
         return <NotificationCenter />;
+      case 'preferences':
+        return <NotificationPreferences />;
       default:
         return <DashboardView data={portalData} />;
     }
@@ -353,9 +358,43 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 }
 
 function DashboardView({ data }: { data: PortalData }) {
+  const [viewMode, setViewMode] = useState<'cards' | 'timeline'>('cards');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [showQuickActions, setShowQuickActions] = useState(false);
+
   const activeProject =
     data.projects.find((p) => p.status !== 'COMPLETED' && p.status !== 'CANCELLED') ||
     data.projects[0];
+
+  // Calculate dashboard stats
+  const stats = {
+    activeProjects: data.projects.filter((p) => !['COMPLETED', 'CANCELLED'].includes(p.status))
+      .length,
+    daysToDeadline: activeProject?.deadline
+      ? Math.ceil(
+          (new Date(activeProject.deadline).getTime() - new Date().getTime()) /
+            (1000 * 60 * 60 * 24)
+        )
+      : null,
+    completedMilestones: data.projects.reduce(
+      (acc, project) => acc + (project.milestones?.filter((m) => m.completedAt).length || 0),
+      0
+    ),
+    totalProgress:
+      data.projects.length > 0
+        ? Math.round(data.projects.reduce((acc, p) => acc + p.progress, 0) / data.projects.length)
+        : 0,
+  };
+
+  // Filter projects based on search and status
+  const filteredProjects = data.projects.filter((project) => {
+    const matchesSearch =
+      project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || project.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <motion.div
@@ -364,158 +403,204 @@ function DashboardView({ data }: { data: PortalData }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Enhanced Active Project Section */}
-      {activeProject ? (
+      {/* Dashboard Overview Stats - Mobile Responsive */}
+      <motion.div
+        className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <DashboardStatCard
+          title="active projects"
+          value={stats.activeProjects}
+          icon="🚧"
+          color="taro"
+          subtitle={`${data.projects.length} total`}
+        />
+        <DashboardStatCard
+          title="next deadline"
+          value={stats.daysToDeadline !== null ? `${stats.daysToDeadline}d` : 'tbd'}
+          icon="⏰"
+          color="matcha"
+          subtitle={
+            stats.daysToDeadline !== null
+              ? stats.daysToDeadline > 7
+                ? 'on track'
+                : 'coming up'
+              : 'no deadline set'
+          }
+        />
+        <DashboardStatCard
+          title="milestones done"
+          value={stats.completedMilestones}
+          icon="✅"
+          color="milk-tea"
+          subtitle={`${stats.totalProgress}% overall`}
+        />
+        <DashboardStatCard
+          title="new messages"
+          value={data.unreadMessages}
+          icon="💬"
+          color="brown-sugar"
+          subtitle={data.unreadMessages > 0 ? 'needs attention' : 'all caught up'}
+          isAlert={data.unreadMessages > 0}
+        />
+      </motion.div>
+
+      {/* Quick Actions Panel - Mobile Optimized */}
+      <motion.div
+        className="fixed bottom-6 right-4 sm:right-6 z-50"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, delay: 1 }}
+      >
+        <div className="relative">
+          {showQuickActions && (
+            <motion.div
+              className="absolute bottom-16 right-0 sm:right-auto sm:left-0 bg-white/95 backdrop-blur-lg rounded-xl shadow-xl border border-brown-sugar/20 p-4 space-y-2 min-w-48 sm:min-w-56"
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            >
+              <QuickActionButton
+                icon={<MessageSquare size={16} />}
+                label="new message"
+                onClick={() => {
+                  /* TODO: open message modal */
+                }}
+                badge={data.unreadMessages}
+              />
+              <QuickActionButton
+                icon={<FileText size={16} />}
+                label="latest update"
+                onClick={() => {
+                  /* TODO: scroll to activity */
+                }}
+              />
+              <QuickActionButton
+                icon={<Upload size={16} />}
+                label="upload files"
+                onClick={() => {
+                  /* TODO: open file upload */
+                }}
+              />
+            </motion.div>
+          )}
+          <motion.button
+            onClick={() => setShowQuickActions(!showQuickActions)}
+            className="w-14 h-14 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-full shadow-lg flex items-center justify-center"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <motion.div
+              animate={{ rotate: showQuickActions ? 45 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              ✨
+            </motion.div>
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* Search and Filter Controls - Mobile Enhanced */}
+      {data.projects.length > 0 && (
         <motion.div
-          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
+          className="bg-white/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-brown-sugar/10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          whileHover={{ y: -2, transition: { duration: 0.2 } }}
+          transition={{ duration: 0.4, delay: 0.2 }}
         >
-          <motion.h2
-            className="font-display text-2xl font-bold text-ink mb-6 lowercase"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            current project
-          </motion.h2>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-            >
-              <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase">
-                {activeProject.name}
-              </h3>
-              <p className="font-display text-ink/70 mb-4 lowercase">
-                {activeProject.description || 'no description available'}
-              </p>
-
-              <div className="space-y-3">
-                {[
-                  {
-                    label: 'status',
-                    value: (
-                      <span className="font-display font-medium text-ink bg-gradient-to-r from-taro/15 to-brown-sugar/15 text-taro px-3 py-1 rounded-full text-sm border border-taro/20 lowercase">
-                        {activeProject.status.toLowerCase().replace('_', ' ')}
-                      </span>
-                    ),
-                  },
-                  {
-                    label: 'deadline',
-                    value: activeProject.deadline
-                      ? new Date(activeProject.deadline).toLocaleDateString()
-                      : 'TBD',
-                  },
-                  {
-                    label: 'started',
-                    value: new Date(activeProject.startDate).toLocaleDateString(),
-                  },
-                ].map((item, index) => (
-                  <motion.div
-                    key={item.label}
-                    className="flex justify-between items-center"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 + index * 0.1 }}
+          <div className="flex flex-col gap-3">
+            {/* Search and Status Filter Row */}
+            <div className="flex flex-col xs:flex-row gap-3">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  placeholder="search projects..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 sm:py-2 text-sm bg-white/70 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro/40 transition-all"
+                />
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-ink/40 text-sm">
+                  🔍
+                </div>
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-ink/40 hover:text-ink/70 transition-colors"
                   >
-                    <span className="font-display text-ink/60 lowercase">{item.label}:</span>
-                    <span className="font-display font-medium text-ink lowercase">
-                      {typeof item.value === 'string' ? item.value : item.value}
-                    </span>
-                  </motion.div>
-                ))}
+                    ✕
+                  </button>
+                )}
               </div>
-            </motion.div>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-3 sm:px-4 py-2.5 sm:py-2 text-sm bg-white/70 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro/40 transition-all min-w-32"
+              >
+                <option value="all">all statuses</option>
+                <option value="ACTIVE">active</option>
+                <option value="IN_PROGRESS">in progress</option>
+                <option value="REVIEW">in review</option>
+                <option value="COMPLETED">completed</option>
+              </select>
+            </div>
 
-            <motion.div
-              className="md:col-span-2 mt-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-            >
-              <MilestoneTracker
-                milestones={activeProject.milestones}
-                currentPhase={activeProject.status.toLowerCase()}
-                estimatedDeadline={
-                  activeProject.deadline ? activeProject.deadline.toString() : undefined
-                }
-              />
-            </motion.div>
-
-            {/* Keep the boba indicator as a summary widget */}
-            <motion.div
-              className="flex justify-center md:justify-end"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-            >
-              <BobaProgressIndicator
-                progress={activeProject.progress}
-                status={activeProject.status}
-                size="medium"
-              />
-            </motion.div>
+            {/* View Mode Toggle and Results Count */}
+            <div className="flex items-center justify-between">
+              <div className="text-xs text-ink/60">
+                {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''} found
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-ink/60 hidden xs:inline">view:</span>
+                <div className="flex bg-white/50 rounded-lg p-0.5 border border-brown-sugar/10">
+                  <button
+                    onClick={() => setViewMode('cards')}
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-all ${
+                      viewMode === 'cards'
+                        ? 'bg-taro text-white shadow-sm'
+                        : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
+                    }`}
+                  >
+                    📋 cards
+                  </button>
+                  <button
+                    onClick={() => setViewMode('timeline')}
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-all ${
+                      viewMode === 'timeline'
+                        ? 'bg-taro text-white shadow-sm'
+                        : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
+                    }`}
+                  >
+                    📅 timeline
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
-      ) : (
-        <motion.div
-          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-8 border border-brown-sugar/20 shadow-lg text-center"
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <motion.div
-            className="w-16 h-16 bg-gradient-to-br from-taro/15 to-brown-sugar/15 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm"
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <FileText className="w-8 h-8 text-taro" />
-          </motion.div>
-          <motion.h2
-            className="font-display text-2xl font-bold text-ink mb-2 lowercase"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            welcome to your portal!
-          </motion.h2>
-          <motion.p
-            className="font-display text-ink/70 mb-6 lowercase"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            your projects will appear here once we start working together. in the meantime, feel
-            free to explore the different sections.
-          </motion.p>
-          <motion.div
-            className="flex justify-center space-x-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            {[
-              { emoji: '🎨', text: 'design & development', color: 'taro' },
-              { emoji: '📱', text: 'digital solutions', color: 'brown-sugar' },
-            ].map((tag, index) => (
-              <motion.div
-                key={tag.text}
-                className={`px-4 py-2 bg-${tag.color}/15 text-${tag.color} rounded-lg text-sm font-display font-medium border border-${tag.color}/20 lowercase`}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                {tag.emoji} {tag.text}
-              </motion.div>
+      )}
+
+      {/* Projects Display */}
+      {filteredProjects.length > 0 ? (
+        viewMode === 'cards' ? (
+          <div className="space-y-6">
+            {filteredProjects.map((project, index) => (
+              <EnhancedProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                isActive={project.id === activeProject?.id}
+              />
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        ) : (
+          <TimelineView projects={filteredProjects} />
+        )
+      ) : data.projects.length > 0 && (searchTerm || statusFilter !== 'all') ? (
+        <EmptySearchState searchTerm={searchTerm} statusFilter={statusFilter} />
+      ) : (
+        <EmptyProjectsState />
       )}
 
       {/* Stats Grid */}
@@ -716,5 +801,592 @@ function ActivityItem({
         <span className="text-ink/50 text-xs mt-2 inline-block">{time}</span>
       </div>
     </div>
+  );
+}
+
+// Enhanced Components
+
+function DashboardStatCard({
+  title,
+  value,
+  icon,
+  color,
+  subtitle,
+  isAlert = false,
+}: {
+  title: string;
+  value: string | number;
+  icon: string;
+  color: string;
+  subtitle: string;
+  isAlert?: boolean;
+}) {
+  return (
+    <motion.div
+      className={`relative bg-white/60 backdrop-blur-sm rounded-xl p-4 border transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+        isAlert ? 'border-orange-200 bg-orange-50/60' : 'border-brown-sugar/20'
+      }`}
+      whileHover={{ y: -2 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      {isAlert && (
+        <motion.div
+          className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+      )}
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+          <p className="text-ink/60 text-xs font-medium uppercase tracking-wide mb-1">{title}</p>
+          <p className="text-2xl font-bold text-ink mb-1">{value}</p>
+          <p className="text-xs text-ink/50">{subtitle}</p>
+        </div>
+        <div className={`ml-3 p-2 bg-${color}/10 rounded-lg`}>
+          <span className="text-lg">{icon}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function QuickActionButton({
+  icon,
+  label,
+  onClick,
+  badge,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+  badge?: number;
+}) {
+  return (
+    <motion.button
+      onClick={onClick}
+      className="relative flex items-center gap-3 w-full p-3 text-left hover:bg-taro/10 rounded-lg transition-colors group"
+      whileHover={{ x: 4 }}
+    >
+      <div className="text-taro group-hover:scale-110 transition-transform">{icon}</div>
+      <span className="text-sm font-medium text-ink group-hover:text-taro transition-colors">
+        {label}
+      </span>
+      {badge && badge > 0 && (
+        <span className="ml-auto min-w-5 h-5 bg-orange-500 text-white text-xs rounded-full flex items-center justify-center">
+          {badge > 9 ? '9+' : badge}
+        </span>
+      )}
+    </motion.button>
+  );
+}
+
+function EnhancedProjectCard({
+  project,
+  index,
+  isActive,
+}: {
+  project: Project;
+  index: number;
+  isActive: boolean;
+}) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'COMPLETED':
+        return 'bg-green-100 text-green-700 border-green-200';
+      case 'ACTIVE':
+      case 'IN_PROGRESS':
+        return 'bg-taro/10 text-taro border-taro/20';
+      case 'REVIEW':
+        return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+      default:
+        return 'bg-gray-100 text-gray-600 border-gray-200';
+    }
+  };
+
+  const progressPercentage = project.progress || 0;
+
+  return (
+    <motion.div
+      className={`bg-white/70 backdrop-blur-lg rounded-xl p-6 border shadow-lg hover:shadow-xl transition-all duration-300 ${
+        isActive ? 'border-taro/30 ring-2 ring-taro/10' : 'border-brown-sugar/20'
+      }`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+    >
+      {/* Project Header */}
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex-1">
+          <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase flex items-center gap-2">
+            {project.name}
+            {isActive && (
+              <span className="text-xs bg-taro/20 text-taro px-2 py-1 rounded-full">active</span>
+            )}
+          </h3>
+          <p className="font-display text-ink/70 lowercase">
+            {project.description || 'no description available'}
+          </p>
+        </div>
+        <div className="ml-4">
+          <BobaProgressIndicator
+            progress={progressPercentage}
+            status={project.status}
+            size="small"
+          />
+        </div>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="mb-4">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm font-medium text-ink/60">project progress</span>
+          <span className="text-sm font-bold text-ink">{progressPercentage}%</span>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-2">
+          <motion.div
+            className="h-2 rounded-full bg-gradient-to-r from-taro to-brown-sugar"
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercentage}%` }}
+            transition={{ duration: 1, delay: 0.5 }}
+          />
+        </div>
+      </div>
+
+      {/* Project Details Grid */}
+      <div className="grid md:grid-cols-3 gap-4 mb-6">
+        <div className="text-center">
+          <span
+            className={`inline-block font-display font-medium px-3 py-1 rounded-full text-sm border lowercase ${getStatusColor(project.status)}`}
+          >
+            {project.status.toLowerCase().replace('_', ' ')}
+          </span>
+        </div>
+        <div className="text-center">
+          <p className="font-display text-ink/60 text-sm lowercase">deadline</p>
+          <p className="font-display font-medium text-ink">
+            {project.deadline ? new Date(project.deadline).toLocaleDateString() : 'tbd'}
+          </p>
+        </div>
+        <div className="text-center">
+          <p className="font-display text-ink/60 text-sm lowercase">started</p>
+          <p className="font-display font-medium text-ink">
+            {new Date(project.startDate).toLocaleDateString()}
+          </p>
+        </div>
+      </div>
+
+      {/* Project Milestones */}
+      <motion.div
+        className="border-t border-ink/10 pt-4"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.6 }}
+      >
+        <h4 className="font-display text-sm font-semibold text-ink mb-3 lowercase">
+          project milestones
+        </h4>
+        <MilestoneTracker
+          milestones={project.milestones}
+          currentPhase={project.status.toLowerCase()}
+          estimatedDeadline={project.deadline ? project.deadline.toString() : undefined}
+        />
+      </motion.div>
+
+      {/* Quick Actions */}
+      <div className="flex gap-2 mt-4">
+        <button className="flex-1 bg-taro/10 hover:bg-taro/20 text-taro px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+          💬 message
+        </button>
+        <button className="flex-1 bg-brown-sugar/10 hover:bg-brown-sugar/20 text-brown-sugar px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+          📁 files
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
+function TimelineView({ projects }: { projects: Project[] }) {
+  return (
+    <motion.div
+      className="relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Timeline Line */}
+      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-taro via-brown-sugar to-milk-tea"></div>
+
+      <div className="space-y-8">
+        {projects.map((project, index) => (
+          <motion.div
+            key={project.id}
+            className="relative flex items-start gap-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            {/* Timeline Node */}
+            <div className="relative z-10 w-16 h-16 bg-white border-4 border-taro rounded-full flex items-center justify-center shadow-lg">
+              <span className="text-lg">{project.status === 'COMPLETED' ? '✅' : '🚧'}</span>
+            </div>
+
+            {/* Project Card */}
+            <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20 shadow-lg">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-display text-lg font-semibold text-ink lowercase">
+                  {project.name}
+                </h3>
+                <span className="text-sm text-ink/60">
+                  {new Date(project.startDate).toLocaleDateString()}
+                </span>
+              </div>
+              <p className="text-ink/70 mb-4 lowercase">
+                {project.description || 'no description available'}
+              </p>
+
+              {/* Progress */}
+              <div className="flex items-center gap-4">
+                <div className="flex-1">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="h-2 rounded-full bg-gradient-to-r from-taro to-brown-sugar transition-all duration-1000"
+                      style={{ width: `${project.progress}%` }}
+                    />
+                  </div>
+                </div>
+                <span className="text-sm font-medium text-ink">{project.progress}%</span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function EmptySearchState({
+  searchTerm,
+  statusFilter,
+}: {
+  searchTerm: string;
+  statusFilter: string;
+}) {
+  return (
+    <motion.div
+      className="text-center py-16"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      <div className="w-16 h-16 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span className="text-2xl">🔍</span>
+      </div>
+      <h3 className="font-display text-lg font-semibold text-ink mb-2 lowercase">
+        no projects found
+      </h3>
+      <p className="text-ink/60 mb-4">
+        {searchTerm && statusFilter !== 'all'
+          ? `no projects match "${searchTerm}" with status "${statusFilter}"`
+          : searchTerm
+            ? `no projects match "${searchTerm}"`
+            : `no projects with status "${statusFilter}"`}
+      </p>
+      <button
+        onClick={() => window.location.reload()}
+        className="text-taro hover:text-brown-sugar transition-colors font-medium"
+      >
+        clear filters →
+      </button>
+    </motion.div>
+  );
+}
+
+function EmptyProjectsState() {
+  return (
+    <motion.div
+      className="bg-white/60 backdrop-blur-lg rounded-xl p-8 border border-brown-sugar/20 shadow-lg text-center"
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+    >
+      {/* Floating Illustrations */}
+      <div className="relative mb-6">
+        <motion.div
+          className="w-24 h-24 bg-gradient-to-br from-taro/15 to-brown-sugar/15 rounded-full flex items-center justify-center mx-auto shadow-sm"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <span className="text-4xl">🎨</span>
+        </motion.div>
+
+        {/* Floating pearls */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-3 h-3 bg-taro/30 rounded-full"
+              style={{
+                left: `${30 + i * 20}%`,
+                top: `${20 + i * 15}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: 2 + i * 0.5,
+                repeat: Infinity,
+                delay: i * 0.3,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <motion.h2
+        className="font-display text-3xl font-bold text-ink mb-4 lowercase"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        welcome to your portal!
+      </motion.h2>
+
+      <motion.p
+        className="font-display text-ink/70 mb-8 text-lg lowercase max-w-2xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        your projects will appear here once we start working together. in the meantime, feel free to
+        explore the different sections and get familiar with your dashboard.
+      </motion.p>
+
+      {/* Feature Preview Cards */}
+      <motion.div
+        className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        {[
+          { emoji: '📊', title: 'project tracking', desc: 'real-time progress updates' },
+          { emoji: '💬', title: 'team messaging', desc: 'direct communication channel' },
+          { emoji: '📁', title: 'file sharing', desc: 'organized project assets' },
+        ].map((feature, index) => (
+          <motion.div
+            key={feature.title}
+            className="bg-white/50 rounded-xl p-4 border border-brown-sugar/10"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 + index * 0.1 }}
+            whileHover={{ scale: 1.05, y: -2 }}
+          >
+            <div className="text-2xl mb-2">{feature.emoji}</div>
+            <h3 className="font-display font-semibold text-ink mb-1 lowercase">{feature.title}</h3>
+            <p className="text-sm text-ink/60 lowercase">{feature.desc}</p>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <motion.div
+        className="flex justify-center space-x-3"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+      >
+        {[
+          { emoji: '🎨', text: 'design & development', color: 'taro' },
+          { emoji: '📱', text: 'digital solutions', color: 'brown-sugar' },
+        ].map((tag, index) => (
+          <motion.div
+            key={tag.text}
+            className={`px-6 py-3 bg-${tag.color}/15 text-${tag.color} rounded-lg font-display font-medium border border-${tag.color}/20 lowercase`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.7 + index * 0.1 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            {tag.emoji} {tag.text}
+          </motion.div>
+        ))}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Loading and Skeleton Components
+
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-8 animate-pulse">
+      {/* Stats Grid Skeleton */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="bg-white/40 rounded-xl p-4 border border-brown-sugar/10">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="h-3 bg-gray-200 rounded mb-2 w-20"></div>
+                <div className="h-6 bg-gray-300 rounded mb-1 w-12"></div>
+                <div className="h-2 bg-gray-200 rounded w-16"></div>
+              </div>
+              <div className="w-8 h-8 bg-gray-200 rounded-lg"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Project Card Skeleton */}
+      <div className="bg-white/40 rounded-xl p-6 border border-brown-sugar/10">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <div className="h-6 bg-gray-300 rounded mb-2 w-48"></div>
+            <div className="h-4 bg-gray-200 rounded w-72"></div>
+          </div>
+          <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
+        </div>
+
+        <div className="mb-4">
+          <div className="h-4 bg-gray-200 rounded mb-2 w-32"></div>
+          <div className="w-full bg-gray-200 rounded-full h-2"></div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-4 mb-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="text-center">
+              <div className="h-6 bg-gray-200 rounded-full w-20 mx-auto mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-16 mx-auto"></div>
+            </div>
+          ))}
+        </div>
+
+        <div className="border-t border-gray-200 pt-4">
+          <div className="h-4 bg-gray-200 rounded mb-4 w-36"></div>
+          <div className="space-y-3">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+                <div className="flex-1">
+                  <div className="h-4 bg-gray-200 rounded mb-2 w-32"></div>
+                  <div className="h-3 bg-gray-200 rounded w-48"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectCardSkeleton({ index = 0 }: { index?: number }) {
+  return (
+    <motion.div
+      className="bg-white/40 rounded-xl p-6 border border-brown-sugar/10 animate-pulse"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex-1">
+          <div className="h-6 bg-gray-300 rounded mb-2 w-48"></div>
+          <div className="h-4 bg-gray-200 rounded w-72"></div>
+        </div>
+        <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
+      </div>
+
+      <div className="mb-4">
+        <div className="flex justify-between items-center mb-2">
+          <div className="h-3 bg-gray-200 rounded w-28"></div>
+          <div className="h-3 bg-gray-300 rounded w-8"></div>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-2"></div>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-4 mb-6">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="text-center">
+            <div className="h-6 bg-gray-200 rounded-full w-20 mx-auto mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded w-16 mx-auto"></div>
+          </div>
+        ))}
+      </div>
+
+      <div className="border-t border-gray-200 pt-4">
+        <div className="h-4 bg-gray-200 rounded mb-3 w-32"></div>
+        <div className="space-y-3">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+              <div className="flex-1">
+                <div className="h-3 bg-gray-200 rounded mb-1 w-24"></div>
+                <div className="h-3 bg-gray-200 rounded w-40"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex gap-2 mt-4">
+        <div className="flex-1 h-8 bg-gray-200 rounded-lg"></div>
+        <div className="flex-1 h-8 bg-gray-200 rounded-lg"></div>
+      </div>
+    </motion.div>
+  );
+}
+
+function LoadingSpinner({ size = 'medium' }: { size?: 'small' | 'medium' | 'large' }) {
+  const sizeClasses = {
+    small: 'w-4 h-4',
+    medium: 'w-8 h-8',
+    large: 'w-12 h-12',
+  };
+
+  return (
+    <motion.div
+      className={`border-2 border-taro/30 border-t-taro rounded-full ${sizeClasses[size]}`}
+      animate={{ rotate: 360 }}
+      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+    />
+  );
+}
+
+function ProgressiveLoader({
+  isLoading,
+  skeletonComponent,
+  children,
+}: {
+  isLoading: boolean;
+  skeletonComponent: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <AnimatePresence mode="wait">
+      {isLoading ? (
+        <motion.div
+          key="skeleton"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {skeletonComponent}
+        </motion.div>
+      ) : (
+        <motion.div
+          key="content"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

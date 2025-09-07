@@ -29,7 +29,7 @@ const footerNavigation = {
     { name: 'terms of service', href: '/legal/terms' },
   ],
   social: [
-    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/108532043', icon: Linkedin },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/pixel-boba/', icon: Linkedin },
     { name: 'X', href: siteConfig.links.twitter, icon: XIcon },
     { name: 'Instagram', href: siteConfig.links.instagram, icon: Instagram },
   ],

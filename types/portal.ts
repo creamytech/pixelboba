@@ -6,7 +6,25 @@ export interface User {
   phone?: string;
   company?: string;
   image?: string;
+  emailPreferences?: EmailPreferences;
   createdAt: Date;
+}
+
+export interface EmailPreferences {
+  newMessages: boolean;
+  projectUpdates: boolean;
+  milestoneCompletions: boolean;
+  invoiceNotifications: boolean;
+  contractReminders: boolean;
+  fileUploads: boolean;
+  weeklyDigest: boolean;
+  marketingEmails: boolean;
+  frequency: 'instant' | 'daily' | 'weekly';
+  quietHours?: {
+    start: string; // "22:00"
+    end: string; // "08:00"
+    timezone: string;
+  };
 }
 
 export interface Project {
