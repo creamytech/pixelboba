@@ -361,7 +361,6 @@ function DashboardView({ data }: { data: PortalData }) {
   const [viewMode, setViewMode] = useState<'cards' | 'timeline'>('cards');
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [showQuickActions, setShowQuickActions] = useState(false);
 
   const activeProject =
     data.projects.find((p) => p.status !== 'COMPLETED' && p.status !== 'CANCELLED') ||
@@ -445,61 +444,6 @@ function DashboardView({ data }: { data: PortalData }) {
           subtitle={data.unreadMessages > 0 ? 'needs attention' : 'all caught up'}
           isAlert={data.unreadMessages > 0}
         />
-      </motion.div>
-
-      {/* Quick Actions Panel - Mobile Optimized */}
-      <motion.div
-        className="fixed bottom-6 right-4 sm:right-6 z-50"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, delay: 1 }}
-      >
-        <div className="relative">
-          {showQuickActions && (
-            <motion.div
-              className="absolute bottom-16 right-0 sm:right-auto sm:left-0 bg-white/95 backdrop-blur-lg rounded-xl shadow-xl border border-brown-sugar/20 p-4 space-y-2 min-w-48 sm:min-w-56"
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            >
-              <QuickActionButton
-                icon={<MessageSquare size={16} />}
-                label="new message"
-                onClick={() => {
-                  /* TODO: open message modal */
-                }}
-                badge={data.unreadMessages}
-              />
-              <QuickActionButton
-                icon={<FileText size={16} />}
-                label="latest update"
-                onClick={() => {
-                  /* TODO: scroll to activity */
-                }}
-              />
-              <QuickActionButton
-                icon={<Upload size={16} />}
-                label="upload files"
-                onClick={() => {
-                  /* TODO: open file upload */
-                }}
-              />
-            </motion.div>
-          )}
-          <motion.button
-            onClick={() => setShowQuickActions(!showQuickActions)}
-            className="w-14 h-14 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-full shadow-lg flex items-center justify-center"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <motion.div
-              animate={{ rotate: showQuickActions ? 45 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              ✨
-            </motion.div>
-          </motion.button>
-        </div>
       </motion.div>
 
       {/* Search and Filter Controls - Mobile Enhanced */}
@@ -852,36 +796,6 @@ function DashboardStatCard({
   );
 }
 
-function QuickActionButton({
-  icon,
-  label,
-  onClick,
-  badge,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  onClick: () => void;
-  badge?: number;
-}) {
-  return (
-    <motion.button
-      onClick={onClick}
-      className="relative flex items-center gap-3 w-full p-3 text-left hover:bg-taro/10 rounded-lg transition-colors group"
-      whileHover={{ x: 4 }}
-    >
-      <div className="text-taro group-hover:scale-110 transition-transform">{icon}</div>
-      <span className="text-sm font-medium text-ink group-hover:text-taro transition-colors">
-        {label}
-      </span>
-      {badge && badge > 0 && (
-        <span className="ml-auto min-w-5 h-5 bg-orange-500 text-white text-xs rounded-full flex items-center justify-center">
-          {badge > 9 ? '9+' : badge}
-        </span>
-      )}
-    </motion.button>
-  );
-}
-
 function EnhancedProjectCard({
   project,
   index,
@@ -994,6 +908,37 @@ function EnhancedProjectCard({
           estimatedDeadline={project.deadline ? project.deadline.toString() : undefined}
         />
       </motion.div>
+
+      {/* Real-Time Progress Link */}
+      {project.websiteUrl && (
+        <motion.div
+          className="border-t border-ink/10 pt-4 mt-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.7 }}
+        >
+          <div className="bg-taro/5 border border-taro/20 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-taro">🌐</span>
+              <h4 className="font-display text-sm font-semibold text-taro lowercase">
+                live project progress
+              </h4>
+            </div>
+            <p className="text-xs text-ink/60 mb-3">
+              view your project&apos;s real-time progress and updates
+            </p>
+            <a
+              href={project.websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-taro text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-taro/80 transition-colors"
+            >
+              <span>view live progress</span>
+              <span className="text-taro-200">↗</span>
+            </a>
+          </div>
+        </motion.div>
+      )}
 
       {/* Quick Actions */}
       <div className="flex gap-2 mt-4">

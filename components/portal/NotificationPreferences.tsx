@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Bell, Mail, Clock, Shield, Check, X } from 'lucide-react';
+import { Bell, Mail, Check, X } from 'lucide-react';
 import { EmailPreferences } from '@/types/portal';
 
 export default function NotificationPreferences() {
@@ -184,7 +184,7 @@ export default function NotificationPreferences() {
         transition={{ delay: 0.1 }}
       >
         <div className="flex items-center gap-3 mb-4">
-          <Clock className="w-5 h-5 text-taro" />
+          <Mail className="w-5 h-5 text-taro" />
           <h3 className="font-display text-lg font-semibold text-ink lowercase">email frequency</h3>
         </div>
 
@@ -310,32 +310,6 @@ export default function NotificationPreferences() {
           ))}
         </div>
       </motion.div>
-
-      {/* Quiet Hours */}
-      {preferences.quietHours && (
-        <motion.div
-          className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <Shield className="w-5 h-5 text-taro" />
-            <h3 className="font-display text-lg font-semibold text-ink lowercase">quiet hours</h3>
-          </div>
-
-          <div className="bg-taro/5 rounded-lg p-4 border border-taro/20">
-            <p className="text-sm text-ink/70 mb-3">
-              we&apos;ll hold non-urgent notifications during these hours:
-            </p>
-            <div className="flex items-center gap-2 text-taro font-medium">
-              <Clock size={16} />
-              {preferences.quietHours.start} - {preferences.quietHours.end}
-              <span className="text-xs text-ink/50 ml-2">({preferences.quietHours.timezone})</span>
-            </div>
-          </div>
-        </motion.div>
-      )}
 
       {/* Info Footer */}
       <motion.div

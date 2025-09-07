@@ -97,6 +97,14 @@ export default function MilestoneTracker({
     }
   };
 
+  // Get recent milestone updates (completed in last 30 days)
+  const recentUpdates = sortedMilestones
+    .filter(
+      (m) =>
+        m.completedAt && new Date(m.completedAt).getTime() > Date.now() - 30 * 24 * 60 * 60 * 1000
+    )
+    .sort((a, b) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime());
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -117,6 +125,51 @@ export default function MilestoneTracker({
           </div>
         )}
       </div>
+
+      {/* Recent Updates */}
+      {recentUpdates.length > 0 && (
+        <motion.div
+          className="bg-green-50 border border-green-200 rounded-lg p-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-green-600">🎉</span>
+            <h4 className="font-display text-sm font-semibold text-green-700 lowercase">
+              recent milestone updates
+            </h4>
+          </div>
+          <div className="space-y-2">
+            {recentUpdates.slice(0, 3).map((milestone, index) => (
+              <motion.div
+                key={milestone.id}
+                className="flex items-center gap-3 text-sm"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <span className="text-green-600">✅</span>
+                <span className="font-medium text-green-700">{milestone.title}</span>
+                <span className="text-green-600">•</span>
+                <span className="text-green-600/80">
+                  completed{' '}
+                  {new Date(milestone.completedAt!).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </span>
+              </motion.div>
+            ))}
+            {recentUpdates.length > 3 && (
+              <p className="text-xs text-green-600/70 ml-8">
+                +{recentUpdates.length - 3} more milestone{recentUpdates.length - 3 > 1 ? 's' : ''}{' '}
+                completed this month
+              </p>
+            )}
+          </div>
+        </motion.div>
+      )}
 
       {/* Timeline */}
       <div className="relative">

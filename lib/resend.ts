@@ -31,7 +31,7 @@ export type EmailTemplate = (typeof EMAIL_TEMPLATES)[keyof typeof EMAIL_TEMPLATE
 
 // Common email configuration
 export const EMAIL_CONFIG = {
-  FROM: 'Pixel Boba <notifications@pixelboba.com>',
+  FROM: 'Pixel Boba <hello@pixelboba.com>',
   REPLY_TO: 'hello@pixelboba.com',
   BRAND_COLORS: {
     taro: '#A78BFA',
@@ -120,7 +120,14 @@ export class EmailQueue {
       const resend = await getResend();
       const template = await this.getEmailTemplate(notification.template, notification.data);
 
-      await resend.emails.send({
+      console.log(`Attempting to send email: ${notification.template} to ${notification.to}`);
+      console.log(`Email config:`, {
+        from: EMAIL_CONFIG.FROM,
+        to: notification.to,
+        subject: notification.subject,
+      });
+
+      const result = await resend.emails.send({
         from: EMAIL_CONFIG.FROM,
         to: notification.to,
         replyTo: EMAIL_CONFIG.REPLY_TO,
@@ -128,9 +135,14 @@ export class EmailQueue {
         html: template,
       });
 
-      console.log(`Email sent: ${notification.template} to ${notification.to}`);
+      console.log(
+        `Email sent successfully: ${notification.template} to ${notification.to}`,
+        result
+      );
+      return result;
     } catch (error) {
-      console.error(`Failed to send email: ${notification.template}`, error);
+      console.error(`Failed to send email: ${notification.template} to ${notification.to}`, error);
+      throw error;
     }
   }
 

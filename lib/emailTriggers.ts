@@ -18,31 +18,6 @@ const shouldSendNotification = (
   return Boolean(preferences[notificationType]);
 };
 
-// Helper to check quiet hours
-const isInQuietHours = (user: User): boolean => {
-  const preferences = user.emailPreferences;
-  if (!preferences?.quietHours) return false;
-
-  const now = new Date();
-  const currentHour = now.getHours();
-  const currentMinute = now.getMinutes();
-  const currentTime = currentHour * 60 + currentMinute;
-
-  const [startHour, startMinute] = preferences.quietHours.start.split(':').map(Number);
-  const [endHour, endMinute] = preferences.quietHours.end.split(':').map(Number);
-
-  const startTime = startHour * 60 + startMinute;
-  const endTime = endHour * 60 + endMinute;
-
-  if (startTime <= endTime) {
-    // Same day quiet hours (e.g., 22:00 - 08:00 next day)
-    return currentTime >= startTime && currentTime <= endTime;
-  } else {
-    // Overnight quiet hours (e.g., 22:00 - 08:00)
-    return currentTime >= startTime || currentTime <= endTime;
-  }
-};
-
 // Email trigger functions
 
 export const triggerNewMessageEmail = async (
@@ -53,13 +28,6 @@ export const triggerNewMessageEmail = async (
 ) => {
   if (!shouldSendNotification(recipient, 'newMessages')) {
     console.log('User has disabled new message notifications');
-    return;
-  }
-
-  // Skip if in quiet hours for non-urgent messages
-  if (isInQuietHours(recipient)) {
-    console.log('User is in quiet hours, queuing for later');
-    // TODO: Queue for after quiet hours
     return;
   }
 

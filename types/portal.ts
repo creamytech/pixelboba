@@ -20,11 +20,6 @@ export interface EmailPreferences {
   weeklyDigest: boolean;
   marketingEmails: boolean;
   frequency: 'instant' | 'daily' | 'weekly';
-  quietHours?: {
-    start: string; // "22:00"
-    end: string; // "08:00"
-    timezone: string;
-  };
 }
 
 export interface Project {
@@ -36,6 +31,7 @@ export interface Project {
   startDate: Date;
   deadline?: Date;
   completedAt?: Date;
+  websiteUrl?: string; // URL for real-time progress viewing
   client: User;
   milestones: Milestone[];
   createdAt: Date;

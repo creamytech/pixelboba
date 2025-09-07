@@ -290,6 +290,7 @@ function EditProjectModal({
     status: project.status,
     progress: project.progress,
     deadline: project.deadline ? new Date(project.deadline).toISOString().split('T')[0] : '',
+    websiteUrl: project.websiteUrl || '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -318,6 +319,7 @@ function EditProjectModal({
           ...formData,
           deadline: formData.deadline || null,
           progress: parseInt(formData.progress.toString()),
+          websiteUrl: formData.websiteUrl || null,
         }),
       });
 
@@ -429,6 +431,22 @@ function EditProjectModal({
                 type="date"
                 value={formData.deadline}
                 onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
+                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-ink mb-2">
+                website url (optional)
+                <span className="text-xs text-ink/60 block mt-1">
+                  share this link with clients for real-time project progress
+                </span>
+              </label>
+              <input
+                type="url"
+                placeholder="https://example.com"
+                value={formData.websiteUrl}
+                onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
                 className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
               />
             </div>
