@@ -134,7 +134,7 @@ export default function AboutPage() {
         />
         <meta property="og:url" content="https://pixelboba.com/about" />
         <meta property="og:siteName" content="pixel boba" />
-        <meta property="og:image" content="https://pixelboba.com/og-image.png" />
+        <meta property="og:image" content="https://pixelboba.com/Pixel_Boba_Icon_PNG.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="en_US" />
@@ -145,7 +145,7 @@ export default function AboutPage() {
           name="twitter:description"
           content="custom websites built with code-first quality. performance and accessibility built in from day one."
         />
-        <meta name="twitter:image" content="https://pixelboba.com/og-image.png" />
+        <meta name="twitter:image" content="https://pixelboba.com/Pixel_Boba_Icon_PNG.png" />
       </Head>
       <div className="min-h-screen">
         <Header />

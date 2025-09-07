@@ -39,12 +39,20 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [
+      {
+        url: '/Pixel_Boba_Icon_PNG.png',
+        width: 512,
+        height: 512,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteConfig.name,
     description: siteConfig.description,
     creator: '@pixelboba_',
+    images: ['/Pixel_Boba_Icon_PNG.png'],
   },
   icons: {
     icon: '/favicon.ico',

@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     siteName: 'pixel boba',
     images: [
       {
-        url: 'https://pixelboba.com/og-image.png',
-        width: 1200,
-        height: 630,
+        url: 'https://pixelboba.com/Pixel_Boba_Icon_PNG.png',
+        width: 512,
+        height: 512,
       },
     ],
     locale: 'en_US',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: 'pixel boba — services & pricing',
     description:
       'custom web design and redesigns with starting-at pricing. no calls needed, tell us what you need and get a custom proposal by email.',
-    images: ['https://pixelboba.com/og-image.png'],
+    images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
 };
 

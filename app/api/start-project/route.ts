@@ -108,7 +108,8 @@ Reply directly to this email to respond to ${sanitizedData.name}.
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
               <div style="background: linear-gradient(135deg, #8B5CF6, #A78BFA); padding: 30px; text-align: center; border-radius: 12px 12px 0 0;">
-                <h1 style="color: white; margin: 0; font-size: 24px;">🧋 New Project Inquiry</h1>
+                <img src="https://pixelboba.com/Pixel_Boba_Icon_PNG.png" alt="pixel boba" style="width: 48px; height: 48px; margin-bottom: 16px; filter: brightness(0) invert(1);" />
+                <h1 style="color: white; margin: 0; font-size: 24px;">New Project Inquiry</h1>
                 <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0;">From your website services form</p>
               </div>
               

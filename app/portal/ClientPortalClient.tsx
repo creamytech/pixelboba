@@ -177,7 +177,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
                   }}
                 >
                   <Image
-                    src="/brand/Pixel_Boba_Icon_01.svg"
+                    src="/Pixel_Boba_Icon_PNG.png"
                     alt="pixel boba"
                     width={56}
                     height={56}

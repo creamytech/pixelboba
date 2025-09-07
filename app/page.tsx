@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     siteName: 'pixel boba',
     images: [
       {
-        url: 'https://pixelboba.com/og-image.png',
-        width: 1200,
-        height: 630,
+        url: 'https://pixelboba.com/Pixel_Boba_Icon_PNG.png',
+        width: 512,
+        height: 512,
       },
     ],
     locale: 'en_US',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: 'pixel boba — websites that pop',
     description:
       'custom websites built with code-first quality. no meetings, no calls, just clean builds and quick turnarounds.',
-    images: ['https://pixelboba.com/og-image.png'],
+    images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
 };
 
