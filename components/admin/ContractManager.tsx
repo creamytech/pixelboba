@@ -2,17 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Filter, Edit, Trash2, Send, FileCheck, Eye } from 'lucide-react';
-import { Contract, ContractStatus } from '@/types/portal';
+import { Plus, Search, Filter, Edit, Trash2, Send, FileCheck, Eye, X, User } from 'lucide-react';
+import { Contract, ContractStatus, User as UserType } from '@/types/portal';
 
 export default function ContractManager() {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<ContractStatus | 'ALL'>('ALL');
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [clients, setClients] = useState<UserType[]>([]);
 
   useEffect(() => {
     fetchContracts();
+    fetchClients();
   }, []);
 
   const fetchContracts = async () => {
@@ -26,6 +29,18 @@ export default function ContractManager() {
       console.error('Error fetching contracts:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchClients = async () => {
+    try {
+      const response = await fetch('/api/admin/clients');
+      if (response.ok) {
+        const data = await response.json();
+        setClients(data.clients);
+      }
+    } catch (error) {
+      console.error('Error fetching clients:', error);
     }
   };
 
@@ -56,7 +71,10 @@ export default function ContractManager() {
             <p className="text-ink/60 mt-1">create, send, and track client contracts</p>
           </div>
 
-          <button className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors">
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+          >
             <Plus size={18} />
             <span>new contract</span>
           </button>
@@ -112,6 +130,18 @@ export default function ContractManager() {
           </tbody>
         </table>
       </div>
+
+      {/* Create Contract Modal */}
+      {showCreateModal && (
+        <CreateContractModal
+          clients={clients}
+          onClose={() => setShowCreateModal(false)}
+          onSuccess={() => {
+            setShowCreateModal(false);
+            fetchContracts();
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -126,6 +156,44 @@ function ContractRow({ contract }: { contract: Contract }) {
       CANCELLED: 'bg-gray-100 text-gray-700',
     };
     return colors[status];
+  };
+
+  const handleSendContract = async () => {
+    try {
+      const response = await fetch(`/api/admin/contracts/${contract.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'SENT' }),
+      });
+
+      if (response.ok) {
+        window.location.reload(); // Simple refresh - in production you'd update state
+      } else {
+        alert('Failed to send contract');
+      }
+    } catch (error) {
+      console.error('Error sending contract:', error);
+      alert('Failed to send contract');
+    }
+  };
+
+  const handleDeleteContract = async () => {
+    if (!confirm('Are you sure you want to delete this contract?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/contracts/${contract.id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        window.location.reload(); // Simple refresh - in production you'd update state
+      } else {
+        alert('Failed to delete contract');
+      }
+    } catch (error) {
+      console.error('Error deleting contract:', error);
+      alert('Failed to delete contract');
+    }
   };
 
   return (
@@ -153,22 +221,190 @@ function ContractRow({ contract }: { contract: Contract }) {
       </td>
       <td className="p-4">
         <div className="flex items-center space-x-2">
-          <button className="p-1 text-ink/60 hover:text-ink">
+          <button
+            onClick={() => alert(`View contract: ${contract.title}`)}
+            className="p-1 text-ink/60 hover:text-ink"
+            title="View contract"
+          >
             <Eye size={16} />
           </button>
-          <button className="p-1 text-ink/60 hover:text-ink">
+          <button
+            onClick={() => alert(`Edit contract: ${contract.title}`)}
+            className="p-1 text-ink/60 hover:text-ink"
+            title="Edit contract"
+          >
             <Edit size={16} />
           </button>
           {contract.status === 'DRAFT' && (
-            <button className="p-1 text-ink/60 hover:text-blue-500">
+            <button
+              onClick={handleSendContract}
+              className="p-1 text-ink/60 hover:text-blue-500"
+              title="Send contract via DocuSign"
+            >
               <Send size={16} />
             </button>
           )}
-          <button className="p-1 text-ink/60 hover:text-red-500">
-            <Trash2 size={16} />
-          </button>
+          {contract.status !== 'SIGNED' && (
+            <button
+              onClick={handleDeleteContract}
+              className="p-1 text-ink/60 hover:text-red-500"
+              title="Delete contract"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
         </div>
       </td>
     </motion.tr>
+  );
+}
+
+interface CreateContractModalProps {
+  clients: UserType[];
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+function CreateContractModal({ clients, onClose, onSuccess }: CreateContractModalProps) {
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    clientId: '',
+    projectId: '',
+    expiresAt: '',
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/admin/contracts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          expiresAt: formData.expiresAt ? new Date(formData.expiresAt).toISOString() : null,
+          projectId: formData.projectId || null,
+        }),
+      });
+
+      if (response.ok) {
+        onSuccess();
+      } else {
+        const error = await response.json();
+        console.error('Error creating contract:', error);
+        alert('Failed to create contract: ' + (error.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error creating contract:', error);
+      alert('Failed to create contract. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+      >
+        <div className="p-6 border-b border-ink/10">
+          <div className="flex items-center justify-between">
+            <h3 className="font-display text-xl font-bold text-ink">create new contract</h3>
+            <button onClick={onClose} className="p-1 text-ink/60 hover:text-ink">
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-ink mb-2">contract title *</label>
+            <input
+              type="text"
+              required
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              placeholder="enter contract title..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink mb-2">client *</label>
+            <select
+              required
+              value={formData.clientId}
+              onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
+              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            >
+              <option value="">select a client...</option>
+              {clients.map((client) => (
+                <option key={client.id} value={client.id}>
+                  {client.name || client.email}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink mb-2">project (optional)</label>
+            <input
+              type="text"
+              value={formData.projectId}
+              onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
+              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              placeholder="project id (leave blank if none)..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink mb-2">
+              expiration date (optional)
+            </label>
+            <input
+              type="date"
+              value={formData.expiresAt}
+              onChange={(e) => setFormData({ ...formData, expiresAt: e.target.value })}
+              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink mb-2">contract content *</label>
+            <textarea
+              required
+              rows={10}
+              value={formData.content}
+              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 resize-y"
+              placeholder="enter contract terms and content..."
+            />
+          </div>
+
+          <div className="flex justify-end space-x-4 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-ink/60 hover:text-ink transition-colors"
+            >
+              cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50"
+            >
+              {loading ? 'creating...' : 'create contract'}
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
   );
 }
