@@ -3,7 +3,6 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import ServicesPreview from '@/components/sections/ServicesPreview';
-import PlatformsSection from '@/components/sections/PlatformsSection';
 import CodeFirstSection from '@/components/sections/CodeFirstSection';
 import ProcessSection from '@/components/sections/ProcessSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
@@ -45,7 +44,6 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <ServicesPreview />
-        <PlatformsSection />
         <CodeFirstSection />
         <ProcessSection />
         <TestimonialsSection />

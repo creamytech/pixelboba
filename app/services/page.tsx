@@ -5,6 +5,7 @@ import PriceCard from '@/components/services/PriceCard';
 import CTABanner from '@/components/services/CTABanner';
 import HowItWorks from '@/components/services/HowItWorks';
 import StartProjectForm from '@/components/form/StartProjectForm';
+import PlatformsSection from '@/components/sections/PlatformsSection';
 
 export const metadata: Metadata = {
   title: 'pixel boba — services & pricing (starting at)',
@@ -139,6 +140,9 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
+
+        {/* Platforms Section */}
+        <PlatformsSection />
 
         {/* How It Works */}
         <HowItWorks />
