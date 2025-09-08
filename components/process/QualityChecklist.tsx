@@ -14,7 +14,7 @@ const checklistItems = [
   },
   {
     icon: Zap,
-    text: 'lighthouse: performance ≥ 90, seo ≥ 90',
+    text: 'optimized performance and seo standards',
   },
   {
     icon: Mail,
