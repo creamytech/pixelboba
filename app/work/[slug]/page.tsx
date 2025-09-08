@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { getWorkBySlug, getAllWork } from '@/lib/mdx';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import BeforeAfterSlideshow from '@/components/BeforeAfterSlideshow';
 import {
   Calendar,
   ExternalLink,
@@ -252,25 +253,30 @@ export default async function WorkPage({ params }: WorkPageProps) {
         </section>
 
         {/* Before/After Comparison */}
-        {frontmatter.beforeImage &&
-          frontmatter.afterImage &&
-          frontmatter.projectType === 'redesign' && (
-            <section className="py-12 bg-gray-50">
-              <div className="container mx-auto px-4">
-                <div className="max-w-6xl mx-auto">
-                  <h2 className="font-display text-3xl font-bold text-center mb-8">
-                    before & after
-                  </h2>
+        {frontmatter.projectType === 'redesign' && (
+          <section className="py-12 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <h2 className="font-display text-3xl font-bold text-center mb-8">before & after</h2>
+                {frontmatter.beforeImages && frontmatter.afterImages ? (
+                  <BeforeAfterSlideshow
+                    beforeImages={frontmatter.beforeImages}
+                    afterImages={frontmatter.afterImages}
+                    beforeLabel="before"
+                    afterLabel="after"
+                  />
+                ) : frontmatter.beforeImage && frontmatter.afterImage ? (
                   <BeforeAfterSlider
                     beforeImage={frontmatter.beforeImage}
                     afterImage={frontmatter.afterImage}
                     beforeLabel="before"
                     afterLabel="after"
                   />
-                </div>
+                ) : null}
               </div>
-            </section>
-          )}
+            </div>
+          </section>
+        )}
 
         {/* Case Study Content */}
         <section className="py-12">

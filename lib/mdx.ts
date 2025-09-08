@@ -15,6 +15,8 @@ export interface WorkFrontmatter {
   cover: string;
   beforeImage?: string;
   afterImage?: string;
+  beforeImages?: string[];
+  afterImages?: string[];
   website?: string;
   projectType?: 'redesign' | 'custom';
   gallery?: string[];
