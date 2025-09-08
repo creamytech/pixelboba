@@ -38,7 +38,7 @@ const faqs = [
   {
     question: 'how do you ensure my website will be fast and seo-friendly?',
     answer:
-      'we follow industry best practices including optimized images, efficient code, fast hosting, proper meta tags, schema markup, and mobile-first design. every site is tested for core web vitals and we aim for 95+ lighthouse scores across all metrics.',
+      'we follow industry best practices including optimized images, efficient code, fast hosting, proper meta tags, schema markup, and mobile-first design. every site is tested for core web vitals and built for excellent performance.',
   },
   {
     question: 'what happens if i need changes after the website launches?',

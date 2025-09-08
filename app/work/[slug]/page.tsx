@@ -382,33 +382,10 @@ export default async function WorkPage({ params }: WorkPageProps) {
                     <h3 className="font-display text-2xl font-bold text-gray-900">Results</h3>
                   </div>
 
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-                      <div className="text-3xl font-bold text-taro mb-2">100</div>
-                      <div className="text-sm text-gray-600 uppercase tracking-wide">
-                        Lighthouse Score
-                      </div>
-                    </div>
-                    <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-                      <div className="text-3xl font-bold text-taro mb-2">+40%</div>
-                      <div className="text-sm text-gray-600 uppercase tracking-wide">
-                        User Engagement
-                      </div>
-                    </div>
-                    <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-                      <div className="text-3xl font-bold text-taro mb-2">-60%</div>
-                      <div className="text-sm text-gray-600 uppercase tracking-wide">
-                        Bounce Rate
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="prose prose-gray max-w-none">
                     <p className="text-gray-700 leading-relaxed">
-                      The new website delivers exceptional performance across all metrics,
-                      significantly improving user experience and driving measurable business
-                      growth.
+                      The new website delivers exceptional performance, significantly improving user
+                      experience and driving business growth.
                     </p>
                   </div>
                 </div>

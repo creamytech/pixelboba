@@ -14,7 +14,7 @@ const benefits = [
     icon: Zap,
     title: 'performance and accessibility built in',
     description:
-      'every build meets lighthouse standards. fast loading, keyboard navigation, screen reader friendly.',
+      'every build meets high performance standards. fast loading, keyboard navigation, screen reader friendly.',
   },
   {
     icon: Eye,

@@ -9,7 +9,7 @@ const valueProps = [
     title: 'performance',
     description:
       'lightning-fast loading times and smooth interactions that keep users engaged and search engines happy.',
-    stats: '99+ lighthouse score',
+    stats: 'optimized for speed',
   },
   {
     icon: Palette,

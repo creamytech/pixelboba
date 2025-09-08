@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     quote:
-      'Not only did they create a stunning portfolio site, but the performance improvements increased our inquiries by 40%. Highly recommend!',
+      'Not only did they create a stunning portfolio site, but the performance improvements significantly increased our inquiries. Highly recommend!',
     author: 'Elena Rodriguez',
     role: 'Owner, Artisan Studio',
     avatar: 'ER',
