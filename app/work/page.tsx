@@ -40,8 +40,9 @@ export default async function WorkPage() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {works.map((work) => (
-                <div
+                <Link
                   key={work.slug}
+                  href={`/work/${work.slug}`}
                   className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 min-h-[400px] flex flex-col"
                 >
                   {/* Project Thumbnail */}
@@ -60,9 +61,6 @@ export default async function WorkPage() {
                         <div className="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
                           <div className="flex items-center gap-2 text-sm">
                             {work.frontmatter.website && <ExternalLink className="w-4 h-4" />}
-                            {work.frontmatter.featured && (
-                              <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                            )}
                           </div>
                         </div>
                       </div>
@@ -102,23 +100,8 @@ export default async function WorkPage() {
                     <p className="text-gray-600 mb-4 flex-1 line-clamp-2">
                       {work.frontmatter.summary}
                     </p>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <Calendar className="w-3 h-3" />
-                        {new Date(work.frontmatter.publishedAt).getFullYear()}
-                      </div>
-
-                      <Button
-                        asChild
-                        size="sm"
-                        className="bg-taro hover:bg-deep-taro group-hover:shadow-lg transition-shadow"
-                      >
-                        <Link href={`/work/${work.slug}`}>View Case Study</Link>
-                      </Button>
-                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
