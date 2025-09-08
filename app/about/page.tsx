@@ -185,9 +185,9 @@ export default function AboutPage() {
                 <div className="prose prose-lg max-w-none text-center">
                   <p className="text-gray-600 text-lg md:text-xl leading-relaxed lowercase mb-0">
                     we don&apos;t waste time with endless mockups or long meetings. from day one
-                    you&apos;ll see your site in action, not on a slideshow. everything is async and
-                    simple—updates in your inbox, previews you can click through, and progress that
-                    speaks for itself.
+                    you&apos;ll see your site in action, not on a slideshow. everything is
+                    streamlined and simple—updates through your client portal, previews you can
+                    click through, and progress that speaks for itself.
                   </p>
                 </div>
               </div>

@@ -10,11 +10,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'pixel boba — our process',
   description:
-    'a simple, async workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
+    'a simple workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
   openGraph: {
     title: 'pixel boba — our process',
     description:
-      'a simple, async workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
+      'a simple workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
     url: 'https://pixelboba.com/process',
     siteName: 'pixel boba',
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'pixel boba — our process',
     description:
-      'a simple, async workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
+      'a simple workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
 };
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 const processSteps = [
   {
     stepNumber: '1',
-    title: '1) shake - discovery, but async',
+    title: '1) shake - discovery, no meetings',
     whatWeDo:
       'turn your project form into a short written brief; align on goals, audience, and scope.',
     whatWeNeed: 'brand assets, links, must-have features, examples you like.',
@@ -58,7 +58,7 @@ const processSteps = [
     stepNumber: '3',
     title: '3) layer - visual design',
     whatWeDo: 'design system, page designs, and interaction previews.',
-    whatWeNeed: 'async comments in figma; choose between a/b explorations.',
+    whatWeNeed: 'feedback via client portal; choose between a/b explorations.',
     deliverables: 'figma files, design tokens, motion previews.',
     timing: '5–10 days (depends on page count).',
   },
@@ -101,8 +101,8 @@ export default function ProcessPage() {
                 our process
               </h1>
               <p className="text-xl text-gray-600 mb-12 lowercase">
-                a simple, async workflow that keeps things moving. no meetings, no calls, just clear
-                steps, clean builds, and quick turnarounds.
+                a simple workflow that keeps things moving. no meetings, no calls, just clear steps,
+                clean builds, and quick turnarounds.
               </p>
 
               {/* Quick nav links */}
@@ -166,8 +166,8 @@ export default function ProcessPage() {
                 </h2>
                 <div className="max-w-3xl mx-auto">
                   <p className="text-xl text-gray-600 mb-8 lowercase">
-                    once we kick off, you&apos;ll get access to your own pixel boba dashboard. no
-                    messy email chains or lost files—everything lives in one place:
+                    once we kick off, you&apos;ll get access to your own pixel boba dashboard. all
+                    project communication happens here—no messy email chains or lost files:
                   </p>
 
                   {/* Feature List */}
