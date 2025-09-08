@@ -14,17 +14,10 @@ const testimonials = [
   },
   {
     quote:
-      'Working with the Pixel Boba team felt like having an extension of our own team. They truly understood our vision and brought it to life beautifully.',
-    author: 'Marcus Johnson',
-    role: 'Founder, TechStart SaaS',
-    avatar: 'MJ',
-  },
-  {
-    quote:
-      'Not only did they create a stunning portfolio site, but the performance improvements made such a difference for my visitors. Highly recommend!',
-    author: 'Elena Rodriguez',
-    role: 'Owner, Artisan Studio',
-    avatar: 'ER',
+      "Working with Pixel Boba transformed our vision into reality. They didn't just build us a website—they crafted an experience that captures the soul of travel and adventure.",
+    author: 'Locra Team',
+    role: 'Travel-Inspired Fashion Brand',
+    avatar: 'LT',
   },
 ];
 

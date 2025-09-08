@@ -272,129 +272,140 @@ export default async function WorkPage({ params }: WorkPageProps) {
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              {/* Content Blocks */}
-              <div className="space-y-16">
-                {/* Challenge Block */}
-                <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 border border-red-100">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z"
-                        />
-                      </svg>
+              {/* Content Blocks - Show different layouts based on project type */}
+              {frontmatter.projectType === 'redesign' ? (
+                // Redesign Layout - Focus on Before/After
+                <div className="space-y-12">
+                  {/* Original Content */}
+                  <div className="prose prose-lg max-w-none">
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                  </div>
+                </div>
+              ) : (
+                // Custom Build Layout - Full content blocks
+                <div className="space-y-16">
+                  {/* Challenge Block */}
+                  <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 border border-red-100">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z"
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="font-display text-2xl font-bold text-gray-900">Challenge</h3>
                     </div>
-                    <h3 className="font-display text-2xl font-bold text-gray-900">Challenge</h3>
-                  </div>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-700 leading-relaxed">
-                      The existing solution lacked modern design principles and failed to
-                      effectively showcase the client&apos;s expertise, resulting in low engagement
-                      and missed opportunities.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Approach Block */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                        />
-                      </svg>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-gray-700 leading-relaxed">
+                        The existing solution lacked modern design principles and failed to
+                        effectively showcase the client&apos;s expertise, resulting in low
+                        engagement and missed opportunities.
+                      </p>
                     </div>
-                    <h3 className="font-display text-2xl font-bold text-gray-900">Approach</h3>
                   </div>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-700 leading-relaxed">
-                      We conducted comprehensive user research, developed a design system focused on
-                      accessibility and performance, and implemented modern development practices to
-                      create a solution that exceeds industry standards.
-                    </p>
-                  </div>
-                </div>
 
-                {/* Solution Block */}
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
+                  {/* Approach Block */}
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="font-display text-2xl font-bold text-gray-900">Approach</h3>
                     </div>
-                    <h3 className="font-display text-2xl font-bold text-gray-900">Solution</h3>
-                  </div>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-700 leading-relaxed">
-                      The final solution combines beautiful design with technical excellence,
-                      featuring responsive layouts, optimized performance, and intuitive user
-                      interactions that drive measurable business results.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Results with Stats */}
-                <div className="bg-gradient-to-br from-taro/5 to-deep-taro/10 rounded-2xl p-8 border border-taro/20">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-lg flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                        />
-                      </svg>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-gray-700 leading-relaxed">
+                        We conducted comprehensive user research, developed a design system focused
+                        on accessibility and performance, and implemented modern development
+                        practices to create a solution that exceeds industry standards.
+                      </p>
                     </div>
-                    <h3 className="font-display text-2xl font-bold text-gray-900">Results</h3>
                   </div>
 
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-700 leading-relaxed">
-                      The new website delivers exceptional performance, significantly improving user
-                      experience and driving business growth.
-                    </p>
+                  {/* Solution Block */}
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="font-display text-2xl font-bold text-gray-900">Solution</h3>
+                    </div>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-gray-700 leading-relaxed">
+                        The final solution combines beautiful design with technical excellence,
+                        featuring responsive layouts, optimized performance, and intuitive user
+                        interactions that drive measurable business results.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Results with Stats */}
+                  <div className="bg-gradient-to-br from-taro/5 to-deep-taro/10 rounded-2xl p-8 border border-taro/20">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-lg flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="font-display text-2xl font-bold text-gray-900">Results</h3>
+                    </div>
+
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-gray-700 leading-relaxed">
+                        The new website delivers exceptional performance, significantly improving
+                        user experience and driving business growth.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Original Content */}
+                  <div className="prose prose-lg max-w-none">
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
                   </div>
                 </div>
-
-                {/* Original Content */}
-                <div className="prose prose-lg max-w-none">
-                  <div dangerouslySetInnerHTML={{ __html: content }} />
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
