@@ -191,8 +191,9 @@ model Contract {
   sentAt              DateTime?
   signedAt            DateTime?
   expiresAt           DateTime?
-  templateId          String?
-  docusignEnvelopeId  String?
+  templateId          String?        // Local contract template ID
+  docusignTemplateId  String?        // DocuSign template ID
+  docusignEnvelopeId  String?        // DocuSign envelope ID
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
 

@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
 
     const { prisma } = await import('@/lib/prisma');
     const body = await request.json();
-    const { title, content, clientId, projectId, expiresAt } = body;
+    const { title, content, clientId, projectId, expiresAt, templateId } = body;
 
     if (!title || !content || !clientId) {
       return NextResponse.json(
@@ -124,6 +124,7 @@ export async function POST(request: NextRequest) {
         clientId,
         projectId: projectId || null,
         expiresAt: expiresAt ? new Date(expiresAt) : null,
+        docusignTemplateId: templateId || null, // Store DocuSign template ID
       },
       include: {
         client: {

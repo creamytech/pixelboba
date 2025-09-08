@@ -98,7 +98,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const contract = await prisma.contract.findUnique({
       where: { id: contractId },
-      include: { client: true },
+      include: {
+        client: true,
+        project: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
 
     if (!contract) {
@@ -113,6 +121,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           content: content || contract.content,
           clientEmail: contract.client.email,
           clientName: contract.client.name || 'Client',
+          templateId: contract.docusignTemplateId || undefined,
+          templateVariables: contract.docusignTemplateId
+            ? {
+                ClientName: contract.client.name || 'Client',
+                ProjectName: contract.project?.name || 'General Services',
+                ContractTitle: title || contract.title,
+              }
+            : undefined,
         });
 
         const updatedContract = await prisma.contract.update({

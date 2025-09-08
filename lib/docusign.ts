@@ -15,19 +15,20 @@ interface DocuSignAuthToken {
 }
 
 interface DocuSignEnvelopeRequest {
-  documents: Array<{
+  // For document-based envelopes
+  documents?: Array<{
     documentBase64: string;
     name: string;
     fileExtension: string;
     documentId: string;
   }>;
-  recipients: {
+  recipients?: {
     signers: Array<{
       email: string;
       name: string;
       recipientId: string;
-      tabs: {
-        signHereTabs: Array<{
+      tabs?: {
+        signHereTabs?: Array<{
           documentId: string;
           pageNumber: string;
           xPosition: string;
@@ -36,6 +37,20 @@ interface DocuSignEnvelopeRequest {
       };
     }>;
   };
+  // For template-based envelopes
+  templateId?: string;
+  templateRoles?: Array<{
+    email: string;
+    name: string;
+    roleName: string;
+    tabs?: {
+      textTabs?: Array<{
+        tabLabel: string;
+        value: string;
+        tabId: string;
+      }>;
+    };
+  }>;
   status: 'sent' | 'created';
   emailSubject: string;
   emailBlurb: string;
@@ -125,45 +140,78 @@ export class DocuSignService {
     content: string;
     clientEmail: string;
     clientName: string;
+    templateId?: string; // DocuSign template ID
+    templateVariables?: Record<string, string>; // Variables to populate in template
   }): Promise<{ envelopeId: string; signingUrl: string }> {
     const accessToken = await this.getAccessToken();
     const accountId = await this.getAccountId();
 
-    // Create PDF document (simplified - you might want to use a PDF library)
-    const documentBase64 = Buffer.from(contractData.content).toString('base64');
+    let envelopeRequest: DocuSignEnvelopeRequest;
 
-    const envelopeRequest: DocuSignEnvelopeRequest = {
-      documents: [
-        {
-          documentBase64,
-          name: contractData.title,
-          fileExtension: 'pdf',
-          documentId: '1',
-        },
-      ],
-      recipients: {
-        signers: [
+    // Use DocuSign template if provided, otherwise create from document
+    if (contractData.templateId) {
+      // Template-based envelope
+      envelopeRequest = {
+        templateId: contractData.templateId,
+        templateRoles: [
           {
             email: contractData.clientEmail,
             name: contractData.clientName,
-            recipientId: '1',
-            tabs: {
-              signHereTabs: [
-                {
-                  documentId: '1',
-                  pageNumber: '1',
-                  xPosition: '100',
-                  yPosition: '100',
-                },
-              ],
-            },
+            roleName: 'Client', // This should match the role in your DocuSign template
+            tabs: contractData.templateVariables
+              ? {
+                  textTabs: Object.entries(contractData.templateVariables).map(
+                    ([key, value], index) => ({
+                      tabLabel: key,
+                      value: value,
+                      tabId: (index + 1).toString(),
+                    })
+                  ),
+                }
+              : undefined,
           },
         ],
-      },
-      status: 'sent',
-      emailSubject: `Please sign: ${contractData.title}`,
-      emailBlurb: 'Please review and sign this contract from Pixel Boba.',
-    };
+        status: 'sent',
+        emailSubject: `Please sign: ${contractData.title}`,
+        emailBlurb: 'Please review and sign this contract from Pixel Boba.',
+      };
+    } else {
+      // Document-based envelope (fallback to current method)
+      const documentBase64 = createContractPDF(contractData.title, contractData.content);
+
+      envelopeRequest = {
+        documents: [
+          {
+            documentBase64,
+            name: contractData.title,
+            fileExtension: 'pdf',
+            documentId: '1',
+          },
+        ],
+        recipients: {
+          signers: [
+            {
+              email: contractData.clientEmail,
+              name: contractData.clientName,
+              recipientId: '1',
+              tabs: {
+                signHereTabs: [
+                  {
+                    documentId: '1',
+                    pageNumber: '1',
+                    xPosition: '100',
+                    yPosition: '100',
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        status: 'sent',
+        emailSubject: `Please sign: ${contractData.title}`,
+        emailBlurb: 'Please review and sign this contract from Pixel Boba.',
+      };
+    }
 
     try {
       const response = await fetch(
@@ -293,6 +341,42 @@ export class DocuSignService {
     } catch (error) {
       console.error('DocuSign document download error:', error);
       throw error;
+    }
+  }
+
+  static async getTemplates(): Promise<
+    Array<{ templateId: string; name: string; description?: string }>
+  > {
+    try {
+      const accessToken = await this.getAccessToken();
+      const accountId = await this.getAccountId();
+
+      const response = await fetch(
+        `${DOCUSIGN_CONFIG.DEMO_BASE_URL}/v2.1/accounts/${accountId}/templates`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: 'application/json',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to get DocuSign templates');
+      }
+
+      const data = await response.json();
+      return (
+        data.envelopeTemplates?.map((template: any) => ({
+          templateId: template.templateId,
+          name: template.name,
+          description: template.description,
+        })) || []
+      );
+    } catch (error) {
+      console.error('DocuSign get templates error:', error);
+      return [];
     }
   }
 

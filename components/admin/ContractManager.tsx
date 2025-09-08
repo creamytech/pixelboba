@@ -12,10 +12,14 @@ export default function ContractManager() {
   const [statusFilter, setStatusFilter] = useState<ContractStatus | 'ALL'>('ALL');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [clients, setClients] = useState<UserType[]>([]);
+  const [templates, setTemplates] = useState<
+    Array<{ templateId: string; name: string; description?: string }>
+  >([]);
 
   useEffect(() => {
     fetchContracts();
     fetchClients();
+    fetchDocuSignTemplates();
   }, []);
 
   const fetchContracts = async () => {
@@ -41,6 +45,19 @@ export default function ContractManager() {
       }
     } catch (error) {
       console.error('Error fetching clients:', error);
+    }
+  };
+
+  const fetchDocuSignTemplates = async () => {
+    try {
+      const response = await fetch('/api/admin/docusign/templates');
+      if (response.ok) {
+        const data = await response.json();
+        setTemplates(data.templates || []);
+      }
+    } catch (error) {
+      console.error('Error fetching DocuSign templates:', error);
+      setTemplates([]);
     }
   };
 
@@ -135,6 +152,7 @@ export default function ContractManager() {
       {showCreateModal && (
         <CreateContractModal
           clients={clients}
+          templates={templates}
           onClose={() => setShowCreateModal(false)}
           onSuccess={() => {
             setShowCreateModal(false);
@@ -261,17 +279,20 @@ function ContractRow({ contract }: { contract: Contract }) {
 
 interface CreateContractModalProps {
   clients: UserType[];
+  templates: Array<{ templateId: string; name: string; description?: string }>;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-function CreateContractModal({ clients, onClose, onSuccess }: CreateContractModalProps) {
+function CreateContractModal({ clients, templates, onClose, onSuccess }: CreateContractModalProps) {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
     clientId: '',
     projectId: '',
     expiresAt: '',
+    templateId: '', // DocuSign template
+    contractType: 'custom', // 'template' or 'custom'
   });
   const [loading, setLoading] = useState(false);
 
@@ -287,6 +308,11 @@ function CreateContractModal({ clients, onClose, onSuccess }: CreateContractModa
           ...formData,
           expiresAt: formData.expiresAt ? new Date(formData.expiresAt).toISOString() : null,
           projectId: formData.projectId || null,
+          // Include template info if using template
+          ...(formData.contractType === 'template' && {
+            templateId: formData.templateId,
+            content: 'Template-based contract', // Placeholder content
+          }),
         }),
       });
 
@@ -336,6 +362,58 @@ function CreateContractModal({ clients, onClose, onSuccess }: CreateContractModa
           </div>
 
           <div>
+            <label className="block text-sm font-medium text-ink mb-2">contract type *</label>
+            <div className="flex space-x-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="template"
+                  checked={formData.contractType === 'template'}
+                  onChange={(e) => setFormData({ ...formData, contractType: e.target.value })}
+                  className="mr-2"
+                />
+                use docusign template
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="custom"
+                  checked={formData.contractType === 'custom'}
+                  onChange={(e) => setFormData({ ...formData, contractType: e.target.value })}
+                  className="mr-2"
+                />
+                custom content
+              </label>
+            </div>
+          </div>
+
+          {formData.contractType === 'template' && (
+            <div>
+              <label className="block text-sm font-medium text-ink mb-2">docusign template *</label>
+              <select
+                required
+                value={formData.templateId}
+                onChange={(e) => setFormData({ ...formData, templateId: e.target.value })}
+                className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              >
+                <option value="">select a docusign template...</option>
+                {templates.map((template) => (
+                  <option key={template.templateId} value={template.templateId}>
+                    {template.name}
+                    {template.description && ` - ${template.description}`}
+                  </option>
+                ))}
+              </select>
+              {templates.length === 0 && (
+                <p className="text-sm text-amber-600 mt-1">
+                  no docusign templates found. make sure you have templates in your docusign
+                  account.
+                </p>
+              )}
+            </div>
+          )}
+
+          <div>
             <label className="block text-sm font-medium text-ink mb-2">client *</label>
             <select
               required
@@ -375,17 +453,28 @@ function CreateContractModal({ clients, onClose, onSuccess }: CreateContractModa
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-ink mb-2">contract content *</label>
-            <textarea
-              required
-              rows={10}
-              value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 resize-y"
-              placeholder="enter contract terms and content..."
-            />
-          </div>
+          {formData.contractType === 'custom' && (
+            <div>
+              <label className="block text-sm font-medium text-ink mb-2">contract content *</label>
+              <textarea
+                required
+                rows={10}
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 resize-y"
+                placeholder="enter contract terms and content..."
+              />
+            </div>
+          )}
+
+          {formData.contractType === 'template' && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-700">
+                using docusign template: when you send this contract, it will use the selected
+                template with pre-positioned signature fields and form elements.
+              </p>
+            </div>
+          )}
 
           <div className="flex justify-end space-x-4 pt-4">
             <button
