@@ -3,7 +3,21 @@
 import { motion } from 'framer-motion';
 import { Check, X, Star } from 'lucide-react';
 
-const services = [
+type FeatureValue = string | boolean;
+
+interface ServiceFeatures {
+  [key: string]: FeatureValue;
+}
+
+interface Service {
+  name: string;
+  price: string;
+  timeframe: string;
+  popular: boolean;
+  features: ServiceFeatures;
+}
+
+const services: Service[] = [
   {
     name: 'website redesign',
     price: '$750',
@@ -65,13 +79,6 @@ const services = [
     },
   },
 ];
-
-const formatFeatureValue = (value: string | boolean) => {
-  if (typeof value === 'boolean') {
-    return value;
-  }
-  return value;
-};
 
 export default function ServiceComparison() {
   return (
