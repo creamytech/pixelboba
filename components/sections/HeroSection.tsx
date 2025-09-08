@@ -50,16 +50,38 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto lowercase"
+              className="text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto lowercase leading-relaxed px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              fresh designs with clean code. previews from day one, no endless meetings.
+              get more leads, sell more products, build your brand. see working previews from day
+              one, skip the endless meetings.
             </motion.p>
 
+            {/* Social proof bullets */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8 text-sm md:text-base px-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className="flex items-center space-x-2 text-gray-600">
+                <div className="w-2 h-2 bg-taro rounded-full"></div>
+                <span className="lowercase">see your site building live</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-600">
+                <div className="w-2 h-2 bg-matcha rounded-full"></div>
+                <span className="lowercase">average 340% more conversions</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-600">
+                <div className="w-2 h-2 bg-milk-tea rounded-full"></div>
+                <span className="lowercase">launch in 2-6 weeks</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 w-full max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
@@ -67,7 +89,7 @@ export default function HeroSection() {
               <Button
                 asChild
                 size="lg"
-                className="bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg lowercase"
+                className="w-full sm:w-auto bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg lowercase min-h-[3.5rem]"
               >
                 <Link href="/services#start">start your project</Link>
               </Button>
@@ -76,7 +98,7 @@ export default function HeroSection() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 lowercase"
+                className="w-full sm:w-auto border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 lowercase min-h-[3.5rem]"
               >
                 <Link href="/process">see our process</Link>
               </Button>

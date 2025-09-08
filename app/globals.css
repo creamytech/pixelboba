@@ -60,6 +60,28 @@ body {
   background: hsl(var(--background));
   font-family: var(--font-sans);
   overflow-x: hidden;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* Ensure buttons are big enough for touch */
+  button,
+  .btn,
+  a[role='button'] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Reduce pearl animations on mobile for better performance */
+  .pearl-animation {
+    animation-duration: 8s;
+  }
 }
 
 html {

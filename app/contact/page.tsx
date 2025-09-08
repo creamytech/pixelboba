@@ -6,11 +6,11 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'pixel boba — contact + faq',
   description:
-    'ready to start your project? use our project form for a custom proposal, or email us with questions.',
+    'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing.',
   openGraph: {
     title: 'pixel boba — contact + faq',
     description:
-      'ready to start your project? use our project form for a custom proposal, or email us with questions.',
+      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing.',
     url: 'https://pixelboba.com/contact',
     siteName: 'pixel boba',
     images: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'pixel boba — contact + faq',
     description:
-      'ready to start your project? use our project form for a custom proposal, or email us with questions.',
+      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
 };
@@ -78,6 +78,16 @@ const faqs = [
     answer:
       'every site includes basic seo optimization. our advanced seo package starts at $750 for keyword research and content strategy.',
   },
+  {
+    question: 'how do you handle rush projects?',
+    answer:
+      'we can expedite projects with our priority timeline - typically 50% faster delivery for an additional 25% fee. just mention your deadline in the project form.',
+  },
+  {
+    question: 'do you work with wix, squarespace, or wordpress?',
+    answer:
+      'we specialize in custom next.js builds for better performance and flexibility. we can integrate with headless cms or migrate from existing platforms.',
+  },
 ];
 
 export default function ContactPage() {
@@ -92,22 +102,34 @@ export default function ContactPage() {
               <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-8 lowercase">
                 ready to start?
               </h1>
-              <p className="text-xl text-gray-600 mb-12 lowercase max-w-3xl mx-auto">
-                use our project form for a custom proposal, or email us with questions. no calls, no
-                pressure.
+              <p className="text-lg md:text-xl text-gray-600 mb-8 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
+                ready to get started? use our project form to get a custom proposal within 24 hours.
               </p>
 
               {/* Primary CTA */}
-              <div className="mb-16">
+              <div className="mb-12">
                 <Link
                   href="/services#start"
-                  className="inline-block bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-taro/90 transition-colors duration-200 lowercase shadow-lg hover:shadow-xl text-lg"
+                  className="inline-block bg-taro text-white px-10 py-5 rounded-xl font-semibold hover:bg-taro/90 transition-all duration-200 lowercase shadow-lg hover:shadow-xl text-xl hover:scale-105"
                 >
-                  start your project →
+                  get your custom proposal →
                 </Link>
-                <p className="text-gray-500 mt-4 lowercase">
-                  get a custom proposal within 24 hours
+                <p className="text-gray-500 mt-4 lowercase font-medium">
+                  ✨ response within 24 hours, no calls required
                 </p>
+              </div>
+
+              {/* Secondary option */}
+              <div className="max-w-md mx-auto bg-milk-tea/20 rounded-xl p-6">
+                <p className="text-gray-600 mb-4 lowercase">
+                  <strong>have questions first?</strong> email us and we&apos;ll respond quickly.
+                </p>
+                <a
+                  href="mailto:hello@pixelboba.com"
+                  className="text-taro hover:text-deep-taro transition-colors duration-200 font-medium text-lg"
+                >
+                  hello@pixelboba.com →
+                </a>
               </div>
             </div>
           </div>
@@ -174,16 +196,21 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="font-display text-4xl font-bold text-ink mb-6 lowercase">
-                ready to get started?
+                let&apos;s make something amazing
               </h2>
-              <p className="text-xl text-gray-600 mb-8 lowercase">
-                tell us about your project and get a custom proposal by email.
+              <p className="text-xl text-gray-600 mb-6 lowercase">
+                we&apos;re taking on select projects for early 2025.
               </p>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 mb-8 max-w-md mx-auto">
+                <p className="text-sm text-gray-600 lowercase">
+                  🗓️ <strong>booking now:</strong> january & february 2025 spots
+                </p>
+              </div>
               <Link
                 href="/services#start"
                 className="inline-block bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-taro/90 transition-colors duration-200 lowercase shadow-lg"
               >
-                start your project
+                secure your spot
               </Link>
             </div>
           </div>

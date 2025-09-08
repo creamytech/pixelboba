@@ -11,11 +11,11 @@ import CTASection from '@/components/sections/CTASection';
 export const metadata: Metadata = {
   title: 'pixel boba — websites that pop',
   description:
-    'custom websites built with code-first quality. no meetings, no calls, just clean builds and quick turnarounds.',
+    'custom websites that convert. live previews from day 1, 2-6 week delivery, no endless meetings. starting at $750.',
   openGraph: {
     title: 'pixel boba — websites that pop',
     description:
-      'custom websites built with code-first quality. no meetings, no calls, just clean builds and quick turnarounds.',
+      'custom websites that convert. live previews from day 1, 2-6 week delivery, no endless meetings. starting at $750.',
     url: 'https://pixelboba.com',
     siteName: 'pixel boba',
     images: [
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'pixel boba — websites that pop',
     description:
-      'custom websites built with code-first quality. no meetings, no calls, just clean builds and quick turnarounds.',
+      'custom websites that convert. live previews from day 1, 2-6 week delivery, no endless meetings. starting at $750.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
 };
@@ -44,9 +44,9 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <ServicesPreview />
+        <TestimonialsSection />
         <CodeFirstSection />
         <ProcessSection />
-        <TestimonialsSection />
         <CTASection />
       </main>
       <Footer />

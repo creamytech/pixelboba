@@ -24,11 +24,14 @@ const serviceOptions = [
   'website redesign',
   'custom website build',
   'advanced website build',
-  'ongoing care',
-  'add-ons',
+  'ongoing care plans',
+  'branding & logo design',
+  'custom animations',
+  'ecommerce setup',
+  'seo optimization package',
 ];
 
-const budgetOptions = ['under $1,500', '$1,500–$3,000', '$3,000–$6,000', '$6,000+'];
+const budgetOptions = ['under $750', '$750–$1,500', '$1,500–$4,000', '$4,000–$6,000', '$6,000+'];
 
 export default function StartProjectForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -228,7 +231,7 @@ export default function StartProjectForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 relative overflow-hidden"
+      className="bg-white rounded-2xl p-6 md:p-8 shadow-xl border border-gray-100 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-4 right-6 w-3 h-3 bg-taro/20 rounded-full"></div>

@@ -6,15 +6,17 @@ import CTABanner from '@/components/services/CTABanner';
 import HowItWorks from '@/components/services/HowItWorks';
 import StartProjectForm from '@/components/form/StartProjectForm';
 import PlatformsSection from '@/components/sections/PlatformsSection';
+import ServiceComparison from '@/components/services/ServiceComparison';
+import ProcessPreview from '@/components/services/ProcessPreview';
 
 export const metadata: Metadata = {
   title: 'pixel boba — services & pricing (starting at)',
   description:
-    'custom web design and redesigns with starting-at pricing. no calls needed, tell us what you need and get a custom proposal by email.',
+    'custom web design starting at $750. no calls needed - get a custom proposal by email within 24 hours.',
   openGraph: {
     title: 'pixel boba — services & pricing',
     description:
-      'custom web design and redesigns with starting-at pricing. no calls needed, tell us what you need and get a custom proposal by email.',
+      'custom web design starting at $750. no calls needed - get a custom proposal by email within 24 hours.',
     url: 'https://pixelboba.com/services',
     siteName: 'pixel boba',
     images: [
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'pixel boba — services & pricing',
     description:
-      'custom web design and redesigns with starting-at pricing. no calls needed, tell us what you need and get a custom proposal by email.',
+      'custom web design starting at $750. no calls needed - get a custom proposal by email within 24 hours.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
 };
@@ -140,6 +142,12 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
+
+        {/* Service Comparison */}
+        <ServiceComparison />
+
+        {/* Process Preview */}
+        <ProcessPreview />
 
         {/* Platforms Section */}
         <PlatformsSection />

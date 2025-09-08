@@ -74,7 +74,7 @@ export default function CTASection() {
               size="lg"
               className="bg-white text-taro hover:bg-milk-tea px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105"
             >
-              <Link href="/contact">start your project</Link>
+              <Link href="/services#start">start your project</Link>
             </Button>
 
             <Button
