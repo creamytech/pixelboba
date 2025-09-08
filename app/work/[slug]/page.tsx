@@ -252,21 +252,25 @@ export default async function WorkPage({ params }: WorkPageProps) {
         </section>
 
         {/* Before/After Comparison */}
-        {frontmatter.beforeImage && frontmatter.afterImage && (
-          <section className="py-12 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <div className="max-w-6xl mx-auto">
-                <h2 className="font-display text-3xl font-bold text-center mb-8">before & after</h2>
-                <BeforeAfterSlider
-                  beforeImage={frontmatter.beforeImage}
-                  afterImage={frontmatter.afterImage}
-                  beforeLabel="before"
-                  afterLabel="after"
-                />
+        {frontmatter.beforeImage &&
+          frontmatter.afterImage &&
+          frontmatter.projectType === 'redesign' && (
+            <section className="py-12 bg-gray-50">
+              <div className="container mx-auto px-4">
+                <div className="max-w-6xl mx-auto">
+                  <h2 className="font-display text-3xl font-bold text-center mb-8">
+                    before & after
+                  </h2>
+                  <BeforeAfterSlider
+                    beforeImage={frontmatter.beforeImage}
+                    afterImage={frontmatter.afterImage}
+                    beforeLabel="before"
+                    afterLabel="after"
+                  />
+                </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
 
         {/* Case Study Content */}
         <section className="py-12">
