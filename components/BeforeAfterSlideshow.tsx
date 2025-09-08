@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 
 interface BeforeAfterSlideshowProps {
   beforeImages: string[];
@@ -22,6 +22,7 @@ export default function BeforeAfterSlideshow({
 }: BeforeAfterSlideshowProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showAfter, setShowAfter] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   // Create pairs of before/after images
   const maxLength = Math.max(beforeImages.length, afterImages.length);
@@ -33,62 +34,91 @@ export default function BeforeAfterSlideshow({
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
     setShowAfter(false);
+    setIsZoomed(false);
   };
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     setShowAfter(false);
+    setIsZoomed(false);
   };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
     setShowAfter(false);
+    setIsZoomed(false);
+  };
+
+  const toggleZoom = () => {
+    setIsZoomed(!isZoomed);
   };
 
   return (
     <div className={`relative w-full max-w-[90rem] mx-auto ${className}`}>
       {/* Main Slideshow Container */}
       <div className="relative bg-white rounded-xl overflow-hidden shadow-2xl">
-        {/* Toggle Buttons */}
-        <div className="absolute top-6 right-6 z-20 flex bg-white/90 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg">
+        {/* Control Buttons */}
+        <div className="absolute top-6 right-6 z-20 flex gap-2">
+          {/* Before/After Toggle */}
+          <div className="flex bg-white/90 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg">
+            <button
+              onClick={() => setShowAfter(false)}
+              className={`px-4 py-2 text-sm font-medium transition-all ${
+                !showAfter
+                  ? 'bg-taro text-white'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`}
+            >
+              {beforeLabel}
+            </button>
+            <button
+              onClick={() => setShowAfter(true)}
+              className={`px-4 py-2 text-sm font-medium transition-all ${
+                showAfter
+                  ? 'bg-taro text-white'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`}
+            >
+              {afterLabel}
+            </button>
+          </div>
+
+          {/* Zoom Toggle */}
           <button
-            onClick={() => setShowAfter(false)}
-            className={`px-4 py-2 text-sm font-medium transition-all ${
-              !showAfter
-                ? 'bg-taro text-white'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+            onClick={toggleZoom}
+            className={`w-10 h-10 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg flex items-center justify-center hover:bg-white transition-all ${
+              isZoomed ? 'text-taro' : 'text-gray-600 hover:text-gray-900'
             }`}
+            title={isZoomed ? 'Zoom out' : 'Zoom in'}
           >
-            {beforeLabel}
-          </button>
-          <button
-            onClick={() => setShowAfter(true)}
-            className={`px-4 py-2 text-sm font-medium transition-all ${
-              showAfter
-                ? 'bg-taro text-white'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-            }`}
-          >
-            {afterLabel}
+            {isZoomed ? <ZoomOut className="w-4 h-4" /> : <ZoomIn className="w-4 h-4" />}
           </button>
         </div>
 
         {/* Image Container */}
-        <div className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[800px]">
+        <div
+          className={`relative transition-all duration-300 ${
+            isZoomed
+              ? 'min-h-[1200px] overflow-auto'
+              : 'min-h-[600px] md:min-h-[700px] lg:min-h-[800px] overflow-hidden'
+          }`}
+        >
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${currentSlide}-${showAfter ? 'after' : 'before'}`}
+              key={`${currentSlide}-${showAfter ? 'after' : 'before'}-${isZoomed}`}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="absolute inset-0"
+              className={`absolute inset-0 ${isZoomed ? 'cursor-grab active:cursor-grabbing' : ''}`}
             >
               <Image
                 src={showAfter ? slides[currentSlide].after : slides[currentSlide].before}
                 alt={`${showAfter ? afterLabel : beforeLabel} - Slide ${currentSlide + 1}`}
                 fill
-                className="object-contain"
+                className={`transition-all duration-300 ${
+                  isZoomed ? 'object-contain object-top' : 'object-contain'
+                }`}
                 priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1440px"
               />
@@ -138,8 +168,8 @@ export default function BeforeAfterSlideshow({
       {/* Instructions */}
       <div className="text-center mt-6">
         <p className="text-gray-600 text-sm">
-          Use the {beforeLabel}/{afterLabel} toggle to compare, or navigate between pages with the
-          arrows
+          Use the {beforeLabel}/{afterLabel} toggle to compare, navigate with arrows, or zoom in to
+          see details
         </p>
       </div>
     </div>
