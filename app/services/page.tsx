@@ -68,46 +68,32 @@ export default function ServicesPage() {
                 price="starting at $1,500"
                 features={[
                   'modern design refresh',
-                  'mobile-responsive optimization',
-                  'speed & basic seo improvements',
-                  'content migration assistance',
-                  'ssl certificate setup',
-                  'basic contact forms',
+                  'mobile optimization',
+                  'content migration',
                   '1-2 week delivery',
-                  '30 days of tweaks included',
                 ]}
               />
               <PriceCard
                 title="custom website build"
                 price="starting at $3,500"
                 features={[
-                  'custom design reflecting your brand',
-                  '5-8 professionally designed pages',
-                  'custom animations & interactions',
-                  'cms setup + content training',
-                  'comprehensive seo optimization',
-                  'advanced contact forms & lead capture',
-                  'google analytics integration',
-                  'social media integration',
+                  'custom design & branding',
+                  '5-8 professional pages',
+                  'cms setup & training',
+                  'seo & analytics integration',
                   '3-4 week delivery',
-                  'launch support included',
                 ]}
               />
               <PriceCard
                 title="advanced website build"
                 price="starting at $8,000"
                 features={[
-                  'complete custom design system + brand guide',
-                  '8-15 custom pages with advanced functionality',
-                  'complex animations & micro-interactions',
-                  'api & third-party service integrations',
-                  'advanced cms with user roles & permissions',
-                  'enterprise-level seo & performance optimization',
-                  'user authentication & membership areas',
-                  'advanced analytics & reporting dashboards',
-                  'multi-language support (if needed)',
+                  'complete design system & brand guide',
+                  '8-15 custom pages',
+                  'advanced integrations & apis',
+                  'user authentication & cms',
+                  'enterprise seo & analytics',
                   '6-10 week delivery',
-                  '90 days support included',
                 ]}
                 highlighted={true}
               />
