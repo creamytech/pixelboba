@@ -7,6 +7,7 @@ import CodeFirstSection from '@/components/sections/CodeFirstSection';
 import ProcessSection from '@/components/sections/ProcessSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import CTASection from '@/components/sections/CTASection';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
   title: 'Professional Web Design & Development | Pixel Boba | Starting at $750',
@@ -53,6 +54,7 @@ export default function HomePage() {
         <CTASection />
       </main>
       <Footer />
+      <StickyCTA />
     </div>
   );
 }

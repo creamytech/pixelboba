@@ -21,6 +21,7 @@ import {
   Camera,
   Users,
 } from 'lucide-react';
+import StickyCTA from '@/components/common/StickyCTA';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Breadcrumb from '@/components/ui/Breadcrumb';
@@ -539,6 +540,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
         </section>
       </main>
       <Footer />
+      <StickyCTA />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Code, Zap, Shield, Smartphone } from 'lucide-react';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
   title: 'Next.js Development Services | React Web Development | Pixel Boba',
@@ -241,6 +242,7 @@ export default function NextJSPage() {
         </section>
       </main>
       <Footer />
+      <StickyCTA />
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
   title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
@@ -288,6 +289,7 @@ export default function EcommercePage() {
         </section>
       </main>
       <Footer />
+      <StickyCTA />
     </div>
   );
 }

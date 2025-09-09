@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AboutPageClient from '@/components/about/AboutPageClient';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
   title: 'About Pixel Boba - Web Design Team | Fort Lauderdale',
@@ -43,6 +44,7 @@ export default function AboutPage() {
       <Header />
       <AboutPageClient />
       <Footer />
+      <StickyCTA />
     </div>
   );
 }

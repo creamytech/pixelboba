@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
   title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
@@ -220,6 +221,7 @@ export default function ContactPage() {
         </section>
       </main>
       <Footer />
+      <StickyCTA />
     </div>
   );
 }

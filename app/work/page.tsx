@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import { getAllWork } from '@/lib/mdx';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Calendar, Star } from 'lucide-react';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
   title: 'Web Design Portfolio | Real Client Results | Pixel Boba',
@@ -152,6 +153,7 @@ export default async function WorkPage() {
         </section>
       </main>
       <Footer />
+      <StickyCTA />
     </div>
   );
 }

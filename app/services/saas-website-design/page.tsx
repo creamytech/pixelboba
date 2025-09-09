@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Zap, Users, TrendingUp, Shield, Globe, BarChart } from 'lucide-react';
+import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
   title: 'SaaS Website Design | Software Landing Pages | Pixel Boba',
@@ -281,6 +282,7 @@ export default function SaaSPage() {
         </section>
       </main>
       <Footer />
+      <StickyCTA />
     </div>
   );
 }
