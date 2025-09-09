@@ -209,7 +209,7 @@ export default function NextJSPage() {
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
                   <p className="text-2xl font-bold text-ink mb-2">$1,500</p>
                   <p className="text-sm text-gray-500 lowercase">
-                    refresh & optimize existing sites
+                    design refresh & mobile optimization
                   </p>
                 </div>
                 <div className="p-6 bg-taro/5 rounded-xl border-2 border-taro">
@@ -219,7 +219,7 @@ export default function NextJSPage() {
                   <h3 className="font-semibold text-taro mb-2 lowercase">custom website build</h3>
                   <p className="text-2xl font-bold text-ink mb-2">$3,500+</p>
                   <p className="text-sm text-gray-600 lowercase">
-                    modern frameworks & custom design
+                    custom design & advanced functionality
                   </p>
                 </div>
                 <div className="p-6 bg-white rounded-xl border border-gray-200">
@@ -227,7 +227,9 @@ export default function NextJSPage() {
                     advanced website build
                   </h3>
                   <p className="text-2xl font-bold text-ink mb-2">$8,000+</p>
-                  <p className="text-sm text-gray-500 lowercase">complex features & integrations</p>
+                  <p className="text-sm text-gray-500 lowercase">
+                    enterprise features & integrations
+                  </p>
                 </div>
               </div>
               <div className="mt-8">

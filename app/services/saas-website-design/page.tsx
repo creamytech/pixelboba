@@ -71,18 +71,22 @@ const features = [
 ];
 
 const benefits = [
-  'high-converting landing pages',
-  'feature showcase sections',
-  'pricing table optimization',
-  'customer testimonials integration',
-  'free trial signup forms',
-  'product demo sections',
-  'security and compliance badges',
+  'conversion-optimized landing pages',
+  'feature showcase & benefits sections',
+  'strategic pricing table design',
+  'customer testimonials & case studies',
+  'optimized free trial & signup forms',
+  'product demo & walkthrough sections',
+  'trust badges & security compliance display',
   'integration showcase pages',
-  'help documentation design',
-  'mobile-responsive layouts',
+  'help documentation & support pages',
+  'fully mobile-responsive design',
   'a/b testing ready components',
-  'crm and analytics integration',
+  'google analytics & tracking setup',
+  'email capture & lead generation forms',
+  'professional copywriting consultation',
+  'competitive analysis integration',
+  'user onboarding flow optimization',
 ];
 
 const caseStudies = [
@@ -245,7 +249,7 @@ export default function SaaSPage() {
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
                   <p className="text-2xl font-bold text-ink mb-2">$1,500</p>
                   <p className="text-sm text-gray-500 lowercase">
-                    refresh & optimize existing sites
+                    design refresh & mobile optimization
                   </p>
                 </div>
                 <div className="p-6 bg-taro/5 rounded-xl border-2 border-taro">
@@ -254,14 +258,16 @@ export default function SaaSPage() {
                   </div>
                   <h3 className="font-semibold text-taro mb-2 lowercase">custom website build</h3>
                   <p className="text-2xl font-bold text-ink mb-2">$3,500+</p>
-                  <p className="text-sm text-gray-600 lowercase">conversion-focused design</p>
+                  <p className="text-sm text-gray-600 lowercase">conversion-focused saas design</p>
                 </div>
                 <div className="p-6 bg-white rounded-xl border border-gray-200">
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">
                     advanced website build
                   </h3>
                   <p className="text-2xl font-bold text-ink mb-2">$8,000+</p>
-                  <p className="text-sm text-gray-500 lowercase">complex features & integrations</p>
+                  <p className="text-sm text-gray-500 lowercase">
+                    enterprise features & integrations
+                  </p>
                 </div>
               </div>
               <div className="mt-8">

@@ -68,10 +68,11 @@ export default function ServicesPage() {
                 price="starting at $1,500"
                 features={[
                   'modern design refresh',
-                  'mobile optimization',
-                  'speed & seo improvements',
-                  'accessibility improvements',
-                  'content migration',
+                  'mobile-responsive optimization',
+                  'speed & basic seo improvements',
+                  'content migration assistance',
+                  'ssl certificate setup',
+                  'basic contact forms',
                   '1-2 week delivery',
                   '30 days of tweaks included',
                 ]}
@@ -80,12 +81,14 @@ export default function ServicesPage() {
                 title="custom website build"
                 price="starting at $3,500"
                 features={[
-                  'custom design system',
-                  '5-8 fully designed pages',
-                  'smooth animations & interactions',
-                  'cms setup + training',
-                  'seo optimization',
-                  'contact forms & lead capture',
+                  'custom design reflecting your brand',
+                  '5-8 professionally designed pages',
+                  'custom animations & interactions',
+                  'cms setup + content training',
+                  'comprehensive seo optimization',
+                  'advanced contact forms & lead capture',
+                  'google analytics integration',
+                  'social media integration',
                   '3-4 week delivery',
                   'launch support included',
                 ]}
@@ -94,14 +97,16 @@ export default function ServicesPage() {
                 title="advanced website build"
                 price="starting at $8,000"
                 features={[
-                  'full design system + brand guide',
-                  '8-15 custom pages',
-                  'complex animations & interactions',
-                  'third-party integrations',
-                  'advanced cms + training',
-                  'comprehensive seo setup',
-                  'user authentication system',
-                  '4-8 week delivery',
+                  'complete custom design system + brand guide',
+                  '8-15 custom pages with advanced functionality',
+                  'complex animations & micro-interactions',
+                  'api & third-party service integrations',
+                  'advanced cms with user roles & permissions',
+                  'enterprise-level seo & performance optimization',
+                  'user authentication & membership areas',
+                  'advanced analytics & reporting dashboards',
+                  'multi-language support (if needed)',
+                  '6-10 week delivery',
                   '90 days support included',
                 ]}
                 highlighted={true}

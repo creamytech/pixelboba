@@ -82,17 +82,21 @@ const features = [
 
 const benefits = [
   'custom product catalog design',
-  'inventory management system',
-  'order processing and fulfillment',
-  'customer account management',
-  'search and filtering functionality',
-  'abandoned cart recovery',
-  'seo optimization for products',
-  'social media integration',
-  'email marketing automation',
-  'multi-currency support',
-  'shipping calculator integration',
-  'admin dashboard for management',
+  'advanced inventory management system',
+  'automated order processing & fulfillment tracking',
+  'customer account management with order history',
+  'advanced search & filtering functionality',
+  'abandoned cart recovery automation',
+  'comprehensive seo optimization for products',
+  'social media integration & sharing',
+  'email marketing automation setup',
+  'multi-currency & payment gateway support',
+  'real-time shipping calculator integration',
+  'comprehensive admin dashboard',
+  'mobile-optimized shopping experience',
+  'ssl certificate & security compliance',
+  'google analytics & conversion tracking',
+  'customer reviews & ratings system',
 ];
 
 export default function EcommercePage() {
@@ -252,7 +256,7 @@ export default function EcommercePage() {
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
                   <p className="text-2xl font-bold text-ink mb-2">$1,500</p>
                   <p className="text-sm text-gray-500 lowercase">
-                    refresh & optimize existing sites
+                    design refresh & mobile optimization
                   </p>
                 </div>
                 <div className="p-6 bg-white rounded-xl border border-gray-200">
@@ -260,9 +264,7 @@ export default function EcommercePage() {
                     custom website build
                   </h3>
                   <p className="text-2xl font-bold text-ink mb-2">$3,500+</p>
-                  <p className="text-sm text-gray-500 lowercase">
-                    modern frameworks & custom design
-                  </p>
+                  <p className="text-sm text-gray-500 lowercase">custom design & functionality</p>
                 </div>
                 <div className="p-6 bg-taro/5 rounded-xl border-2 border-taro">
                   <div className="bg-taro text-white px-3 py-1 rounded-full text-xs font-medium mb-3 inline-block">
@@ -270,9 +272,7 @@ export default function EcommercePage() {
                   </div>
                   <h3 className="font-semibold text-taro mb-2 lowercase">advanced website build</h3>
                   <p className="text-2xl font-bold text-ink mb-2">$8,000+</p>
-                  <p className="text-sm text-gray-600 lowercase">
-                    online stores & complex features
-                  </p>
+                  <p className="text-sm text-gray-600 lowercase">e-commerce & advanced features</p>
                 </div>
               </div>
               <div className="mt-8">
