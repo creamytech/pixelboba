@@ -35,8 +35,8 @@ export default function CTABanner() {
         </svg>
       </motion.button>
 
-      {/* Decorative pearls */}
-      <div className="absolute top-4 right-8 flex space-x-2">
+      {/* Decorative pearls - Hidden on mobile */}
+      <div className="absolute top-4 right-8 hidden md:flex space-x-2">
         <motion.div
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 2, repeat: Infinity, delay: 0 }}
