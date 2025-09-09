@@ -7,7 +7,6 @@ import CTABanner from '@/components/services/CTABanner';
 import HowItWorks from '@/components/services/HowItWorks';
 import StartProjectForm from '@/components/form/StartProjectForm';
 import PlatformsSection from '@/components/sections/PlatformsSection';
-import ServiceComparison from '@/components/services/ServiceComparison';
 import ProcessPreview from '@/components/services/ProcessPreview';
 
 export const metadata: Metadata = {
@@ -104,9 +103,6 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-
-        {/* Service Comparison */}
-        <ServiceComparison />
 
         {/* Process Preview */}
         <ProcessPreview />
