@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm run lint)",
+      "Bash(npx tsc:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(find:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma:*)",
+      "Bash(git reset:*)",
+      "Bash(npm run build:*)",
+      "Bash(pg_isready:*)",
+      "Bash(where psql)",
+      "Bash(npx tsx:*)",
+      "Bash(echo:*)",
+      "Bash(pkill:*)",
+      "Bash(tasklist)",
+      "Bash(node:*)",
+      "Bash(vercel env:*)",
+      "Bash(vercel link:*)",
+      "Bash(vercel:*)",
+      "Bash(curl:*)",
+      "Bash(npx eslint:*)",
+      "Bash(git restore:*)",
+      "Bash(grep:*)",
+      "Bash(sed:*)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:www.behance.net)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
