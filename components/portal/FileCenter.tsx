@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
@@ -45,28 +45,28 @@ export default function FileCenter({ projects }: FileCenterProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const url =
-          selectedProject === 'all'
-            ? '/api/portal/files'
-            : `/api/portal/files?projectId=${selectedProject}`;
+  const fetchFiles = useCallback(async () => {
+    try {
+      const url =
+        selectedProject === 'all'
+          ? '/api/portal/files'
+          : `/api/portal/files?projectId=${selectedProject}`;
 
-        const response = await fetch(url);
-        if (response.ok) {
-          const data = await response.json();
-          setFiles(data.files);
-        }
-      } catch (error) {
-        console.error('Error fetching files:', error);
-      } finally {
-        setLoading(false);
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setFiles(data.files);
       }
-    };
-
-    fetchFiles();
+    } catch (error) {
+      console.error('Error fetching files:', error);
+    } finally {
+      setLoading(false);
+    }
   }, [selectedProject]);
+
+  useEffect(() => {
+    fetchFiles();
+  }, [selectedProject, fetchFiles]);
 
   const uploadFiles = async (newFiles: File[]) => {
     setUploading(true);
