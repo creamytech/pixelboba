@@ -194,52 +194,25 @@ export default function NextJSPage() {
           </div>
         </section>
 
-        {/* Pricing Alignment Section */}
-        <section className="py-20 bg-gradient-to-b from-transparent to-milk-tea/10">
+        {/* Pricing Badge Section */}
+        <section className="py-16 bg-gradient-to-b from-transparent to-milk-tea/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase">
-                pricing & packages
-              </h2>
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="inline-flex items-center bg-taro/10 border border-taro/20 rounded-full px-6 py-3 mb-6">
+                <span className="text-taro font-medium lowercase">
+                  part of our custom website build package starting at $3,500
+                </span>
+              </div>
               <p className="text-lg text-gray-600 mb-8 lowercase">
-                next.js development fits into our custom website build package
+                next.js development includes all features of our custom website build tier, plus
+                modern react framework advantages for performance and seo.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="p-6 bg-white rounded-xl border border-gray-200">
-                  <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$1,500</p>
-                  <p className="text-sm text-gray-500 lowercase">
-                    design refresh & mobile optimization
-                  </p>
-                </div>
-                <div className="p-6 bg-taro/5 rounded-xl border-2 border-taro">
-                  <div className="bg-taro text-white px-3 py-1 rounded-full text-xs font-medium mb-3 inline-block">
-                    next.js fits here
-                  </div>
-                  <h3 className="font-semibold text-taro mb-2 lowercase">custom website build</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$3,500+</p>
-                  <p className="text-sm text-gray-600 lowercase">
-                    custom design & advanced functionality
-                  </p>
-                </div>
-                <div className="p-6 bg-white rounded-xl border border-gray-200">
-                  <h3 className="font-semibold text-gray-600 mb-2 lowercase">
-                    advanced website build
-                  </h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$8,000+</p>
-                  <p className="text-sm text-gray-500 lowercase">
-                    enterprise features & integrations
-                  </p>
-                </div>
-              </div>
-              <div className="mt-8">
-                <Link
-                  href="/services"
-                  className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
-                >
-                  view all pricing options →
-                </Link>
-              </div>
+              <Link
+                href="/services"
+                className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+              >
+                view all pricing packages →
+              </Link>
             </div>
           </div>
         </section>
