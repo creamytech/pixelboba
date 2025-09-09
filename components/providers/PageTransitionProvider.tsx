@@ -37,14 +37,17 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
   };
 
   const completeTransition = () => {
-    // Keep loading visible for at least 600ms for smooth UX
+    // Shorter loading time on mobile devices
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const loadingDuration = isMobile ? 300 : 600;
+
     setTimeout(() => {
       setIsLoading(false);
       // Show page content after loading disappears
       setTimeout(() => {
         setPageVisible(true);
       }, 100);
-    }, 600);
+    }, loadingDuration);
   };
 
   // Listen for pathname changes to complete transition
@@ -55,12 +58,15 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
         completeTransition();
       } else {
         // Direct navigation (browser back/forward), show brief loading
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+        const loadingDuration = isMobile ? 200 : 400;
+
         setPageVisible(false);
         setIsLoading(true);
         setTimeout(() => {
           setIsLoading(false);
           setTimeout(() => setPageVisible(true), 100);
-        }, 400);
+        }, loadingDuration);
       }
     }
     setLastPathname(pathname);

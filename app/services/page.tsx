@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PriceCard from '@/components/services/PriceCard';
@@ -151,6 +152,63 @@ export default function ServicesPage() {
 
         {/* Process Preview */}
         <ProcessPreview />
+
+        {/* Featured Services */}
+        <section className="py-20 bg-gradient-to-b from-transparent to-milk-tea/10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-12 text-center lowercase">
+                specialized services
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm hover:shadow-md transition-shadow">
+                  <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">
+                    next.js development
+                  </h3>
+                  <p className="text-gray-600 mb-6 lowercase">
+                    high-performance websites with modern react framework. server-side rendering and
+                    optimal seo.
+                  </p>
+                  <Link
+                    href="/services/nextjs-development"
+                    className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+                  >
+                    learn more →
+                  </Link>
+                </div>
+                <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm hover:shadow-md transition-shadow">
+                  <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">
+                    e-commerce development
+                  </h3>
+                  <p className="text-gray-600 mb-6 lowercase">
+                    custom online stores with shopify, stripe integration, and conversion
+                    optimization.
+                  </p>
+                  <Link
+                    href="/services/ecommerce-development"
+                    className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+                  >
+                    learn more →
+                  </Link>
+                </div>
+                <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm hover:shadow-md transition-shadow">
+                  <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">
+                    saas website design
+                  </h3>
+                  <p className="text-gray-600 mb-6 lowercase">
+                    conversion-focused websites for software companies with user onboarding flows.
+                  </p>
+                  <Link
+                    href="/services/saas-website-design"
+                    className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+                  >
+                    learn more →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Platforms Section */}
         <PlatformsSection />
