@@ -63,38 +63,12 @@ export default function ServicesPage() {
         <section className="pb-20">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <PriceCard
-                title="website redesign"
-                price="starting at $1,500"
-                features={[
-                  'modern design refresh',
-                  'mobile optimization',
-                  'content migration',
-                  '1-2 week delivery',
-                ]}
-              />
-              <PriceCard
-                title="custom website build"
-                price="starting at $3,500"
-                features={[
-                  'custom design & branding',
-                  '5-8 professional pages',
-                  'cms setup & training',
-                  'seo & analytics integration',
-                  '3-4 week delivery',
-                ]}
-              />
+              <PriceCard title="website redesign" price="starting at $1,500" features={[]} />
+              <PriceCard title="custom website build" price="starting at $3,500" features={[]} />
               <PriceCard
                 title="advanced website build"
                 price="starting at $8,000"
-                features={[
-                  'complete design system & brand guide',
-                  '8-15 custom pages',
-                  'advanced integrations & apis',
-                  'user authentication & cms',
-                  'enterprise seo & analytics',
-                  '6-10 week delivery',
-                ]}
+                features={[]}
                 highlighted={true}
               />
             </div>
@@ -102,17 +76,7 @@ export default function ServicesPage() {
             {/* Ongoing Care & Add-ons */}
             <div className="mt-12 max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <PriceCard
-                  title="ongoing care plans"
-                  price="starting at $99/month"
-                  features={[
-                    'content updates & tweaks',
-                    'security & performance monitoring',
-                    'priority bug fixes',
-                    'monthly backup & reports',
-                    'no long-term contracts',
-                  ]}
-                />
+                <PriceCard title="ongoing care plans" price="starting at $99/month" features={[]} />
                 <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm">
                   <h3 className="font-display text-2xl font-bold text-ink mb-6 lowercase">
                     add-ons
