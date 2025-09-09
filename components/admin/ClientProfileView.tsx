@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import {
   ArrowLeft,
   Mail,
@@ -87,22 +88,22 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
   const [showUpdateForm, setShowUpdateForm] = useState(false);
 
   useEffect(() => {
+    const fetchClientProfile = async () => {
+      try {
+        const response = await fetch(`/api/admin/clients/${clientId}/profile`);
+        if (response.ok) {
+          const profileData = await response.json();
+          setData(profileData);
+        }
+      } catch (error) {
+        console.error('Error fetching client profile:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchClientProfile();
   }, [clientId]);
-
-  const fetchClientProfile = async () => {
-    try {
-      const response = await fetch(`/api/admin/clients/${clientId}/profile`);
-      if (response.ok) {
-        const profileData = await response.json();
-        setData(profileData);
-      }
-    } catch (error) {
-      console.error('Error fetching client profile:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const sendMilestoneNotification = async (projectId: string, title: string, message: string) => {
     try {
@@ -188,9 +189,11 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
         <div className="flex items-center space-x-6">
           <div className="w-20 h-20 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center shadow-lg">
             {data.client.image ? (
-              <img
+              <Image
                 src={data.client.image}
                 alt={data.client.name || 'Client'}
+                width={80}
+                height={80}
                 className="w-full h-full rounded-full object-cover"
               />
             ) : (

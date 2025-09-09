@@ -27,6 +27,26 @@ export default function SignupPage() {
   });
 
   useEffect(() => {
+    const validateInvite = async () => {
+      try {
+        const response = await fetch(`/api/auth/validate-invite?token=${inviteToken}`);
+        const data = await response.json();
+
+        if (data.valid) {
+          setInviteValid(true);
+          setInviteData(data.invite);
+          setFormData((prev) => ({ ...prev, email: data.invite.email }));
+        } else {
+          setError(data.error || 'Invalid invite');
+        }
+      } catch (error) {
+        console.error('Error validating invite:', error);
+        setError('Error validating invite');
+      } finally {
+        setInviteLoading(false);
+      }
+    };
+
     const validateInviteToken = async () => {
       if (inviteToken) {
         await validateInvite();
@@ -38,25 +58,6 @@ export default function SignupPage() {
 
     validateInviteToken();
   }, [inviteToken]);
-
-  const validateInvite = async () => {
-    try {
-      const response = await fetch(`/api/auth/validate-invite?token=${inviteToken}`);
-      const data = await response.json();
-
-      if (data.valid) {
-        setInviteValid(true);
-        setInviteData(data.invite);
-        setFormData((prev) => ({ ...prev, email: data.invite.email }));
-      } else {
-        setError(data.error);
-      }
-    } catch (error) {
-      setError('Failed to validate invite');
-    } finally {
-      setInviteLoading(false);
-    }
-  };
 
   const handleManualSignup = async (e: React.FormEvent) => {
     e.preventDefault();

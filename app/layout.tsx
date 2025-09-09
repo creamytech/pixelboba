@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import { siteConfig } from '@/lib/seo';
 import StructuredData from '@/components/StructuredData';
@@ -76,20 +77,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <StructuredData type="organization" />
         <StructuredData type="website" />
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z3342RYND2"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-Z3342RYND2');
-            `,
-          }}
-        />
       </head>
       <body className="min-h-screen bg-background antialiased">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-Z3342RYND2"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-Z3342RYND2');
+          `}
+        </Script>
         <Providers>{children}</Providers>
       </body>
     </html>

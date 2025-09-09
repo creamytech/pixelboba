@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
+import Image from 'next/image';
 import {
   Upload,
   Download,
@@ -45,27 +46,27 @@ export default function FileCenter({ projects }: FileCenterProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const url =
+          selectedProject === 'all'
+            ? '/api/portal/files'
+            : `/api/portal/files?projectId=${selectedProject}`;
+
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          setFiles(data.files);
+        }
+      } catch (error) {
+        console.error('Error fetching files:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchFiles();
   }, [selectedProject]);
-
-  const fetchFiles = async () => {
-    try {
-      const url =
-        selectedProject === 'all'
-          ? '/api/portal/files'
-          : `/api/portal/files?projectId=${selectedProject}`;
-
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setFiles(data.files);
-      }
-    } catch (error) {
-      console.error('Error fetching files:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const uploadFiles = async (newFiles: File[]) => {
     setUploading(true);
@@ -340,7 +341,12 @@ function FileGridItem({
       {/* File Preview */}
       <div className="aspect-square bg-milk-tea/10 flex items-center justify-center relative overflow-hidden">
         {isImage ? (
-          <img src={file.url} alt={file.originalName} className="w-full h-full object-cover" />
+          <Image
+            src={file.url}
+            alt={file.originalName}
+            fill
+            className="w-full h-full object-cover"
+          />
         ) : (
           <FileIcon className="w-12 h-12 text-taro/60" />
         )}

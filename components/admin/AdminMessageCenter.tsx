@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Paperclip, FileText, X, MessageCircle, Plus } from 'lucide-react';
+import Image from 'next/image';
 import { useDropzone } from 'react-dropzone';
 import { Project } from '@/types/portal';
 import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
@@ -313,9 +314,11 @@ export default function AdminMessageCenter({ projects, onClose }: AdminMessageCe
                       {!message.isOwn && (
                         <div className="w-8 h-8 rounded-full bg-taro/20 flex items-center justify-center order-1 mr-3 mt-1">
                           {message.sender.image ? (
-                            <img
+                            <Image
                               src={message.sender.image}
                               alt={message.sender.name}
+                              width={32}
+                              height={32}
                               className="w-8 h-8 rounded-full object-cover"
                             />
                           ) : (
@@ -404,7 +407,13 @@ function FilePreview({ file }: { file: { originalName: string; url: string; mime
   return (
     <div className="mb-2">
       {isImage ? (
-        <img src={file.url} alt={file.originalName} className="max-w-full h-auto rounded-lg" />
+        <Image
+          src={file.url}
+          alt={file.originalName}
+          width={400}
+          height={300}
+          className="max-w-full h-auto rounded-lg"
+        />
       ) : (
         <div className="flex items-center space-x-2 p-2 bg-white/20 rounded-lg">
           <FileText size={16} />

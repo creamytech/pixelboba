@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Paperclip, Image, FileText, X, FolderOpen, Plus } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
+import NextImage from 'next/image';
 import { Project, Message, File as PortalFile } from '@/types/portal';
 import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
 
@@ -382,9 +383,11 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
                       {!message.isOwn && (
                         <div className="w-8 h-8 rounded-full bg-taro/20 flex items-center justify-center order-1 mr-3 mt-1">
                           {message.sender.image ? (
-                            <img
+                            <NextImage
                               src={message.sender.image}
                               alt={message.sender.name}
+                              width={32}
+                              height={32}
                               className="w-8 h-8 rounded-full object-cover"
                             />
                           ) : (
@@ -517,7 +520,13 @@ function FilePreview({ file }: { file: { originalName: string; url: string; mime
   return (
     <div className="mb-2">
       {isImage ? (
-        <img src={file.url} alt={file.originalName} className="max-w-full h-auto rounded-lg" />
+        <NextImage
+          src={file.url}
+          alt={file.originalName}
+          width={400}
+          height={300}
+          className="max-w-full h-auto rounded-lg"
+        />
       ) : (
         <div className="flex items-center space-x-2 p-2 bg-white/20 rounded-lg">
           <FileText size={16} />
@@ -620,9 +629,11 @@ function FileLibraryModal({
                   >
                     <div className="flex items-center space-x-3">
                       {isImage ? (
-                        <img
+                        <NextImage
                           src={file.url}
                           alt={file.originalName}
+                          width={48}
+                          height={48}
                           className="w-12 h-12 object-cover rounded"
                         />
                       ) : (
