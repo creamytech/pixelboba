@@ -5,9 +5,8 @@ import { motion } from 'framer-motion';
 interface StepCardProps {
   stepNumber: string;
   title: string;
-  whatWeDo: string;
-  whatWeNeed: string;
-  deliverables: string;
+  description: string;
+  whatYouGet: string;
   timing: string;
   delay?: number;
 }
@@ -15,9 +14,8 @@ interface StepCardProps {
 export default function StepCard({
   stepNumber,
   title,
-  whatWeDo,
-  whatWeNeed,
-  deliverables,
+  description,
+  whatYouGet,
   timing,
   delay = 0,
 }: StepCardProps) {
@@ -41,33 +39,21 @@ export default function StepCard({
         <h3 className="font-display text-2xl font-bold text-ink lowercase">{title}</h3>
       </div>
 
-      {/* Content grid */}
+      {/* Content */}
       <div className="space-y-6">
         <div>
-          <h4 className="text-sm font-semibold text-taro mb-2 uppercase tracking-wide">
-            what we do
-          </h4>
-          <p className="text-gray-600 lowercase">{whatWeDo}</p>
+          <p className="text-gray-600 lowercase text-lg leading-relaxed">{description}</p>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-taro mb-2 uppercase tracking-wide">
-            what we need
+          <h4 className="text-sm font-semibold text-taro mb-2 lowercase tracking-wide">
+            what you get
           </h4>
-          <p className="text-gray-600 lowercase">{whatWeNeed}</p>
+          <p className="text-gray-600 lowercase">{whatYouGet}</p>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-taro mb-2 uppercase tracking-wide">
-            deliverables
-          </h4>
-          <p className="text-gray-600 lowercase">{deliverables}</p>
-        </div>
-
-        <div>
-          <h4 className="text-sm font-semibold text-taro mb-2 uppercase tracking-wide">
-            typical timing
-          </h4>
+          <h4 className="text-sm font-semibold text-taro mb-2 lowercase tracking-wide">timeline</h4>
           <p className="text-gray-600 lowercase font-medium">{timing}</p>
         </div>
       </div>

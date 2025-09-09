@@ -39,52 +39,25 @@ export const metadata: Metadata = {
 const processSteps = [
   {
     stepNumber: '1',
-    title: '1) shake - discovery, no meetings',
-    whatWeDo:
-      'turn your project form into a short written brief; align on goals, audience, and scope.',
-    whatWeNeed: 'brand assets, links, must-have features, examples you like.',
-    deliverables: '1–2 page project brief + success metrics.',
-    timing: '1–3 days.',
+    title: 'discovery & planning',
+    description:
+      'turn your project form into a clear brief with sitemap, wireframes, and tech plan.',
+    whatYouGet: 'project brief, clickable prototype, and timeline',
+    timing: '3–5 days',
   },
   {
     stepNumber: '2',
-    title: '2) brew - architecture & prototype',
-    whatWeDo: 'site map, low-fi wireframes, and a tech plan for cms, integrations, and hosting.',
-    whatWeNeed: 'confirm pages/features; share any compliance or legal requirements.',
-    deliverables: 'site map, clickable wireframe prototype, technical outline.',
-    timing: '3–5 days.',
+    title: 'design & build',
+    description: 'create your visual design and develop the site with live previews throughout.',
+    whatYouGet: 'figma designs, staging site, and progress updates',
+    timing: '2–5 weeks',
   },
   {
     stepNumber: '3',
-    title: '3) layer - visual design',
-    whatWeDo: 'design system, page designs, and interaction previews.',
-    whatWeNeed: 'feedback via client portal; choose between a/b explorations.',
-    deliverables: 'figma files, design tokens, motion previews.',
-    timing: '5–10 days (depends on page count).',
-  },
-  {
-    stepNumber: '4',
-    title: '4) pop - build & performance',
-    whatWeDo: 'develop in next.js/vercel with accessibility, seo, and speed baked in.',
-    whatWeNeed: 'final copy, images, and access for integrations.',
-    deliverables: 'staging url, lighthouse report, accessibility checks.',
-    timing: '5–14 days (scope dependent).',
-  },
-  {
-    stepNumber: '5',
-    title: '5) launch - go live (no drama)',
-    whatWeDo: 'deploy, connect domain, set up analytics, forms, and error monitoring.',
-    whatWeNeed: 'dns access or a temporary token; a thumbs-up to ship.',
-    deliverables: 'production site, analytics dashboard, handoff notes.',
-    timing: '1–2 days.',
-  },
-  {
-    stepNumber: '6',
-    title: '6) refill - iterate & care',
-    whatWeDo: 'track, tweak, and improve with monthly updates, bug fixes, and small enhancements.',
-    whatWeNeed: 'backlog items via the client portal; we&apos;ll ship in weekly batches.',
-    deliverables: 'monthly change log + performance deltas.',
-    timing: 'ongoing (care plans start at $99/mo).',
+    title: 'launch & support',
+    description: 'deploy your site, set up analytics, and provide ongoing care.',
+    whatYouGet: 'live site, analytics setup, and monthly updates',
+    timing: '1–2 days to launch',
   },
 ];
 
@@ -131,21 +104,20 @@ export default function ProcessPage() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-6 lowercase">
-                  detailed breakdown
+                  our 3-step process
                 </h2>
                 <p className="text-lg text-gray-600 lowercase">
                   here&apos;s what happens in each phase of your project
                 </p>
               </div>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {processSteps.map((step, index) => (
                   <StepCard
                     key={step.stepNumber}
                     stepNumber={step.stepNumber}
                     title={step.title}
-                    whatWeDo={step.whatWeDo}
-                    whatWeNeed={step.whatWeNeed}
-                    deliverables={step.deliverables}
+                    description={step.description}
+                    whatYouGet={step.whatYouGet}
                     timing={step.timing}
                     delay={index * 0.1}
                   />
