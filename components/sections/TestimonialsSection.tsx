@@ -7,11 +7,10 @@ import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 const testimonials = [
   {
     quote:
-      'The new website doesn&apos;t just look better—it&apos;s a conversion machine. Our trial signups increased 340% and the quality of leads is dramatically higher.',
+      'The new website looks fantastic and we&apos;re really happy with the quality and attention to detail. The team was professional and delivered exactly what we needed.',
     author: 'Sarah Chen',
     role: 'CEO, TechFlow Solutions',
     avatar: 'SC',
-    metric: '+340% conversions',
   },
   {
     quote:
@@ -19,7 +18,6 @@ const testimonials = [
     author: 'Dr. Maria Rodriguez',
     role: 'Founder, Care On Call Home Healthcare',
     avatar: 'MR',
-    metric: 'HomeCare Elite Top Agency',
   },
   {
     quote:
@@ -27,7 +25,6 @@ const testimonials = [
     author: 'Locra Team',
     role: 'Travel-Inspired Fashion Brand',
     avatar: 'LT',
-    metric: 'Global reach achieved',
   },
 ];
 
@@ -84,23 +81,14 @@ export default function TestimonialsSection() {
               </blockquote>
 
               {/* Author */}
-              <div className="flex flex-col items-center justify-center space-y-4">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-taro rounded-full flex items-center justify-center text-white font-bold">
-                    {testimonials[currentIndex].avatar}
-                  </div>
-                  <div className="text-left">
-                    <div className="font-semibold text-ink">
-                      {testimonials[currentIndex].author}
-                    </div>
-                    <div className="text-gray-600 text-sm">{testimonials[currentIndex].role}</div>
-                  </div>
+              <div className="flex items-center justify-center space-x-4">
+                <div className="w-12 h-12 bg-taro rounded-full flex items-center justify-center text-white font-bold">
+                  {testimonials[currentIndex].avatar}
                 </div>
-                {testimonials[currentIndex].metric && (
-                  <div className="bg-taro/10 text-taro px-4 py-2 rounded-full text-sm font-medium">
-                    {testimonials[currentIndex].metric}
-                  </div>
-                )}
+                <div className="text-left">
+                  <div className="font-semibold text-ink">{testimonials[currentIndex].author}</div>
+                  <div className="text-gray-600 text-sm">{testimonials[currentIndex].role}</div>
+                </div>
               </div>
 
               {/* Decorative pearls */}

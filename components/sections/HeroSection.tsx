@@ -72,7 +72,7 @@ export default function HeroSection() {
               </div>
               <div className="flex items-center space-x-2 text-gray-600">
                 <div className="w-2 h-2 bg-matcha rounded-full"></div>
-                <span className="lowercase">average 340% more conversions</span>
+                <span className="lowercase">clean, professional results</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-600">
                 <div className="w-2 h-2 bg-milk-tea rounded-full"></div>
