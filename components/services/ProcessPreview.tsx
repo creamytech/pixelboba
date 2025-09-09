@@ -80,11 +80,6 @@ export default function ProcessPreview() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
                   <div className="relative mb-6">
-                    {/* Connection line */}
-                    {index < steps.length - 1 && (
-                      <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-gradient-to-r from-taro/50 to-transparent transform -translate-y-1/2 z-0" />
-                    )}
-
                     {/* Step icon */}
                     <div className="relative z-10 w-20 h-20 bg-gradient-to-br from-taro to-deep-taro rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <Icon className="w-8 h-8 text-white" />
