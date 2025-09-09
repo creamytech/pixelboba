@@ -8,21 +8,40 @@ const steps = [
   {
     number: '1',
     title: 'discovery',
-    description: 'we turn your project form into a clear brief',
+    description:
+      'we turn your project form into a clear brief with wireframes and design direction',
+    details: [
+      'project requirements analysis',
+      'competitor research & insights',
+      'wireframe & sitemap creation',
+      'design style guide development',
+    ],
     time: '1-3 days',
     icon: Eye,
   },
   {
     number: '2',
     title: 'build',
-    description: 'see your site come to life with live previews',
+    description: 'see your site come to life with live previews and real-time collaboration',
+    details: [
+      'custom design implementation',
+      'responsive mobile optimization',
+      'content management setup',
+      'live preview sharing for feedback',
+    ],
     time: '2-5 weeks',
     icon: Clock,
   },
   {
     number: '3',
     title: 'launch',
-    description: 'go live with full support and training',
+    description: 'go live with full support, training, and ongoing maintenance options',
+    details: [
+      'domain & hosting configuration',
+      'seo optimization & analytics setup',
+      'client training & documentation',
+      'post-launch support & monitoring',
+    ],
     time: '1-2 days',
     icon: Rocket,
   },
@@ -30,7 +49,7 @@ const steps = [
 
 export default function ProcessPreview() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-gradient-to-b from-white via-milk-tea/5 to-white">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"
@@ -47,14 +66,14 @@ export default function ProcessPreview() {
           </p>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <motion.div
                   key={step.number}
-                  className="text-center"
+                  className="text-center bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -80,7 +99,18 @@ export default function ProcessPreview() {
                   <h3 className="font-display text-2xl font-bold text-ink mb-3 lowercase">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 mb-4 lowercase leading-relaxed">{step.description}</p>
+                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">{step.description}</p>
+
+                  {/* Step Details */}
+                  <div className="mb-6 space-y-2">
+                    {step.details.map((detail, detailIndex) => (
+                      <div key={detailIndex} className="flex items-center text-sm text-gray-600">
+                        <div className="w-1.5 h-1.5 bg-taro rounded-full mr-3 flex-shrink-0"></div>
+                        <span className="lowercase">{detail}</span>
+                      </div>
+                    ))}
+                  </div>
+
                   <div className="bg-milk-tea/20 rounded-full px-4 py-2 inline-block">
                     <span className="text-sm text-gray-600 font-medium lowercase">{step.time}</span>
                   </div>
