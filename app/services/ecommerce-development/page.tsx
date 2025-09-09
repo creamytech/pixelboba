@@ -143,7 +143,8 @@ export default function EcommercePage() {
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 leading-relaxed lowercase max-w-3xl mx-auto mb-8">
                 custom online stores that convert visitors into customers. shopify, next.js, and
-                headless commerce solutions. starting at $4,000.
+                headless commerce solutions. part of our <strong>advanced website build</strong>{' '}
+                service starting at $4,000.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button
@@ -231,6 +232,56 @@ export default function EcommercePage() {
                     decoupled frontend and backend for maximum flexibility and performance.
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Alignment Section */}
+        <section className="py-20 bg-gradient-to-b from-transparent to-milk-tea/10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase">
+                pricing & packages
+              </h2>
+              <p className="text-lg text-gray-600 mb-8 lowercase">
+                e-commerce development fits into our advanced website build package
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="p-6 bg-white rounded-xl border border-gray-200">
+                  <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
+                  <p className="text-2xl font-bold text-ink mb-2">$750</p>
+                  <p className="text-sm text-gray-500 lowercase">
+                    refresh & optimize existing sites
+                  </p>
+                </div>
+                <div className="p-6 bg-white rounded-xl border border-gray-200">
+                  <h3 className="font-semibold text-gray-600 mb-2 lowercase">
+                    custom website build
+                  </h3>
+                  <p className="text-2xl font-bold text-ink mb-2">$1,500+</p>
+                  <p className="text-sm text-gray-500 lowercase">
+                    modern frameworks & custom design
+                  </p>
+                </div>
+                <div className="p-6 bg-taro/5 rounded-xl border-2 border-taro">
+                  <div className="bg-taro text-white px-3 py-1 rounded-full text-xs font-medium mb-3 inline-block">
+                    e-commerce fits here
+                  </div>
+                  <h3 className="font-semibold text-taro mb-2 lowercase">advanced website build</h3>
+                  <p className="text-2xl font-bold text-ink mb-2">$4,000+</p>
+                  <p className="text-sm text-gray-600 lowercase">
+                    online stores & complex features
+                  </p>
+                </div>
+              </div>
+              <div className="mt-8">
+                <Link
+                  href="/services"
+                  className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+                >
+                  view all pricing options →
+                </Link>
               </div>
             </div>
           </div>
