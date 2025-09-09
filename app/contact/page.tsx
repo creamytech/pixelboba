@@ -4,13 +4,13 @@ import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'pixel boba — contact + faq',
+  title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
   description:
-    'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing.',
+    'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing. based in fort lauderdale, florida.',
   openGraph: {
-    title: 'pixel boba — contact + faq',
+    title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
-      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing.',
+      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing. based in fort lauderdale, florida.',
     url: 'https://pixelboba.com/contact',
     siteName: 'pixel boba',
     images: [
@@ -25,10 +25,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'pixel boba — contact + faq',
+    title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
-      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing.',
+      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing. based in fort lauderdale, florida.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
+  },
+  alternates: {
+    canonical: 'https://pixelboba.com/contact',
   },
 };
 

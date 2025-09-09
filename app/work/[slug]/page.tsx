@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface WorkPageProps {
   params: {
@@ -47,12 +48,34 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
   }
 
   return {
-    title: `${work.frontmatter.title} - Case Study`,
-    description: work.frontmatter.summary,
+    title: `${work.frontmatter.title} Case Study | Web Design Portfolio | Pixel Boba`,
+    description: `${work.frontmatter.summary} see how pixel boba transformed this client's online presence with custom web design and development.`,
     openGraph: {
-      title: `${work.frontmatter.title} - Case Study`,
-      description: work.frontmatter.summary,
+      title: `${work.frontmatter.title} Case Study | Web Design Portfolio | Pixel Boba`,
+      description: `${work.frontmatter.summary} see how pixel boba transformed this client's online presence with custom web design and development.`,
+      url: `https://pixelboba.com/work/${params.slug}`,
+      siteName: 'pixel boba',
+      images: work.frontmatter.cover
+        ? [
+            {
+              url: work.frontmatter.cover,
+              width: 1200,
+              height: 630,
+              alt: `${work.frontmatter.title} project screenshot`,
+            },
+          ]
+        : [],
+      locale: 'en_US',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${work.frontmatter.title} Case Study | Web Design Portfolio | Pixel Boba`,
+      description: `${work.frontmatter.summary} see how pixel boba transformed this client's online presence with custom web design and development.`,
       images: work.frontmatter.cover ? [work.frontmatter.cover] : [],
+    },
+    alternates: {
+      canonical: `https://pixelboba.com/work/${params.slug}`,
     },
   };
 }
@@ -66,10 +89,50 @@ export default async function WorkPage({ params }: WorkPageProps) {
 
   const { frontmatter, content } = work;
 
+  // Structured data for the portfolio piece
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: frontmatter.title,
+    description: frontmatter.summary,
+    url: `https://pixelboba.com/work/${params.slug}`,
+    image: frontmatter.cover || 'https://pixelboba.com/Pixel_Boba_Icon_PNG.png',
+    datePublished: frontmatter.publishedAt,
+    creator: {
+      '@type': 'Organization',
+      name: 'Pixel Boba',
+      url: 'https://pixelboba.com',
+    },
+    provider: {
+      '@type': 'Organization',
+      name: 'Pixel Boba',
+      url: 'https://pixelboba.com',
+    },
+    genre: 'Web Design',
+    keywords: frontmatter.services?.join(', ') || 'web design, web development',
+  };
+
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
       <Header />
       <main className="pt-20">
+        {/* Breadcrumb Navigation */}
+        <div className="container mx-auto px-4">
+          <Breadcrumb
+            items={[
+              { label: 'home', href: '/' },
+              { label: 'portfolio', href: '/work' },
+              { label: frontmatter.title.toLowerCase(), href: `/work/${params.slug}` },
+            ]}
+          />
+        </div>
+
         {/* Back Navigation */}
         <div className="container mx-auto px-4 py-6">
           <Button asChild variant="ghost" className="group">

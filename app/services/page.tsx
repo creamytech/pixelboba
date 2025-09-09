@@ -10,13 +10,13 @@ import ServiceComparison from '@/components/services/ServiceComparison';
 import ProcessPreview from '@/components/services/ProcessPreview';
 
 export const metadata: Metadata = {
-  title: 'pixel boba — services & pricing (starting at)',
+  title: 'Web Design Services & Pricing | Starting at $750 | Pixel Boba',
   description:
-    'custom web design starting at $750. no calls needed - get a custom proposal by email within 24 hours.',
+    'custom web design starting at $750. next.js development, react websites, ecommerce solutions. no calls needed - get a custom proposal by email within 24 hours.',
   openGraph: {
-    title: 'pixel boba — services & pricing',
+    title: 'Web Design Services & Pricing | Starting at $750 | Pixel Boba',
     description:
-      'custom web design starting at $750. no calls needed - get a custom proposal by email within 24 hours.',
+      'custom web design starting at $750. next.js development, react websites, ecommerce solutions. no calls needed - get a custom proposal by email within 24 hours.',
     url: 'https://pixelboba.com/services',
     siteName: 'pixel boba',
     images: [
@@ -31,10 +31,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'pixel boba — services & pricing',
+    title: 'Web Design Services & Pricing | Starting at $750 | Pixel Boba',
     description:
-      'custom web design starting at $750. no calls needed - get a custom proposal by email within 24 hours.',
+      'custom web design starting at $750. next.js development, react websites, ecommerce solutions. no calls needed - get a custom proposal by email within 24 hours.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
+  },
+  alternates: {
+    canonical: 'https://pixelboba.com/services',
   },
 };
 

@@ -8,13 +8,13 @@ import QualityChecklist from '@/components/process/QualityChecklist';
 import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
-  title: 'pixel boba — our process',
+  title: 'Our Web Design Process | 3-Step Workflow | Pixel Boba',
   description:
-    'a simple workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
+    'a simple 3-step web design process. no meetings, no calls, just clear steps, clean builds, and quick turnarounds. discovery, design & build, launch & support.',
   openGraph: {
-    title: 'pixel boba — our process',
+    title: 'Our Web Design Process | 3-Step Workflow | Pixel Boba',
     description:
-      'a simple workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
+      'a simple 3-step web design process. no meetings, no calls, just clear steps, clean builds, and quick turnarounds. discovery, design & build, launch & support.',
     url: 'https://pixelboba.com/process',
     siteName: 'pixel boba',
     images: [
@@ -29,10 +29,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'pixel boba — our process',
+    title: 'Our Web Design Process | 3-Step Workflow | Pixel Boba',
     description:
-      'a simple workflow that keeps things moving. no meetings, no calls, just clear steps, clean builds, and quick turnarounds.',
+      'a simple 3-step web design process. no meetings, no calls, just clear steps, clean builds, and quick turnarounds. discovery, design & build, launch & support.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
+  },
+  alternates: {
+    canonical: 'https://pixelboba.com/process',
   },
 };
 

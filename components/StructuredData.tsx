@@ -65,7 +65,13 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         url: 'https://pixelboba.com',
         logo: 'https://pixelboba.com/brand/Pixel_Boba_Logo_White.svg',
         description:
-          'design-first websites with delightful details and boba-smooth interactions. websites that pop.',
+          'professional web design and development agency based in fort lauderdale, florida. custom websites with next.js, react, and modern web technologies.',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Fort Lauderdale',
+          addressRegion: 'FL',
+          addressCountry: 'US',
+        },
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'customer service',
@@ -101,12 +107,20 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         '@type': 'Service',
         name: 'web design and development services',
         description:
-          'professional web design and development services including next.js development, ui/ux design, and performance optimization.',
+          'professional web design and development services including next.js development, ui/ux design, and performance optimization. based in fort lauderdale, florida, serving clients globally.',
         provider: {
           '@type': 'Organization',
           name: 'pixel boba llc',
         },
-        areaServed: 'global',
+        areaServed: [
+          'Fort Lauderdale',
+          'Miami',
+          'Tampa',
+          'Orlando',
+          'Florida',
+          'United States',
+          'Global',
+        ],
         serviceType: 'web development',
         ...data,
       };
