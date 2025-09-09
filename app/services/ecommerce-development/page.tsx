@@ -17,11 +17,11 @@ import {
 export const metadata: Metadata = {
   title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
   description:
-    'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $4,000.',
+    'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $8,000.',
   openGraph: {
     title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
     description:
-      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $4,000.',
+      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $8,000.',
     url: 'https://pixelboba.com/services/ecommerce-development',
     siteName: 'pixel boba',
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
     description:
-      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $4,000.',
+      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $8,000.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -144,7 +144,7 @@ export default function EcommercePage() {
               <p className="text-xl md:text-2xl text-gray-600 leading-relaxed lowercase max-w-3xl mx-auto mb-8">
                 custom online stores that convert visitors into customers. shopify, next.js, and
                 headless commerce solutions. part of our <strong>advanced website build</strong>{' '}
-                service starting at $4,000.
+                service starting at $8,000.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button
@@ -250,7 +250,7 @@ export default function EcommercePage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="p-6 bg-white rounded-xl border border-gray-200">
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$750</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$1,500</p>
                   <p className="text-sm text-gray-500 lowercase">
                     refresh & optimize existing sites
                   </p>
@@ -259,7 +259,7 @@ export default function EcommercePage() {
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">
                     custom website build
                   </h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$1,500+</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$3,500+</p>
                   <p className="text-sm text-gray-500 lowercase">
                     modern frameworks & custom design
                   </p>
@@ -269,7 +269,7 @@ export default function EcommercePage() {
                     e-commerce fits here
                   </div>
                   <h3 className="font-semibold text-taro mb-2 lowercase">advanced website build</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$4,000+</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$8,000+</p>
                   <p className="text-sm text-gray-600 lowercase">
                     online stores & complex features
                   </p>
@@ -304,7 +304,7 @@ export default function EcommercePage() {
                 </Link>
               </Button>
               <p className="text-gray-500 mt-4 text-sm lowercase">
-                e-commerce development starting at $4,000 • 4-8 week delivery
+                e-commerce development starting at $8,000 • 6-12 week delivery
               </p>
             </div>
           </div>

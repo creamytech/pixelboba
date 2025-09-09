@@ -31,7 +31,13 @@ const serviceOptions = [
   'seo optimization package',
 ];
 
-const budgetOptions = ['under $750', '$750–$1,500', '$1,500–$4,000', '$4,000–$6,000', '$6,000+'];
+const budgetOptions = [
+  'under $1,500',
+  '$1,500–$3,500',
+  '$3,500–$8,000',
+  '$8,000–$15,000',
+  '$15,000+',
+];
 
 export default function StartProjectForm() {
   const [formData, setFormData] = useState<FormData>({

@@ -9,11 +9,11 @@ import Breadcrumb from '@/components/ui/Breadcrumb';
 export const metadata: Metadata = {
   title: 'Next.js Development Services | React Web Development | Pixel Boba',
   description:
-    'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions starting at $1,500.',
+    'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions starting at $3,500.',
   openGraph: {
     title: 'Next.js Development Services | React Web Development | Pixel Boba',
     description:
-      'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions starting at $1,500.',
+      'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions starting at $3,500.',
     url: 'https://pixelboba.com/services/nextjs-development',
     siteName: 'pixel boba',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Next.js Development Services | React Web Development | Pixel Boba',
     description:
-      'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions starting at $1,500.',
+      'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions starting at $3,500.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -132,7 +132,7 @@ export default function NextJSPage() {
               <p className="text-xl md:text-2xl text-gray-600 leading-relaxed lowercase max-w-3xl mx-auto mb-8">
                 modern react websites built with next.js. server-side rendering, static generation,
                 and enterprise-grade performance. part of our <strong>custom website build</strong>{' '}
-                service starting at $1,500.
+                service starting at $3,500.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button
@@ -207,7 +207,7 @@ export default function NextJSPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="p-6 bg-white rounded-xl border border-gray-200">
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$750</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$1,500</p>
                   <p className="text-sm text-gray-500 lowercase">
                     refresh & optimize existing sites
                   </p>
@@ -217,7 +217,7 @@ export default function NextJSPage() {
                     next.js fits here
                   </div>
                   <h3 className="font-semibold text-taro mb-2 lowercase">custom website build</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$1,500+</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$3,500+</p>
                   <p className="text-sm text-gray-600 lowercase">
                     modern frameworks & custom design
                   </p>
@@ -226,7 +226,7 @@ export default function NextJSPage() {
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">
                     advanced website build
                   </h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$4,000+</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$8,000+</p>
                   <p className="text-sm text-gray-500 lowercase">complex features & integrations</p>
                 </div>
               </div>
@@ -259,7 +259,7 @@ export default function NextJSPage() {
                 </Link>
               </Button>
               <p className="text-gray-500 mt-4 text-sm lowercase">
-                custom development starting at $1,500 • 2-6 week delivery
+                custom development starting at $3,500 • 3-6 week delivery
               </p>
             </div>
           </div>

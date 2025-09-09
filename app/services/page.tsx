@@ -11,13 +11,13 @@ import ServiceComparison from '@/components/services/ServiceComparison';
 import ProcessPreview from '@/components/services/ProcessPreview';
 
 export const metadata: Metadata = {
-  title: 'Web Design Services & Pricing | Starting at $750 | Pixel Boba',
+  title: 'Web Design Services & Pricing | Starting at $1,500 | Pixel Boba',
   description:
-    'custom web design starting at $750. next.js development, react websites, ecommerce solutions. no calls needed - get a custom proposal by email within 24 hours.',
+    'professional web design starting at $1,500. next.js development, react websites, ecommerce solutions. competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
   openGraph: {
-    title: 'Web Design Services & Pricing | Starting at $750 | Pixel Boba',
+    title: 'Web Design Services & Pricing | Starting at $1,500 | Pixel Boba',
     description:
-      'custom web design starting at $750. next.js development, react websites, ecommerce solutions. no calls needed - get a custom proposal by email within 24 hours.',
+      'professional web design starting at $1,500. next.js development, react websites, ecommerce solutions. competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
     url: 'https://pixelboba.com/services',
     siteName: 'pixel boba',
     images: [
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Web Design Services & Pricing | Starting at $750 | Pixel Boba',
+    title: 'Web Design Services & Pricing | Starting at $1,500 | Pixel Boba',
     description:
-      'custom web design starting at $750. next.js development, react websites, ecommerce solutions. no calls needed - get a custom proposal by email within 24 hours.',
+      'professional web design starting at $1,500. next.js development, react websites, ecommerce solutions. competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -65,41 +65,44 @@ export default function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               <PriceCard
                 title="website redesign"
-                price="starting at $750"
+                price="starting at $1,500"
                 features={[
                   'modern design refresh',
                   'mobile optimization',
                   'speed & seo improvements',
-                  'basic accessibility fixes',
+                  'accessibility improvements',
+                  'content migration',
                   '1-2 week delivery',
                   '30 days of tweaks included',
                 ]}
               />
               <PriceCard
                 title="custom website build"
-                price="starting at $1,500"
+                price="starting at $3,500"
                 features={[
                   'custom design system',
-                  '4-6 fully designed pages',
+                  '5-8 fully designed pages',
                   'smooth animations & interactions',
                   'cms setup + training',
-                  'basic seo optimization',
+                  'seo optimization',
+                  'contact forms & lead capture',
                   '3-4 week delivery',
                   'launch support included',
                 ]}
               />
               <PriceCard
                 title="advanced website build"
-                price="starting at $4,000"
+                price="starting at $8,000"
                 features={[
                   'full design system + brand guide',
-                  '6-12 custom pages',
+                  '8-15 custom pages',
                   'complex animations & interactions',
                   'third-party integrations',
                   'advanced cms + training',
                   'comprehensive seo setup',
-                  '4-6 week delivery',
-                  '60 days support included',
+                  'user authentication system',
+                  '4-8 week delivery',
+                  '90 days support included',
                 ]}
                 highlighted={true}
               />
@@ -126,19 +129,19 @@ export default function ServicesPage() {
                   <ul className="space-y-4">
                     <li className="flex justify-between items-center">
                       <span className="text-gray-600 lowercase">branding & logo design</span>
-                      <span className="font-semibold text-taro lowercase">starting at $350</span>
+                      <span className="font-semibold text-taro lowercase">starting at $750</span>
                     </li>
                     <li className="flex justify-between items-center">
                       <span className="text-gray-600 lowercase">custom animations</span>
-                      <span className="font-semibold text-taro lowercase">starting at $200</span>
+                      <span className="font-semibold text-taro lowercase">starting at $500</span>
                     </li>
                     <li className="flex justify-between items-center">
                       <span className="text-gray-600 lowercase">ecommerce setup</span>
-                      <span className="font-semibold text-taro lowercase">starting at $1,000</span>
+                      <span className="font-semibold text-taro lowercase">starting at $2,500</span>
                     </li>
                     <li className="flex justify-between items-center">
                       <span className="text-gray-600 lowercase">seo optimization package</span>
-                      <span className="font-semibold text-taro lowercase">starting at $750</span>
+                      <span className="font-semibold text-taro lowercase">starting at $1,200</span>
                     </li>
                   </ul>
                 </div>

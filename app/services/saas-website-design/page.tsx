@@ -8,11 +8,11 @@ import { ArrowRight, Check, Zap, Users, TrendingUp, Shield, Globe, BarChart } fr
 export const metadata: Metadata = {
   title: 'SaaS Website Design | Software Landing Pages | Pixel Boba',
   description:
-    'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $1,500.',
+    'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $3,500.',
   openGraph: {
     title: 'SaaS Website Design | Software Landing Pages | Pixel Boba',
     description:
-      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $1,500.',
+      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $3,500.',
     url: 'https://pixelboba.com/services/saas-website-design',
     siteName: 'pixel boba',
     images: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'SaaS Website Design | Software Landing Pages | Pixel Boba',
     description:
-      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $1,500.',
+      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $3,500.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -143,7 +143,7 @@ export default function SaaSPage() {
               <p className="text-xl md:text-2xl text-gray-600 leading-relaxed lowercase max-w-3xl mx-auto mb-8">
                 conversion-optimized saas websites that turn visitors into paying customers. clear
                 value propositions, streamlined signups, and modern design. part of our{' '}
-                <strong>custom website build</strong> service starting at $1,500.
+                <strong>custom website build</strong> service starting at $3,500.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button
@@ -243,7 +243,7 @@ export default function SaaSPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="p-6 bg-white rounded-xl border border-gray-200">
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">website redesign</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$750</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$1,500</p>
                   <p className="text-sm text-gray-500 lowercase">
                     refresh & optimize existing sites
                   </p>
@@ -253,14 +253,14 @@ export default function SaaSPage() {
                     saas design fits here
                   </div>
                   <h3 className="font-semibold text-taro mb-2 lowercase">custom website build</h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$1,500+</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$3,500+</p>
                   <p className="text-sm text-gray-600 lowercase">conversion-focused design</p>
                 </div>
                 <div className="p-6 bg-white rounded-xl border border-gray-200">
                   <h3 className="font-semibold text-gray-600 mb-2 lowercase">
                     advanced website build
                   </h3>
-                  <p className="text-2xl font-bold text-ink mb-2">$4,000+</p>
+                  <p className="text-2xl font-bold text-ink mb-2">$8,000+</p>
                   <p className="text-sm text-gray-500 lowercase">complex features & integrations</p>
                 </div>
               </div>
@@ -293,7 +293,7 @@ export default function SaaSPage() {
                 </Link>
               </Button>
               <p className="text-gray-500 mt-4 text-sm lowercase">
-                saas website design starting at $1,500 • 2-4 week delivery
+                saas website design starting at $3,500 • 3-5 week delivery
               </p>
             </div>
           </div>
