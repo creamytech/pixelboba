@@ -48,7 +48,7 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <ServicesPreview />
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
         <CodeFirstSection />
         <ProcessSection />
         <CTASection />
