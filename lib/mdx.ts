@@ -28,6 +28,8 @@ export interface WorkFrontmatter {
   };
   publishedAt: string;
   featured?: boolean;
+  impact?: string;
+  timeline?: string;
 }
 
 export interface WorkPost {
