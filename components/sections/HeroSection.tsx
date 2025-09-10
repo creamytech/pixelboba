@@ -50,7 +50,7 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto lowercase leading-relaxed px-4"
+              className="text-lg md:text-xl lg:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto lowercase leading-relaxed px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -59,24 +59,33 @@ export default function HeroSection() {
               one, skip the endless meetings.
             </motion.p>
 
+            <motion.p
+              className="text-base md:text-lg text-taro font-medium mb-6 lowercase px-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              → proudly based in fort lauderdale, serving all of south florida
+            </motion.p>
+
             {/* Social proof bullets */}
             <motion.div
               className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8 text-sm md:text-base px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
             >
               <div className="flex items-center space-x-2 text-gray-600">
                 <div className="w-2 h-2 bg-taro rounded-full"></div>
-                <span className="lowercase">see your site building live</span>
+                <span className="lowercase">local south florida team</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-600">
                 <div className="w-2 h-2 bg-matcha rounded-full"></div>
-                <span className="lowercase">clean, professional results</span>
+                <span className="lowercase">see your site building live</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-600">
                 <div className="w-2 h-2 bg-milk-tea rounded-full"></div>
-                <span className="lowercase">launch in 2-6 weeks</span>
+                <span className="lowercase">launch in 1-8 weeks</span>
               </div>
             </motion.div>
 
@@ -84,7 +93,7 @@ export default function HeroSection() {
               className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 w-full max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
             >
               <Button
                 asChild

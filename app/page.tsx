@@ -10,13 +10,13 @@ import CTASection from '@/components/sections/CTASection';
 import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
-  title: 'Professional Web Design & Development | Pixel Boba | Starting at $1,500',
+  title: 'Fort Lauderdale Web Design & Development | Pixel Boba | Local South Florida',
   description:
-    'custom websites that convert. live previews from day 1, 1-8 week delivery, no endless meetings. starting at $1,500. based in fort lauderdale, florida.',
+    'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach. Starting at $1,500.',
   openGraph: {
-    title: 'Professional Web Design & Development | Pixel Boba | Starting at $1,500',
+    title: 'Fort Lauderdale Web Design & Development | Pixel Boba | Local South Florida',
     description:
-      'custom websites that convert. live previews from day 1, 1-8 week delivery, no endless meetings. starting at $1,500. based in fort lauderdale, florida.',
+      'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach. Starting at $1,500.',
     url: 'https://pixelboba.com',
     siteName: 'pixel boba',
     images: [
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Professional Web Design & Development | Pixel Boba | Starting at $1,500',
+    title: 'Fort Lauderdale Web Design & Development | Pixel Boba | Local South Florida',
     description:
-      'custom websites that convert. live previews from day 1, 1-8 week delivery, no endless meetings. starting at $1,500. based in fort lauderdale, florida.',
+      'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach. Starting at $1,500.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
