@@ -7,9 +7,20 @@ interface PriceCardProps {
   price: string;
   features: string[];
   highlighted?: boolean;
+  deliveryTime?: string;
+  badge?: string;
+  description?: string;
 }
 
-export default function PriceCard({ title, price, features, highlighted = false }: PriceCardProps) {
+export default function PriceCard({
+  title,
+  price,
+  features,
+  highlighted = false,
+  deliveryTime,
+  badge,
+  description,
+}: PriceCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -34,14 +45,34 @@ export default function PriceCard({ title, price, features, highlighted = false 
         </div>
       )}
 
+      {badge && !highlighted && (
+        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+          <div className="bg-matcha text-white px-4 py-2 rounded-full text-sm font-semibold lowercase">
+            {badge}
+          </div>
+        </div>
+      )}
+
+      {/* Delivery time badge */}
+      {deliveryTime && (
+        <div className="absolute top-4 right-4">
+          <div className="bg-brown-sugar/10 text-brown-sugar px-3 py-1 rounded-full text-xs font-medium lowercase">
+            {deliveryTime}
+          </div>
+        </div>
+      )}
+
       {/* Pearl decoration */}
-      <div className="absolute top-4 right-4">
-        <div className="w-3 h-3 bg-taro/40 rounded-full"></div>
-      </div>
+      {!deliveryTime && (
+        <div className="absolute top-4 right-4">
+          <div className="w-3 h-3 bg-taro/40 rounded-full"></div>
+        </div>
+      )}
 
       <div className="mb-6">
         <h3 className="font-display text-2xl font-bold text-ink mb-2 lowercase">{title}</h3>
         <div className="text-3xl font-bold text-taro lowercase">{price}</div>
+        {description && <p className="text-gray-600 mt-3 text-sm lowercase">{description}</p>}
       </div>
 
       <ul className="space-y-3 mb-8">

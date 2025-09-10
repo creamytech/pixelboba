@@ -84,10 +84,40 @@ export default async function WorkPage() {
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                         {/* Overlay with project info */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
-                          <div className="flex items-center gap-2 text-sm">
-                            {work.frontmatter.website && <ExternalLink className="w-4 h-4" />}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                        {/* Key metrics on hover */}
+                        <div className="absolute top-4 left-4 text-white transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
+                          <div className="space-y-2">
+                            {work.frontmatter.impact && (
+                              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1">
+                                <div className="flex items-center gap-2 text-sm">
+                                  <Star className="w-3 h-3 fill-current" />
+                                  <span className="font-medium">{work.frontmatter.impact}</span>
+                                </div>
+                              </div>
+                            )}
+                            {work.frontmatter.timeline && (
+                              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1">
+                                <div className="flex items-center gap-2 text-sm">
+                                  <Calendar className="w-3 h-3" />
+                                  <span>{work.frontmatter.timeline}</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Bottom overlay with CTA */}
+                        <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 text-sm">
+                              {work.frontmatter.website && <ExternalLink className="w-4 h-4" />}
+                              <span>Live Site</span>
+                            </div>
+                            <div className="bg-taro/90 backdrop-blur-sm rounded-lg px-4 py-2">
+                              <span className="text-sm font-medium">View Case Study →</span>
+                            </div>
                           </div>
                         </div>
                       </div>

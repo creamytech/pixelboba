@@ -61,43 +61,103 @@ export default function ServicesPage() {
         {/* Pricing Cards */}
         <section className="pb-20">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <PriceCard title="website redesign" price="starting at $1,500" features={[]} />
-              <PriceCard title="custom website build" price="starting at $3,500" features={[]} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+              <PriceCard
+                title="website redesign"
+                price="starting at $1,500"
+                deliveryTime="1–2 weeks"
+                badge="quick start"
+                description="refresh your existing site with modern design and improved performance"
+                features={[
+                  'modern design refresh',
+                  'mobile optimization',
+                  'speed improvements',
+                  'seo audit included',
+                  'content migration',
+                  '2 rounds of revisions',
+                ]}
+              />
+              <PriceCard
+                title="custom website build"
+                price="starting at $3,500"
+                deliveryTime="3–4 weeks"
+                description="brand new website built from scratch with custom features"
+                features={[
+                  'custom design & development',
+                  'responsive across all devices',
+                  'cms integration',
+                  'contact forms & analytics',
+                  'basic seo setup',
+                  '3 rounds of revisions',
+                  '1 month free support',
+                ]}
+              />
               <PriceCard
                 title="advanced website build"
                 price="starting at $8,000"
-                features={[]}
+                deliveryTime="6–8 weeks"
                 highlighted={true}
+                description="complex websites with advanced features and integrations"
+                features={[
+                  'everything in custom build',
+                  'advanced functionality',
+                  'third-party integrations',
+                  'custom animations',
+                  'advanced seo optimization',
+                  'user authentication',
+                  'database integration',
+                  'unlimited revisions',
+                  '3 months free support',
+                ]}
+              />
+              <PriceCard
+                title="ongoing care"
+                price="starting at $99/month"
+                badge="peace of mind"
+                description="keep your website updated, secure, and performing at its best"
+                features={[
+                  'monthly updates & backups',
+                  'security monitoring',
+                  'performance optimization',
+                  'content updates (2 hours)',
+                  'priority support',
+                  'uptime monitoring',
+                  'monthly reports',
+                ]}
               />
             </div>
 
-            {/* Ongoing Care & Add-ons */}
-            <div className="mt-12 max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <PriceCard title="ongoing care plans" price="starting at $99/month" features={[]} />
-                <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm">
-                  <h3 className="font-display text-2xl font-bold text-ink mb-6 lowercase">
-                    add-ons
-                  </h3>
-                  <ul className="space-y-4">
-                    <li className="flex justify-between items-center">
-                      <span className="text-gray-600 lowercase">branding & logo design</span>
-                      <span className="font-semibold text-taro lowercase">starting at $750</span>
-                    </li>
-                    <li className="flex justify-between items-center">
-                      <span className="text-gray-600 lowercase">custom animations</span>
-                      <span className="font-semibold text-taro lowercase">starting at $500</span>
-                    </li>
-                    <li className="flex justify-between items-center">
-                      <span className="text-gray-600 lowercase">ecommerce setup</span>
-                      <span className="font-semibold text-taro lowercase">starting at $2,500</span>
-                    </li>
-                    <li className="flex justify-between items-center">
-                      <span className="text-gray-600 lowercase">seo optimization package</span>
-                      <span className="font-semibold text-taro lowercase">starting at $1,200</span>
-                    </li>
-                  </ul>
+            {/* Add-ons Section */}
+            <div className="mt-16 max-w-4xl mx-auto">
+              <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm">
+                <h3 className="font-display text-2xl font-bold text-ink mb-6 lowercase text-center">
+                  popular add-ons
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
+                      <span className="text-gray-700 font-medium lowercase">
+                        branding & logo design
+                      </span>
+                      <span className="font-bold text-taro lowercase">starting at $750</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
+                      <span className="text-gray-700 font-medium lowercase">custom animations</span>
+                      <span className="font-bold text-taro lowercase">starting at $500</span>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
+                      <span className="text-gray-700 font-medium lowercase">ecommerce setup</span>
+                      <span className="font-bold text-taro lowercase">starting at $2,500</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
+                      <span className="text-gray-700 font-medium lowercase">
+                        seo optimization package
+                      </span>
+                      <span className="font-bold text-taro lowercase">starting at $1,200</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
