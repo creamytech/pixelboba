@@ -5,25 +5,21 @@ import Link from 'next/link';
 
 const services = [
   {
-    title: 'website redesign',
-    price: 'starting at $750',
+    title: 'fresh design',
+    icon: '🎨',
     description:
-      'modernize your existing site with fresh design, mobile optimization, and speed improvements',
-    popular: false,
+      'modern, mobile-first designs that make your brand stand out and convert visitors into customers',
   },
   {
-    title: 'custom website build',
-    price: 'starting at $1,500',
+    title: 'fast performance',
+    icon: '⚡',
     description:
-      'custom-designed site with 4-6 pages, smooth animations, and easy content management',
-    popular: true,
+      'lightning-fast websites built with cutting-edge tech for better SEO and user experience',
   },
   {
-    title: 'advanced website build',
-    price: 'starting at $4,000',
-    description:
-      'complex functionality with 6-12 pages, advanced interactions, and third-party integrations',
-    popular: false,
+    title: 'live previews',
+    icon: '👀',
+    description: 'see your site come to life from day one—no waiting weeks for the big reveal',
   },
 ];
 
@@ -39,7 +35,7 @@ export default function ServicesPreview() {
               transition={{ duration: 0.6 }}
               className="font-display text-4xl md:text-5xl font-bold text-ink mb-4 lowercase"
             >
-              services that deliver
+              websites that work
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -47,34 +43,24 @@ export default function ServicesPreview() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xl text-gray-600 lowercase max-w-2xl mx-auto"
             >
-              transparent pricing, working code previews from day one
+              professional websites starting at $1,500. no endless meetings, just results.
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`relative bg-white rounded-xl p-8 shadow-sm border ${
-                  service.popular ? 'border-taro ring-2 ring-taro/20' : 'border-ink/10'
-                } hover:shadow-lg transition-all duration-300`}
+                className="relative bg-white rounded-xl p-8 shadow-sm border border-ink/10 hover:shadow-lg transition-all duration-300 hover:border-taro/30"
               >
-                {service.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-taro text-white px-4 py-1 rounded-full text-sm font-semibold lowercase">
-                      most popular
-                    </span>
-                  </div>
-                )}
-
                 <div className="text-center">
-                  <h3 className="font-display text-2xl font-bold text-ink mb-2 lowercase">
+                  <div className="text-4xl mb-4">{service.icon}</div>
+                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase">
                     {service.title}
                   </h3>
-                  <p className="text-3xl font-bold text-taro mb-4 lowercase">{service.price}</p>
                   <p className="text-gray-600 lowercase leading-relaxed">{service.description}</p>
                 </div>
 
@@ -84,6 +70,36 @@ export default function ServicesPreview() {
               </motion.div>
             ))}
           </div>
+
+          {/* Pricing highlight */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="bg-gradient-to-r from-taro/10 to-matcha/10 rounded-2xl p-8 mb-12 text-center border border-taro/20"
+          >
+            <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase">
+              transparent pricing, no surprises
+            </h3>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-taro lowercase">redesigns from $1,500</div>
+                <div className="text-gray-600 lowercase">refresh your existing site</div>
+              </div>
+              <div className="hidden md:block w-px h-12 bg-gray-300"></div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-taro lowercase">
+                  custom builds from $3,500
+                </div>
+                <div className="text-gray-600 lowercase">brand new websites</div>
+              </div>
+              <div className="hidden md:block w-px h-12 bg-gray-300"></div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-taro lowercase">advanced from $8,000</div>
+                <div className="text-gray-600 lowercase">complex functionality</div>
+              </div>
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
