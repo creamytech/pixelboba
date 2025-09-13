@@ -8,12 +8,18 @@ export const siteConfig = {
   keywords: [
     'web design',
     'web development',
+    'fort lauderdale web design',
+    'south florida web development',
+    'broward county web design',
+    'miami web development',
     'next.js',
     'ui/ux design',
     'creative agency',
     'digital studio',
     'bespoke websites',
     'custom development',
+    'florida web design company',
+    'local web developer',
   ],
   links: {
     twitter: 'https://twitter.com/pixelboba_',
