@@ -5,6 +5,9 @@ import Footer from '@/components/layout/Footer';
 export const metadata: Metadata = {
   title: 'terms of service',
   description: 'terms and conditions for using pixel boba services.',
+  alternates: {
+    canonical: 'https://pixelboba.com/legal/terms',
+  },
 };
 
 export default function TermsPage() {
