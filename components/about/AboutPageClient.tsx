@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import Lottie from 'lottie-react';
-import logoAnimation from '/public/PIxel Boba Final Logo Animation 2.json';
+import { useState, useEffect } from 'react';
 
 // Floating Pearl Component with accessibility support
 const FloatingPearl = ({
@@ -116,6 +116,36 @@ const TeamPhotoWithPearls = ({ src, alt, name }: { src: string; alt: string; nam
   );
 };
 
+// Logo Animation Component
+const LogoAnimation = () => {
+  const [animationData, setAnimationData] = useState(null);
+
+  useEffect(() => {
+    // Load the animation JSON file
+    fetch('/PIxel Boba Final Logo Animation 2.json')
+      .then((response) => response.json())
+      .then((data) => setAnimationData(data))
+      .catch((error) => console.error('Error loading animation:', error));
+  }, []);
+
+  if (!animationData) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <div className="w-8 h-8 bg-taro/20 rounded-full animate-pulse"></div>
+      </div>
+    );
+  }
+
+  return (
+    <Lottie
+      animationData={animationData}
+      loop={true}
+      autoplay={true}
+      style={{ width: '100%', height: 'auto' }}
+    />
+  );
+};
+
 export default function AboutPageClient() {
   return (
     <main className="pt-20">
@@ -123,12 +153,7 @@ export default function AboutPageClient() {
       <section className="py-8 md:py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto">
-            <Lottie
-              animationData={logoAnimation}
-              loop={true}
-              autoplay={true}
-              style={{ width: '100%', height: 'auto' }}
-            />
+            <LogoAnimation />
           </div>
         </div>
       </section>
