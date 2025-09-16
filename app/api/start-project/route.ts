@@ -234,9 +234,7 @@ Reply directly to this email to respond to ${sanitizedData.name}.
               <!-- Header with branding -->
               <div style="background: linear-gradient(135deg, #8B5CF6, #A78BFA); padding: 40px 30px; text-align: center; border-radius: 0;">
                 <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; backdrop-filter: blur(10px);">
-                  <div style="width: 60px; height: 60px; background: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
-                    🧋
-                  </div>
+                  <img src="https://pixelboba.com/Pixel_Boba_Icon_PNG.png" alt="pixel boba" style="width: 60px; height: 60px; margin: 0 auto 15px; display: block;" />
                   <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 700;">pixel boba</h1>
                   <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">websites that pop</p>
                 </div>
