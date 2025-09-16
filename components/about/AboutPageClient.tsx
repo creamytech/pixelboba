@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import Lottie from 'lottie-react';
+import logoAnimation from '/public/PIxel Boba Final Logo Animation 2.json';
 
 // Floating Pearl Component with accessibility support
 const FloatingPearl = ({
@@ -117,8 +119,22 @@ const TeamPhotoWithPearls = ({ src, alt, name }: { src: string; alt: string; nam
 export default function AboutPageClient() {
   return (
     <main className="pt-20">
+      {/* Logo Animation Section */}
+      <section className="py-8 md:py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-md mx-auto">
+            <Lottie
+              animationData={logoAnimation}
+              loop={true}
+              autoplay={true}
+              style={{ width: '100%', height: 'auto' }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-8 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-8 lowercase">
