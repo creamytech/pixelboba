@@ -10,11 +10,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'Our Web Design Process | 3-Step Workflow | Pixel Boba',
   description:
-    'a simple 3-step web design process. no meetings, no calls, just clear steps, clean builds, and quick turnarounds. discovery, design & build, launch & support.',
+    'A simple 3-step Fort Lauderdale web design process. No meetings, no calls, just clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses.',
   openGraph: {
     title: 'Our Web Design Process | 3-Step Workflow | Pixel Boba',
     description:
-      'a simple 3-step web design process. no meetings, no calls, just clear steps, clean builds, and quick turnarounds. discovery, design & build, launch & support.',
+      'A simple 3-step Fort Lauderdale web design process. No meetings, no calls, just clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses.',
     url: 'https://pixelboba.com/process',
     siteName: 'pixel boba',
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Our Web Design Process | 3-Step Workflow | Pixel Boba',
     description:
-      'a simple 3-step web design process. no meetings, no calls, just clear steps, clean builds, and quick turnarounds. discovery, design & build, launch & support.',
+      'A simple 3-step Fort Lauderdale web design process. No meetings, no calls, just clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {

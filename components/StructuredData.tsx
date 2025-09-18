@@ -65,7 +65,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         url: 'https://pixelboba.com',
         logo: 'https://pixelboba.com/brand/Pixel_Boba_Logo_White.svg',
         description:
-          'professional web design and development agency based in fort lauderdale, florida. custom websites with next.js, react, and modern web technologies.',
+          'Professional Fort Lauderdale web design agency creating custom websites that convert visitors into customers. Specializing in Next.js, React, SaaS website design, and ecommerce development for South Florida businesses.',
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Fort Lauderdale',
@@ -92,7 +92,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         name: 'pixel boba',
         url: 'https://pixelboba.com',
         description:
-          'design-first websites with delightful details and boba-smooth interactions. websites that pop.',
+          'Fort Lauderdale web design company creating custom websites that convert visitors into customers. Local South Florida team specializing in Next.js, React, and modern web development.',
         potentialAction: {
           '@type': 'SearchAction',
           target: 'https://pixelboba.com/work?search={search_term_string}',
@@ -107,16 +107,21 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         '@type': 'Service',
         name: 'web design and development services',
         description:
-          'professional web design and development services including next.js development, ui/ux design, and performance optimization. based in fort lauderdale, florida, serving clients globally.',
+          'Professional web design and development services including Next.js development, React websites, SaaS landing pages, ecommerce development, and conversion optimization. Based in Fort Lauderdale, Florida, serving South Florida businesses and clients globally.',
         provider: {
           '@type': 'Organization',
           name: 'pixel boba llc',
         },
         areaServed: [
           'Fort Lauderdale',
+          'Broward County',
           'Miami',
-          'Tampa',
-          'Orlando',
+          'Miami-Dade County',
+          'Palm Beach County',
+          'Boca Raton',
+          'Pompano Beach',
+          'Hollywood',
+          'South Florida',
           'Florida',
           'United States',
           'Global',

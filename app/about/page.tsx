@@ -8,11 +8,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'About Pixel Boba - Web Design Team | Fort Lauderdale',
   description:
-    'meet the pixel boba team. custom websites built with code-first quality, performance and accessibility built in from day one. based in fort lauderdale, florida.',
+    'Meet the Pixel Boba team. Fort Lauderdale web design agency building custom websites with code-first quality, performance and accessibility from day one. Learn about our process and expertise.',
   openGraph: {
     title: 'About Pixel Boba - Web Design Team | Fort Lauderdale',
     description:
-      'meet the pixel boba team. custom websites built with code-first quality, performance and accessibility built in from day one. based in fort lauderdale, florida.',
+      'Meet the Pixel Boba team. Fort Lauderdale web design agency building custom websites with code-first quality, performance and accessibility from day one. Learn about our process and expertise.',
     url: 'https://pixelboba.com/about',
     siteName: 'pixel boba',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About Pixel Boba - Web Design Team | Fort Lauderdale',
     description:
-      'meet the pixel boba team. custom websites built with code-first quality, performance and accessibility built in from day one. based in fort lauderdale, florida.',
+      'Meet the Pixel Boba team. Fort Lauderdale web design agency building custom websites with code-first quality, performance and accessibility from day one. Learn about our process and expertise.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {

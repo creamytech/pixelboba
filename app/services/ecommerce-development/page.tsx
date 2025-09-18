@@ -18,11 +18,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
   description:
-    'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $8,000.',
+    'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences for growing businesses.',
   openGraph: {
     title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
     description:
-      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $8,000.',
+      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences for growing businesses.',
     url: 'https://pixelboba.com/services/ecommerce-development',
     siteName: 'pixel boba',
     images: [
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
     description:
-      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences starting at $8,000.',
+      'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences for growing businesses.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {

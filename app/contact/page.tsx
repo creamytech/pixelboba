@@ -7,11 +7,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
   description:
-    'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing. based in fort lauderdale, florida.',
+    'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
   openGraph: {
     title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
-      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing. based in fort lauderdale, florida.',
+      'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
     url: 'https://pixelboba.com/contact',
     siteName: 'pixel boba',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
-      'get a custom website proposal within 24 hours. no calls required - just fill out our project form and we&apos;ll get brewing. based in fort lauderdale, florida.',
+      'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -95,8 +95,27 @@ const faqs = [
 ];
 
 export default function ContactPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema),
+        }}
+      />
       <Header />
       <main className="pt-20">
         {/* Hero Section */}

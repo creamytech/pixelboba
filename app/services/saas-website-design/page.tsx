@@ -9,11 +9,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'SaaS Website Design | Software Landing Pages | Pixel Boba',
   description:
-    'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $3,500.',
+    'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react for growth-focused companies.',
   openGraph: {
     title: 'SaaS Website Design | Software Landing Pages | Pixel Boba',
     description:
-      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $3,500.',
+      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react for growth-focused companies.',
     url: 'https://pixelboba.com/services/saas-website-design',
     siteName: 'pixel boba',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'SaaS Website Design | Software Landing Pages | Pixel Boba',
     description:
-      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react starting at $3,500.',
+      'professional saas website design and software landing pages. conversion-optimized designs that turn visitors into paying customers. built with next.js and react for growth-focused companies.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {

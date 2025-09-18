@@ -12,11 +12,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'Fort Lauderdale Web Design & Development | Pixel Boba | Local South Florida',
   description:
-    'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach. Starting at $1,500.',
+    'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach County.',
   openGraph: {
     title: 'Fort Lauderdale Web Design & Development | Pixel Boba | Local South Florida',
     description:
-      'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach. Starting at $1,500.',
+      'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach County.',
     url: 'https://pixelboba.com',
     siteName: 'pixel boba',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Fort Lauderdale Web Design & Development | Pixel Boba | Local South Florida',
     description:
-      'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach. Starting at $1,500.',
+      'Fort Lauderdale web design company creating custom websites that convert. Local South Florida team, live previews from day 1, no endless meetings. Serving Broward County, Miami-Dade, and Palm Beach County.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
