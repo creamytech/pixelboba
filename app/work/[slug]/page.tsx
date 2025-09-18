@@ -49,10 +49,10 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
   }
 
   return {
-    title: `${work.frontmatter.title} Case Study | Web Design Portfolio | Pixel Boba`,
+    title: `${work.frontmatter.title} Case Study | Web Design Portfolio`,
     description: `${work.frontmatter.summary} see how pixel boba transformed this client's online presence with custom web design and development.`,
     openGraph: {
-      title: `${work.frontmatter.title} Case Study | Web Design Portfolio | Pixel Boba`,
+      title: `${work.frontmatter.title} Case Study | Web Design Portfolio`,
       description: `${work.frontmatter.summary} see how pixel boba transformed this client's online presence with custom web design and development.`,
       url: `https://pixelboba.com/work/${params.slug}`,
       siteName: 'pixel boba',
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${work.frontmatter.title} Case Study | Web Design Portfolio | Pixel Boba`,
+      title: `${work.frontmatter.title} Case Study | Web Design Portfolio`,
       description: `${work.frontmatter.summary} see how pixel boba transformed this client's online presence with custom web design and development.`,
       images: work.frontmatter.cover ? [work.frontmatter.cover] : [],
     },

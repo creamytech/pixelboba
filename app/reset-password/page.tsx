@@ -4,7 +4,7 @@ import ResetPasswordForm from '@/components/reset-password/ResetPasswordForm';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
 
 export const metadata: Metadata = {
-  title: 'Reset Password | Pixel Boba',
+  title: 'Reset Password',
   description: 'Reset your Pixel Boba account password',
   robots: {
     index: false,

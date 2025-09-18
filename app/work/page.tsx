@@ -9,11 +9,11 @@ import { ExternalLink, Calendar, Star } from 'lucide-react';
 import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
-  title: 'Web Design Portfolio | Real Client Results | Pixel Boba',
+  title: 'Web Design Portfolio | Real Client Results',
   description:
     'Browse our Fort Lauderdale web design portfolio featuring beautiful, high-performance websites and digital experiences. See real client case studies and results from our web design projects for South Florida businesses.',
   openGraph: {
-    title: 'Web Design Portfolio | Real Client Results | Pixel Boba',
+    title: 'Web Design Portfolio | Real Client Results',
     description:
       'Browse our Fort Lauderdale web design portfolio featuring beautiful, high-performance websites and digital experiences. See real client case studies and results from our web design projects for South Florida businesses.',
     url: 'https://pixelboba.com/work',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Web Design Portfolio | Real Client Results | Pixel Boba',
+    title: 'Web Design Portfolio | Real Client Results',
     description:
       'Browse our Fort Lauderdale web design portfolio featuring beautiful, high-performance websites and digital experiences. See real client case studies and results from our web design projects for South Florida businesses.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],

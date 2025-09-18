@@ -4,7 +4,7 @@ import SignupForm from '@/components/signup/SignupForm';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
 
 export const metadata: Metadata = {
-  title: 'Sign Up | Pixel Boba',
+  title: 'Sign Up',
   description: 'Create your Pixel Boba account',
   robots: {
     index: false,

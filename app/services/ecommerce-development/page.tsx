@@ -16,11 +16,11 @@ import {
 import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
-  title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
+  title: 'E-commerce Website Development | Online Store Design',
   description:
     'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences for growing businesses.',
   openGraph: {
-    title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
+    title: 'E-commerce Website Development | Online Store Design',
     description:
       'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences for growing businesses.',
     url: 'https://pixelboba.com/services/ecommerce-development',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'E-commerce Website Development | Online Store Design | Pixel Boba',
+    title: 'E-commerce Website Development | Online Store Design',
     description:
       'custom e-commerce website development. shopify, next.js, and react online stores. payment processing, inventory management, and mobile-optimized shopping experiences for growing businesses.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],

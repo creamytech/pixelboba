@@ -10,11 +10,11 @@ import PlatformsSection from '@/components/sections/PlatformsSection';
 import ProcessPreview from '@/components/services/ProcessPreview';
 
 export const metadata: Metadata = {
-  title: 'Web Design Services & Pricing | Fort Lauderdale | Pixel Boba',
+  title: 'Web Design Services & Pricing | Fort Lauderdale',
   description:
     'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
   openGraph: {
-    title: 'Web Design Services & Pricing | Fort Lauderdale | Pixel Boba',
+    title: 'Web Design Services & Pricing | Fort Lauderdale',
     description:
       'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
     url: 'https://pixelboba.com/services',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Web Design Services & Pricing | Fort Lauderdale | Pixel Boba',
+    title: 'Web Design Services & Pricing | Fort Lauderdale',
     description:
       'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],

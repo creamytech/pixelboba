@@ -5,11 +5,11 @@ import Link from 'next/link';
 import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
-  title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
+  title: 'Contact | Web Design Quote in 24 Hours | Fort Lauderdale',
   description:
     'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
   openGraph: {
-    title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
+    title: 'Contact | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
       'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
     url: 'https://pixelboba.com/contact',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact Pixel Boba | Web Design Quote in 24 Hours | Fort Lauderdale',
+    title: 'Contact | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
       'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],

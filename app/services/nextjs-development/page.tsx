@@ -8,11 +8,11 @@ import Breadcrumb from '@/components/ui/Breadcrumb';
 import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
-  title: 'Next.js Development Services | React Web Development | Pixel Boba',
+  title: 'Next.js Development Services | React Web Development',
   description:
     'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions for businesses.',
   openGraph: {
-    title: 'Next.js Development Services | React Web Development | Pixel Boba',
+    title: 'Next.js Development Services | React Web Development',
     description:
       'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions for businesses.',
     url: 'https://pixelboba.com/services/nextjs-development',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Next.js Development Services | React Web Development | Pixel Boba',
+    title: 'Next.js Development Services | React Web Development',
     description:
       'professional next.js development services. custom react websites, server-side rendering, and modern web applications. fast, secure, and scalable solutions for businesses.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
