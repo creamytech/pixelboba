@@ -29,7 +29,9 @@
       "Bash(sed:*)",
       "Bash(npm run:*)",
       "WebFetch(domain:www.behance.net)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(git remote add:*)",
+      "WebFetch(domain:pixelboba.com)"
     ],
     "deny": [],
     "ask": []
