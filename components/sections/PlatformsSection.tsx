@@ -88,21 +88,23 @@ export default function PlatformsSection() {
                 className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
               />
 
-              {/* Icon with gradient background */}
-              <div
-                className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${platform.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300`}
-              >
-                {platform.icon}
+              <div className="flex flex-col items-center text-center">
+                {/* Icon with gradient background */}
+                <div
+                  className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${platform.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300`}
+                >
+                  {platform.icon}
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-bold text-ink mb-3 lowercase group-hover:text-gray-800 transition-colors">
+                  {platform.name}
+                </h3>
+
+                <p className="text-gray-600 lowercase leading-relaxed group-hover:text-gray-700 transition-colors">
+                  {platform.description}
+                </p>
               </div>
-
-              {/* Content */}
-              <h3 className="text-xl font-bold text-ink mb-3 lowercase group-hover:text-gray-800 transition-colors">
-                {platform.name}
-              </h3>
-
-              <p className="text-gray-600 lowercase leading-relaxed group-hover:text-gray-700 transition-colors">
-                {platform.description}
-              </p>
 
               {/* Decorative pearl */}
               <div className="absolute top-6 right-6 w-2 h-2 bg-taro/20 rounded-full group-hover:bg-taro/40 transition-colors duration-300" />
