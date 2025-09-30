@@ -1,10 +1,13 @@
 interface Organization {
   '@context': 'https://schema.org';
-  '@type': 'Organization';
+  '@type': 'Organization' | 'ProfessionalService' | 'LocalBusiness';
   name: string;
   url: string;
   logo: string;
+  image?: string;
   description: string;
+  priceRange?: string;
+  email?: string;
   address?: {
     '@type': 'PostalAddress';
     streetAddress?: string;
@@ -13,12 +16,22 @@ interface Organization {
     postalCode?: string;
     addressCountry?: string;
   };
+  geo?: {
+    '@type': 'GeoCoordinates';
+    latitude: number;
+    longitude: number;
+  };
   contactPoint?: {
     '@type': 'ContactPoint';
     telephone?: string;
     contactType: string;
     email: string;
+    availableLanguage?: string;
   };
+  areaServed?: Array<{
+    '@type': string;
+    name: string;
+  }>;
   sameAs: string[];
 }
 
