@@ -34,25 +34,6 @@ export default function CTABanner() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </motion.button>
-
-      {/* Decorative pearls - Hidden on mobile */}
-      <div className="absolute top-4 right-8 hidden md:flex space-x-2">
-        <motion.div
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0 }}
-          className="w-2 h-2 bg-taro/30 rounded-full"
-        />
-        <motion.div
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-          className="w-2 h-2 bg-matcha/30 rounded-full"
-        />
-        <motion.div
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-          className="w-2 h-2 bg-taro/30 rounded-full"
-        />
-      </div>
     </motion.div>
   );
 }
