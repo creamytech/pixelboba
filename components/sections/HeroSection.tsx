@@ -40,17 +40,21 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
-              className="font-display text-6xl md:text-8xl font-bold text-ink mb-6 lowercase"
+              className="font-display text-6xl md:text-8xl lg:text-9xl font-bold text-ink mb-6 lowercase leading-[0.95]"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              websites that <span className="relative inline-block">pop</span>
+              websites that{' '}
+              <span className="relative inline-block">
+                <span className="relative z-10">pop</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
+              </span>
               <span className="text-taro">.</span>
             </motion.h1>
 
             <motion.p
-              className="text-base md:text-lg text-taro font-medium mb-8 lowercase px-4"
+              className="text-lg md:text-xl text-gray-700 font-medium mb-12 lowercase px-4 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -67,18 +71,28 @@ export default function HeroSection() {
               <Button
                 asChild
                 size="lg"
-                className="w-full sm:w-auto bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg lowercase min-h-[3.5rem]"
+                className="group w-full sm:w-auto bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-taro/30 lowercase min-h-[3.5rem]"
               >
-                <Link href="/services#start">start your project</Link>
+                <Link href="/services#start">
+                  start your project
+                  <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </Link>
               </Button>
 
               <Button
                 asChild
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 lowercase min-h-[3.5rem]"
+                className="group w-full sm:w-auto border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:shadow-lg lowercase min-h-[3.5rem]"
               >
-                <Link href="/process">see our process</Link>
+                <Link href="/process">
+                  see our process
+                  <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1 opacity-70">
+                    →
+                  </span>
+                </Link>
               </Button>
             </motion.div>
 

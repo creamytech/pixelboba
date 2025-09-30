@@ -85,12 +85,20 @@ export default function Header() {
             <Button
               asChild
               variant="ghost"
-              className="text-taro hover:text-deep-taro hover:bg-taro/10"
+              className="text-taro hover:text-deep-taro hover:bg-taro/10 transition-all duration-200"
             >
               <Link href="/login">client sign in</Link>
             </Button>
-            <Button asChild className="bg-taro hover:bg-deep-taro text-white">
-              <Link href="/services#start">start a project</Link>
+            <Button
+              asChild
+              className="group bg-taro hover:bg-deep-taro text-white transition-all duration-300 hover:shadow-lg hover:shadow-taro/30"
+            >
+              <Link href="/services#start">
+                start a project
+                <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1 text-sm">
+                  →
+                </span>
+              </Link>
             </Button>
           </div>
 
@@ -121,14 +129,30 @@ export default function Header() {
 
           {/* Medium screen CTA buttons */}
           <div className="hidden md:flex lg:hidden items-center space-x-3">
-            <Button asChild className="bg-taro hover:bg-deep-taro text-white text-xs px-3 py-2">
-              <Link href="/services#start">start project</Link>
+            <Button
+              asChild
+              className="group bg-taro hover:bg-deep-taro text-white text-xs px-3 py-2 transition-all duration-300 hover:shadow-md"
+            >
+              <Link href="/services#start">
+                start project
+                <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-0.5 text-xs">
+                  →
+                </span>
+              </Link>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden p-2" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          <button
+            className="md:hidden p-2 hover:bg-taro/10 rounded-lg transition-colors duration-200"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-taro" />
+            ) : (
+              <Menu className="w-6 h-6 text-taro" />
+            )}
           </button>
         </div>
       </div>
@@ -165,15 +189,21 @@ export default function Header() {
                   <Button
                     asChild
                     variant="ghost"
-                    className="text-taro hover:text-deep-taro hover:bg-taro/10 w-full"
+                    className="text-taro hover:text-deep-taro hover:bg-taro/10 w-full transition-all duration-200"
                   >
                     <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
                       client sign in
                     </Link>
                   </Button>
-                  <Button asChild className="bg-taro hover:bg-deep-taro text-white w-full">
+                  <Button
+                    asChild
+                    className="group bg-taro hover:bg-deep-taro text-white w-full transition-all duration-300 hover:shadow-lg"
+                  >
                     <Link href="/services#start" onClick={() => setIsMobileMenuOpen(false)}>
                       start a project
+                      <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                        →
+                      </span>
                     </Link>
                   </Button>
                 </div>

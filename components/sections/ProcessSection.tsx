@@ -59,15 +59,23 @@ export default function ProcessSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-xl p-8 shadow-sm border border-ink/10 relative overflow-hidden hover:shadow-lg transition-all duration-300"
+                whileHover={{ y: -8 }}
+                className="group bg-white rounded-2xl p-8 shadow-md border border-ink/10 relative overflow-hidden hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:border-taro/30"
               >
                 {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-taro/5 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-taro/5 via-transparent to-matcha/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                {/* Pearl accents */}
-                <div className="absolute top-4 right-6 w-3 h-3 bg-taro/20 rounded-full"></div>
-                <div className="absolute bottom-6 right-4 w-2 h-2 bg-matcha/30 rounded-full"></div>
+                {/* Pearl accents - animated */}
+                <motion.div
+                  className="absolute top-4 right-6 w-3 h-3 bg-taro/30 rounded-full"
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
+                ></motion.div>
+                <motion.div
+                  className="absolute bottom-6 right-4 w-2 h-2 bg-matcha/40 rounded-full"
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 + 1.5 }}
+                ></motion.div>
 
                 {/* Step header */}
                 <div className="relative z-10">
@@ -127,12 +135,17 @@ export default function ProcessSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <p className="text-gray-600 mb-6 lowercase">ready to start your project journey?</p>
+          <p className="text-gray-600 text-lg mb-6 lowercase">
+            ready to start your project journey?
+          </p>
           <a
             href="/process"
-            className="inline-block border-2 border-taro text-taro px-8 py-3 rounded-lg font-semibold hover:bg-taro hover:text-white transition-colors duration-300 lowercase"
+            className="group inline-flex items-center border-2 border-taro text-taro px-8 py-4 rounded-xl font-semibold hover:bg-taro hover:text-white transition-all duration-300 lowercase hover:shadow-lg hover:scale-105"
           >
             learn more about our process
+            <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
           </a>
         </motion.div>
       </div>
