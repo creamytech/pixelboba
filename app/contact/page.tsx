@@ -108,6 +108,14 @@ export default function ContactPage() {
     })),
   };
 
+  // Get current and next month
+  const now = new Date();
+  const currentMonth = now.toLocaleDateString('en-US', { month: 'long' });
+  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1).toLocaleDateString('en-US', {
+    month: 'long',
+  });
+  const year = now.getFullYear();
+
   return (
     <div className="min-h-screen">
       <script
@@ -229,11 +237,12 @@ export default function ContactPage() {
                 let&apos;s make something amazing
               </h2>
               <p className="text-xl text-gray-600 mb-6 lowercase">
-                we&apos;re taking on select projects for early 2025.
+                we&apos;re taking on select projects for {year}.
               </p>
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 mb-8 max-w-md mx-auto">
                 <p className="text-sm text-gray-600 lowercase">
-                  🗓️ <strong>booking now:</strong> january & february 2025 spots
+                  🗓️ <strong>booking now:</strong> {currentMonth.toLowerCase()} &{' '}
+                  {nextMonth.toLowerCase()} {year} spots
                 </p>
               </div>
               <Link
