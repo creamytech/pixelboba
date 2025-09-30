@@ -33,6 +33,11 @@ export const metadata: Metadata = {
   ],
   creator: siteConfig.name,
   metadataBase: new URL(siteConfig.url),
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

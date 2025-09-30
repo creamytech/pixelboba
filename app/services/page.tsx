@@ -42,8 +42,80 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Web Design & Development Services',
+    description:
+      'Professional Fort Lauderdale web design services including Next.js development, React websites, SaaS & ecommerce solutions.',
+    provider: {
+      '@type': 'ProfessionalService',
+      name: 'pixel boba llc',
+      url: 'https://pixelboba.com',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Fort Lauderdale',
+        addressRegion: 'FL',
+        addressCountry: 'US',
+      },
+    },
+    areaServed: [
+      'Fort Lauderdale',
+      'Broward County',
+      'Miami',
+      'Miami-Dade County',
+      'Palm Beach County',
+      'South Florida',
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Web Design Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Website Redesign',
+            description: 'Modern design refresh with mobile optimization and speed improvements',
+          },
+          price: '1500',
+          priceCurrency: 'USD',
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            minPrice: '1500',
+            priceCurrency: 'USD',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Custom Website Build',
+            description: 'Brand new website built from scratch with custom features',
+          },
+          price: '3500',
+          priceCurrency: 'USD',
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Advanced Website Build',
+            description: 'Complex websites with advanced features and integrations',
+          },
+          price: '8000',
+          priceCurrency: 'USD',
+        },
+      ],
+    },
+  };
+
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       <Header />
       <main className="pt-20">
         {/* Hero Section */}

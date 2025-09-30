@@ -9,6 +9,9 @@ const withMDX = require('@next/mdx')({
 });
 
 const nextConfig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     formats: ['image/webp', 'image/avif'],
