@@ -70,13 +70,13 @@ export default function ProcessPage() {
       <Header />
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-20">
+        <section className="py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-8 lowercase">
+              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
                 our process
               </h1>
-              <p className="text-xl text-gray-600 mb-12 lowercase">
+              <p className="text-xl md:text-2xl text-gray-700 mb-12 lowercase leading-relaxed max-w-3xl mx-auto">
                 a simple workflow that keeps things moving. no meetings, no calls, just clear steps,
                 clean builds, and quick turnarounds.
               </p>
@@ -85,16 +85,22 @@ export default function ProcessPage() {
               <div className="flex flex-wrap justify-center gap-4 mb-8">
                 <a
                   href="/services"
-                  className="text-taro hover:text-deep-taro transition-colors duration-200 lowercase font-medium"
+                  className="group inline-flex items-center text-taro hover:text-deep-taro transition-all duration-200 lowercase font-semibold px-4 py-2 rounded-lg hover:bg-taro/10"
                 >
-                  → services & pricing
+                  services & pricing
+                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </a>
                 <span className="text-gray-300">|</span>
                 <a
                   href="/work"
-                  className="text-taro hover:text-deep-taro transition-colors duration-200 lowercase font-medium"
+                  className="group inline-flex items-center text-taro hover:text-deep-taro transition-all duration-200 lowercase font-semibold px-4 py-2 rounded-lg hover:bg-taro/10"
                 >
-                  → see our work
+                  see our work
+                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </a>
               </div>
             </div>
@@ -225,9 +231,12 @@ export default function ProcessPage() {
               </p>
               <a
                 href="/services#start"
-                className="inline-block bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-taro/90 transition-colors duration-200 lowercase shadow-lg"
+                className="group inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
               >
                 start your project
+                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
               </a>
             </div>
           </div>

@@ -119,13 +119,13 @@ export default function ContactPage() {
       <Header />
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-20">
+        <section className="py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-8 lowercase">
+              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
                 ready to start?
               </h1>
-              <p className="text-lg md:text-xl text-gray-600 mb-8 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
+              <p className="text-xl md:text-2xl text-gray-700 mb-12 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
                 ready to get started? use our project form to get a custom proposal within 24 hours.
               </p>
 
@@ -133,25 +133,32 @@ export default function ContactPage() {
               <div className="mb-12">
                 <Link
                   href="/services#start"
-                  className="inline-block bg-taro text-white px-10 py-5 rounded-xl font-semibold hover:bg-taro/90 transition-all duration-200 lowercase shadow-lg hover:shadow-xl text-xl hover:scale-105"
+                  className="group inline-flex items-center bg-taro text-white px-10 py-5 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 text-xl hover:scale-105"
                 >
-                  get your custom proposal →
+                  get your custom proposal
+                  <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </Link>
-                <p className="text-gray-500 mt-4 lowercase font-medium">
+                <p className="text-gray-600 mt-4 lowercase font-medium text-lg">
                   ✨ response within 24 hours, no calls required
                 </p>
               </div>
 
               {/* Secondary option */}
-              <div className="max-w-md mx-auto bg-milk-tea/20 rounded-xl p-6">
-                <p className="text-gray-600 mb-4 lowercase">
-                  <strong>have questions first?</strong> email us and we&apos;ll respond quickly.
+              <div className="max-w-md mx-auto bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-taro/20 shadow-md">
+                <p className="text-gray-700 mb-4 lowercase font-medium text-lg">
+                  <strong className="text-ink">have questions first?</strong> email us and
+                  we&apos;ll respond quickly.
                 </p>
                 <a
                   href="mailto:hello@pixelboba.com"
-                  className="text-taro hover:text-deep-taro transition-colors duration-200 font-medium text-lg"
+                  className="group inline-flex items-center text-taro hover:text-deep-taro transition-all duration-200 font-semibold text-lg px-4 py-2 rounded-lg hover:bg-taro/10"
                 >
-                  hello@pixelboba.com →
+                  hello@pixelboba.com
+                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </a>
               </div>
             </div>
@@ -162,27 +169,27 @@ export default function ContactPage() {
         <section className="pb-10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="bg-milk-tea/20 rounded-2xl p-8">
-                <h2 className="font-display text-2xl font-bold text-ink mb-6 lowercase">
-                  have questions first?
+              <div className="bg-gradient-to-br from-milk-tea/30 to-taro/10 rounded-2xl p-10 border border-taro/20 shadow-md">
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase">
+                  quick info
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div>
-                    <h3 className="font-semibold text-ink mb-2 lowercase">email</h3>
+                  <div className="group">
+                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">email</h3>
                     <a
                       href="mailto:hello@pixelboba.com"
-                      className="text-taro hover:text-deep-taro transition-colors duration-200 font-medium"
+                      className="text-taro hover:text-deep-taro transition-colors duration-200 font-semibold group-hover:scale-105 inline-block"
                     >
                       hello@pixelboba.com
                     </a>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-ink mb-2 lowercase">response time</h3>
-                    <p className="text-gray-600 lowercase">within 24 hours</p>
+                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">response time</h3>
+                    <p className="text-gray-700 lowercase font-medium">within 24 hours</p>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-ink mb-2 lowercase">project timeline</h3>
-                    <p className="text-gray-600 lowercase">2-6 weeks typical</p>
+                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">project timeline</h3>
+                    <p className="text-gray-700 lowercase font-medium">2-6 weeks typical</p>
                   </div>
                 </div>
               </div>
@@ -201,12 +208,12 @@ export default function ContactPage() {
                 {faqs.map((faq, index) => (
                   <div
                     key={index}
-                    className="bg-white rounded-xl p-8 shadow-sm border border-ink/10 hover:shadow-md transition-shadow duration-200"
+                    className="group bg-white rounded-2xl p-8 shadow-md border border-ink/10 hover:shadow-xl hover:shadow-taro/10 hover:border-taro/30 transition-all duration-300"
                   >
-                    <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">
+                    <h3 className="font-display text-xl md:text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
                       {faq.question}
                     </h3>
-                    <p className="text-gray-600 lowercase leading-relaxed">{faq.answer}</p>
+                    <p className="text-gray-600 lowercase leading-relaxed text-lg">{faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -231,9 +238,12 @@ export default function ContactPage() {
               </div>
               <Link
                 href="/services#start"
-                className="inline-block bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-taro/90 transition-colors duration-200 lowercase shadow-lg"
+                className="group inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
               >
                 secure your spot
+                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
               </Link>
             </div>
           </div>

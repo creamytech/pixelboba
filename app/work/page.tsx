@@ -48,13 +48,13 @@ export default async function WorkPage() {
       <Header />
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-20">
+        <section className="py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-6">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
                 our work
               </h1>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-xl md:text-2xl text-gray-700 mb-8 lowercase leading-relaxed max-w-3xl mx-auto">
                 a collection of beautiful, functional websites that demonstrate our commitment to
                 exceptional design and smooth user experiences.
               </p>
@@ -70,7 +70,7 @@ export default async function WorkPage() {
                 <Link
                   key={work.slug}
                   href={`/work/${work.slug}`}
-                  className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 min-h-[400px] flex flex-col"
+                  className="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:shadow-taro/10 transition-all duration-500 transform hover:-translate-y-4 hover:scale-[1.02] min-h-[400px] flex flex-col border border-ink/10 hover:border-taro/30"
                 >
                   {/* Project Thumbnail */}
                   <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-taro/10 to-deep-taro/20">
@@ -80,11 +80,11 @@ export default async function WorkPage() {
                           src={work.frontmatter.cover}
                           alt={work.frontmatter.title}
                           fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.15]"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                         {/* Overlay with project info */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                         {/* Key metrics on hover */}
                         <div className="absolute top-4 left-4 text-white transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
@@ -115,8 +115,8 @@ export default async function WorkPage() {
                               {work.frontmatter.website && <ExternalLink className="w-4 h-4" />}
                               <span>Live Site</span>
                             </div>
-                            <div className="bg-taro/90 backdrop-blur-sm rounded-lg px-4 py-2">
-                              <span className="text-sm font-medium">View Case Study →</span>
+                            <div className="bg-taro backdrop-blur-sm rounded-lg px-4 py-2 group-hover:bg-deep-taro transition-colors duration-300">
+                              <span className="text-sm font-semibold">View Case Study →</span>
                             </div>
                           </div>
                         </div>
@@ -150,11 +150,11 @@ export default async function WorkPage() {
                       )}
                     </div>
 
-                    <h3 className="font-display text-xl font-bold text-ink mb-2 group-hover:text-taro transition-colors">
+                    <h3 className="font-display text-xl md:text-2xl font-bold text-ink mb-3 group-hover:text-taro transition-colors duration-300 lowercase">
                       {work.frontmatter.title}
                     </h3>
 
-                    <p className="text-gray-600 mb-4 flex-1 line-clamp-2">
+                    <p className="text-gray-600 mb-4 flex-1 line-clamp-2 leading-relaxed lowercase">
                       {work.frontmatter.summary}
                     </p>
                   </div>

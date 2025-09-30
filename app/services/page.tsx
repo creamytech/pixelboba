@@ -47,10 +47,10 @@ export default function ServicesPage() {
       <Header />
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-20">
+        <section className="py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-6xl font-bold text-ink mb-8 lowercase">
+              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
                 services - websites that pop
               </h1>
               <CTABanner />
@@ -129,33 +129,43 @@ export default function ServicesPage() {
 
             {/* Add-ons Section */}
             <div className="mt-16 max-w-4xl mx-auto">
-              <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm">
-                <h3 className="font-display text-2xl font-bold text-ink mb-6 lowercase text-center">
+              <div className="bg-gradient-to-br from-white to-milk-tea/20 rounded-2xl p-10 border-2 border-ink/10 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <h3 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase text-center">
                   popular add-ons
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
-                      <span className="text-gray-700 font-medium lowercase">
+                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
+                      <span className="text-gray-700 font-semibold lowercase">
                         branding & logo design
                       </span>
-                      <span className="font-bold text-taro lowercase">starting at $750</span>
+                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
+                        starting at $750
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
-                      <span className="text-gray-700 font-medium lowercase">custom animations</span>
-                      <span className="font-bold text-taro lowercase">starting at $500</span>
+                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
+                      <span className="text-gray-700 font-semibold lowercase">
+                        custom animations
+                      </span>
+                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
+                        starting at $500
+                      </span>
                     </div>
                   </div>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
-                      <span className="text-gray-700 font-medium lowercase">ecommerce setup</span>
-                      <span className="font-bold text-taro lowercase">starting at $2,500</span>
+                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
+                      <span className="text-gray-700 font-semibold lowercase">ecommerce setup</span>
+                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
+                        starting at $2,500
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-milk-tea/10 rounded-lg">
-                      <span className="text-gray-700 font-medium lowercase">
+                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
+                      <span className="text-gray-700 font-semibold lowercase">
                         seo optimization package
                       </span>
-                      <span className="font-bold text-taro lowercase">starting at $1,200</span>
+                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
+                        starting at $1,200
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -175,48 +185,51 @@ export default function ServicesPage() {
                 specialized services
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">
+                <div className="group bg-white rounded-2xl p-8 border border-ink/10 shadow-md hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:-translate-y-2">
+                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
                     next.js development
                   </h3>
-                  <p className="text-gray-600 mb-6 lowercase">
+                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">
                     high-performance websites with modern react framework. server-side rendering and
                     optimal seo.
                   </p>
                   <Link
                     href="/services/nextjs-development"
-                    className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+                    className="inline-flex items-center text-taro hover:text-deep-taro font-semibold lowercase transition-all duration-200 group-hover:translate-x-1"
                   >
-                    learn more →
+                    learn more
+                    <span className="ml-2">→</span>
                   </Link>
                 </div>
-                <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">
+                <div className="group bg-white rounded-2xl p-8 border border-ink/10 shadow-md hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:-translate-y-2">
+                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
                     e-commerce development
                   </h3>
-                  <p className="text-gray-600 mb-6 lowercase">
+                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">
                     custom online stores with shopify, stripe integration, and conversion
                     optimization.
                   </p>
                   <Link
                     href="/services/ecommerce-development"
-                    className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+                    className="inline-flex items-center text-taro hover:text-deep-taro font-semibold lowercase transition-all duration-200 group-hover:translate-x-1"
                   >
-                    learn more →
+                    learn more
+                    <span className="ml-2">→</span>
                   </Link>
                 </div>
-                <div className="bg-white rounded-xl p-8 border border-ink/10 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">
+                <div className="group bg-white rounded-2xl p-8 border border-ink/10 shadow-md hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:-translate-y-2">
+                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
                     saas website design
                   </h3>
-                  <p className="text-gray-600 mb-6 lowercase">
+                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">
                     conversion-focused websites for software companies with user onboarding flows.
                   </p>
                   <Link
                     href="/services/saas-website-design"
-                    className="inline-flex items-center text-taro hover:text-deep-taro font-medium lowercase transition-colors duration-200"
+                    className="inline-flex items-center text-taro hover:text-deep-taro font-semibold lowercase transition-all duration-200 group-hover:translate-x-1"
                   >
-                    learn more →
+                    learn more
+                    <span className="ml-2">→</span>
                   </Link>
                 </div>
               </div>
