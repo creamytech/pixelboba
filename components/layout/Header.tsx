@@ -14,7 +14,6 @@ const navigation = [
   { name: 'services', href: '/services' },
   { name: 'process', href: '/process' },
   { name: 'about', href: '/about' },
-  { name: 'contact', href: '/contact' },
 ];
 
 export default function Header() {
@@ -38,10 +37,15 @@ export default function Header() {
         isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-border' : 'bg-transparent'
       )}
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      animate={{ y: 0, scale: isScrolled ? 0.98 : 1 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div
+        className={cn(
+          'container mx-auto px-4 transition-all duration-300',
+          isScrolled ? 'py-2' : 'py-4'
+        )}
+      >
         <div className="flex items-center justify-between lg:grid lg:grid-cols-3 lg:gap-8">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
@@ -50,7 +54,7 @@ export default function Header() {
               alt="pixel boba"
               width={200}
               height={60}
-              className="h-12 w-auto"
+              className={cn('w-auto transition-all duration-300', isScrolled ? 'h-10' : 'h-12')}
               priority
             />
           </Link>
@@ -91,13 +95,14 @@ export default function Header() {
             </Button>
             <Button
               asChild
-              className="group bg-taro hover:bg-deep-taro text-white transition-all duration-300 hover:shadow-lg hover:shadow-taro/30"
+              className="group bg-gradient-to-r from-taro to-deep-taro hover:from-deep-taro hover:to-taro text-white transition-all duration-300 hover:shadow-lg hover:shadow-taro/30 relative overflow-hidden"
             >
               <Link href="/start">
-                start a project
-                <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1 text-sm">
+                <span className="relative z-10">start now</span>
+                <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1 text-sm relative z-10">
                   →
                 </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-matcha/20 to-taro/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </Link>
             </Button>
           </div>
@@ -131,10 +136,10 @@ export default function Header() {
           <div className="hidden md:flex lg:hidden items-center space-x-3">
             <Button
               asChild
-              className="group bg-taro hover:bg-deep-taro text-white text-xs px-3 py-2 transition-all duration-300 hover:shadow-md"
+              className="group bg-gradient-to-r from-taro to-deep-taro hover:from-deep-taro hover:to-taro text-white text-xs px-3 py-2 transition-all duration-300 hover:shadow-md"
             >
               <Link href="/start">
-                start project
+                start now
                 <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-0.5 text-xs">
                   →
                 </span>
@@ -197,10 +202,10 @@ export default function Header() {
                   </Button>
                   <Button
                     asChild
-                    className="group bg-taro hover:bg-deep-taro text-white w-full transition-all duration-300 hover:shadow-lg"
+                    className="group bg-gradient-to-r from-taro to-deep-taro hover:from-deep-taro hover:to-taro text-white w-full transition-all duration-300 hover:shadow-lg"
                   >
                     <Link href="/start" onClick={() => setIsMobileMenuOpen(false)}>
-                      start a project
+                      start now
                       <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
                         →
                       </span>

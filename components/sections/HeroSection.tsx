@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import FloatingPearls from '@/components/common/FloatingPearls';
+import ValueBadges from '@/components/sections/ValueBadges';
 import Link from 'next/link';
 
 export default function HeroSection() {
@@ -38,37 +39,37 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
-              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-6 lowercase leading-tight"
+              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-6 leading-tight"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              websites that{' '}
+              Modern Websites That Look{' '}
               <span className="relative inline-block">
-                <span className="relative z-10">actually convert</span>
+                <span className="relative z-10">Sharp</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
               </span>
+              <span className="text-taro">,</span> Load Fast, and Convert Better
               <span className="text-taro">.</span>
-              <br />
-              <span className="text-3xl md:text-5xl lg:text-6xl text-gray-700">
-                zero meetings required.
-              </span>
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-xl text-gray-700 font-medium mb-12 lowercase px-4 max-w-2xl mx-auto"
+              className="text-lg md:text-xl text-gray-700 font-medium mb-8 px-4 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              → proudly based in fort lauderdale, serving all of south florida
+              No calls. No confusion. Just clean code, real previews, and results that pop.
             </motion.p>
+
+            {/* Value Badges */}
+            <ValueBadges />
 
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 w-full max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
             >
               <Button
                 asChild
@@ -76,7 +77,7 @@ export default function HeroSection() {
                 className="group w-full sm:w-auto bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-taro/30 lowercase min-h-[3.5rem]"
               >
                 <Link href="/start">
-                  start your project
+                  start now
                   <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>

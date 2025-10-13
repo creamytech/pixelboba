@@ -11,7 +11,7 @@ interface StickyCTAProps {
 }
 
 export default function StickyCTA({
-  text = 'start your project',
+  text = 'start now',
   href = '/start',
   targetId = 'start',
 }: StickyCTAProps) {
