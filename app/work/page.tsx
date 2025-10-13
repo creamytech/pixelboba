@@ -52,8 +52,8 @@ export default async function WorkPage() {
                 our work
               </h1>
               <p className="text-xl md:text-2xl text-gray-700 mb-8 lowercase leading-relaxed max-w-3xl mx-auto">
-                a collection of beautiful, functional websites that demonstrate our commitment to
-                exceptional design and smooth user experiences.
+                sites that help real businesses grow. explore the mix of design and development
+                we&apos;ve brewed for our clients.
               </p>
             </div>
           </div>
@@ -63,6 +63,27 @@ export default async function WorkPage() {
         <section className="pb-20">
           <div className="container mx-auto px-4">
             <WorkGridClient works={works} />
+          </div>
+        </section>
+
+        {/* Bottom CTA Section */}
+        <section className="py-20 bg-gradient-to-br from-taro/5 to-milk-tea">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="font-display text-4xl md:text-6xl font-bold text-ink mb-6 lowercase leading-tight">
+                your project could be next.
+              </h2>
+              <p className="text-xl text-gray-700 mb-8 lowercase">ready to start?</p>
+              <a
+                href="/start"
+                className="inline-flex items-center px-8 py-4 bg-taro hover:bg-deep-taro text-white text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-taro/30 lowercase"
+              >
+                start now
+                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </a>
+            </div>
           </div>
         </section>
       </main>

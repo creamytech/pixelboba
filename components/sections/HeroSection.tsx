@@ -65,11 +65,21 @@ export default function HeroSection() {
             {/* Value Badges */}
             <ValueBadges />
 
+            {/* Trust Statement */}
+            <motion.p
+              className="text-sm md:text-base text-gray-600 mb-8 px-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+            >
+              Trusted by 30+ businesses for performance-driven websites.
+            </motion.p>
+
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 w-full max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
             >
               <Button
                 asChild

@@ -26,14 +26,14 @@ export default function PriceCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -8, scale: 1.02 }}
       className={`
-        relative bg-white rounded-xl p-8 border shadow-sm
-        hover:shadow-lg transition-all duration-300
+        relative bg-white rounded-xl p-8 border shadow-md
+        hover:shadow-2xl transition-all duration-300
         ${
           highlighted
-            ? 'border-taro ring-2 ring-taro/20 bg-gradient-to-br from-white to-taro/5'
-            : 'border-ink/10 hover:border-taro/30'
+            ? 'border-taro ring-2 ring-taro/30 bg-gradient-to-br from-white to-taro/5 shadow-taro/20 hover:shadow-taro/30'
+            : 'border-ink/10 hover:border-taro/50 hover:ring-2 hover:ring-taro/10'
         }
       `}
     >

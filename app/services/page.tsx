@@ -135,55 +135,55 @@ export default function ServicesPage() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
               <PriceCard
-                title="website redesign"
+                title="starter brew"
                 price="starting at $1,500"
                 deliveryTime="1–2 weeks"
                 badge="quick start"
                 description="refresh your existing site with modern design and improved performance"
                 features={[
+                  'mobile-optimized',
+                  '1:1 code preview updates',
+                  'launch-ready in 1–2 weeks',
                   'modern design refresh',
-                  'mobile optimization',
                   'speed improvements',
                   'seo audit included',
-                  'content migration',
-                  '2 rounds of revisions',
                 ]}
               />
               <PriceCard
-                title="custom website build"
+                title="custom blend"
                 price="starting at $3,500"
                 deliveryTime="3–4 weeks"
                 highlighted={true}
                 description="brand new website built from scratch with custom features"
                 features={[
+                  'mobile-optimized',
+                  '1:1 code preview updates',
+                  'launch-ready in 3–4 weeks',
                   'custom design & development',
-                  'responsive across all devices',
                   'cms integration',
                   'contact forms & analytics',
-                  'basic seo setup',
-                  '3 rounds of revisions',
                   '1 month free support',
                 ]}
               />
               <PriceCard
-                title="advanced website build"
+                title="full flavor"
                 price="starting at $8,000"
                 deliveryTime="6–8 weeks"
                 description="complex websites with advanced features and integrations"
                 features={[
-                  'everything in custom build',
+                  'mobile-optimized',
+                  '1:1 code preview updates',
+                  'launch-ready in 6–8 weeks',
+                  'everything in custom blend',
                   'advanced functionality',
                   'third-party integrations',
                   'custom animations',
-                  'advanced seo optimization',
                   'user authentication',
-                  'database integration',
-                  'unlimited revisions',
                   '3 months free support',
                 ]}
               />
               <PriceCard
-                title="ongoing care"
+                title="refills"
                 price="starting at $99/month"
                 badge="peace of mind"
                 description="keep your website updated, secure, and performing at its best"

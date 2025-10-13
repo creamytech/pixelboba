@@ -163,11 +163,12 @@ export default function AboutPageClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
-              who we are
+              design + code that tastes better together.
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 leading-relaxed lowercase max-w-3xl mx-auto">
-              pixel boba is a small but mighty studio mixing code and creativity. we build custom
-              websites that feel as fresh as your favorite drink—smooth, fun, and designed to pop.
+              pixel boba is a small but mighty fort lauderdale studio mixing code and creativity. we
+              build custom websites that feel as fresh as your favorite drink—smooth, fun, and
+              designed to pop.
             </p>
           </div>
         </div>
@@ -206,6 +207,38 @@ export default function AboutPageClient() {
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-matcha/40 rounded-full"></div>
           <div className="w-3 h-3 bg-taro/50 rounded-full"></div>
+          <div className="w-2 h-2 bg-milk-tea/60 rounded-full"></div>
+        </div>
+      </div>
+
+      {/* Our Story Section */}
+      <section className="py-16 bg-gradient-to-br from-taro/5 to-transparent">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase text-center">
+              our story
+            </h2>
+            <div className="prose prose-lg max-w-none">
+              <p className="text-gray-600 text-lg md:text-xl leading-relaxed lowercase mb-6">
+                pixel boba started with a simple idea: web design doesn&apos;t have to be
+                complicated. we were tired of seeing clients stuck in endless revision cycles,
+                waiting weeks for mockups that didn&apos;t match the final product.
+              </p>
+              <p className="text-gray-600 text-lg md:text-xl leading-relaxed lowercase">
+                so we brewed up something different—a code-first approach where clients see real,
+                working websites from day one. no smoke and mirrors, no surprises. just clean code,
+                honest timelines, and websites that actually work the way they should.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pearl Divider */}
+      <div className="flex justify-center py-8">
+        <div className="flex items-center space-x-2">
+          <div className="w-2 h-2 bg-taro/40 rounded-full"></div>
+          <div className="w-3 h-3 bg-matcha/50 rounded-full"></div>
           <div className="w-2 h-2 bg-milk-tea/60 rounded-full"></div>
         </div>
       </div>

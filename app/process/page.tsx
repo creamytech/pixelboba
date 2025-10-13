@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 const processSteps = [
   {
     stepNumber: '1',
-    title: 'discovery & planning',
+    title: 'shake: define the flavor',
     description:
       'turn your project form into a clear brief with sitemap, wireframes, and tech plan.',
     whatYouGet: 'project brief, clickable prototype, and timeline',
@@ -51,17 +51,32 @@ const processSteps = [
   },
   {
     stepNumber: '2',
-    title: 'design & build',
+    title: 'brew: design meets code',
     description: 'create your visual design and develop the site with live previews throughout.',
     whatYouGet: 'figma designs, staging site, and progress updates',
     timing: '2–5 weeks',
   },
   {
     stepNumber: '3',
-    title: 'launch & support',
-    description: 'deploy your site, set up analytics, and provide ongoing care.',
-    whatYouGet: 'live site, analytics setup, and monthly updates',
-    timing: '1–2 days to launch',
+    title: 'pop: review your build live',
+    description:
+      'test your site, provide feedback, and fine-tune every detail until it&apos;s perfect.',
+    whatYouGet: 'live preview, feedback rounds, and final adjustments',
+    timing: '3–5 days',
+  },
+  {
+    stepNumber: '4',
+    title: 'launch: go public',
+    description: 'deploy your site, set up analytics, and make it available to the world.',
+    whatYouGet: 'live site, analytics setup, and performance monitoring',
+    timing: '1–2 days',
+  },
+  {
+    stepNumber: '5',
+    title: 'refill: keep it fresh',
+    description: 'ongoing support and updates to keep your site running smoothly.',
+    whatYouGet: 'monthly updates, security patches, and priority support',
+    timing: 'ongoing',
   },
 ];
 
@@ -114,13 +129,13 @@ export default function ProcessPage() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-6 lowercase">
-                  our 3-step process
+                  how we brew your website
                 </h2>
                 <p className="text-lg text-gray-600 lowercase">
                   here&apos;s what happens in each phase of your project
                 </p>
               </div>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {processSteps.map((step, index) => (
                   <StepCard
                     key={step.stepNumber}
