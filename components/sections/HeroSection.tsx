@@ -40,20 +40,20 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
-              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-6 leading-tight"
+              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-6 lowercase leading-tight"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="lowercase">high-converting websites, built </span>
-              <span className="relative inline-block lowercase">
-                <span className="relative z-10">code-first</span>
+              websites that{' '}
+              <span className="relative inline-block">
+                <span className="relative z-10">actually convert</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
               </span>
               <span className="text-taro">.</span>
               <br />
               <span className="text-3xl md:text-5xl lg:text-6xl text-gray-700">
-                No Endless Meetings.
+                zero meetings required.
               </span>
             </motion.h1>
 
