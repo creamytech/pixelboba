@@ -8,19 +8,19 @@ const benefits = [
     icon: Code,
     title: 'working previews from day one',
     description:
-      "see exactly what you're getting with live code previews. no endless mockups or guesswork.",
+      "See exactly what you're getting with live code previews. No mockups, no guesswork.",
   },
   {
     icon: Zap,
     title: 'performance and accessibility built in',
     description:
-      'every build meets high performance standards. fast loading, keyboard navigation, screen reader friendly.',
+      'Every build meets high performance standards. Fast loading, keyboard navigation, screen reader friendly.',
   },
   {
     icon: Eye,
     title: 'no endless revisions',
     description:
-      "clear previews mean fewer surprises. you know what you're getting before we call it done.",
+      "Clear previews mean fewer surprises. You know what you're getting before we call it done.",
   },
 ];
 

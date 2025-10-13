@@ -8,18 +8,18 @@ const services = [
     title: 'fresh design',
     icon: '🎨',
     description:
-      'modern, mobile-first designs that make your brand stand out and convert visitors into customers',
+      'Modern, mobile-first designs that make your brand stand out and turn visitors into buyers',
   },
   {
     title: 'fast performance',
     icon: '⚡',
     description:
-      'lightning-fast websites built with cutting-edge tech for better SEO and user experience',
+      'Lightning-fast websites built with cutting-edge tech for better SEO and user experience',
   },
   {
     title: 'live previews',
     icon: '👀',
-    description: 'see your site come to life from day one—no waiting weeks for the big reveal',
+    description: 'See your site come to life from day one—no waiting weeks for the big reveal',
   },
 ];
 

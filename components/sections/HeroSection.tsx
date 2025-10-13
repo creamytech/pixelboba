@@ -87,9 +87,9 @@ export default function HeroSection() {
 
               <Button
                 asChild
-                variant="outline"
+                variant="ghost"
                 size="lg"
-                className="group w-full sm:w-auto border-2 border-taro text-taro hover:bg-taro hover:text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:shadow-lg lowercase min-h-[3.5rem]"
+                className="group w-full sm:w-auto border-2 border-taro/30 text-taro hover:bg-taro/5 hover:border-taro px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 lowercase min-h-[3.5rem]"
               >
                 <Link href="/process">
                   see our process

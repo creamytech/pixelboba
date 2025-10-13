@@ -123,7 +123,7 @@ export default function ServicesPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
-                services - websites that pop
+                services & pricing
               </h1>
               <CTABanner />
             </div>
@@ -153,6 +153,7 @@ export default function ServicesPage() {
                 title="custom website build"
                 price="starting at $3,500"
                 deliveryTime="3–4 weeks"
+                highlighted={true}
                 description="brand new website built from scratch with custom features"
                 features={[
                   'custom design & development',
@@ -168,7 +169,6 @@ export default function ServicesPage() {
                 title="advanced website build"
                 price="starting at $8,000"
                 deliveryTime="6–8 weeks"
-                highlighted={true}
                 description="complex websites with advanced features and integrations"
                 features={[
                   'everything in custom build',

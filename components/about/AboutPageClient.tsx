@@ -219,28 +219,28 @@ export default function AboutPageClient() {
             </h2>
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
-                <div className="w-3 h-3 bg-taro rounded-full mt-2 flex-shrink-0"></div>
+                <div className="text-2xl flex-shrink-0">👀</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
                   <strong className="text-ink">previews, not promises</strong>—you see the real
                   thing as it&apos;s built.
                 </p>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="w-3 h-3 bg-matcha rounded-full mt-2 flex-shrink-0"></div>
+                <div className="text-2xl flex-shrink-0">⚡</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
                   <strong className="text-ink">fewer hoops to jump through</strong>—clear process,
                   clean results.
                 </p>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="w-3 h-3 bg-milk-tea rounded-full mt-2 flex-shrink-0"></div>
+                <div className="text-2xl flex-shrink-0">🚀</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
                   <strong className="text-ink">built to last</strong>—fast, accessible, and ready
                   for whatever comes next.
                 </p>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="w-3 h-3 bg-taro/60 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="text-2xl flex-shrink-0">📊</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
                   <strong className="text-ink">our custom client dashboard</strong> keeps everything
                   in one place—progress, messages, and payments.

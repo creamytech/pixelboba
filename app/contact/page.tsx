@@ -40,57 +40,57 @@ const faqs = [
   {
     question: 'what information do you need to get started?',
     answer:
-      'just fill out our project form with your goals, timeline, and any examples you like. we handle the rest through email.',
+      'Just fill out our project form with your goals, timeline, and any examples you like. We handle the rest through email.',
   },
   {
     question: 'can you work with our existing branding?',
     answer:
-      "absolutely! send us your brand guidelines, logos, and color schemes. we'll make sure everything stays on-brand.",
+      "Absolutely! Send us your brand guidelines, logos, and color schemes. We'll make sure everything stays on-brand.",
   },
   {
     question: 'do you offer payment plans?',
     answer:
-      'yes, we typically split projects into 2-3 payments: deposit, midpoint, and final. larger projects can be broken down further.',
+      'Yes, we typically split projects into 2-3 payments: deposit, midpoint, and final. Larger projects can be broken down further.',
   },
   {
     question: 'how long does a typical project take?',
     answer:
-      '2-6 weeks depending on scope. website redesigns take 1-3 weeks, custom builds take 3-5 weeks, advanced builds take 4-6 weeks.',
+      '2-6 weeks depending on scope. Website redesigns take 1-3 weeks, custom builds take 3-5 weeks, advanced builds take 4-6 weeks.',
   },
   {
     question: "what if we're not happy with the design?",
     answer:
-      'we share working previews throughout the process so there are no surprises. most issues get resolved during our regular check-ins via email.',
+      'We share working previews throughout the process so there are no surprises. Most issues get resolved during our regular check-ins via email.',
   },
   {
     question: 'what if I need changes during the project?',
     answer:
-      "we share working code previews as we build, so you can see exactly what you're getting. changes happen via email feedback.",
+      "We share working code previews as we build, so you can see exactly what you're getting. Changes happen via email feedback.",
   },
   {
     question: 'do you work with wordpress or shopify?',
     answer:
-      'we build custom sites with next.js and react for better performance. we can integrate with headless cms or ecommerce apis if needed.',
+      'We build custom sites with Next.js and React for better performance. We can integrate with headless CMS or ecommerce APIs if needed.',
   },
   {
     question: 'what about ongoing maintenance?',
     answer:
-      'our care plans start at $99/month for content updates, security patches, and bug fixes. no long-term contracts required.',
+      'Our care plans start at $99/month for content updates, security patches, and bug fixes. No long-term contracts required.',
   },
   {
     question: 'can you help with seo?',
     answer:
-      'every site includes basic seo optimization. our advanced seo package starts at $750 for keyword research and content strategy.',
+      'Every site includes basic SEO optimization. Our advanced SEO package starts at $750 for keyword research and content strategy.',
   },
   {
     question: 'how do you handle rush projects?',
     answer:
-      'we can expedite projects with our priority timeline - typically 50% faster delivery for an additional 25% fee. just mention your deadline in the project form.',
+      'We can expedite projects with our priority timeline - typically 50% faster delivery for an additional 25% fee. Just mention your deadline in the project form.',
   },
   {
     question: 'do you work with wix, squarespace, or wordpress?',
     answer:
-      'we specialize in custom next.js builds for better performance and flexibility. we can integrate with headless cms or migrate from existing platforms.',
+      'We specialize in custom Next.js builds for better performance and flexibility. We can integrate with headless CMS or migrate from existing platforms.',
   },
 ];
 
@@ -134,7 +134,7 @@ export default function ContactPage() {
                 ready to start?
               </h1>
               <p className="text-xl md:text-2xl text-gray-700 mb-12 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
-                ready to get started? use our project form to get a custom proposal within 24 hours.
+                use our project form to get a custom proposal within 24 hours.
               </p>
 
               {/* Primary CTA */}
