@@ -156,7 +156,7 @@ export default function SaaSPage() {
                   size="lg"
                   className="bg-taro hover:bg-deep-taro text-white px-8 py-4"
                 >
-                  <Link href="/services#start">start your project</Link>
+                  <Link href="/start">start your project</Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="border-taro text-taro">
                   <Link href="/work/techflow-solutions">see saas case study</Link>
@@ -269,7 +269,7 @@ export default function SaaSPage() {
                 get a custom saas website design proposal within 24 hours. no calls required.
               </p>
               <Button asChild size="lg" className="bg-taro hover:bg-deep-taro text-white px-8 py-4">
-                <Link href="/services#start" className="inline-flex items-center space-x-2">
+                <Link href="/start" className="inline-flex items-center space-x-2">
                   <span>start your project</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>

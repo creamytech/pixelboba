@@ -93,7 +93,7 @@ export default function Header() {
               asChild
               className="group bg-taro hover:bg-deep-taro text-white transition-all duration-300 hover:shadow-lg hover:shadow-taro/30"
             >
-              <Link href="/services#start">
+              <Link href="/start">
                 start a project
                 <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1 text-sm">
                   →
@@ -133,7 +133,7 @@ export default function Header() {
               asChild
               className="group bg-taro hover:bg-deep-taro text-white text-xs px-3 py-2 transition-all duration-300 hover:shadow-md"
             >
-              <Link href="/services#start">
+              <Link href="/start">
                 start project
                 <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-0.5 text-xs">
                   →
@@ -199,7 +199,7 @@ export default function Header() {
                     asChild
                     className="group bg-taro hover:bg-deep-taro text-white w-full transition-all duration-300 hover:shadow-lg"
                   >
-                    <Link href="/services#start" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link href="/start" onClick={() => setIsMobileMenuOpen(false)}>
                       start a project
                       <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
                         →

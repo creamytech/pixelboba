@@ -197,14 +197,12 @@ export default function StartProjectForm() {
           </svg>
         </div>
         <h3 className="text-3xl font-bold text-ink mb-4 lowercase">project submitted! 🧋</h3>
-        <p className="text-gray-600 mb-6 lowercase max-w-md mx-auto leading-relaxed">
-          thanks! we&apos;ve received your project details and sent you a confirmation email.
-          we&apos;ll review everything and send you a custom proposal within 24 hours.
+        <p className="text-gray-600 mb-6 max-w-md mx-auto leading-relaxed">
+          Thanks! We&apos;ve received your project details and sent you a confirmation email.
+          We&apos;ll review everything and send you a custom proposal within 24 hours.
         </p>
         <div className="bg-milk-tea/20 rounded-xl p-4 mb-6">
-          <p className="text-sm text-gray-600 lowercase">
-            💌 check your inbox for confirmation details
-          </p>
+          <p className="text-sm text-gray-600">💌 Check your inbox for confirmation details</p>
         </div>
         <button
           type="button"
@@ -247,7 +245,7 @@ export default function StartProjectForm() {
       {/* Header */}
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-ink mb-2 lowercase">tell us about your project</h3>
-        <p className="text-gray-600 lowercase">we&apos;ll craft a custom proposal just for you</p>
+        <p className="text-gray-600">We&apos;ll craft a custom proposal just for you</p>
       </div>
       {/* Honeypot field - hidden from users */}
       <input
@@ -272,7 +270,7 @@ export default function StartProjectForm() {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            placeholder="your name"
+            placeholder="Your Name"
             className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro ${
               errors.name ? 'border-red-300' : 'border-gray-300'
             }`}
@@ -323,7 +321,7 @@ export default function StartProjectForm() {
           name="company"
           value={formData.company}
           onChange={handleInputChange}
-          placeholder="your company name (optional)"
+          placeholder="Your Company Name (Optional)"
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
         />
       </div>
@@ -395,7 +393,7 @@ export default function StartProjectForm() {
           name="pages"
           value={formData.pages}
           onChange={handleInputChange}
-          placeholder="describe the pages or features you need (optional)"
+          placeholder="Describe the pages or features you need (Optional)"
           rows={3}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
         />
@@ -415,7 +413,7 @@ export default function StartProjectForm() {
           name="timeline"
           value={formData.timeline}
           onChange={handleInputChange}
-          placeholder="when do you need this completed? (optional)"
+          placeholder="When do you need this completed? (Optional)"
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
         />
       </div>
@@ -430,7 +428,7 @@ export default function StartProjectForm() {
           name="links"
           value={formData.links}
           onChange={handleInputChange}
-          placeholder="share urls of your current site or sites you like (optional)"
+          placeholder="Share URLs of your current site or sites you like (Optional)"
           rows={3}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
         />
@@ -449,7 +447,7 @@ export default function StartProjectForm() {
           name="additional"
           value={formData.additional}
           onChange={handleInputChange}
-          placeholder="any additional details about your project (optional)"
+          placeholder="Any additional details about your project (Optional)"
           rows={3}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
         />
@@ -474,14 +472,14 @@ export default function StartProjectForm() {
           animate={{ opacity: 1 }}
           className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg"
         >
-          <p className="text-red-700 text-sm lowercase">
-            something went wrong. please try again or email hello@pixelboba.com.
+          <p className="text-red-700 text-sm">
+            Something went wrong. Please try again or email hello@pixelboba.com.
           </p>
         </motion.div>
       )}
 
-      <p className="mt-4 text-sm text-gray-500 text-center lowercase">
-        we&apos;ll respond within 24 hours with a custom proposal
+      <p className="mt-4 text-sm text-gray-500 text-center">
+        We&apos;ll respond within 24 hours with a custom proposal
       </p>
     </motion.form>
   );

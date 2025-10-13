@@ -140,7 +140,7 @@ export default function ContactPage() {
               {/* Primary CTA */}
               <div className="mb-12">
                 <Link
-                  href="/services#start"
+                  href="/start"
                   className="group inline-flex items-center bg-taro text-white px-10 py-5 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 text-xl hover:scale-105"
                 >
                   get your custom proposal
@@ -246,7 +246,7 @@ export default function ContactPage() {
                 </p>
               </div>
               <Link
-                href="/services#start"
+                href="/start"
                 className="group inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
               >
                 secure your spot

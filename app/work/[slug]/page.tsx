@@ -508,7 +508,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
                   size="lg"
                   className="bg-white text-taro hover:bg-milk-tea shadow-lg hover:shadow-xl transition-all"
                 >
-                  <Link href="/services#start">Start Your Project</Link>
+                  <Link href="/start">Start Your Project</Link>
                 </Button>
 
                 <Button

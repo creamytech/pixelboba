@@ -5,6 +5,7 @@ import StepCard from '@/components/process/StepCard';
 import DashboardMockup from '@/components/process/DashboardMockup';
 import FeedbackSection from '@/components/process/FeedbackSection';
 import QualityChecklist from '@/components/process/QualityChecklist';
+import ProcessFAQ from '@/components/process/ProcessFAQ';
 import StickyCTA from '@/components/common/StickyCTA';
 
 export const metadata: Metadata = {
@@ -218,6 +219,9 @@ export default function ProcessPage() {
         {/* Quality Checklist */}
         <QualityChecklist />
 
+        {/* FAQ Section */}
+        <ProcessFAQ />
+
         {/* Bottom CTA Section */}
         <section className="py-20 bg-gradient-to-r from-taro/10 to-matcha/10">
           <div className="container mx-auto px-4">
@@ -230,7 +234,7 @@ export default function ProcessPage() {
                 get brewing.
               </p>
               <a
-                href="/services#start"
+                href="/start"
                 className="group inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
               >
                 start your project

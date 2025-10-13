@@ -12,7 +12,7 @@ interface StickyCTAProps {
 
 export default function StickyCTA({
   text = 'start your project',
-  href = '/services#start',
+  href = '/start',
   targetId = 'start',
 }: StickyCTAProps) {
   const [isVisible, setIsVisible] = useState(false);

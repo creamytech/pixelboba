@@ -40,17 +40,21 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
-              className="font-display text-6xl md:text-8xl lg:text-9xl font-bold text-ink mb-6 lowercase leading-[0.95]"
+              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-6 leading-tight"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              websites that{' '}
-              <span className="relative inline-block">
-                <span className="relative z-10">pop</span>
+              <span className="lowercase">high-converting websites, built </span>
+              <span className="relative inline-block lowercase">
+                <span className="relative z-10">code-first</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
               </span>
               <span className="text-taro">.</span>
+              <br />
+              <span className="text-3xl md:text-5xl lg:text-6xl text-gray-700">
+                No Endless Meetings.
+              </span>
             </motion.h1>
 
             <motion.p
@@ -73,7 +77,7 @@ export default function HeroSection() {
                 size="lg"
                 className="group w-full sm:w-auto bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-taro/30 lowercase min-h-[3.5rem]"
               >
-                <Link href="/services#start">
+                <Link href="/start">
                   start your project
                   <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
                     →

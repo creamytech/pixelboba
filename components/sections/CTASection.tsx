@@ -78,7 +78,7 @@ export default function CTASection() {
               size="lg"
               className="group bg-white text-taro hover:bg-milk-tea px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-white/20"
             >
-              <Link href="/services#start">
+              <Link href="/start">
                 start your project
                 <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
                   →

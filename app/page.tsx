@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
+import SocialProofSection from '@/components/sections/SocialProofSection';
 import ServicesPreview from '@/components/sections/ServicesPreview';
 import CodeFirstSection from '@/components/sections/CodeFirstSection';
 import ProcessSection from '@/components/sections/ProcessSection';
@@ -47,6 +48,7 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
+        <SocialProofSection />
         <ServicesPreview />
         {/* <TestimonialsSection /> */}
         <CodeFirstSection />

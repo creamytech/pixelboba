@@ -53,15 +53,6 @@ export default function PriceCard({
         </div>
       )}
 
-      {/* Delivery time badge */}
-      {deliveryTime && (
-        <div className="absolute top-4 right-4">
-          <div className="bg-brown-sugar/10 text-brown-sugar px-3 py-1 rounded-full text-xs font-medium lowercase">
-            {deliveryTime}
-          </div>
-        </div>
-      )}
-
       {/* Pearl decoration */}
       {!deliveryTime && (
         <div className="absolute top-4 right-4">
@@ -70,9 +61,33 @@ export default function PriceCard({
       )}
 
       <div className="mb-6">
-        <h3 className="font-display text-2xl font-bold text-ink mb-2 lowercase">{title}</h3>
-        <div className="text-3xl font-bold text-taro lowercase">{price}</div>
-        {description && <p className="text-gray-600 mt-3 text-sm lowercase">{description}</p>}
+        <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase">{title}</h3>
+        <div className="flex items-baseline gap-2 mb-3">
+          <div className="text-4xl md:text-5xl font-black text-taro lowercase leading-none">
+            {price}
+          </div>
+        </div>
+        {deliveryTime && (
+          <div className="flex items-center gap-2 mb-2">
+            <svg
+              className="w-4 h-4 text-matcha"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span className="text-sm font-medium text-gray-600 lowercase">{deliveryTime}</span>
+          </div>
+        )}
+        {description && (
+          <p className="text-gray-600 mt-3 text-sm lowercase leading-relaxed">{description}</p>
+        )}
       </div>
 
       <ul className="space-y-3 mb-8">
