@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import PearlField from '@/components/animations/PearlField';
+import FloatingPearls from '@/components/common/FloatingPearls';
 import Link from 'next/link';
 
 export default function HeroSection() {
@@ -26,10 +26,8 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-milk-tea via-background to-taro/5">
-      {/* Pearl Background */}
-      <div className="absolute inset-0">
-        <PearlField className="w-full h-full" />
-      </div>
+      {/* Floating Pearls with Parallax */}
+      <FloatingPearls />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-20">

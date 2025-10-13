@@ -5,7 +5,6 @@ import './globals.css';
 import { siteConfig } from '@/lib/seo';
 import StructuredData from '@/components/StructuredData';
 import Providers from '@/components/providers/Providers';
-import CustomCursor from '@/components/common/CustomCursor';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -97,10 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'G-Z3342RYND2');
           `}
         </Script>
-        <Providers>
-          <CustomCursor />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
