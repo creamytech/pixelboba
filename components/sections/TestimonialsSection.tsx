@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     quote:
-      "Working with Pixel Boba transformed our vision into reality. They didn't just build us a website—they crafted an experience that captures the soul of travel and adventure.",
+      "Working with Pixel Boba transformed our vision into reality. They didn't just build us a website. they crafted an experience that captures the soul of travel and adventure.",
     author: 'Locra Team',
     role: 'Travel-Inspired Fashion Brand',
     avatar: 'LT',
@@ -53,8 +53,8 @@ export default function TestimonialsSection() {
             what our clients say
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            don&apos;t just take our word for it—hear from the amazing businesses we&apos;ve had the
-            pleasure of working with.
+            don&apos;t just take our word for it. hear from the amazing businesses we&apos;ve had
+            the pleasure of working with.
           </p>
         </motion.div>
 

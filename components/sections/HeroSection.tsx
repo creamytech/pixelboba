@@ -28,6 +28,27 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-milk-tea via-background to-taro/5">
+      {/* Pearl Pattern Background */}
+      <div className="absolute inset-0 text-taro/10 opacity-40">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="hero-pearl-pattern"
+              x="0"
+              y="0"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle cx="20" cy="20" r="2" fill="currentColor" opacity="0.5" />
+              <circle cx="10" cy="10" r="1" fill="currentColor" opacity="0.3" />
+              <circle cx="30" cy="30" r="1" fill="currentColor" opacity="0.3" />
+            </pattern>
+          </defs>
+          <rect x="0" y="0" width="100%" height="100%" fill="url(#hero-pearl-pattern)" />
+        </svg>
+      </div>
+
       {/* Floating Pearls with Parallax */}
       <FloatingPearls />
 
@@ -48,7 +69,8 @@ export default function HeroSection() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              modern websites that look{' '}
+              websites crafted like your favorite boba
+              <span className="text-taro">.</span>{' '}
               <motion.span
                 className="relative inline-block"
                 animate={{
@@ -61,10 +83,10 @@ export default function HeroSection() {
                   times: [0, 0.25, 0.5, 0.75, 1],
                 }}
               >
-                <span className="relative z-10">sharp</span>
+                <span className="relative z-10">smooth</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
               </motion.span>
-              <span className="text-taro">,</span> load fast, and convert better
+              <span className="text-taro">,</span> refreshing, and impossible to put down
               <span className="text-taro">.</span>
             </motion.h1>
 
@@ -74,7 +96,8 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              no calls. no confusion. just clean code, real previews, and results that pop.
+              no calls. no confusion. just clean code, live previews from day one, and websites that
+              actually convert.
             </motion.p>
 
             {/* Value Badges */}

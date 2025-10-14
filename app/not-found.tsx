@@ -4,62 +4,137 @@ import Footer from '@/components/layout/Footer';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="pt-20">
-        <div className="container mx-auto px-4 py-20">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="mb-8">
-              {/* 404 with pearls */}
-              <div className="relative inline-block">
-                <h1 className="font-display text-8xl font-bold text-ink mb-4">
-                  4
-                  <span className="relative">
-                    0
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-12 bg-taro rounded-full flex items-center justify-center">
-                        <div className="w-6 h-6 bg-white rounded-full opacity-60" />
-                      </div>
-                    </div>
-                  </span>
-                  4
-                </h1>
-                {/* Floating pearls */}
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-matcha rounded-full animate-bounce-subtle" />
-                <div
-                  className="absolute -top-2 -right-6 w-6 h-6 bg-brown-sugar rounded-full animate-bounce-subtle"
-                  style={{ animationDelay: '0.5s' }}
-                />
-                <div
-                  className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-milk-tea border-2 border-taro rounded-full animate-bounce-subtle"
-                  style={{ animationDelay: '1s' }}
-                />
-              </div>
-            </div>
-
-            <h2 className="font-display text-3xl font-bold text-ink mb-4">
-              Oops! This page got lost in the tea
-            </h2>
-
-            <p className="text-xl text-gray-600 mb-8">
-              The page you&apos;re looking for doesn&apos;t exist or has been moved. But don&apos;t
-              worry, we&apos;ll help you find what you need.
-            </p>
-
-            <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-              <Link
-                href="/"
-                className="inline-block bg-taro text-white px-8 py-3 rounded-lg font-semibold hover:bg-deep-taro transition-colors duration-200"
+      <main className="flex-1 flex items-center justify-center px-4 py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5 relative overflow-hidden">
+        {/* Pearl pattern background */}
+        <div className="absolute inset-0 text-taro/10 opacity-30">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="404-pearl-pattern"
+                x="0"
+                y="0"
+                width="50"
+                height="50"
+                patternUnits="userSpaceOnUse"
               >
-                Go Home
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-block border border-taro text-taro px-8 py-3 rounded-lg font-semibold hover:bg-taro hover:text-white transition-colors duration-200"
-              >
-                Contact Us
-              </Link>
-            </div>
+                <circle cx="25" cy="25" r="2" fill="currentColor" opacity="0.4" />
+                <circle cx="10" cy="10" r="1" fill="currentColor" opacity="0.2" />
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="100%" height="100%" fill="url(#404-pearl-pattern)" />
+          </svg>
+        </div>
+
+        <div className="max-w-2xl mx-auto text-center relative z-10">
+          {/* Spilled Boba Cup SVG */}
+          <div className="mb-8 flex justify-center">
+            <svg
+              className="w-48 h-48 text-taro"
+              viewBox="0 0 200 200"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Spilled liquid puddle */}
+              <ellipse cx="120" cy="160" rx="60" ry="15" fill="currentColor" opacity="0.1" />
+
+              {/* Fallen cup */}
+              <g transform="rotate(-45 100 100)">
+                {/* Cup body */}
+                <path
+                  d="M70 60L65 100C65 105 68 108 73 108H107C112 108 115 105 115 100L110 60H70Z"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  fill="currentColor"
+                  fillOpacity="0.05"
+                />
+                {/* Cup lid (separated) */}
+                <path d="M60 55H125" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                {/* Straw (bent) */}
+                <path
+                  d="M95 50L92 65L85 72"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+              </g>
+
+              {/* Scattered pearls */}
+              <circle cx="130" cy="140" r="4" fill="currentColor" opacity="0.5" />
+              <circle cx="145" cy="145" r="3.5" fill="currentColor" opacity="0.5" />
+              <circle cx="118" cy="150" r="3" fill="currentColor" opacity="0.5" />
+              <circle cx="155" cy="138" r="4.5" fill="currentColor" opacity="0.5" />
+              <circle cx="108" cy="145" r="3.5" fill="currentColor" opacity="0.5" />
+              <circle cx="140" cy="152" r="3" fill="currentColor" opacity="0.5" />
+
+              {/* Splash effect */}
+              <path
+                d="M95 120C95 120 88 125 85 130"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                opacity="0.3"
+              />
+              <path
+                d="M125 125C125 125 132 130 135 135"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                opacity="0.3"
+              />
+            </svg>
+          </div>
+
+          {/* 404 text */}
+          <h1 className="font-display text-7xl md:text-9xl font-bold text-ink mb-4">404</h1>
+
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-4 lowercase">
+            oops, the pearls got stuck in the straw
+          </h2>
+
+          <p className="text-xl text-gray-600 mb-8 lowercase max-w-md mx-auto">
+            looks like this page spilled all over the place. let&apos;s get you back to something
+            tasty.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/"
+              className="group inline-flex items-center justify-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
+            >
+              back to home
+              <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
+
+            <Link
+              href="/services"
+              className="group inline-flex items-center justify-center border-2 border-taro text-taro px-8 py-4 rounded-xl font-semibold hover:bg-taro/5 transition-all duration-300 lowercase"
+            >
+              browse services
+              <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1 opacity-70">
+                →
+              </span>
+            </Link>
+          </div>
+
+          {/* Floating pearls animation */}
+          <div className="mt-12 flex justify-center gap-4">
+            <div
+              className="w-3 h-3 bg-taro/40 rounded-full animate-bounce"
+              style={{ animationDelay: '0s' }}
+            />
+            <div
+              className="w-3 h-3 bg-matcha/50 rounded-full animate-bounce"
+              style={{ animationDelay: '0.2s' }}
+            />
+            <div
+              className="w-3 h-3 bg-milk-tea/60 rounded-full animate-bounce"
+              style={{ animationDelay: '0.4s' }}
+            />
           </div>
         </div>
       </main>

@@ -13,12 +13,12 @@ const faqs: FAQItem[] = [
   {
     question: 'how do we give feedback if there are no meetings?',
     answer:
-      'All feedback happens directly in your client dashboard. You can leave comments on designs, share ideas via messages, and approve milestones—all in one place. We respond within 24 hours, and you never have to schedule a call unless you want to.',
+      'All feedback happens directly in your client dashboard. You can leave comments on designs, share ideas via messages, and approve milestones. all in one place. We respond within 24 hours, and you never have to schedule a call unless you want to.',
   },
   {
     question: 'what if I need to talk to someone?',
     answer:
-      'We are always available via your dashboard messaging system and email. If you prefer a quick call to clarify something, we are happy to hop on—but we don&apos;t require meetings to move forward. Most clients love the async workflow because it saves time and keeps things moving.',
+      'We are always available via your dashboard messaging system and email. If you prefer a quick call to clarify something, we are happy to hop on. but we don&apos;t require meetings to move forward. Most clients love the async workflow because it saves time and keeps things moving.',
   },
   {
     question: 'how do you understand my vision without a discovery call?',
@@ -28,7 +28,7 @@ const faqs: FAQItem[] = [
   {
     question: 'how long does each phase take?',
     answer:
-      'Discovery & planning takes 3–5 days. Design & build ranges from 2–5 weeks depending on complexity. Launch happens in 1–2 days. We provide exact timelines in your proposal and track everything in your dashboard.',
+      'Discovery & planning takes 3-5 days. Design & build ranges from 2-5 weeks depending on complexity. Launch happens in 1-2 days. We provide exact timelines in your proposal and track everything in your dashboard.',
   },
   {
     question: 'what happens after the site launches?',
@@ -38,17 +38,17 @@ const faqs: FAQItem[] = [
   {
     question: 'can I see work-in-progress designs?',
     answer:
-      'Absolutely! You get a live staging site from day one. As we build, you can click through and test everything in real-time. No waiting weeks to see your site—you are involved throughout the entire process via your dashboard.',
+      'Absolutely! You get a live staging site from day one. As we build, you can click through and test everything in real-time. No waiting weeks to see your site. you are involved throughout the entire process via your dashboard.',
   },
   {
     question: 'what if I need revisions?',
     answer:
-      'Revisions are built into every package (2–3 rounds depending on your tier). Just leave feedback in your dashboard, and we will implement changes quickly. Our goal is to get it right, not to limit revisions—we want you to love your site.',
+      'Revisions are built into every package (2-3 rounds depending on your tier). Just leave feedback in your dashboard, and we will implement changes quickly. Our goal is to get it right, not to limit revisions. we want you to love your site.',
   },
   {
     question: 'do you work with clients outside south florida?',
     answer:
-      'Yes! While we are based in Fort Lauderdale, our async-first process works perfectly for remote clients. We have built sites for businesses across the US. Location doesn&apos;t matter—great communication and clear processes do.',
+      'Yes! While we are based in Fort Lauderdale, our async-first process works perfectly for remote clients. We have built sites for businesses across the US. Location doesn&apos;t matter. great communication and clear processes do.',
   },
 ];
 

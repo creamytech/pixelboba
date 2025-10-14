@@ -164,7 +164,7 @@ export default function ProcessPage() {
                 <div className="max-w-3xl mx-auto">
                   <p className="text-xl text-gray-600 mb-8 lowercase">
                     once we kick off, you&apos;ll get access to your own pixel boba dashboard. all
-                    project communication happens here—no messy email chains or lost files:
+                    project communication happens here. no messy email chains or lost files:
                   </p>
 
                   {/* Feature List */}

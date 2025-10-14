@@ -168,7 +168,7 @@ export default function AboutPageClient() {
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 leading-relaxed lowercase max-w-3xl mx-auto">
               pixel boba is a small but mighty fort lauderdale studio mixing code and creativity. we
-              build custom websites that feel as fresh as your favorite drink—smooth, fun, and
+              build custom websites that feel as fresh as your favorite drink. smooth, fun, and
               designed to pop.
             </p>
           </div>
@@ -195,7 +195,7 @@ export default function AboutPageClient() {
               <p className="text-gray-600 text-lg md:text-xl leading-relaxed lowercase mb-0">
                 we don&apos;t waste time with endless mockups or long meetings. from day one
                 you&apos;ll see your site in action, not on a slideshow. everything is streamlined
-                and simple—updates through your client portal, previews you can click through, and
+                and simple. updates through your client portal, previews you can click through, and
                 progress that speaks for itself.
               </p>
             </div>
@@ -226,7 +226,7 @@ export default function AboutPageClient() {
                 waiting weeks for mockups that didn&apos;t match the final product.
               </p>
               <p className="text-gray-600 text-lg md:text-xl leading-relaxed lowercase">
-                so we brewed up something different—a code-first approach where clients see real,
+                so we brewed up something different. a code-first approach where clients see real,
                 working websites from day one. no smoke and mirrors, no surprises. just clean code,
                 honest timelines, and websites that actually work the way they should.
               </p>
@@ -255,21 +255,21 @@ export default function AboutPageClient() {
               <div className="flex items-start space-x-4">
                 <div className="text-2xl flex-shrink-0">👀</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
-                  <strong className="text-ink">previews, not promises</strong>—you see the real
+                  <strong className="text-ink">previews, not promises.</strong> you see the real
                   thing as it&apos;s built.
                 </p>
               </div>
               <div className="flex items-start space-x-4">
                 <div className="text-2xl flex-shrink-0">⚡</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
-                  <strong className="text-ink">fewer hoops to jump through</strong>—clear process,
+                  <strong className="text-ink">fewer hoops to jump through.</strong> clear process,
                   clean results.
                 </p>
               </div>
               <div className="flex items-start space-x-4">
                 <div className="text-2xl flex-shrink-0">🚀</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
-                  <strong className="text-ink">built to last</strong>—fast, accessible, and ready
+                  <strong className="text-ink">built to last.</strong> fast, accessible, and ready
                   for whatever comes next.
                 </p>
               </div>
@@ -277,7 +277,7 @@ export default function AboutPageClient() {
                 <div className="text-2xl flex-shrink-0">📊</div>
                 <p className="text-gray-600 text-lg leading-relaxed lowercase">
                   <strong className="text-ink">our custom client dashboard</strong> keeps everything
-                  in one place—progress, messages, and payments.
+                  in one place. progress, messages, and payments.
                 </p>
               </div>
             </div>
@@ -318,9 +318,17 @@ export default function AboutPageClient() {
 
                 <div className="space-y-3">
                   <p className="text-gray-600 text-lg leading-relaxed lowercase">
-                    <strong className="text-ink">scott benjamin</strong> — founder & developer, fort
+                    <strong className="text-ink">scott benjamin</strong> * founder & developer, fort
                     lauderdale. coding since middle school, still fueled by curiosity (and boba).
                     specializes in react, next.js, and making complex things simple.
+                  </p>
+                  <p className="text-gray-600 text-base leading-relaxed lowercase">
+                    <strong className="text-taro">favorite order:</strong> classic milk tea, 50%
+                    sweet, extra pearls
+                  </p>
+                  <p className="text-gray-600 text-base leading-relaxed lowercase">
+                    <strong className="text-taro">fun fact:</strong> still debugs with console.log()
+                    and refuses to apologize
                   </p>
                 </div>
               </div>
@@ -337,10 +345,18 @@ export default function AboutPageClient() {
 
                 <div className="space-y-3">
                   <p className="text-gray-600 text-lg leading-relaxed lowercase">
-                    <strong className="text-ink">joel armenta</strong> — artist & designer, ciudad
+                    <strong className="text-ink">joel armenta</strong> * artist & designer, ciudad
                     obregón. the creative eye behind the visuals, blending illustration with design
                     that feels alive. specializes in brand identity and bringing personality to
                     digital experiences.
+                  </p>
+                  <p className="text-gray-600 text-base leading-relaxed lowercase">
+                    <strong className="text-taro">favorite order:</strong> taro milk tea with mango
+                    jelly (obviously)
+                  </p>
+                  <p className="text-gray-600 text-base leading-relaxed lowercase">
+                    <strong className="text-taro">fun fact:</strong> sketches every concept on
+                    napkins first, then pretends it was all digital
                   </p>
                   <div className="pt-2">
                     <a

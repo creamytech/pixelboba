@@ -86,16 +86,16 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-display text-3xl font-bold mb-4">stay in the loop</h3>
+              <h3 className="font-display text-3xl font-bold mb-4">want the tea? 🧋</h3>
               <p className="text-gray-400 mb-8">
-                get updates on our latest work, industry insights, and exclusive behind-the-scenes
-                content.
+                get fresh insights on web design, our latest projects, and the occasional boba meme.
+                straight to your inbox.
               </p>
 
               {submitStatus === 'success' ? (
                 <div className="bg-taro/20 border border-taro/30 rounded-lg p-4 mb-6">
-                  <p className="text-white font-medium">thanks for subscribing! 🧋</p>
-                  <p className="text-gray-300 text-sm">check your email for a welcome message.</p>
+                  <p className="text-white font-medium">you&apos;re in! 🧋</p>
+                  <p className="text-gray-300 text-sm">check your inbox for the good stuff.</p>
                 </div>
               ) : (
                 <form
@@ -123,7 +123,7 @@ export default function Footer() {
 
               {submitStatus === 'error' && (
                 <div className="mt-4 text-red-400 text-sm">
-                  something went wrong. please try again or email hello@pixelboba.com
+                  oops, spilled the boba. try again or email us at hello@pixelboba.com
                 </div>
               )}
 

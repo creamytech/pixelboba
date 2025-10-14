@@ -131,10 +131,11 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
-                ready to start?
+                let&apos;s brew something together
               </h1>
               <p className="text-xl md:text-2xl text-gray-700 mb-12 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
-                use our project form to get a custom proposal within 24 hours.
+                tell us about your project. we&apos;ll send you a custom proposal within 24 hours.
+                no calls, no pressure.
               </p>
 
               {/* Primary CTA */}
@@ -156,8 +157,8 @@ export default function ContactPage() {
               {/* Secondary option */}
               <div className="max-w-md mx-auto bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-taro/20 shadow-md">
                 <p className="text-gray-700 mb-4 lowercase font-medium text-lg">
-                  <strong className="text-ink">have questions first?</strong> email us and
-                  we&apos;ll respond quickly.
+                  <strong className="text-ink">just browsing?</strong> shoot us an email. we love
+                  talking shop (and boba).
                 </p>
                 <a
                   href="mailto:hello@pixelboba.com"
@@ -237,12 +238,12 @@ export default function ContactPage() {
                 let&apos;s make something amazing
               </h2>
               <p className="text-xl text-gray-600 mb-6 lowercase">
-                we&apos;re taking on select projects for {year}.
+                brewing up fresh websites for {year}. your order&apos;s up next.
               </p>
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 mb-8 max-w-md mx-auto">
                 <p className="text-sm text-gray-600 lowercase">
-                  🗓️ <strong>booking now:</strong> {currentMonth.toLowerCase()} &{' '}
-                  {nextMonth.toLowerCase()} {year} spots
+                  🗓️ <strong>taking orders for:</strong> {currentMonth.toLowerCase()} &{' '}
+                  {nextMonth.toLowerCase()} {year}
                 </p>
               </div>
               <Link

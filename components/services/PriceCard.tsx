@@ -33,7 +33,8 @@ export default function PriceCard({
       whileHover={{ y: -8, scale: 1.02 }}
       className={`
         relative rounded-3xl p-6 border shadow-md w-full min-w-0
-        hover:shadow-2xl transition-all duration-300 overflow-hidden
+        hover:shadow-2xl transition-all duration-300
+        ${badge || highlighted ? 'mt-6' : ''}
         ${
           isPremium
             ? 'bg-gradient-to-br from-deep-taro via-taro to-deep-taro border-deep-taro ring-4 ring-taro/20 shadow-taro/30 hover:shadow-taro/50'

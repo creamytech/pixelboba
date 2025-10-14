@@ -19,7 +19,7 @@ const services = [
   {
     title: 'live previews',
     icon: '👀',
-    description: 'See your site come to life from day one—no waiting weeks for the big reveal',
+    description: 'See your site come to life from day one. no waiting weeks for the big reveal',
   },
 ];
 

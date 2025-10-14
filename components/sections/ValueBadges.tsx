@@ -1,21 +1,23 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Code2, Eye, MessageSquare } from 'lucide-react';
+import CodeCupIcon from '@/components/icons/CodeCupIcon';
+import StrawEyeIcon from '@/components/icons/StrawEyeIcon';
+import BubbleMessageIcon from '@/components/icons/BubbleMessageIcon';
 
 const badges = [
   {
-    icon: Code2,
+    icon: CodeCupIcon,
     label: 'Code-First Builds',
     color: 'from-taro/20 to-taro/5',
   },
   {
-    icon: Eye,
+    icon: StrawEyeIcon,
     label: 'Pixel-Perfect Previews',
     color: 'from-matcha/20 to-matcha/5',
   },
   {
-    icon: MessageSquare,
+    icon: BubbleMessageIcon,
     label: 'Async, Transparent Workflow',
     color: 'from-milk-tea to-milk-tea/50',
   },
@@ -40,7 +42,7 @@ export default function ValueBadges() {
             transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
             whileHover={{ scale: 1.05, y: -2 }}
           >
-            <Icon className="w-4 h-4 text-ink" />
+            <Icon className="w-5 h-5 text-ink" />
             <span className="text-sm font-medium text-ink">{badge.label}</span>
           </motion.div>
         );

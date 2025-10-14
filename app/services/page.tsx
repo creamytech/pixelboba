@@ -271,8 +271,8 @@ export default function ServicesPage() {
                     next.js development
                   </h3>
                   <p className="text-gray-600 mb-6 lowercase leading-relaxed">
-                    high-performance websites with modern react framework. server-side rendering and
-                    optimal seo.
+                    the espresso shot of web frameworks. bold, fast, and packs a serious punch.
+                    server-side rendering for lightning speed and seo that actually works.
                   </p>
                   <Link
                     href="/services/nextjs-development"
@@ -287,8 +287,8 @@ export default function ServicesPage() {
                     e-commerce development
                   </h3>
                   <p className="text-gray-600 mb-6 lowercase leading-relaxed">
-                    custom online stores with shopify, stripe integration, and conversion
-                    optimization.
+                    online stores that sell like cold boba on a hot day. shopify, stripe, and
+                    checkout flows smooth enough to drink through a straw.
                   </p>
                   <Link
                     href="/services/ecommerce-development"
@@ -303,7 +303,8 @@ export default function ServicesPage() {
                     saas website design
                   </h3>
                   <p className="text-gray-600 mb-6 lowercase leading-relaxed">
-                    conversion-focused websites for software companies with user onboarding flows.
+                    websites that convert visitors into customers faster than you can say &ldquo;add
+                    tapioca pearls.&rdquo; built for software companies ready to grow.
                   </p>
                   <Link
                     href="/services/saas-website-design"

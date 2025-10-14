@@ -50,7 +50,7 @@ export default function ValuePropsSection() {
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             we combine beautiful design with exceptional performance to create websites that
-            don&apos;t just look good—they work brilliantly.
+            don&apos;t just look good. they work brilliantly.
           </p>
         </motion.div>
 

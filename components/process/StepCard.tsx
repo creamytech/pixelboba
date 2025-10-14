@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Search, Palette, Rocket } from 'lucide-react';
+import BrewingCupIcon from '@/components/icons/BrewingCupIcon';
 
 interface StepCardProps {
   stepNumber: string;
@@ -12,17 +12,15 @@ interface StepCardProps {
   delay?: number;
 }
 
-const getStepIcon = (stepNumber: string) => {
-  switch (stepNumber) {
-    case '1':
-      return Search;
-    case '2':
-      return Palette;
-    case '3':
-      return Rocket;
-    default:
-      return Search;
-  }
+const getBrewingLevel = (stepNumber: string) => {
+  const levels: { [key: string]: number } = {
+    '1': 20, // shake: define the flavor
+    '2': 50, // brew: design meets code
+    '3': 75, // pop: review your build live
+    '4': 95, // launch: go public
+    '5': 100, // refill: keep it fresh
+  };
+  return levels[stepNumber] || 20;
 };
 
 export default function StepCard({
@@ -33,15 +31,15 @@ export default function StepCard({
   timing,
   delay = 0,
 }: StepCardProps) {
-  const StepIcon = getStepIcon(stepNumber);
+  const brewingLevel = getBrewingLevel(stepNumber);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      whileHover={{ y: -4 }}
-      className="bg-white rounded-xl p-8 shadow-sm border border-ink/10 relative overflow-hidden hover:shadow-lg transition-all duration-300"
+      whileHover={{ y: -4, scale: 1.02 }}
+      className="bg-white rounded-xl p-8 shadow-sm border border-ink/10 relative overflow-hidden hover:shadow-xl hover:shadow-taro/10 transition-all duration-300"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-taro/5 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
@@ -50,17 +48,26 @@ export default function StepCard({
       <div className="absolute top-4 right-6 w-3 h-3 bg-taro/20 rounded-full"></div>
       <div className="absolute bottom-6 right-4 w-2 h-2 bg-matcha/30 rounded-full"></div>
 
-      {/* Step header */}
+      {/* Step header with Brewing Cup */}
       <div className="relative z-10">
         <div className="flex items-start mb-6">
-          <div className="w-16 h-16 bg-gradient-to-br from-taro to-taro/80 rounded-2xl flex items-center justify-center mr-4 relative shadow-lg">
-            <StepIcon className="w-7 h-7 text-white" />
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-matcha rounded-full flex items-center justify-center">
-              <span className="text-xs font-bold text-white">{stepNumber}</span>
+          <motion.div
+            className="mr-6"
+            whileHover={{ rotate: [0, -5, 5, -5, 0] }}
+            transition={{ duration: 0.5 }}
+          >
+            <BrewingCupIcon fillLevel={brewingLevel} className="w-20 h-20 text-taro" />
+            <div className="mt-1 text-center">
+              <span className="text-xs font-bold text-taro">{brewingLevel}%</span>
             </div>
-          </div>
+          </motion.div>
           <div className="flex-1 pt-2">
-            <h3 className="font-display text-2xl font-bold text-ink lowercase">{title}</h3>
+            <div className="inline-block bg-taro text-white text-xs font-bold px-2 py-1 rounded-full mb-2">
+              step {stepNumber}
+            </div>
+            <h3 className="font-display text-2xl font-bold text-ink lowercase leading-tight">
+              {title}
+            </h3>
           </div>
         </div>
       </div>
