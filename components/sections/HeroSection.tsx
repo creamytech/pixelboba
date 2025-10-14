@@ -43,12 +43,12 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <motion.h1
-              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-6 leading-tight"
+              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-6 leading-tight lowercase"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Modern Websites That Look{' '}
+              modern websites that look{' '}
               <motion.span
                 className="relative inline-block"
                 animate={{
@@ -61,20 +61,20 @@ export default function HeroSection() {
                   times: [0, 0.25, 0.5, 0.75, 1],
                 }}
               >
-                <span className="relative z-10">Sharp</span>
+                <span className="relative z-10">sharp</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
               </motion.span>
-              <span className="text-taro">,</span> Load Fast, and Convert Better
+              <span className="text-taro">,</span> load fast, and convert better
               <span className="text-taro">.</span>
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-xl text-gray-700 font-medium mb-8 px-4 max-w-2xl mx-auto"
+              className="text-lg md:text-xl text-gray-700 font-medium mb-8 px-4 max-w-2xl mx-auto lowercase"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              No calls. No confusion. Just clean code, real previews, and results that pop.
+              no calls. no confusion. just clean code, real previews, and results that pop.
             </motion.p>
 
             {/* Value Badges */}
@@ -82,12 +82,12 @@ export default function HeroSection() {
 
             {/* Trust Statement */}
             <motion.p
-              className="text-sm md:text-base text-gray-600 mb-8 px-4"
+              className="text-sm md:text-base text-gray-600 mb-8 px-4 lowercase"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              Trusted by 30+ businesses for performance-driven websites.
+              trusted by 30+ businesses for performance-driven websites.
             </motion.p>
 
             <motion.div
