@@ -37,7 +37,7 @@ export default function Header() {
         isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-border' : 'bg-transparent'
       )}
       initial={{ y: -100 }}
-      animate={{ y: 0, scale: isScrolled ? 0.98 : 1 }}
+      animate={{ y: 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
       <div
