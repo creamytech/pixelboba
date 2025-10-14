@@ -111,16 +111,6 @@ export default function HeroSection() {
               confusion.
             </motion.p>
 
-            {/* Trust Statement */}
-            <motion.p
-              className="text-sm md:text-base text-gray-600 mb-8 lowercase"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              trusted by 30+ businesses for performance-driven websites.
-            </motion.p>
-
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20 }}

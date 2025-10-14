@@ -5,26 +5,26 @@ import { Star } from 'lucide-react';
 
 const testimonials = [
   {
-    quote: 'Pixel Boba transformed our online presence. Our conversions increased by 60%.',
+    quote: 'Pixel Boba transformed our online presence. the results speak for themselves.',
     author: 'Care on Call',
     role: 'Healthcare Platform',
     rating: 5,
   },
   {
-    quote: 'The no-meetings process was refreshing. We got a beautiful site in record time.',
+    quote: 'the no-meetings process was refreshing. we got a beautiful site in record time.',
     author: 'Real Client',
     role: 'E-commerce Business',
     rating: 5,
   },
   {
     quote:
-      'Best web design experience we have had. Professional, fast, and the results speak for themselves.',
+      'best web design experience we have had. professional, fast, and exactly what we needed.',
     author: 'Real Client',
     role: 'SaaS Startup',
     rating: 5,
   },
   {
-    quote: 'They delivered exactly what we needed without any of the usual back-and-forth.',
+    quote: 'they delivered exactly what we needed without any of the usual back-and-forth.',
     author: 'Real Client',
     role: 'Local Service Business',
     rating: 5,
@@ -100,7 +100,7 @@ export default function SocialProofSection() {
           </motion.div>
         </div>
 
-        {/* Stats row */}
+        {/* Value Props */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -109,20 +109,26 @@ export default function SocialProofSection() {
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
         >
           <div className="text-center">
-            <div className="text-4xl font-bold text-taro mb-2">100%</div>
-            <p className="text-sm text-gray-600 lowercase">client satisfaction</p>
+            <div className="text-3xl font-bold text-taro mb-2 lowercase">🧋</div>
+            <p className="text-sm text-gray-600 lowercase font-medium">
+              smooth process, zero stress
+            </p>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-taro mb-2">&lt;24 Hours</div>
-            <p className="text-sm text-gray-600 lowercase">response time</p>
+            <div className="text-3xl font-bold text-taro mb-2 lowercase">⚡</div>
+            <p className="text-sm text-gray-600 lowercase font-medium">
+              fast responses, faster delivery
+            </p>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-taro mb-2">100/100</div>
-            <p className="text-sm text-gray-600 lowercase">lighthouse scores</p>
+            <div className="text-3xl font-bold text-taro mb-2 lowercase">💯</div>
+            <p className="text-sm text-gray-600 lowercase font-medium">lighthouse perfect scores</p>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-taro mb-2">2-8 Weeks</div>
-            <p className="text-sm text-gray-600 lowercase">average delivery</p>
+            <div className="text-3xl font-bold text-taro mb-2 lowercase">👀</div>
+            <p className="text-sm text-gray-600 lowercase font-medium">
+              live previews from day one
+            </p>
           </div>
         </motion.div>
       </div>
