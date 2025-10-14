@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -9,6 +9,11 @@ export default function ScrollProgress() {
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Convert scroll progress (0-1) to pixel position within the bar
+  // Bar height is 256px (h-64), pearl is 16px (w-4), so range is 0 to 240px
+  const pearlTop = useTransform(scrollYProgress, [0, 1], [0, 240]);
+  const smoothPearlTop = useSpring(pearlTop, { stiffness: 100, damping: 30 });
 
   return (
     <>
@@ -31,7 +36,7 @@ export default function ScrollProgress() {
           <motion.div
             className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-taro rounded-full shadow-lg"
             style={{
-              top: useSpring(scrollYProgress, { stiffness: 100, damping: 30 }),
+              top: smoothPearlTop,
             }}
             animate={{
               scale: [1, 1.2, 1],
