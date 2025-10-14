@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import Lottie from 'lottie-react';
 import { useState, useEffect } from 'react';
+import OurValues from '@/components/about/OurValues';
 
 // Floating Pearl Component with accessibility support
 const FloatingPearl = ({
@@ -283,6 +284,9 @@ export default function AboutPageClient() {
           </div>
         </div>
       </section>
+
+      {/* Our Values Section */}
+      <OurValues />
 
       {/* Pearl Divider */}
       <div className="flex justify-center py-8">

@@ -8,6 +8,9 @@ import HowItWorks from '@/components/services/HowItWorks';
 import StartProjectForm from '@/components/form/StartProjectForm';
 import PlatformsSection from '@/components/sections/PlatformsSection';
 import ProcessPreview from '@/components/services/ProcessPreview';
+import WhatsIncluded from '@/components/services/WhatsIncluded';
+import ComparisonTable from '@/components/services/ComparisonTable';
+import BrewStrength from '@/components/services/BrewStrength';
 
 export const metadata: Metadata = {
   title: 'Web Design Services & Pricing | Fort Lauderdale',
@@ -130,6 +133,9 @@ export default function ServicesPage() {
           </div>
         </section>
 
+        {/* What's Included Section */}
+        <WhatsIncluded />
+
         {/* Pricing Cards */}
         <section className="pb-20">
           <div className="container mx-auto px-4">
@@ -245,6 +251,9 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
+
+        {/* Comparison Table */}
+        <ComparisonTable />
 
         {/* Process Preview */}
         <ProcessPreview />

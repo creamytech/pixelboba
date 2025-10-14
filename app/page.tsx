@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
+import StatsBar from '@/components/sections/StatsBar';
 import SocialProofSection from '@/components/sections/SocialProofSection';
 import ServicesPreview from '@/components/sections/ServicesPreview';
 import CodeFirstSection from '@/components/sections/CodeFirstSection';
@@ -9,6 +10,7 @@ import ProcessSection from '@/components/sections/ProcessSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import CTASection from '@/components/sections/CTASection';
 import StickyCTA from '@/components/common/StickyCTA';
+import ScrollProgress from '@/components/common/ScrollProgress';
 
 export const metadata: Metadata = {
   title: 'Fort Lauderdale Web Design & Development | Local South Florida',
@@ -45,9 +47,11 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="min-h-screen">
+      <ScrollProgress />
       <Header />
       <main>
         <HeroSection />
+        <StatsBar />
         <SocialProofSection />
         <ServicesPreview />
         {/* <TestimonialsSection /> */}

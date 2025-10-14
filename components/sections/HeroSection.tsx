@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import FloatingPearls from '@/components/common/FloatingPearls';
 import ValueBadges from '@/components/sections/ValueBadges';
+import LighthouseBadges from '@/components/sections/LighthouseBadges';
 import Link from 'next/link';
 
 export default function HeroSection() {
@@ -30,6 +31,9 @@ export default function HeroSection() {
       {/* Floating Pearls with Parallax */}
       <FloatingPearls />
 
+      {/* Lighthouse Badges */}
+      <LighthouseBadges />
+
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
@@ -45,10 +49,21 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               Modern Websites That Look{' '}
-              <span className="relative inline-block">
+              <motion.span
+                className="relative inline-block"
+                animate={{
+                  rotate: [0, -1, 1, -1, 0],
+                  scale: [1, 1.02, 1],
+                }}
+                transition={{
+                  duration: 0.3,
+                  delay: 1.5,
+                  times: [0, 0.25, 0.5, 0.75, 1],
+                }}
+              >
                 <span className="relative z-10">Sharp</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
-              </span>
+              </motion.span>
               <span className="text-taro">,</span> Load Fast, and Convert Better
               <span className="text-taro">.</span>
             </motion.h1>
