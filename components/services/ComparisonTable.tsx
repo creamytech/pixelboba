@@ -97,7 +97,7 @@ export default function ComparisonTable() {
         </div>
 
         {/* Desktop View - Table */}
-        <div className="hidden lg:block overflow-x-auto">
+        <div className="hidden lg:block overflow-x-auto pt-12">
           <motion.table
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -117,10 +117,10 @@ export default function ComparisonTable() {
                       tier.popular ? 'border-taro' : 'border-ink/10'
                     }`}
                   >
-                    <div className="relative">
+                    <div className="relative pt-2">
                       {tier.popular && (
-                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                          <div className="bg-taro text-white px-3 py-1 rounded-full text-xs font-semibold lowercase">
+                        <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                          <div className="bg-taro text-white px-3 py-1 rounded-full text-xs font-semibold lowercase shadow-lg">
                             most popular
                           </div>
                         </div>
