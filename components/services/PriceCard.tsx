@@ -32,7 +32,7 @@ export default function PriceCard({
       transition={{ duration: 0.5 }}
       whileHover={{ y: -8, scale: 1.02 }}
       className={`
-        relative rounded-3xl p-6 border shadow-md
+        relative rounded-3xl p-6 border shadow-md w-full min-w-0
         hover:shadow-2xl transition-all duration-300 overflow-hidden
         ${
           isPremium

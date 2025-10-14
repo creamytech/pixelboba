@@ -137,9 +137,9 @@ export default function ServicesPage() {
         <WhatsIncluded />
 
         {/* Pricing Cards */}
-        <section className="pb-20">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <section className="pb-20 overflow-hidden">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[1600px] mx-auto">
               <PriceCard
                 title="starter brew"
                 price="starting at $1,500"
