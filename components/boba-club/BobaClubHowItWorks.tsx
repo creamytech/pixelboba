@@ -68,11 +68,23 @@ export default function BobaClubHowItWorks() {
               className="relative"
             >
               {/* Card */}
-              <div className="bg-white border-4 border-ink rounded-3xl p-8 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:translate-x-1 hover:translate-y-1 transition-all duration-200 h-full flex flex-col">
+              <motion.div
+                className="bg-white border-4 border-ink rounded-3xl p-8 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] h-full flex flex-col group cursor-pointer"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '12px 12px 0px 0px rgba(15,23,42,1)',
+                  y: -4,
+                }}
+                transition={{ duration: 0.2 }}
+              >
                 {/* Number badge */}
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-taro text-white rounded-full font-black text-2xl mb-6 shadow-lg">
+                <motion.div
+                  className="inline-flex items-center justify-center w-16 h-16 bg-taro text-white rounded-full font-black text-2xl mb-6 shadow-lg"
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                >
                   {step.number}
-                </div>
+                </motion.div>
 
                 {/* Title */}
                 <div className="flex items-center gap-2 mb-3">
@@ -82,7 +94,7 @@ export default function BobaClubHowItWorks() {
 
                 {/* Description */}
                 <p className="text-ink/60 font-medium text-lg">{step.description}</p>
-              </div>
+              </motion.div>
 
               {/* Arrow connector with animated boba pearl for desktop */}
               {index < steps.length - 1 && (

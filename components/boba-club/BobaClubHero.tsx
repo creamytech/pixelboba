@@ -74,7 +74,7 @@ export default function BobaClubHero() {
 
         {/* Massive headline */}
         <motion.h1
-          className="font-display text-6xl md:text-8xl lg:text-9xl font-black text-ink mb-8 leading-[0.9]"
+          className="font-display text-6xl md:text-8xl lg:text-[10rem] font-black text-ink mb-6 leading-[0.85]"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -84,9 +84,30 @@ export default function BobaClubHero() {
           <span className="italic text-taro">tap.</span>
         </motion.h1>
 
+        {/* Explainer tagline */}
+        <motion.p
+          className="text-xl md:text-2xl text-ink font-bold mb-4 max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          Unlimited design requests for creators and brands at a flat monthly rate
+        </motion.p>
+
+        {/* Pricing surface */}
+        <motion.div
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-taro/10 to-matcha/10 border-2 border-ink/20 rounded-full px-5 py-2 mb-8"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+        >
+          <span className="font-display text-2xl md:text-3xl font-black text-ink">$3,000</span>
+          <span className="text-sm text-ink/60 font-medium">/month</span>
+        </motion.div>
+
         {/* Punchy subheadline */}
         <motion.p
-          className="text-2xl md:text-3xl text-ink/70 mb-12 max-w-3xl mx-auto font-medium"
+          className="text-lg md:text-xl text-ink/70 mb-12 max-w-3xl mx-auto font-medium"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -105,11 +126,12 @@ export default function BobaClubHero() {
           <Button
             asChild
             size="lg"
-            className="group bg-ink hover:bg-ink/90 text-white px-12 py-8 text-xl font-bold rounded-full shadow-[8px_8px_0px_0px_rgba(167,139,250,1)] hover:shadow-[4px_4px_0px_0px_rgba(167,139,250,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1"
+            className="group bg-gradient-to-r from-taro to-deep-taro hover:from-deep-taro hover:to-taro text-white px-14 py-8 text-xl font-black rounded-full shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1 border-4 border-ink relative overflow-hidden"
           >
-            <Link href="/start">
-              see plans
-              <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-2">
+            <Link href="/start" className="relative z-10 flex items-center gap-2">
+              <span className="w-3 h-3 bg-white rounded-full animate-pulse" />
+              <span>join boba club</span>
+              <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-2">
                 →
               </span>
             </Link>
@@ -119,7 +141,7 @@ export default function BobaClubHero() {
             asChild
             variant="outline"
             size="lg"
-            className="border-4 border-ink text-ink hover:bg-ink hover:text-white px-12 py-8 text-xl font-bold rounded-full transition-all duration-200"
+            className="border-4 border-ink text-ink hover:bg-ink hover:text-white px-14 py-8 text-xl font-bold rounded-full transition-all duration-200"
           >
             <a href="mailto:hello@pixelboba.com">contact us</a>
           </Button>

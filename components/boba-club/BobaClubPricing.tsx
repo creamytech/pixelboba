@@ -172,25 +172,65 @@ export default function BobaClubPricing() {
                   </div>
                 </div>
 
-                {/* Join button inside dark card */}
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full bg-matcha hover:bg-matcha/90 text-ink py-7 text-lg font-bold rounded-full transition-all duration-200"
-                >
-                  <Link href="/start">join today</Link>
-                </Button>
+                {/* Join button inside dark card with shimmer */}
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="w-full bg-matcha hover:bg-matcha/90 text-ink py-7 text-lg font-bold rounded-full transition-all duration-200 relative overflow-hidden group/btn"
+                  >
+                    <Link href="/start" className="relative z-10">
+                      join today
+                      {/* Shimmer effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -z-10"
+                        animate={{
+                          x: ['-200%', '200%'],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: 'linear',
+                          repeatDelay: 1,
+                        }}
+                      />
+                    </Link>
+                  </Button>
+                </motion.div>
               </div>
             </motion.div>
           </div>
         </div>
+
+        {/* Value Comparison */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="max-w-4xl mx-auto mt-16 mb-16 text-center"
+        >
+          <div className="bg-gradient-to-r from-taro/10 via-matcha/10 to-taro/10 border-4 border-ink rounded-3xl p-8 relative overflow-hidden">
+            {/* Decorative corner element */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-taro/20 rounded-bl-full" />
+
+            <h3 className="font-display text-2xl md:text-3xl font-black text-ink mb-4">
+              The Smart Choice for Growing Brands
+            </h3>
+            <p className="text-lg md:text-xl text-ink/70 font-medium max-w-2xl mx-auto">
+              Hiring a senior designer costs{' '}
+              <span className="font-bold text-ink">$90K+ per year</span> plus benefits. Boba Club is
+              just <span className="font-bold text-taro">$36K per year</span> — and you can pause
+              anytime.
+            </p>
+          </div>
+        </motion.div>
 
         {/* Bottom perks */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="max-w-7xl mx-auto mt-16 grid md:grid-cols-2 gap-6"
+          className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6"
         >
           {/* Pause anytime */}
           <div className="bg-white rounded-3xl p-10 border-4 border-ink">
