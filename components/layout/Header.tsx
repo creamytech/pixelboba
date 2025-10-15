@@ -35,11 +35,13 @@ export default function Header() {
     <motion.header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-border' : 'bg-transparent'
+        isScrolled
+          ? 'bg-background/95 backdrop-blur-lg border-b border-border shadow-sm'
+          : 'bg-background/80 backdrop-blur-sm'
       )}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      initial={{ y: 0, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div
         className={cn(
