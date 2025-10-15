@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
+import MembershipCard from './MembershipCard';
 
 const features = [
   'unlimited design requests',
@@ -44,6 +45,9 @@ export default function BobaClubPricing() {
               membership
             </div>
           </motion.div>
+
+          {/* Membership Card */}
+          <MembershipCard />
 
           {/* Huge price */}
           <motion.div
