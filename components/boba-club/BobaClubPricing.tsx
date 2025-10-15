@@ -71,7 +71,7 @@ export default function BobaClubPricing() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="relative z-10"
             >
-              <div className="bg-ink rounded-3xl p-10 shadow-2xl relative overflow-hidden flex flex-col group">
+              <div className="bg-gradient-to-br from-deep-taro to-taro rounded-3xl p-10 shadow-2xl relative overflow-hidden flex flex-col group border-4 border-ink">
                 {/* Animated spotlight effect */}
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
@@ -91,9 +91,9 @@ export default function BobaClubPricing() {
 
                 {/* Pulsing glow effect */}
                 <motion.div
-                  className="absolute -inset-4 bg-taro/20 rounded-3xl blur-2xl -z-10"
+                  className="absolute -inset-4 bg-gradient-to-br from-taro/40 to-matcha/30 rounded-3xl blur-2xl -z-10"
                   animate={{
-                    opacity: [0.3, 0.6, 0.3],
+                    opacity: [0.4, 0.7, 0.4],
                     scale: [0.95, 1.05, 0.95],
                   }}
                   transition={{
