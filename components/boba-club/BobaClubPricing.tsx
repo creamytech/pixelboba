@@ -45,23 +45,16 @@ export default function BobaClubPricing() {
           </h2>
         </motion.div>
 
-        {/* Simplified two-column layout */}
-        <div className="max-w-6xl mx-auto relative">
-          <div className="grid lg:grid-cols-[320px,1fr] gap-6 items-start">
-            {/* Left Column: Compact card preview */}
+        {/* Two-column layout with larger card */}
+        <div className="max-w-7xl mx-auto relative">
+          <div className="grid lg:grid-cols-[480px,1fr] gap-8 items-center">
+            {/* Left Column: Larger membership card */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              initial={{ opacity: 0, x: -30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-4"
             >
-              {/* Smaller membership card */}
-              <div className="transform scale-75 origin-top">
-                <MembershipCard />
-              </div>
-              <p className="text-center text-sm text-ink/60 font-medium -mt-8">
-                <span className="italic text-taro">hover</span> to see the magic ✨
-              </p>
+              <MembershipCard />
             </motion.div>
 
             {/* Right Column: Main pricing card */}
