@@ -2,46 +2,73 @@
 
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 const faqs = [
   {
-    question: 'How fast will I get designs?',
+    question: 'How fast will I receive my designs?',
     answer:
       'Most requests are completed in 24-48 business hours. Simple tasks like social graphics may be faster, while complex projects like full landing pages may take the full 48 hours or slightly longer depending on scope.',
   },
   {
-    question: 'Can I submit unlimited requests?',
+    question: 'How does onboarding work?',
     answer:
-      'Yes. Add as many as you like. We complete one at a time from your queue. This ensures each project gets our full attention and maintains our high quality standards.',
+      'After you subscribe, you will receive an invite to our project board where you can submit your first request. We will schedule a quick kickoff to understand your brand and preferences.',
   },
   {
-    question: 'What happens if I pause?',
+    question: 'Who are the designers?',
+    answer:
+      'Your designs are created by our founder and lead designer with 10+ years of experience. Additional specialists join for specific needs like illustration or animation.',
+  },
+  {
+    question: 'Is there a limit to how many requests I can make?',
+    answer:
+      'No limit. Add as many as you like. We complete one at a time from your queue. This ensures each project gets our full attention and maintains our high quality standards.',
+  },
+  {
+    question: 'How does the pause feature work?',
     answer:
       'Your unused time carries over so you never lose days. You can pause your subscription at any time and resume whenever you need design work again. Perfect for seasonal businesses or project-based needs.',
   },
   {
-    question: 'Do I own the work?',
+    question: 'How do you handle larger requests?',
     answer:
-      'Absolutely. Every design is fully yours forever. You receive all source files, and we transfer complete ownership and rights to you. Use them however you want, commercially or personally.',
+      'Complex projects are broken into milestones. We deliver iteratively so you can provide feedback and ensure we are heading in the right direction before completing the full scope.',
   },
   {
-    question: 'What tools do you use?',
+    question: 'What programs do you design in?',
     answer:
       'Figma, Illustrator, Photoshop, and Webflow. We use industry-standard tools to ensure compatibility and professional results. All final files are delivered in formats you can easily use.',
   },
   {
-    question: 'Can I use it for one month only?',
+    question: 'How does Webflow development work?',
     answer:
-      'Yes. Many brands join for a single month to launch or rebrand. There are no long-term contracts or commitments. Cancel anytime, even after your first month.',
+      'We can build your designs directly in Webflow, including responsive layouts, interactions, and CMS setup. You receive a fully functional website ready to publish.',
   },
   {
-    question: 'What is excluded?',
+    question: 'How will I request designs?',
+    answer:
+      'Submit requests through our project board. Include as much detail as you like - references, sketches, brand guidelines. We will clarify anything we need before starting.',
+  },
+  {
+    question: "What if I don't like the design?",
+    answer:
+      'We revise until you are happy. Your feedback guides the work. Most projects need 1-2 rounds of revisions. We want you to love the final result.',
+  },
+  {
+    question: "Are there any requests you don't support?",
     answer:
       '3D rendering, long-form video, and large print publications are not covered. We focus on 2D design work including branding, UI/UX, web design, and marketing materials.',
   },
   {
-    question: 'Do you offer refunds?',
+    question: 'What if I only have a single request?',
+    answer:
+      'That is okay. Many brands join for a single month to launch or rebrand. There are no long-term contracts or commitments. Cancel anytime, even after your first month.',
+  },
+  {
+    question: 'Are there any refunds?',
     answer:
       'You can request a 75% refund within your first week if you are not satisfied. We want to make sure Boba Club is the right fit for you with minimal risk.',
   },
@@ -57,169 +84,128 @@ export default function BobaClubFAQ() {
   };
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white relative overflow-hidden">
-      {/* Background pearls */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-taro/5"
-            style={{
-              width: 60 + i * 20,
-              height: 60 + i * 20,
-              left: `${5 + i * 12}%`,
-              top: `${10 + i * 10}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 5 + i * 0.5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-      </div>
-
+    <section ref={sectionRef} className="py-32 bg-milk-tea/30 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-4">
-            Everything You Want to Know
+          <h2 className="font-display text-5xl md:text-7xl font-black text-ink mb-6">
+            <span className="italic text-taro">Frequently</span> asked
+            <br />
+            questions
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Common questions about Boba Club answered.
-          </p>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
-            >
-              <div className="bg-white rounded-2xl border-2 border-taro/10 hover:border-taro/30 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-lg">
-                {/* Question Button */}
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full text-left p-6 flex items-center justify-between gap-4 transition-colors duration-200 hover:bg-taro/5"
-                >
-                  <div className="flex items-center gap-4 flex-1">
-                    {/* Pearl drop indicator */}
-                    <div className="relative w-8 h-8 flex-shrink-0">
-                      <AnimatePresence mode="wait">
-                        {openIndex === index ? (
-                          <motion.div
-                            key="open"
-                            initial={{ y: -20, opacity: 0, scale: 0 }}
-                            animate={{ y: 0, opacity: 1, scale: 1 }}
-                            exit={{ y: 20, opacity: 0, scale: 0 }}
-                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                            className="w-8 h-8 rounded-full bg-gradient-to-br from-taro to-deep-taro flex items-center justify-center"
-                          >
-                            <div className="w-4 h-4 rounded-full bg-white/30" />
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key="closed"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            exit={{ scale: 0 }}
-                            className="w-8 h-8 rounded-full border-2 border-taro/30 flex items-center justify-center group-hover:border-taro/50 transition-colors duration-200"
-                          >
-                            <div className="w-3 h-3 rounded-full bg-taro/20 group-hover:bg-taro/40 transition-colors duration-200" />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      {/* Pearl drop animation on open */}
-                      <AnimatePresence>
-                        {openIndex === index && (
-                          <>
-                            {[...Array(3)].map((_, i) => (
-                              <motion.div
-                                key={i}
-                                className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-taro/60"
-                                initial={{ y: 0, opacity: 1 }}
-                                animate={{ y: 40, opacity: 0 }}
-                                transition={{
-                                  duration: 0.6,
-                                  delay: i * 0.1,
-                                  ease: 'easeIn',
-                                }}
-                              />
-                            ))}
-                          </>
-                        )}
-                      </AnimatePresence>
-                    </div>
-
-                    <h3 className="font-semibold text-lg text-ink pr-4">{faq.question}</h3>
-                  </div>
-
-                  {/* Chevron */}
-                  <motion.div
-                    animate={{ rotate: openIndex === index ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex-shrink-0"
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1fr,420px] gap-12 items-start">
+          {/* Left: FAQ List */}
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="group"
+              >
+                <div className="bg-white rounded-2xl border-4 border-ink overflow-hidden hover:shadow-xl transition-shadow duration-200">
+                  {/* Question Button */}
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="w-full text-left p-6 flex items-center justify-between gap-4 transition-colors duration-200"
                   >
-                    <ChevronDown className="w-6 h-6 text-taro" />
-                  </motion.div>
-                </button>
+                    <h3 className="font-medium text-lg text-ink pr-4">{faq.question}</h3>
 
-                {/* Answer */}
-                <AnimatePresence>
-                  {openIndex === index && (
+                    {/* Chevron */}
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{
-                        height: { duration: 0.3, ease: 'easeInOut' },
-                        opacity: { duration: 0.2 },
-                      }}
-                      className="overflow-hidden"
+                      animate={{ rotate: openIndex === index ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex-shrink-0"
                     >
-                      <motion.div
-                        initial={{ y: -10 }}
-                        animate={{ y: 0 }}
-                        exit={{ y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="px-6 pb-6 pt-2 pl-20"
-                      >
-                        {/* Splash effect */}
-                        <motion.div
-                          initial={{ scale: 0, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.4, type: 'spring' }}
-                          className="relative"
-                        >
-                          {/* Ripple effect */}
-                          <motion.div
-                            className="absolute -top-4 -left-4 w-12 h-12 border-2 border-taro/20 rounded-full"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 2, opacity: 0 }}
-                            transition={{ duration: 0.6 }}
-                          />
-
-                          <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                        </motion.div>
-                      </motion.div>
+                      <ChevronDown className="w-6 h-6 text-ink" />
                     </motion.div>
-                  )}
-                </AnimatePresence>
+                  </button>
+
+                  {/* Answer */}
+                  <AnimatePresence>
+                    {openIndex === index && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{
+                          height: { duration: 0.3, ease: 'easeInOut' },
+                          opacity: { duration: 0.2 },
+                        }}
+                        className="overflow-hidden border-t-4 border-ink"
+                      >
+                        <div className="px-6 py-6">
+                          <p className="text-ink/70 leading-relaxed font-medium">{faq.answer}</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Right: Taro Contact Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="lg:sticky lg:top-24"
+          >
+            <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-500 rounded-3xl p-10 border-4 border-ink shadow-[12px_12px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
+              {/* Decorative circles */}
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full" />
+              <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-black/10 rounded-full" />
+
+              {/* Content */}
+              <div className="relative z-10">
+                {/* Taro Image */}
+                <div className="mb-8 flex justify-center">
+                  <div className="relative w-32 h-32 rounded-full border-4 border-ink shadow-xl overflow-hidden bg-white">
+                    <Image
+                      src="/pfp.png"
+                      alt="Taro - Pixel Boba mascot"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Text */}
+                <h3 className="font-display text-4xl font-black text-white text-center mb-3 leading-tight">
+                  Get in touch
+                  <br />
+                  with Taro
+                </h3>
+
+                <p className="text-center text-white/90 font-medium text-lg mb-8">
+                  Prefer to email?
+                </p>
+
+                {/* Email Button */}
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full bg-white hover:bg-white/90 text-ink py-6 text-lg font-bold rounded-full transition-all duration-200 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5"
+                >
+                  <a
+                    href="mailto:hello@pixelboba.com"
+                    className="flex items-center justify-center gap-2"
+                  >
+                    <span>hello@pixelboba.com</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </a>
+                </Button>
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
