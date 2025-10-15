@@ -159,10 +159,10 @@ export default function BobaClubFAQ() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="lg:sticky lg:top-24"
           >
-            <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-500 rounded-3xl p-10 border-4 border-ink shadow-[12px_12px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
+            <div className="bg-gradient-to-br from-taro via-deep-taro to-matcha rounded-3xl p-10 border-4 border-ink shadow-[12px_12px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
               {/* Decorative circles */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full" />
-              <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-black/10 rounded-full" />
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-matcha/20 rounded-full" />
+              <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-white/10 rounded-full" />
 
               {/* Content */}
               <div className="relative z-10">
