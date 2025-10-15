@@ -59,8 +59,7 @@ const processSteps = [
   {
     stepNumber: '3',
     title: 'pop: review your build live',
-    description:
-      'test your site, provide feedback, and fine-tune every detail until it&apos;s perfect.',
+    description: "test your site, provide feedback, and fine-tune every detail until it's perfect.",
     whatYouGet: 'live preview, feedback rounds, and final adjustments',
     timing: '3–5 days',
   },
