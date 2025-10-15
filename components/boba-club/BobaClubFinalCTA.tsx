@@ -90,7 +90,7 @@ export default function BobaClubFinalCTA() {
               asChild
               variant="outline"
               size="lg"
-              className="border-4 border-white text-white hover:bg-white hover:text-ink px-14 py-8 text-xl font-bold rounded-full transition-all duration-200"
+              className="bg-white border-4 border-white text-ink hover:bg-milk-tea px-14 py-8 text-xl font-bold rounded-full transition-all duration-200"
             >
               <a href="mailto:hello@pixelboba.com">contact us</a>
             </Button>
