@@ -86,9 +86,40 @@ export default function BobaClubPricing() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="w-full lg:flex-1 lg:-ml-24 relative z-10"
             >
-              <div className="bg-ink rounded-3xl p-10 lg:pl-32 shadow-2xl relative overflow-hidden min-h-[640px] flex flex-col">
+              <div className="bg-ink rounded-3xl p-10 lg:pl-32 shadow-2xl relative overflow-hidden min-h-[640px] flex flex-col group">
+                {/* Animated spotlight effect */}
+                <motion.div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 50% 50%, rgba(167,139,250,0.15) 0%, transparent 70%)',
+                  }}
+                  animate={{
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+
+                {/* Pulsing glow effect */}
+                <motion.div
+                  className="absolute -inset-4 bg-taro/20 rounded-3xl blur-2xl -z-10"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                    scale: [0.95, 1.05, 0.95],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+
                 {/* Header */}
-                <div className="mb-6 flex items-center justify-between">
+                <div className="mb-6 flex items-center justify-between relative z-10">
                   <h3 className="font-bold text-white text-lg">monthly club</h3>
                   <div className="text-white/60 text-xs font-medium uppercase tracking-wider">
                     pause or cancel anytime

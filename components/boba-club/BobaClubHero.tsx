@@ -27,6 +27,38 @@ export default function BobaClubHero() {
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
       />
 
+      {/* Floating boba pearls */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-12 h-12 rounded-full"
+          style={{
+            background:
+              i % 3 === 0
+                ? 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)'
+                : i % 3 === 1
+                  ? 'linear-gradient(135deg, #86efac 0%, #22c55e 100%)'
+                  : 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+            left: `${10 + i * 12}%`,
+            top: `${15 + (i % 3) * 25}%`,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1), inset 0 -4px 8px rgba(0,0,0,0.2)',
+          }}
+          animate={{
+            y: [0, -30, 0],
+            x: [0, i % 2 === 0 ? 15 : -15, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 4 + i * 0.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: i * 0.2,
+          }}
+        >
+          <div className="absolute inset-2 bg-white/30 rounded-full blur-sm" />
+        </motion.div>
+      ))}
+
       <div className="container mx-auto px-4 relative z-10 text-center max-w-5xl">
         {/* Big, bold badge */}
         <motion.div

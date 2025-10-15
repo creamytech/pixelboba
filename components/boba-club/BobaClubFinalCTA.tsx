@@ -44,10 +44,27 @@ export default function BobaClubFinalCTA() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-2xl md:text-3xl text-white/70 mb-16 font-medium max-w-2xl mx-auto"
+            className="text-2xl md:text-3xl text-white/70 mb-8 font-medium max-w-2xl mx-auto"
           >
             join boba club and start getting unlimited design work today
           </motion.p>
+
+          {/* Urgency badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="inline-flex items-center gap-2 bg-taro/20 border-2 border-taro/40 rounded-full px-6 py-3 mb-16"
+          >
+            <motion.div
+              className="w-2 h-2 bg-taro rounded-full"
+              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <span className="text-white font-bold text-sm">
+              Limited spots available — we only take 5 new members per month
+            </span>
+          </motion.div>
 
           {/* Big CTA buttons */}
           <motion.div
