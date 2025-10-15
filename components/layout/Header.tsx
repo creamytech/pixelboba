@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 const navigation = [
   { name: 'work', href: '/work' },
   { name: 'services', href: '/services' },
+  { name: 'boba club', href: '/boba-club' },
   { name: 'process', href: '/process' },
   { name: 'about', href: '/about' },
 ];
