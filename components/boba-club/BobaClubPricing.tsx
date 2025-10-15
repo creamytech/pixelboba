@@ -4,154 +4,190 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Check } from 'lucide-react';
 import MembershipCard from './MembershipCard';
 
 const features = [
-  'unlimited design requests',
-  'one active task at a time',
-  '24-48 hour delivery',
-  'unlimited brands & projects',
-  'up to 2 users',
-  'pause or cancel anytime',
+  'one request at a time',
+  'avg. 48 hour delivery',
+  'unlimited brands',
+  'webflow development',
 ];
+
+const perks = ['unlimited stock photos', 'up to 2 users', 'pause or cancel anytime'];
 
 export default function BobaClubPricing() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   return (
-    <section ref={sectionRef} className="py-32 bg-white relative overflow-hidden">
-      {/* Background blobs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-taro/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-matcha/10 rounded-full blur-3xl" />
-
+    <section ref={sectionRef} className="py-32 bg-milk-tea relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        {/* Big centered pricing card */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          {/* Badge */}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={isInView ? { scale: 1 } : {}}
-            transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-            className="inline-block mb-8"
-          >
-            <div className="bg-matcha text-white px-6 py-2 rounded-full font-bold text-sm shadow-lg">
-              membership
-            </div>
-          </motion.div>
-
-          {/* Membership Card */}
-          <MembershipCard />
-
-          {/* Huge price */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-12"
-          >
-            <div className="font-display text-7xl md:text-9xl font-black text-ink mb-2">
-              $3,000<span className="text-5xl md:text-7xl text-ink/40">/m</span>
-            </div>
-            <p className="text-2xl md:text-3xl text-ink/60 font-medium">pause or cancel anytime</p>
-          </motion.div>
-
-          {/* Features in two columns */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="grid md:grid-cols-2 gap-6 mb-12 max-w-2xl mx-auto"
-          >
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 text-left bg-milk-tea/50 rounded-2xl px-6 py-4 border-2 border-transparent hover:border-taro/20 transition-colors duration-200"
-              >
-                <div className="w-6 h-6 bg-taro rounded-full flex items-center justify-center flex-shrink-0">
-                  <Check className="w-4 h-4 text-white" strokeWidth={3} />
-                </div>
-                <span className="text-ink font-medium text-lg">{feature}</span>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Big CTA buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
-          >
-            <Button
-              asChild
-              size="lg"
-              className="group bg-ink hover:bg-ink/90 text-white px-14 py-8 text-xl font-bold rounded-full shadow-[8px_8px_0px_0px_rgba(167,139,250,1)] hover:shadow-[4px_4px_0px_0px_rgba(167,139,250,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1"
-            >
-              <Link href="/start">
-                get started
-                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-2">
-                  →
-                </span>
-              </Link>
-            </Button>
-
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-4 border-ink text-ink hover:bg-ink hover:text-white px-14 py-8 text-xl font-bold rounded-full transition-all duration-200"
-            >
-              <Link href="/contact">book a call</Link>
-            </Button>
-          </motion.div>
-
-          {/* Risk-free note */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.9 }}
-            className="inline-flex items-center gap-3 bg-matcha/10 border-2 border-matcha/30 rounded-full px-8 py-4"
-          >
-            <div className="w-3 h-3 bg-matcha rounded-full animate-pulse" />
-            <p className="text-ink/70 font-medium">
-              <span className="font-bold text-matcha">75% refund</span> within first week if not
-              satisfied
-            </p>
-          </motion.div>
-        </motion.div>
-
-        {/* What is included section */}
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1.1 }}
-          className="mt-32 max-w-4xl mx-auto"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
         >
-          <h3 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 text-center">
-            what is included
-          </h3>
+          <h2 className="font-display text-5xl md:text-7xl font-black text-ink mb-6">
+            one subscription,
+            <br />
+            <span className="italic text-taro">endless possibilities</span>
+          </h2>
+        </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-4 text-ink/70">
-            <div className="text-left">
-              <p className="font-medium mb-2">✓ branding & logos</p>
-              <p className="font-medium mb-2">✓ web & app UI</p>
-              <p className="font-medium mb-2">✓ social graphics</p>
-              <p className="font-medium mb-2">✓ illustrations & icons</p>
-              <p className="font-medium mb-2">✓ landing pages</p>
+        {/* Side by side layout */}
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left: Membership Card + CTA */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative"
+          >
+            {/* Card */}
+            <div className="mb-8">
+              <MembershipCard />
             </div>
-            <div className="text-left">
-              <p className="font-medium mb-2">✓ email templates</p>
-              <p className="font-medium mb-2">✓ pitch decks</p>
-              <p className="font-medium mb-2">✓ webflow support</p>
-              <p className="font-medium mb-2">✓ unlimited revisions</p>
-              <p className="font-medium mb-2">✓ full file ownership</p>
+
+            {/* Join Button */}
+            <div className="bg-white rounded-3xl p-8 shadow-xl border-4 border-ink">
+              <Button
+                asChild
+                size="lg"
+                className="w-full bg-ink hover:bg-ink/90 text-white py-6 text-xl font-bold rounded-full shadow-[8px_8px_0px_0px_rgba(245,233,218,1)] hover:shadow-[4px_4px_0px_0px_rgba(245,233,218,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1 mb-4"
+              >
+                <Link href="/start">
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="w-3 h-3 bg-matcha rounded-full animate-pulse" />
+                    <span>start today</span>
+                  </span>
+                </Link>
+              </Button>
+
+              <div className="text-center">
+                <p className="font-display text-3xl font-black text-ink mb-2">join</p>
+                <p className="font-display text-3xl font-black text-ink">boba club</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right: Dark Pricing Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="relative"
+          >
+            <div className="bg-ink rounded-3xl p-10 shadow-2xl border-4 border-ink relative overflow-hidden">
+              {/* Decorative smile in corner */}
+              <div className="absolute bottom-0 right-0 w-32 h-32 translate-x-8 translate-y-8">
+                <div className="w-full h-full bg-matcha rounded-tl-full flex items-start justify-start p-6">
+                  <div className="text-ink text-4xl">🙂</div>
+                </div>
+              </div>
+
+              {/* Header */}
+              <div className="mb-6 flex items-center justify-between">
+                <h3 className="font-bold text-white text-xl">monthly club</h3>
+                <div className="text-white/60 text-xs font-medium uppercase tracking-wider">
+                  pause or cancel anytime
+                </div>
+              </div>
+
+              {/* Dotted line */}
+              <div className="border-t border-dotted border-white/20 mb-8" />
+
+              {/* Price */}
+              <div className="mb-10">
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="font-display text-6xl md:text-7xl font-black text-white">
+                    $3,000
+                  </span>
+                  <span className="text-3xl text-white/60 font-medium">/month</span>
+                </div>
+              </div>
+
+              {/* Included section */}
+              <div className="bg-white/5 rounded-2xl p-6 mb-6 border border-white/10">
+                <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-4">
+                  included
+                </p>
+
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Left column */}
+                  <div className="space-y-3">
+                    {features.map((feature, index) => (
+                      <p key={index} className="text-white font-medium text-sm">
+                        {feature}
+                      </p>
+                    ))}
+                  </div>
+
+                  {/* Right column */}
+                  <div className="space-y-3">
+                    {perks.map((perk, index) => (
+                      <p key={index} className="text-white font-medium text-sm">
+                        {perk}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Join button inside dark card */}
+              <Button
+                asChild
+                size="lg"
+                className="w-full bg-matcha hover:bg-matcha/90 text-ink py-6 text-lg font-bold rounded-full transition-all duration-200"
+              >
+                <Link href="/start">
+                  <span className="flex items-center justify-center gap-2">
+                    <span>🙂</span>
+                    <span>join today</span>
+                  </span>
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Bottom perks */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="max-w-5xl mx-auto mt-20 grid md:grid-cols-2 gap-8"
+        >
+          {/* Pause anytime */}
+          <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-xl">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-milk-tea rounded-full flex items-center justify-center flex-shrink-0 text-2xl border-2 border-ink">
+                ⏸️
+              </div>
+              <div>
+                <h4 className="font-display text-2xl font-black text-ink mb-2">pause anytime</h4>
+                <p className="text-ink/60 font-medium">
+                  temporarily pause your subscription anytime, no sweat.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Try it for a week */}
+          <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-xl">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-milk-tea rounded-full flex items-center justify-center flex-shrink-0 text-2xl border-2 border-ink">
+                ✓
+              </div>
+              <div>
+                <h4 className="font-display text-2xl font-black text-ink mb-2">
+                  try it for a week
+                </h4>
+                <p className="text-ink/60 font-medium">
+                  not loving it after a week? get 75% back, no questions asked.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
