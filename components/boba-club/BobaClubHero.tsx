@@ -89,7 +89,7 @@ export default function BobaClubHero() {
             size="lg"
             className="border-4 border-ink text-ink hover:bg-ink hover:text-white px-12 py-8 text-xl font-bold rounded-full transition-all duration-200"
           >
-            <Link href="/contact">book a call</Link>
+            <a href="mailto:hello@pixelboba.com">contact us</a>
           </Button>
         </motion.div>
 

@@ -75,7 +75,7 @@ export default function BobaClubFinalCTA() {
               size="lg"
               className="border-4 border-white text-white hover:bg-white hover:text-ink px-14 py-8 text-xl font-bold rounded-full transition-all duration-200"
             >
-              <Link href="/contact">book a call</Link>
+              <a href="mailto:hello@pixelboba.com">contact us</a>
             </Button>
           </motion.div>
 
