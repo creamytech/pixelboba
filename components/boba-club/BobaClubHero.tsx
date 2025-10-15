@@ -128,13 +128,20 @@ export default function BobaClubHero() {
             size="lg"
             className="group bg-gradient-to-r from-taro to-deep-taro hover:from-deep-taro hover:to-taro text-white px-14 py-8 text-xl font-black rounded-full shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1 border-4 border-ink relative overflow-hidden"
           >
-            <Link href="/start" className="relative z-10 flex items-center gap-2">
+            <a
+              href="#pricing"
+              className="relative z-10 flex items-center gap-2"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               <span className="w-3 h-3 bg-white rounded-full animate-pulse" />
               <span>join boba club</span>
               <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-2">
                 →
               </span>
-            </Link>
+            </a>
           </Button>
 
           <Button

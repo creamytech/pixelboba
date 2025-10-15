@@ -25,7 +25,11 @@ export default function BobaClubPricing() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   return (
-    <section ref={sectionRef} className="py-32 bg-milk-tea relative overflow-hidden">
+    <section
+      id="pricing"
+      ref={sectionRef}
+      className="py-32 bg-milk-tea relative overflow-hidden scroll-mt-20"
+    >
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
@@ -41,57 +45,33 @@ export default function BobaClubPricing() {
           </h2>
         </motion.div>
 
-        {/* Overlapping layout exactly like Designjoy */}
-        <div className="max-w-7xl mx-auto relative">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-0 items-start">
-            {/* Left: Card + Join Box Stack (overlaps pricing card) */}
+        {/* Simplified two-column layout */}
+        <div className="max-w-6xl mx-auto relative">
+          <div className="grid lg:grid-cols-[320px,1fr] gap-6 items-start">
+            {/* Left Column: Compact card preview */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-full lg:w-[440px] relative z-20 flex-shrink-0"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-4"
             >
-              {/* Membership Card */}
-              <div className="mb-6">
+              {/* Smaller membership card */}
+              <div className="transform scale-75 origin-top">
                 <MembershipCard />
-                <p className="text-center mt-4 text-ink/60 font-medium">
-                  <span className="italic text-taro">hover</span> to see the magic ✨
-                </p>
               </div>
-
-              {/* Join Box Below Card */}
-              <div className="bg-white rounded-3xl p-8 shadow-xl border-4 border-ink">
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full bg-ink hover:bg-ink/90 text-white py-6 text-xl font-bold rounded-full shadow-[8px_8px_0px_0px_rgba(245,233,218,1)] hover:shadow-[4px_4px_0px_0px_rgba(245,233,218,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1 mb-6"
-                >
-                  <Link href="/start">
-                    <span className="flex items-center justify-center gap-2">
-                      <span className="w-3 h-3 bg-matcha rounded-full animate-pulse" />
-                      <span>start today</span>
-                    </span>
-                  </Link>
-                </Button>
-
-                <div className="text-center">
-                  <p className="font-display text-3xl font-black text-ink leading-tight">
-                    join
-                    <br />
-                    boba club
-                  </p>
-                </div>
-              </div>
+              <p className="text-center text-sm text-ink/60 font-medium -mt-8">
+                <span className="italic text-taro">hover</span> to see the magic ✨
+              </p>
             </motion.div>
 
-            {/* Right: Dark Pricing Card (extends behind left cards) */}
+            {/* Right Column: Main pricing card */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="w-full lg:flex-1 lg:-ml-24 relative z-10"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="relative z-10"
             >
-              <div className="bg-ink rounded-3xl p-10 lg:pl-32 shadow-2xl relative overflow-hidden min-h-[640px] flex flex-col group">
+              <div className="bg-ink rounded-3xl p-10 shadow-2xl relative overflow-hidden flex flex-col group">
                 {/* Animated spotlight effect */}
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
