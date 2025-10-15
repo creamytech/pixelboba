@@ -110,7 +110,7 @@ export default function BobaClubFinalCTA() {
 
       {/* Floating emojis */}
       <motion.div
-        className="absolute top-20 left-20 text-6xl"
+        className="absolute top-20 left-20 text-6xl hidden md:block"
         animate={{
           y: [0, -30, 0],
           rotate: [0, 10, 0],
@@ -121,7 +121,7 @@ export default function BobaClubFinalCTA() {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-20 right-20 text-6xl"
+        className="absolute bottom-20 right-20 text-6xl hidden md:block"
         animate={{
           y: [0, 30, 0],
           rotate: [0, -10, 0],
@@ -130,6 +130,38 @@ export default function BobaClubFinalCTA() {
       >
         🎨
       </motion.div>
+
+      {/* Floating boba pearls */}
+      {[...Array(6)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-8 h-8 md:w-12 md:h-12 rounded-full"
+          style={{
+            background:
+              i % 3 === 0
+                ? 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), #a78bfa)'
+                : i % 3 === 1
+                  ? 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), #86efac)'
+                  : 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), #fbbf24)',
+            left: i < 3 ? `${10 + i * 15}%` : `${55 + (i - 3) * 15}%`,
+            bottom: i < 3 ? `${20 + i * 10}%` : `${25 + (i - 3) * 10}%`,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.2), inset 0 -4px 8px rgba(0,0,0,0.3)',
+          }}
+          animate={{
+            y: [0, -40, 0],
+            x: [0, i % 2 === 0 ? 20 : -20, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 5 + i * 0.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: i * 0.3,
+          }}
+        >
+          <div className="absolute inset-2 bg-white/20 rounded-full blur-sm" />
+        </motion.div>
+      ))}
     </section>
   );
 }
