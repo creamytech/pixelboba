@@ -36,27 +36,30 @@ export default function BobaClubPricing() {
           </h2>
         </motion.div>
 
-        {/* Overlapping layout like Designjoy */}
-        <div className="max-w-6xl mx-auto relative">
-          <div className="grid lg:grid-cols-12 gap-0 items-start">
-            {/* Left: Membership Card (overlaps pricing card) */}
+        {/* Overlapping layout exactly like Designjoy */}
+        <div className="max-w-7xl mx-auto relative">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-0 items-start">
+            {/* Left: Card + Join Box Stack (overlaps pricing card) */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-5 relative z-20"
+              className="w-full lg:w-[440px] relative z-20 flex-shrink-0"
             >
-              {/* Card */}
-              <div className="mb-8">
+              {/* Membership Card */}
+              <div className="mb-6">
                 <MembershipCard />
+                <p className="text-center mt-4 text-ink/60 font-medium">
+                  <span className="italic text-taro">hover</span> to see the magic ✨
+                </p>
               </div>
 
-              {/* Join Button */}
+              {/* Join Box Below Card */}
               <div className="bg-white rounded-3xl p-8 shadow-xl border-4 border-ink">
                 <Button
                   asChild
                   size="lg"
-                  className="w-full bg-ink hover:bg-ink/90 text-white py-6 text-xl font-bold rounded-full shadow-[8px_8px_0px_0px_rgba(245,233,218,1)] hover:shadow-[4px_4px_0px_0px_rgba(245,233,218,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1 mb-4"
+                  className="w-full bg-ink hover:bg-ink/90 text-white py-6 text-xl font-bold rounded-full shadow-[8px_8px_0px_0px_rgba(245,233,218,1)] hover:shadow-[4px_4px_0px_0px_rgba(245,233,218,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1 mb-6"
                 >
                   <Link href="/start">
                     <span className="flex items-center justify-center gap-2">
@@ -67,7 +70,7 @@ export default function BobaClubPricing() {
                 </Button>
 
                 <div className="text-center">
-                  <p className="font-display text-3xl font-black text-ink">
+                  <p className="font-display text-3xl font-black text-ink leading-tight">
                     join
                     <br />
                     boba club
@@ -76,17 +79,17 @@ export default function BobaClubPricing() {
               </div>
             </motion.div>
 
-            {/* Right: Dark Pricing Card (slightly behind) */}
+            {/* Right: Dark Pricing Card (extends behind left cards) */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="lg:col-span-7 lg:-ml-16 relative z-10"
+              className="w-full lg:flex-1 lg:-ml-24 relative z-10"
             >
-              <div className="bg-ink rounded-3xl p-10 lg:pl-24 shadow-2xl border-4 border-ink relative overflow-hidden min-h-[600px] flex flex-col">
+              <div className="bg-ink rounded-3xl p-10 lg:pl-32 shadow-2xl relative overflow-hidden min-h-[640px] flex flex-col">
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
-                  <h3 className="font-bold text-white text-xl">monthly club</h3>
+                  <h3 className="font-bold text-white text-lg">monthly club</h3>
                   <div className="text-white/60 text-xs font-medium uppercase tracking-wider">
                     pause or cancel anytime
                   </div>
@@ -97,34 +100,34 @@ export default function BobaClubPricing() {
 
                 {/* Price */}
                 <div className="mb-10">
-                  <div className="flex items-baseline gap-2 mb-2">
+                  <div className="flex items-baseline gap-3">
                     <span className="font-display text-6xl md:text-7xl font-black text-white">
                       $3,000
                     </span>
-                    <span className="text-3xl text-white/60 font-medium">/month</span>
+                    <span className="text-2xl text-white/60 font-medium">/month</span>
                   </div>
                 </div>
 
                 {/* Included section */}
-                <div className="bg-white/5 rounded-2xl p-6 mb-6 border border-white/10 flex-grow">
-                  <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-4">
+                <div className="bg-white/5 rounded-2xl p-8 mb-8 border border-white/10 flex-grow">
+                  <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-6">
                     included
                   </p>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-x-12 gap-y-4">
                     {/* Left column */}
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {features.map((feature, index) => (
-                        <p key={index} className="text-white font-medium text-sm">
+                        <p key={index} className="text-white font-medium">
                           {feature}
                         </p>
                       ))}
                     </div>
 
                     {/* Right column */}
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {perks.map((perk, index) => (
-                        <p key={index} className="text-white font-medium text-sm">
+                        <p key={index} className="text-white font-medium">
                           {perk}
                         </p>
                       ))}
@@ -136,7 +139,7 @@ export default function BobaClubPricing() {
                 <Button
                   asChild
                   size="lg"
-                  className="w-full bg-matcha hover:bg-matcha/90 text-ink py-6 text-lg font-bold rounded-full transition-all duration-200"
+                  className="w-full bg-matcha hover:bg-matcha/90 text-ink py-7 text-lg font-bold rounded-full transition-all duration-200"
                 >
                   <Link href="/start">join today</Link>
                 </Button>
@@ -150,17 +153,17 @@ export default function BobaClubPricing() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="max-w-5xl mx-auto mt-20 grid md:grid-cols-2 gap-8"
+          className="max-w-7xl mx-auto mt-16 grid md:grid-cols-2 gap-6"
         >
           {/* Pause anytime */}
-          <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-xl">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-milk-tea rounded-full flex items-center justify-center flex-shrink-0 text-2xl border-2 border-ink">
+          <div className="bg-white rounded-3xl p-10 border-4 border-ink">
+            <div className="flex items-start gap-5">
+              <div className="w-14 h-14 bg-milk-tea rounded-full flex items-center justify-center flex-shrink-0 text-2xl border-4 border-ink">
                 ⏸️
               </div>
               <div>
                 <h4 className="font-display text-2xl font-black text-ink mb-2">pause anytime</h4>
-                <p className="text-ink/60 font-medium">
+                <p className="text-ink/60 font-medium text-base">
                   temporarily pause your subscription anytime, no sweat.
                 </p>
               </div>
@@ -168,16 +171,16 @@ export default function BobaClubPricing() {
           </div>
 
           {/* Try it for a week */}
-          <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-xl">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-milk-tea rounded-full flex items-center justify-center flex-shrink-0 text-2xl border-2 border-ink">
+          <div className="bg-white rounded-3xl p-10 border-4 border-ink">
+            <div className="flex items-start gap-5">
+              <div className="w-14 h-14 bg-milk-tea rounded-full flex items-center justify-center flex-shrink-0 text-2xl border-4 border-ink">
                 ✓
               </div>
               <div>
                 <h4 className="font-display text-2xl font-black text-ink mb-2">
                   try it for a week
                 </h4>
-                <p className="text-ink/60 font-medium">
+                <p className="text-ink/60 font-medium text-base">
                   not loving it after a week? get 75% back, no questions asked.
                 </p>
               </div>
