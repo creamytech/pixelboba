@@ -2,32 +2,39 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { TooltipInfo } from '@/components/ui/tooltip-info';
 
 const steps = [
   {
     number: '01',
     title: 'subscribe',
     description: 'choose your plan and join instantly',
+    tooltip: null,
   },
   {
     number: '02',
     title: 'request',
     description: 'add unlimited designs to your queue',
+    tooltip:
+      'Add as many design requests as you need to your queue. We work through them one at a time to ensure quality.',
   },
   {
     number: '03',
     title: 'receive',
     description: 'get designs back in 24-48 hours',
+    tooltip: null,
   },
   {
     number: '04',
     title: 'revise',
     description: 'request unlimited revisions',
+    tooltip: null,
   },
   {
     number: '05',
     title: 'repeat',
     description: 'pause or cancel anytime',
+    tooltip: null,
   },
 ];
 
@@ -68,22 +75,40 @@ export default function BobaClubHowItWorks() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-display text-3xl font-black text-ink mb-3">{step.title}</h3>
+                <div className="flex items-center gap-2 mb-3">
+                  <h3 className="font-display text-3xl font-black text-ink">{step.title}</h3>
+                  {step.tooltip && <TooltipInfo text={step.tooltip} />}
+                </div>
 
                 {/* Description */}
                 <p className="text-ink/60 font-medium text-lg">{step.description}</p>
               </div>
 
-              {/* Arrow connector for desktop */}
+              {/* Arrow connector with animated boba pearl for desktop */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                    className="text-5xl text-taro"
+                    className="text-5xl text-taro relative"
                   >
-                    →
+                    →{/* Animated boba pearl flowing through */}
+                    <motion.div
+                      className="absolute top-1/2 left-0 w-4 h-4 rounded-full bg-taro shadow-lg"
+                      animate={{
+                        x: [0, 40, 0],
+                        opacity: [0, 1, 0],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: index * 0.6,
+                        ease: 'easeInOut',
+                      }}
+                    >
+                      <div className="absolute inset-1 bg-white/40 rounded-full" />
+                    </motion.div>
                   </motion.div>
                 </div>
               )}

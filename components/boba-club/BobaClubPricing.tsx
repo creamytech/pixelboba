@@ -5,12 +5,17 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import MembershipCard from './MembershipCard';
+import { TooltipInfo } from '@/components/ui/tooltip-info';
 
 const features = [
-  'one request at a time',
-  'avg. 48 hour delivery',
-  'unlimited brands',
-  'webflow development',
+  {
+    text: 'one request at a time',
+    tooltip:
+      'We focus on one active design task at a time to ensure quality. You can add unlimited requests to your queue.',
+  },
+  { text: 'avg. 48 hour delivery', tooltip: null },
+  { text: 'unlimited brands', tooltip: null },
+  { text: 'webflow development', tooltip: null },
 ];
 
 const perks = ['unlimited stock photos', 'up to 2 users', 'pause or cancel anytime'];
@@ -149,9 +154,10 @@ export default function BobaClubPricing() {
                     {/* Left column */}
                     <div className="space-y-4">
                       {features.map((feature, index) => (
-                        <p key={index} className="text-white font-medium">
-                          {feature}
-                        </p>
+                        <div key={index} className="flex items-center gap-2">
+                          <p className="text-white font-medium">{feature.text}</p>
+                          {feature.tooltip && <TooltipInfo text={feature.tooltip} />}
+                        </div>
                       ))}
                     </div>
 
