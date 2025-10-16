@@ -29,17 +29,17 @@ export function TooltipInfo({ text, className = '' }: TooltipInfoProps) {
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 z-50"
+            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 z-50"
           >
-            <div className="bg-ink text-white px-4 py-3 rounded-xl shadow-xl border-2 border-taro/30 relative">
-              <p className="text-sm leading-relaxed">{text}</p>
+            <div className="bg-white text-ink px-4 py-3 rounded-xl shadow-2xl border-4 border-ink relative">
+              <p className="text-sm leading-relaxed font-medium">{text}</p>
               {/* Arrow */}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-                <div className="border-8 border-transparent border-t-ink" />
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 -mb-px">
+                <div className="border-8 border-transparent border-b-ink" />
               </div>
             </div>
           </motion.div>
