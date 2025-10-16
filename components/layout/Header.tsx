@@ -47,12 +47,7 @@ export default function Header() {
           : 'bg-background/80 backdrop-blur-sm'
       )}
     >
-      <div
-        className={cn(
-          'container mx-auto px-4 transition-all duration-300',
-          isScrolled ? 'py-2' : 'py-4'
-        )}
-      >
+      <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between lg:grid lg:grid-cols-3 lg:gap-8">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
@@ -61,7 +56,7 @@ export default function Header() {
               alt="pixel boba"
               width={200}
               height={60}
-              className={cn('w-auto transition-all duration-300', isScrolled ? 'h-10' : 'h-12')}
+              className="w-auto h-12"
               priority
             />
           </Link>
@@ -226,12 +221,9 @@ export default function Header() {
       </AnimatePresence>
 
       {/* Scroll Progress Bar */}
-      <motion.div
+      <div
         className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-taro via-matcha to-taro"
         style={{ width: `${scrollProgress}%` }}
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 0.1 }}
       />
     </header>
   );
