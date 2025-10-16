@@ -97,34 +97,6 @@ export default function BobaClubHowItWorks() {
                 {/* Description */}
                 <p className="text-ink/60 font-medium text-base leading-snug">{step.description}</p>
               </motion.div>
-
-              {/* Arrow connector for desktop */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-12 -right-4 z-10">
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                    className="text-3xl text-taro"
-                  >
-                    →
-                  </motion.div>
-                </div>
-              )}
-
-              {/* Arrow connector for mobile */}
-              {index < steps.length - 1 && (
-                <div className="lg:hidden flex justify-center my-4">
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                    className="text-5xl text-taro rotate-90"
-                  >
-                    →
-                  </motion.div>
-                </div>
-              )}
             </motion.div>
           ))}
         </div>
