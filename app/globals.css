@@ -99,29 +99,43 @@ body::after {
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  position: relative;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-html,
 body {
   margin: 0 !important;
   padding: 0 !important;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   width: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
+  height: 100%;
+}
+
+/* Force body to start at absolute top */
+body > * {
+  margin-top: 0 !important;
 }
 
 /* Ensure no gap above fixed header on mobile */
-@supports (-webkit-touch-callout: none) {
-  /* iOS Safari specific */
+@media (max-width: 768px) {
+  html {
+    height: -webkit-fill-available;
+  }
+
   body {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
+    position: relative;
+    overflow-x: hidden;
   }
 }
 
