@@ -46,6 +46,7 @@ export default function Header() {
           ? 'bg-background/95 backdrop-blur-lg border-b border-border shadow-sm'
           : 'bg-background/80 backdrop-blur-sm'
       )}
+      style={{ marginTop: 0, paddingTop: 0 }}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between lg:grid lg:grid-cols-3 lg:gap-8">
