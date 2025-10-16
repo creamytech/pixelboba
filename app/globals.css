@@ -79,6 +79,21 @@ body::after {
   mix-blend-mode: overlay;
 }
 
+/* Prevent scrolling content from appearing above fixed header on mobile */
+@media (max-width: 768px) {
+  body::before {
+    content: '';
+    position: fixed;
+    top: -100px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: white;
+    z-index: 49;
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     font-size: 16px;
