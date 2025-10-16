@@ -58,7 +58,7 @@ export default function BobaClubHowItWorks() {
           </h2>
         </motion.div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {steps.map((step, index) => (
             <motion.div
               key={index}
@@ -69,7 +69,7 @@ export default function BobaClubHowItWorks() {
             >
               {/* Card */}
               <motion.div
-                className="bg-white border-4 border-ink rounded-3xl p-8 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] h-full flex flex-col group cursor-pointer"
+                className="bg-white border-4 border-ink rounded-3xl p-6 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] flex flex-col group cursor-pointer"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: '12px 12px 0px 0px rgba(15,23,42,1)',
@@ -79,7 +79,7 @@ export default function BobaClubHowItWorks() {
               >
                 {/* Number badge */}
                 <motion.div
-                  className="inline-flex items-center justify-center w-16 h-16 bg-taro text-white rounded-full font-black text-2xl mb-6 shadow-lg"
+                  className="inline-flex items-center justify-center w-14 h-14 bg-taro text-white rounded-full font-black text-xl mb-4 shadow-lg"
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
                 >
@@ -87,40 +87,27 @@ export default function BobaClubHowItWorks() {
                 </motion.div>
 
                 {/* Title */}
-                <div className="flex items-center gap-2 mb-3">
-                  <h3 className="font-display text-3xl font-black text-ink">{step.title}</h3>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="font-display text-2xl font-black text-ink lowercase">
+                    {step.title}
+                  </h3>
                   {step.tooltip && <TooltipInfo text={step.tooltip} />}
                 </div>
 
                 {/* Description */}
-                <p className="text-ink/60 font-medium text-lg">{step.description}</p>
+                <p className="text-ink/60 font-medium text-base leading-snug">{step.description}</p>
               </motion.div>
 
-              {/* Arrow connector with animated boba pearl for desktop */}
+              {/* Arrow connector for desktop */}
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                <div className="hidden lg:block absolute top-12 -right-4 z-10">
                   <motion.div
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                    className="text-5xl text-taro relative"
+                    className="text-3xl text-taro"
                   >
-                    →{/* Animated boba pearl flowing through */}
-                    <motion.div
-                      className="absolute top-1/2 left-0 w-4 h-4 rounded-full bg-taro shadow-lg"
-                      animate={{
-                        x: [0, 40, 0],
-                        opacity: [0, 1, 0],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: index * 0.6,
-                        ease: 'easeInOut',
-                      }}
-                    >
-                      <div className="absolute inset-1 bg-white/40 rounded-full" />
-                    </motion.div>
+                    →
                   </motion.div>
                 </div>
               )}
