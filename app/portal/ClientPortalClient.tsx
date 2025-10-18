@@ -15,6 +15,7 @@ import {
   LogOut,
   FolderOpen,
   Settings,
+  CheckSquare,
 } from 'lucide-react';
 import BobaProgressIndicator from '@/components/portal/BobaProgressIndicator';
 import MilestoneTracker from '@/components/portal/MilestoneTracker';
@@ -26,6 +27,7 @@ import NotificationCenter from '@/components/portal/NotificationCenter';
 import NotificationPreferences from '@/components/portal/NotificationPreferences';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
 import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
+import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Project, User as UserType } from '@/types/portal';
 import { Session } from 'next-auth';
@@ -125,6 +127,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 
   const tabs = [
     { id: 'dashboard', name: 'dashboard', icon: User },
+    { id: 'tasks', name: 'tasks', icon: CheckSquare },
     { id: 'messages', name: 'messages', icon: MessageSquare, badge: portalData.unreadMessages },
     { id: 'invoices', name: 'invoices', icon: CreditCard, badge: portalData.pendingInvoices },
     { id: 'contracts', name: 'contracts', icon: FileCheck, badge: portalData.pendingContracts },
@@ -137,6 +140,8 @@ export default function ClientPortalClient({ session }: { session: Session }) {
     switch (activeTab) {
       case 'dashboard':
         return <DashboardView data={portalData} />;
+      case 'tasks':
+        return <TasksView data={portalData} />;
       case 'messages':
         return <MessageCenter projects={portalData.projects} />;
       case 'invoices':
@@ -1333,5 +1338,95 @@ function ProgressiveLoader({
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+function TasksView({ data }: { data: PortalData }) {
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+
+  // Auto-select first active project
+  const activeProjects = data.projects.filter(
+    (p) => !['COMPLETED', 'CANCELLED'].includes(p.status)
+  );
+  const defaultProject = activeProjects.length > 0 ? activeProjects[0] : data.projects[0];
+
+  // Set default project on mount
+  useEffect(() => {
+    if (defaultProject && !selectedProjectId) {
+      setSelectedProjectId(defaultProject.id);
+    }
+  }, [defaultProject, selectedProjectId]);
+
+  if (data.projects.length === 0) {
+    return (
+      <motion.div
+        className="bg-white/60 backdrop-blur-lg rounded-xl p-12 border border-brown-sugar/20 shadow-lg text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className="w-16 h-16 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckSquare className="w-8 h-8 text-taro/60" />
+        </div>
+        <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase">
+          no projects yet
+        </h3>
+        <p className="text-ink/60 mb-6">
+          tasks will appear here once you have active projects with us
+        </p>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      {/* Project Selector */}
+      <motion.div
+        className="bg-white/60 backdrop-blur-lg rounded-xl p-4 border border-brown-sugar/20 shadow-lg"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <label className="font-display text-sm font-medium text-ink/70 mb-2 block lowercase">
+          select project
+        </label>
+        <select
+          value={selectedProjectId || ''}
+          onChange={(e) => setSelectedProjectId(e.target.value)}
+          className="w-full px-4 py-3 bg-white/70 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro/40 transition-all font-display text-ink"
+        >
+          {data.projects.map((project) => (
+            <option key={project.id} value={project.id}>
+              {project.name} ({project.status.toLowerCase().replace('_', ' ')})
+            </option>
+          ))}
+        </select>
+      </motion.div>
+
+      {/* Kanban Board */}
+      {selectedProjectId && (
+        <motion.div
+          key={selectedProjectId}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ProjectTaskBoard
+            projectId={selectedProjectId}
+            projectName={data.projects.find((p) => p.id === selectedProjectId)?.name || 'Project'}
+            currentUser={{
+              id: data.user.id,
+              role: data.user.role,
+              email: data.user.email,
+            }}
+          />
+        </motion.div>
+      )}
+    </motion.div>
   );
 }
