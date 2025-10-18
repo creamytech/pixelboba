@@ -16,6 +16,7 @@ import {
   Calendar,
   LogOut,
   MessageCircle,
+  CheckSquare,
 } from 'lucide-react';
 import ProjectManager from '@/components/admin/ProjectManager';
 import ClientManager from '@/components/admin/ClientManager';
@@ -26,6 +27,7 @@ import InviteManager from '@/components/admin/InviteManager';
 import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
 import DashboardPearlField from '@/components/animations/DashboardPearlField';
 import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
+import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Session } from 'next-auth';
 
@@ -120,6 +122,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
 
   const tabs = [
     { id: 'overview', name: 'overview', icon: TrendingUp },
+    { id: 'tasks', name: 'tasks', icon: CheckSquare },
     { id: 'projects', name: 'projects', icon: FolderOpen },
     { id: 'clients', name: 'clients', icon: Users },
     { id: 'contracts', name: 'contracts', icon: FileText },
@@ -132,6 +135,8 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
     switch (activeTab) {
       case 'overview':
         return <OverviewTab stats={stats} setActiveTab={setActiveTab} />;
+      case 'tasks':
+        return <AdminTasksView projects={projects} />;
       case 'projects':
         return <ProjectManager />;
       case 'clients':
@@ -881,5 +886,363 @@ function ActionButton({
         {label}
       </span>
     </motion.button>
+  );
+}
+
+function AdminTasksView({ projects }: { projects: any[] }) {
+  const [selectedProjectId, setSelectedProjectId] = useState<string | 'all'>('all');
+  const [viewMode, setViewMode] = useState<'single' | 'overview'>('single');
+  const [allTasks, setAllTasks] = useState<any[]>([]);
+  const [isLoadingStats, setIsLoadingStats] = useState(true);
+
+  // Fetch all tasks for overview statistics
+  useEffect(() => {
+    if (viewMode === 'overview') {
+      fetchAllTasks();
+    }
+  }, [viewMode]);
+
+  const fetchAllTasks = async () => {
+    setIsLoadingStats(true);
+    try {
+      // Fetch tasks from all projects
+      const taskPromises = projects.map((project) =>
+        fetch(`/api/tasks?projectId=${project.id}`)
+          .then((res) => (res.ok ? res.json() : []))
+          .catch(() => [])
+      );
+      const tasksArrays = await Promise.all(taskPromises);
+      const combined = tasksArrays.flat();
+      setAllTasks(combined);
+    } catch (error) {
+      console.error('Failed to fetch all tasks:', error);
+    } finally {
+      setIsLoadingStats(false);
+    }
+  };
+
+  // Auto-select first active project
+  useEffect(() => {
+    if (projects.length > 0 && selectedProjectId === 'all' && viewMode === 'single') {
+      const activeProjects = projects.filter((p) => !['COMPLETED', 'CANCELLED'].includes(p.status));
+      const defaultProject = activeProjects.length > 0 ? activeProjects[0] : projects[0];
+      if (defaultProject) {
+        setSelectedProjectId(defaultProject.id);
+      }
+    }
+  }, [projects, selectedProjectId, viewMode]);
+
+  // Calculate task statistics
+  const getTaskStats = () => {
+    if (viewMode === 'single' || allTasks.length === 0) return null;
+
+    const stats = {
+      total: allTasks.length,
+      backlog: allTasks.filter((t) => t.status === 'BACKLOG').length,
+      todo: allTasks.filter((t) => t.status === 'TODO').length,
+      inProgress: allTasks.filter((t) => t.status === 'IN_PROGRESS').length,
+      inReview: allTasks.filter((t) => t.status === 'IN_REVIEW').length,
+      completed: allTasks.filter((t) => t.status === 'COMPLETED').length,
+      blocked: allTasks.filter((t) => t.status === 'BLOCKED').length,
+      highPriority: allTasks.filter((t) => t.priority === 'HIGH' || t.priority === 'URGENT').length,
+      overdue: allTasks.filter(
+        (t) => t.dueDate && new Date(t.dueDate) < new Date() && t.status !== 'COMPLETED'
+      ).length,
+    };
+
+    return stats;
+  };
+
+  const taskStats = getTaskStats();
+
+  if (projects.length === 0) {
+    return (
+      <motion.div
+        className="bg-white/60 backdrop-blur-lg rounded-xl p-12 border border-brown-sugar/20 shadow-lg text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className="w-16 h-16 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckSquare className="w-8 h-8 text-taro/60" />
+        </div>
+        <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase">
+          no projects yet
+        </h3>
+        <p className="text-ink/60 mb-6">create projects to start managing tasks</p>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      {/* View Mode Switcher & Filters */}
+      <motion.div
+        className="bg-white/60 backdrop-blur-lg rounded-xl p-4 border border-brown-sugar/20 shadow-lg"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          {/* View Mode Toggle */}
+          <div className="flex items-center gap-3">
+            <span className="font-display text-sm font-medium text-ink/70 lowercase">view:</span>
+            <div className="flex bg-white/70 rounded-lg p-1 border border-brown-sugar/10">
+              <button
+                onClick={() => setViewMode('single')}
+                className={`px-4 py-2 rounded font-display text-sm lowercase transition-all ${
+                  viewMode === 'single'
+                    ? 'bg-taro text-white shadow-sm'
+                    : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
+                }`}
+              >
+                single project
+              </button>
+              <button
+                onClick={() => setViewMode('overview')}
+                className={`px-4 py-2 rounded font-display text-sm lowercase transition-all ${
+                  viewMode === 'overview'
+                    ? 'bg-taro text-white shadow-sm'
+                    : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
+                }`}
+              >
+                overview
+              </button>
+            </div>
+          </div>
+
+          {/* Project Selector (only for single project view) */}
+          {viewMode === 'single' && (
+            <div className="flex-1 max-w-md">
+              <select
+                value={selectedProjectId}
+                onChange={(e) => setSelectedProjectId(e.target.value)}
+                className="w-full px-4 py-2 bg-white/70 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro/40 transition-all font-display text-ink text-sm"
+              >
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}>
+                    {project.name} ({project.status?.toLowerCase().replace('_', ' ')})
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Task Overview Statistics */}
+      {viewMode === 'overview' && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
+          {isLoadingStats ? (
+            <div className="bg-white/60 backdrop-blur-lg rounded-xl p-8 border border-brown-sugar/20 shadow-lg text-center">
+              <motion.div
+                className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-4"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+              />
+              <p className="font-display text-ink/70 lowercase">loading task statistics...</p>
+            </div>
+          ) : taskStats ? (
+            <div className="space-y-6">
+              {/* Main Stats Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <TaskStatCard
+                  title="total tasks"
+                  value={taskStats.total}
+                  icon="📊"
+                  color="bg-blue-50 border-blue-100"
+                  textColor="text-blue-600"
+                />
+                <TaskStatCard
+                  title="in progress"
+                  value={taskStats.inProgress}
+                  icon="⚡"
+                  color="bg-violet-50 border-violet-100"
+                  textColor="text-violet-600"
+                />
+                <TaskStatCard
+                  title="completed"
+                  value={taskStats.completed}
+                  icon="✅"
+                  color="bg-green-50 border-green-100"
+                  textColor="text-green-600"
+                />
+                <TaskStatCard
+                  title="high priority"
+                  value={taskStats.highPriority}
+                  icon="🔥"
+                  color="bg-red-50 border-red-100"
+                  textColor="text-red-600"
+                />
+                <TaskStatCard
+                  title="overdue"
+                  value={taskStats.overdue}
+                  icon="⚠️"
+                  color="bg-orange-50 border-orange-100"
+                  textColor="text-orange-600"
+                  isAlert={taskStats.overdue > 0}
+                />
+              </div>
+
+              {/* Status Breakdown */}
+              <div className="bg-white/60 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg">
+                <h3 className="font-display text-lg font-semibold text-ink mb-4 lowercase">
+                  task distribution
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {[
+                    { label: 'backlog', value: taskStats.backlog, color: 'bg-gray-200' },
+                    { label: 'todo', value: taskStats.todo, color: 'bg-blue-200' },
+                    {
+                      label: 'in progress',
+                      value: taskStats.inProgress,
+                      color: 'bg-violet-200',
+                    },
+                    { label: 'in review', value: taskStats.inReview, color: 'bg-yellow-200' },
+                    { label: 'completed', value: taskStats.completed, color: 'bg-green-200' },
+                    { label: 'blocked', value: taskStats.blocked, color: 'bg-red-200' },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="bg-white/50 rounded-lg p-3 border border-brown-sugar/10"
+                    >
+                      <div className={`w-full h-2 ${item.color} rounded-full mb-2`}></div>
+                      <p className="font-display text-xs text-ink/60 lowercase mb-1">
+                        {item.label}
+                      </p>
+                      <p className="font-display text-lg font-bold text-ink">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Project-wise Task Breakdown */}
+              <div className="bg-white/60 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg">
+                <h3 className="font-display text-lg font-semibold text-ink mb-4 lowercase">
+                  tasks by project
+                </h3>
+                <div className="space-y-3">
+                  {projects.map((project) => {
+                    const projectTasks = allTasks.filter((t) => t.projectId === project.id);
+                    const completedCount = projectTasks.filter(
+                      (t) => t.status === 'COMPLETED'
+                    ).length;
+                    const progressPercent =
+                      projectTasks.length > 0
+                        ? Math.round((completedCount / projectTasks.length) * 100)
+                        : 0;
+
+                    return (
+                      <motion.div
+                        key={project.id}
+                        className="bg-white/50 rounded-lg p-4 border border-brown-sugar/10 hover:shadow-md transition-shadow cursor-pointer"
+                        whileHover={{ scale: 1.01, y: -1 }}
+                        onClick={() => {
+                          setSelectedProjectId(project.id);
+                          setViewMode('single');
+                        }}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-display font-medium text-ink lowercase">
+                            {project.name}
+                          </h4>
+                          <span className="text-xs font-display text-ink/60">
+                            {projectTasks.length} tasks
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div
+                            className="h-2 rounded-full bg-gradient-to-r from-taro to-brown-sugar transition-all"
+                            style={{ width: `${progressPercent}%` }}
+                          />
+                        </div>
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="text-xs font-display text-ink/60">
+                            {completedCount} completed
+                          </span>
+                          <span className="text-xs font-display font-medium text-taro">
+                            {progressPercent}%
+                          </span>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </motion.div>
+      )}
+
+      {/* Single Project Kanban Board */}
+      {viewMode === 'single' && selectedProjectId && selectedProjectId !== 'all' && (
+        <motion.div
+          key={selectedProjectId}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ProjectTaskBoard
+            projectId={selectedProjectId}
+            projectName={projects.find((p) => p.id === selectedProjectId)?.name || 'Project'}
+            currentUser={{
+              id: 'admin',
+              role: 'ADMIN',
+              email: 'admin@pixelboba.com',
+            }}
+          />
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}
+
+function TaskStatCard({
+  title,
+  value,
+  icon,
+  color,
+  textColor,
+  isAlert = false,
+}: {
+  title: string;
+  value: number;
+  icon: string;
+  color: string;
+  textColor: string;
+  isAlert?: boolean;
+}) {
+  return (
+    <motion.div
+      className={`${color} backdrop-blur-sm rounded-xl p-4 border shadow-lg hover:shadow-xl transition-all relative`}
+      whileHover={{ scale: 1.03, y: -2 }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      {isAlert && value > 0 && (
+        <motion.div
+          className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+      )}
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+          <p className="font-display text-xs text-ink/60 uppercase tracking-wide mb-1">{title}</p>
+          <p className={`font-display text-2xl font-bold ${textColor}`}>{value}</p>
+        </div>
+        <span className="text-2xl">{icon}</span>
+      </div>
+    </motion.div>
   );
 }
