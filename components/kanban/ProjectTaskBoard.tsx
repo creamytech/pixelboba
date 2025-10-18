@@ -4,8 +4,13 @@ import { useState, useEffect } from 'react';
 import { Task, TaskStatus, Priority, User as UserType } from '@prisma/client';
 import KanbanBoard from './KanbanBoard';
 import TaskModal from './TaskModal';
-import { motion } from 'framer-motion';
-import { Plus, Search, Filter, LayoutGrid, List, Calendar as CalendarIcon } from 'lucide-react';
+import TimelineView from './TimelineView';
+import AdvancedFilters from './AdvancedFilters';
+import BulkOperations from './BulkOperations';
+import KeyboardShortcutsHelp from './KeyboardShortcutsHelp';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Search, Filter, LayoutGrid, Calendar as CalendarIcon, Keyboard } from 'lucide-react';
 
 interface ProjectTaskBoardProps {
   projectId: string;
@@ -23,7 +28,19 @@ export default function ProjectTaskBoard({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
+  const [viewMode, setViewMode] = useState<'kanban' | 'timeline'>('kanban');
+  const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+  const [showShortcuts, setShowShortcuts] = useState(false);
+
+  // Advanced filters state
+  const [filters, setFilters] = useState({
+    status: [] as string[],
+    priority: [] as string[],
+    assignedTo: [] as string[],
+    tags: [] as string[],
+    dateRange: { start: null as string | null, end: null as string | null },
+    overdue: false,
+  });
 
   // Fetch tasks
   const fetchTasks = async () => {
@@ -139,12 +156,134 @@ export default function ProjectTaskBoard({
     }
   };
 
-  // Filter tasks based on search
-  const filteredTasks = tasks.filter(
-    (task) =>
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  // Bulk operations handlers
+  const handleBulkMove = async (status: string) => {
+    try {
+      await Promise.all(
+        selectedTasks.map((taskId) =>
+          fetch(`/api/tasks/${taskId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status }),
+          })
+        )
+      );
+      await fetchTasks();
+      setSelectedTasks([]);
+    } catch (error) {
+      console.error('Failed to bulk move tasks:', error);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    try {
+      await Promise.all(
+        selectedTasks.map((taskId) => fetch(`/api/tasks/${taskId}`, { method: 'DELETE' }))
+      );
+      await fetchTasks();
+      setSelectedTasks([]);
+    } catch (error) {
+      console.error('Failed to bulk delete tasks:', error);
+    }
+  };
+
+  const handleBulkAssign = async (userId: string) => {
+    try {
+      await Promise.all(
+        selectedTasks.map((taskId) =>
+          fetch(`/api/tasks/${taskId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ assignedToId: userId }),
+          })
+        )
+      );
+      await fetchTasks();
+      setSelectedTasks([]);
+    } catch (error) {
+      console.error('Failed to bulk assign tasks:', error);
+    }
+  };
+
+  const handleBulkPriority = async (priority: string) => {
+    try {
+      await Promise.all(
+        selectedTasks.map((taskId) =>
+          fetch(`/api/tasks/${taskId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ priority }),
+          })
+        )
+      );
+      await fetchTasks();
+      setSelectedTasks([]);
+    } catch (error) {
+      console.error('Failed to bulk update priority:', error);
+    }
+  };
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts(
+    {
+      onNewTask: () => handleAddTask('TODO'),
+      onSearch: () => document.getElementById('task-search')?.focus(),
+      onHelp: () => setShowShortcuts(true),
+      onEscape: () => {
+        setIsModalOpen(false);
+        setSelectedTasks([]);
+        setShowShortcuts(false);
+      },
+    },
+    !isModalOpen
   );
+
+  // Filter tasks based on search and advanced filters
+  const filteredTasks = tasks.filter((task) => {
+    // Search filter
+    const matchesSearch =
+      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.description?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Status filter
+    const matchesStatus = filters.status.length === 0 || filters.status.includes(task.status);
+
+    // Priority filter
+    const matchesPriority =
+      filters.priority.length === 0 || filters.priority.includes(task.priority);
+
+    // Assignee filter
+    const matchesAssignee =
+      filters.assignedTo.length === 0 ||
+      (task.assignedToId && filters.assignedTo.includes(task.assignedToId));
+
+    // Tags filter
+    const matchesTags =
+      filters.tags.length === 0 ||
+      (task.tags && filters.tags.some((tag: string) => task.tags.includes(tag)));
+
+    // Date range filter
+    const matchesDateRange =
+      (!filters.dateRange.start && !filters.dateRange.end) ||
+      (task.dueDate &&
+        (!filters.dateRange.start || new Date(task.dueDate) >= new Date(filters.dateRange.start)) &&
+        (!filters.dateRange.end || new Date(task.dueDate) <= new Date(filters.dateRange.end)));
+
+    // Overdue filter
+    const matchesOverdue =
+      !filters.overdue ||
+      (task.dueDate && new Date(task.dueDate) < new Date() && task.status !== 'COMPLETED');
+
+    return (
+      matchesSearch &&
+      matchesStatus &&
+      matchesPriority &&
+      matchesAssignee &&
+      matchesTags &&
+      matchesDateRange &&
+      matchesOverdue
+    );
+  });
 
   if (isLoading) {
     return (
@@ -173,38 +312,72 @@ export default function ProjectTaskBoard({
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* View Mode Toggle */}
+            <div className="flex bg-white/70 rounded-lg p-1 border border-brown-sugar/20">
+              <motion.button
+                onClick={() => setViewMode('kanban')}
+                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                  viewMode === 'kanban'
+                    ? 'bg-taro text-white shadow-sm'
+                    : 'text-ink/60 hover:bg-taro/10'
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </motion.button>
+              <motion.button
+                onClick={() => setViewMode('timeline')}
+                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                  viewMode === 'timeline'
+                    ? 'bg-taro text-white shadow-sm'
+                    : 'text-ink/60 hover:bg-taro/10'
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <CalendarIcon className="w-4 h-4" />
+              </motion.button>
+            </div>
+
             {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink/40" />
               <input
+                id="task-search"
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search tasks..."
-                className="pl-10 pr-4 py-2 border-2 border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro bg-milk-tea/30"
+                placeholder="Search tasks... (⌘K)"
+                className="pl-10 pr-4 py-2 border-2 border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro bg-milk-tea/30 font-display text-sm"
               />
             </div>
 
-            {/* Filter Toggle */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`
-                p-2 rounded-lg transition-colors
-                ${showFilters ? 'bg-taro text-white' : 'bg-milk-tea/50 text-ink hover:bg-taro/10'}
-              `}
+            {/* Advanced Filters */}
+            <AdvancedFilters filters={filters} onFiltersChange={setFilters} />
+
+            {/* Keyboard Shortcuts */}
+            <motion.button
+              onClick={() => setShowShortcuts(true)}
+              className="p-2 bg-white/70 hover:bg-white border border-brown-sugar/20 rounded-lg transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Keyboard shortcuts (?)"
             >
-              <Filter className="w-5 h-5" />
-            </button>
+              <Keyboard className="w-5 h-5 text-ink/60" />
+            </motion.button>
 
             {/* Quick Add Task */}
-            <button
+            <motion.button
               onClick={() => handleAddTask('TODO')}
-              className="flex items-center gap-2 px-4 py-2 bg-taro text-white rounded-lg font-medium hover:bg-deep-taro transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-taro text-white rounded-lg font-display font-medium hover:bg-deep-taro transition-colors shadow-md"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <Plus className="w-5 h-5" />
-              <span className="hidden sm:inline">New Task</span>
-            </button>
+              <span className="hidden sm:inline lowercase">new task</span>
+            </motion.button>
           </div>
         </div>
 
@@ -246,16 +419,51 @@ export default function ProjectTaskBoard({
         </div>
       </div>
 
-      {/* Kanban Board */}
-      <div className="bg-gradient-to-b from-milk-tea/30 to-white rounded-2xl border-2 border-brown-sugar/20 p-6">
-        <KanbanBoard
-          projectId={projectId}
-          tasks={filteredTasks}
-          onTaskMove={handleTaskMove}
-          onTaskClick={handleTaskClick}
-          onAddTask={handleAddTask}
-        />
-      </div>
+      {/* View Content */}
+      <AnimatePresence mode="wait">
+        {viewMode === 'kanban' ? (
+          <motion.div
+            key="kanban"
+            className="bg-gradient-to-b from-milk-tea/30 to-white rounded-2xl border-2 border-brown-sugar/20 p-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <KanbanBoard
+              projectId={projectId}
+              tasks={filteredTasks}
+              onTaskMove={handleTaskMove}
+              onTaskClick={handleTaskClick}
+              onAddTask={handleAddTask}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="timeline"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <TimelineView tasks={filteredTasks} onTaskClick={handleTaskClick} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Bulk Operations */}
+      <AnimatePresence>
+        {selectedTasks.length > 0 && (
+          <BulkOperations
+            selectedTasks={selectedTasks}
+            onClearSelection={() => setSelectedTasks([])}
+            onBulkDelete={handleBulkDelete}
+            onBulkMove={handleBulkMove}
+            onBulkAssign={handleBulkAssign}
+            onBulkPriority={handleBulkPriority}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Task Modal */}
       <TaskModal
@@ -269,6 +477,9 @@ export default function ProjectTaskBoard({
         onDelete={handleTaskDelete}
         currentUser={currentUser}
       />
+
+      {/* Keyboard Shortcuts Help */}
+      <KeyboardShortcutsHelp isOpen={showShortcuts} onClose={() => setShowShortcuts(false)} />
     </div>
   );
 }
