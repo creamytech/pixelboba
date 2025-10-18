@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import MembershipCard from './MembershipCard';
 import { TooltipInfo } from '@/components/ui/tooltip-info';
+import CheckoutButton from './CheckoutButton';
 
 const features = [
   {
@@ -147,28 +148,12 @@ export default function BobaClubPricing() {
 
                 {/* Join button inside dark card with shimmer */}
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button
-                    asChild
+                  <CheckoutButton
                     size="lg"
                     className="w-full bg-matcha hover:bg-matcha/90 text-ink py-7 text-lg font-bold rounded-full transition-all duration-200 relative overflow-hidden group/btn"
                   >
-                    <Link href="/start" className="relative z-10">
-                      join today
-                      {/* Shimmer effect */}
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -z-10"
-                        animate={{
-                          x: ['-200%', '200%'],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: 'linear',
-                          repeatDelay: 1,
-                        }}
-                      />
-                    </Link>
-                  </Button>
+                    join today
+                  </CheckoutButton>
                 </motion.div>
               </div>
             </motion.div>

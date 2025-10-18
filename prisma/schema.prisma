@@ -94,6 +94,15 @@ enum NotificationType {
   SYSTEM
 }
 
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  PAST_DUE
+  INCOMPLETE
+  TRIALING
+}
+
 
 model User {
   id            String    @id @default(cuid())
@@ -127,6 +136,7 @@ model User {
   createdInvites    Invite[]       @relation("InviteCreator")
   usedInvite        Invite?        @relation("InviteUser")
   passwordResets    PasswordReset[]
+  subscription      Subscription?
 }
 
 model Project {
@@ -355,5 +365,29 @@ model AdminSettings {
   value     Json
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Subscription {
+  id                     String             @id @default(cuid())
+  stripeCustomerId       String             @unique
+  stripeSubscriptionId   String             @unique
+  stripePriceId          String
+  status                 SubscriptionStatus @default(INCOMPLETE)
+  currentPeriodStart     DateTime
+  currentPeriodEnd       DateTime
+  cancelAtPeriodEnd      Boolean            @default(false)
+  canceledAt             DateTime?
+  pausedAt               DateTime?
+  trialStart             DateTime?
+  trialEnd               DateTime?
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  // Relations
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([stripeCustomerId])
+  @@index([stripeSubscriptionId])
 }
 

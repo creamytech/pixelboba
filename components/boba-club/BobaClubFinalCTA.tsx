@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import CheckoutButton from './CheckoutButton';
 
 export default function BobaClubFinalCTA() {
   const sectionRef = useRef(null);
@@ -73,18 +74,15 @@ export default function BobaClubFinalCTA() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
           >
-            <Button
-              asChild
+            <CheckoutButton
               size="lg"
               className="group bg-white hover:bg-milk-tea text-ink px-14 py-8 text-xl font-bold rounded-full shadow-[8px_8px_0px_0px_rgba(167,139,250,1)] hover:shadow-[4px_4px_0px_0px_rgba(167,139,250,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1"
             >
-              <Link href="/start">
-                get started
-                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-2">
-                  →
-                </span>
-              </Link>
-            </Button>
+              get started
+              <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-2">
+                →
+              </span>
+            </CheckoutButton>
 
             <Button
               asChild
