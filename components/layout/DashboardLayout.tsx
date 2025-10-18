@@ -50,21 +50,6 @@ export default function DashboardLayout({ children, user, onLogout }: DashboardL
           }}
           style={{ bottom: '15%', right: '15%' }}
         />
-        <motion.div
-          className="absolute w-64 h-64 bg-gradient-to-br from-milk-tea/20 to-transparent rounded-full blur-3xl"
-          animate={{
-            x: [0, 60, 0],
-            y: [0, -60, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 5,
-          }}
-          style={{ top: '50%', right: '25%' }}
-        />
 
         {/* Small floating bubbles */}
         {[...Array(12)].map((_, i) => (
@@ -94,7 +79,7 @@ export default function DashboardLayout({ children, user, onLogout }: DashboardL
 
       {/* Main Content */}
       <motion.main
-        className="ml-[280px] min-h-screen p-8 relative z-10"
+        className="lg:ml-[280px] min-h-screen p-4 sm:p-6 lg:p-8 relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}

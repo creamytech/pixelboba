@@ -98,7 +98,7 @@ export default function PortalLayout({
 
       {/* Main Content */}
       <motion.main
-        className="ml-[280px] min-h-screen p-8 relative z-10"
+        className="lg:ml-[280px] min-h-screen p-4 sm:p-6 lg:p-8 relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
