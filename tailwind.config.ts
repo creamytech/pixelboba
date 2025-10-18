@@ -52,14 +52,19 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // Brand colors
+        // Brand colors - Bubble Tea Palette
         'milk-tea': '#F5E9DA',
         taro: '#A78BFA',
         'deep-taro': '#7C3AED',
         'brown-sugar': '#8B5E3C',
-        matcha: '#84CC16',
+        matcha: '#88C159',
+        'thai-tea': '#E97730',
+        strawberry: '#FF6B9D',
         ink: '#0F172A',
         'slate-bg': '#111827',
+        // Expanded palette
+        cream: '#FFFBF5',
+        'pearl-black': '#2C1810',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -97,7 +102,23 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    function ({ addUtilities }: any) {
+      addUtilities({
+        '.scrollbar-hide': {
+          /* IE and Edge */
+          '-ms-overflow-style': 'none',
+          /* Firefox */
+          'scrollbar-width': 'none',
+          /* Safari and Chrome */
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      });
+    },
+  ],
 };
 
 export default config;
