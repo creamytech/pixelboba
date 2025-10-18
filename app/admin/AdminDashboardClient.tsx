@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { signOut } from 'next-auth/react';
 import {
   Users,
@@ -14,10 +13,12 @@ import {
   TrendingUp,
   DollarSign,
   Calendar,
-  LogOut,
-  MessageCircle,
   CheckSquare,
+  MessageCircle,
 } from 'lucide-react';
+import Sidebar from '@/components/layout/Sidebar';
+import DashboardHeader from '@/components/layout/DashboardHeader';
+import MetricCard from '@/components/dashboard/MetricCard';
 import ProjectManager from '@/components/admin/ProjectManager';
 import ClientManager from '@/components/admin/ClientManager';
 import ContractManager from '@/components/admin/ContractManager';
@@ -25,8 +26,6 @@ import InvoiceManager from '@/components/admin/InvoiceManager';
 import AdminSettings from '@/components/admin/AdminSettings';
 import InviteManager from '@/components/admin/InviteManager';
 import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
-import DashboardPearlField from '@/components/animations/DashboardPearlField';
-import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Session } from 'next-auth';
@@ -95,21 +94,20 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 flex items-center justify-center relative overflow-hidden">
-        <DashboardPearlField />
+      <div className="min-h-screen bg-gradient-to-br from-milk-tea/20 via-white to-taro/10 relative overflow-hidden flex items-center justify-center">
         <motion.div
-          className="text-center relative z-10"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: 'backOut' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
         >
           <motion.div
-            className="w-20 h-20 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-6"
+            className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-4"
             animate={{ rotate: 360 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           />
           <motion.p
-            className="font-display text-2xl text-ink/70"
+            className="font-display text-ink/70"
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           >
@@ -120,15 +118,15 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
     );
   }
 
-  const tabs = [
-    { id: 'overview', name: 'overview', icon: TrendingUp },
-    { id: 'tasks', name: 'tasks', icon: CheckSquare },
-    { id: 'projects', name: 'projects', icon: FolderOpen },
-    { id: 'clients', name: 'clients', icon: Users },
-    { id: 'contracts', name: 'contracts', icon: FileText },
-    { id: 'invoices', name: 'invoices', icon: CreditCard },
-    { id: 'invites', name: 'invites', icon: Plus },
-    { id: 'settings', name: 'settings', icon: Settings },
+  const navItems = [
+    { id: 'overview', name: 'Overview', icon: TrendingUp },
+    { id: 'tasks', name: 'Tasks', icon: CheckSquare },
+    { id: 'projects', name: 'Projects', icon: FolderOpen },
+    { id: 'clients', name: 'Clients', icon: Users },
+    { id: 'contracts', name: 'Contracts', icon: FileText },
+    { id: 'invoices', name: 'Invoices', icon: CreditCard },
+    { id: 'invites', name: 'Invites', icon: Plus },
+    { id: 'settings', name: 'Settings', icon: Settings },
   ];
 
   const renderActiveTab = () => {
@@ -155,149 +153,114 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea via-background to-taro/20 relative overflow-hidden">
-      <DashboardPearlField />
+    <div className="min-h-screen bg-gradient-to-br from-milk-tea/20 via-white to-taro/10 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Large decorative bubbles */}
+        <motion.div
+          className="absolute w-96 h-96 bg-gradient-to-br from-taro/10 to-transparent rounded-full blur-3xl"
+          animate={{
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          style={{ top: '10%', left: '20%' }}
+        />
+        <motion.div
+          className="absolute w-80 h-80 bg-gradient-to-br from-brown-sugar/10 to-transparent rounded-full blur-3xl"
+          animate={{
+            x: [0, -80, 0],
+            y: [0, 80, 0],
+            scale: [1, 1.15, 1],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 2,
+          }}
+          style={{ bottom: '15%', right: '15%' }}
+        />
 
-      {/* Header */}
-      <motion.div
-        className="border-b border-brown-sugar/20 bg-milk-tea/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'backOut' }}
+        {/* Small floating bubbles */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-taro/20 rounded-full"
+            animate={{
+              y: ['100vh', '-10vh'],
+              x: [Math.random() * 100 + 'vw', Math.random() * 100 + 'vw'],
+              opacity: [0, 0.6, 0],
+            }}
+            transition={{
+              duration: 10 + Math.random() * 10,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: 'linear',
+            }}
+            style={{
+              left: Math.random() * 100 + '%',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Sidebar */}
+      <Sidebar
+        user={{
+          name: session?.user?.name || 'Admin',
+          email: session?.user?.email || '',
+          image: session?.user?.image,
+          role: 'Admin',
+        }}
+        onLogout={() => signOut({ callbackUrl: '/' })}
+      />
+
+      {/* Main Content */}
+      <motion.main
+        className="lg:ml-[280px] min-h-screen p-4 sm:p-6 lg:p-8 relative z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
       >
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <motion.div
-              className="flex items-center space-x-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="flex items-center space-x-3">
-                <motion.div
-                  whileHover={{ scale: 1.05, rotate: 5 }}
-                  animate={{
-                    boxShadow: [
-                      '0 4px 6px rgba(0,0,0,0.1)',
-                      '0 8px 15px rgba(167,139,250,0.3)',
-                      '0 4px 6px rgba(0,0,0,0.1)',
-                    ],
-                  }}
-                  transition={{
-                    boxShadow: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
-                  }}
-                >
-                  <Image
-                    src="/Pixel_Boba_Icon_PNG.png"
-                    alt="pixel boba"
-                    width={56}
-                    height={56}
-                    className="h-14 w-14"
-                    priority
-                  />
-                </motion.div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-taro to-brown-sugar rounded-full"></div>
-                <span className="text-ink/70 font-display font-medium">admin panel</span>
-              </div>
-            </motion.div>
+        <DashboardHeader userName={session?.user?.name || 'Admin'} />
 
-            <motion.div
-              className="flex items-center space-x-4"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <motion.button
-                onClick={() => setShowMessageCenter(true)}
-                className="flex items-center space-x-2 px-4 py-2 text-taro hover:bg-taro/10 rounded-xl transition-all duration-300 group font-display"
-                title="Open messaging center"
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <motion.div
-                  animate={{ rotate: [0, 5, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <MessageCircle size={20} className="group-hover:scale-110 transition-transform" />
-                </motion.div>
-                <span className="text-sm">messages</span>
-              </motion.button>
-              <div className="hidden sm:block text-right">
-                <p className="font-display text-sm font-medium text-ink lowercase">welcome back!</p>
-                <p className="font-display text-xs text-ink/60 lowercase">{session?.user?.name}</p>
-              </div>
-              <motion.button
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className="p-2 text-ink/60 hover:text-taro hover:bg-taro/10 rounded-lg transition-all duration-200 group"
-                title="Sign out"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <LogOut size={20} className="group-hover:scale-110 transition-transform" />
-              </motion.button>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
-
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8 relative z-10 overflow-hidden">
-        {/* Navigation Tabs */}
+        {/* Tab Navigation */}
         <motion.div
           className="mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.4 }}
         >
-          <motion.nav
-            className="flex flex-wrap justify-center gap-2 sm:space-x-2 sm:gap-0 bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20 shadow-lg"
-            initial={{ scale: 0.95 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.5, ease: 'backOut' }}
-          >
-            {tabs.map((tab, index) => {
+          <div className="flex flex-wrap gap-2 bg-white/70 backdrop-blur-lg rounded-2xl p-3 border-2 border-brown-sugar/20 shadow-lg">
+            {navItems.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
               return (
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 sm:py-3 rounded-lg font-display font-medium transition-all duration-300 group ${
+                  className={`flex items-center gap-2 px-4 py-3 rounded-xl font-display font-medium transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
-                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80 hover:shadow-md'
+                      ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-md'
+                      : 'text-ink/70 hover:bg-milk-tea/50 hover:text-ink'
                   }`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <motion.div
-                    animate={isActive ? { rotate: [0, 5, 0] } : {}}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Icon
-                      size={18}
-                      className={`transition-transform ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}
-                    />
-                  </motion.div>
-                  <span className="font-medium lowercase hidden sm:inline">{tab.name}</span>
-                  {isActive && (
-                    <motion.div
-                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-taro/20 to-brown-sugar/20"
-                      animate={{ opacity: [0.3, 0.6, 0.3] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                  )}
+                  <Icon className="w-5 h-5" />
+                  <span className="hidden sm:inline">{tab.name}</span>
                 </motion.button>
               );
             })}
-          </motion.nav>
+          </div>
         </motion.div>
 
-        {/* Content */}
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, y: 20 }}
@@ -306,7 +269,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         >
           {renderActiveTab()}
         </motion.div>
-      </div>
+      </motion.main>
 
       {/* Admin Message Center Modal */}
       {showMessageCenter && (
@@ -326,7 +289,7 @@ function OverviewTab({
   if (!stats) {
     return (
       <motion.div
-        className="min-h-[400px] bg-milk-tea/70 backdrop-blur-lg rounded-xl border border-brown-sugar/20 shadow-lg flex items-center justify-center"
+        className="min-h-[400px] bg-milk-tea/70 backdrop-blur-lg rounded-3xl border-2 border-brown-sugar/20 shadow-xl flex items-center justify-center"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
@@ -338,554 +301,252 @@ function OverviewTab({
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           />
           <motion.p
-            className="font-display text-ink/70 lowercase"
+            className="font-display text-ink/70"
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           >
-            loading admin statistics...
+            Loading statistics...
           </motion.p>
         </div>
       </motion.div>
     );
   }
 
-  const statCards = [
+  const metrics = [
     {
-      title: 'total clients',
+      title: 'Total Clients',
       value: stats.totalClients,
       icon: Users,
-      color: 'blue',
-      trend: `+${Math.floor(stats.totalClients * 0.12)} this month`,
-      trendDirection: 'up' as 'up' | 'down' | 'neutral',
-      accentBg: 'bg-blue-50 border-blue-100',
+      gradient: 'from-blue-500 to-blue-600',
+      subtitle: `+${Math.floor(stats.totalClients * 0.12)} this month`,
     },
     {
-      title: 'active projects',
+      title: 'Active Projects',
       value: stats.activeProjects,
       icon: FolderOpen,
-      color: 'taro',
-      trend: `${stats.completedProjects} completed`,
-      trendDirection: 'neutral' as 'up' | 'down' | 'neutral',
-      accentBg: 'bg-violet-50 border-violet-100',
+      gradient: 'from-taro to-deep-taro',
+      subtitle: `${stats.completedProjects} completed`,
     },
     {
-      title: 'monthly revenue',
+      title: 'Monthly Revenue',
       value: `$${stats.monthlyRevenue.toLocaleString()}`,
       icon: DollarSign,
-      color: 'green',
-      trend: `+${Math.floor(stats.monthlyRevenue * 0.15)}% this month`,
-      trendDirection: 'up' as 'up' | 'down' | 'neutral',
-      accentBg: 'bg-green-50 border-green-100',
+      gradient: 'from-matcha to-matcha/80',
+      change: {
+        value: Math.floor(stats.monthlyRevenue * 0.15),
+        type: 'increase' as const,
+      },
     },
     {
-      title: 'pending invoices',
+      title: 'Pending Invoices',
       value: stats.pendingInvoices,
       icon: CreditCard,
-      color: 'red',
-      trend: `${stats.paidInvoices} paid this month`,
-      trendDirection: (stats.pendingInvoices > 3 ? 'up' : 'down') as 'up' | 'down' | 'neutral',
-      accentBg: 'bg-red-50 border-red-100',
+      gradient: 'from-strawberry to-strawberry/80',
+      subtitle: `${stats.paidInvoices} paid`,
     },
     {
-      title: 'pending contracts',
+      title: 'Pending Contracts',
       value: stats.pendingContracts,
       icon: FileText,
-      color: 'orange',
-      trend: `${stats.signedContracts} signed`,
-      trendDirection: 'neutral' as 'up' | 'down' | 'neutral',
-      accentBg: 'bg-orange-50 border-orange-100',
+      gradient: 'from-thai-tea to-thai-tea/80',
+      subtitle: `${stats.signedContracts} signed`,
     },
     {
-      title: 'avg project time',
-      value: stats.averageProjectDuration > 0 ? `${stats.averageProjectDuration} days` : 'N/A',
+      title: 'Avg Project Time',
+      value: stats.averageProjectDuration > 0 ? stats.averageProjectDuration : 'N/A',
       icon: Calendar,
-      color: 'indigo',
-      trend: stats.completedProjects > 0 ? `${stats.completedProjects} completed` : 'No data',
-      trendDirection: 'neutral' as 'up' | 'down' | 'neutral',
-      accentBg: 'bg-indigo-50 border-indigo-100',
+      gradient: 'from-brown-sugar to-brown-sugar/80',
+      suffix: stats.averageProjectDuration > 0 ? 'd' : '',
+      subtitle: `${stats.completedProjects} projects`,
+    },
+  ];
+
+  // Quick action cards for the overview
+  const quickActionCards = [
+    {
+      title: 'Add New Client',
+      description: 'Invite a client to the portal',
+      icon: Users,
+      color: 'from-blue-500/10 to-blue-600/10',
+      onClick: () => setActiveTab('clients'),
+    },
+    {
+      title: 'Create Project',
+      description: 'Start a new project',
+      icon: FolderOpen,
+      color: 'from-taro/10 to-deep-taro/10',
+      onClick: () => setActiveTab('projects'),
+    },
+    {
+      title: 'Send Contract',
+      description: 'Create and send a contract',
+      icon: FileText,
+      color: 'from-green-500/10 to-green-600/10',
+      onClick: () => setActiveTab('contracts'),
+    },
+    {
+      title: 'New Invoice',
+      description: 'Generate an invoice',
+      icon: CreditCard,
+      color: 'from-orange-500/10 to-orange-600/10',
+      onClick: () => setActiveTab('invoices'),
     },
   ];
 
   return (
-    <motion.div
-      className="space-y-8"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-    >
-      {/* Enhanced Stats Grid with Staggered Animations */}
-      <motion.div
-        className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        {statCards.map((card, index) => (
+    <div className="space-y-8">
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {metrics.map((metric, index) => (
           <motion.div
-            key={card.title}
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              duration: 0.4,
-              delay: 0.2 + index * 0.1,
-              ease: 'backOut',
-            }}
+            key={metric.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
           >
-            <StatCard {...card} />
+            <MetricCard {...metric} />
           </motion.div>
         ))}
-      </motion.div>
+      </div>
 
-      {/* Quick Actions with Enhanced Animations */}
+      {/* Quick Action Cards */}
       <motion.div
-        className="grid md:grid-cols-2 gap-6"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1.0 }}
+        transition={{ duration: 0.4, delay: 0.6 }}
       >
-        {/* Recent Activity */}
-        <motion.div
-          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
-          whileHover={{ y: -2, transition: { duration: 0.2 } }}
-        >
-          <motion.h3
-            className="font-display text-lg font-semibold text-ink mb-4 lowercase"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.2 }}
-          >
-            recent activity
-          </motion.h3>
-          <motion.div
-            className="space-y-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.3 }}
-          >
-            {stats.recentActivity.length > 0 ? (
-              <AnimatePresence>
-                {stats.recentActivity.slice(0, 6).map((activity, index) => (
-                  <motion.div
-                    key={activity.id}
-                    initial={{ opacity: 0, x: -30, scale: 0.9 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    transition={{
-                      duration: 0.3,
-                      delay: 1.4 + index * 0.05,
-                      ease: 'backOut',
-                    }}
-                  >
-                    <ActivityItem
-                      action={activity.action}
-                      description={`${activity.user.name || activity.user.email}${activity.project ? ` • ${activity.project.name}` : ''} - ${activity.description}`}
-                      time={new Date(activity.createdAt).toLocaleDateString()}
-                      type="user"
-                    />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            ) : (
-              <motion.div
-                className="text-center py-8 text-ink/50"
+        <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+          Quick Actions
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {quickActionCards.map((card, index) => {
+            const Icon = card.icon;
+            return (
+              <motion.button
+                key={card.title}
+                onClick={card.onClick}
+                className={`bg-gradient-to-r ${card.color} backdrop-blur-sm rounded-2xl p-6 border-2 border-brown-sugar/20 hover:border-brown-sugar/40 transition-all shadow-lg hover:shadow-xl text-left`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.4 }}
+                transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -4 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <motion.div
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <Users className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                </motion.div>
-                <p className="font-display text-sm lowercase">no recent activity</p>
-                <p className="font-display text-xs lowercase">
-                  activity will appear here as users interact with your platform
-                </p>
-              </motion.div>
-            )}
-          </motion.div>
-        </motion.div>
-
-        {/* Quick Actions */}
-        <motion.div
-          className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg hover:shadow-xl transition-shadow"
-          whileHover={{ y: -2, transition: { duration: 0.2 } }}
-        >
-          <motion.h3
-            className="font-display text-lg font-semibold text-ink mb-4 lowercase"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.2 }}
-          >
-            quick actions
-          </motion.h3>
-          <motion.div
-            className="grid grid-cols-2 gap-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.3 }}
-          >
-            {[
-              {
-                icon: Users,
-                label: 'add client',
-                tab: 'clients',
-                color: 'from-blue-500/10 to-blue-600/10',
-                hoverColor: 'from-blue-500/20 to-blue-600/20',
-              },
-              {
-                icon: Plus,
-                label: 'new project',
-                tab: 'projects',
-                color: 'from-taro/10 to-deep-taro/10',
-                hoverColor: 'from-taro/20 to-deep-taro/20',
-              },
-              {
-                icon: FileText,
-                label: 'create contract',
-                tab: 'contracts',
-                color: 'from-green-500/10 to-green-600/10',
-                hoverColor: 'from-green-500/20 to-green-600/20',
-              },
-              {
-                icon: CreditCard,
-                label: 'send invoice',
-                tab: 'invoices',
-                color: 'from-orange-500/10 to-orange-600/10',
-                hoverColor: 'from-orange-500/20 to-orange-600/20',
-              },
-            ].map((action, index) => (
-              <motion.div
-                key={action.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.3,
-                  delay: 1.4 + index * 0.1,
-                  ease: 'backOut',
-                }}
-              >
-                <ActionButton
-                  icon={action.icon}
-                  label={action.label}
-                  onClick={() => setActiveTab(action.tab)}
-                  color={action.color}
-                  hoverColor={action.hoverColor}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
-
-      {/* Revenue Chart Placeholder with Enhanced Design */}
-      <motion.div
-        className="bg-white/70 backdrop-blur-lg rounded-xl p-6 border border-white/30 shadow-lg"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1.6 }}
-        whileHover={{ y: -2, transition: { duration: 0.2 } }}
-      >
-        <motion.h3
-          className="font-display text-lg font-semibold text-ink mb-4 lowercase"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.8 }}
-        >
-          revenue overview
-        </motion.h3>
-        <motion.div
-          className="h-64 bg-gradient-to-br from-white/50 via-milk-tea/30 to-taro/5 rounded-lg p-4 border border-white/20 backdrop-blur-sm"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.9 }}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <p className="font-display text-sm text-ink/60 lowercase">this month</p>
-              <p className="font-display text-2xl font-bold text-ink">
-                ${stats.monthlyRevenue.toLocaleString()}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="font-display text-sm text-green-600 flex items-center gap-1">
-                ↗ +{Math.floor(stats.monthlyRevenue * 0.15)}%
-              </p>
-              <p className="font-display text-xs text-ink/50">vs last month</p>
-            </div>
-          </div>
-
-          {/* Simple Bar Chart */}
-          <div className="relative h-32 flex items-end justify-between gap-2">
-            {[65, 45, 80, 55, 90, 70, 85, 95, 75, 60, 88, stats.monthlyRevenue / 100].map(
-              (height, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-gradient-to-t from-taro/60 to-taro/40 rounded-t-sm flex-1 min-h-[8px] relative group"
-                  style={{ height: `${Math.max(height * 0.8, 8)}%` }}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${Math.max(height * 0.8, 8)}%` }}
-                  transition={{ delay: 2.0 + index * 0.1, duration: 0.5, ease: 'easeOut' }}
-                  whileHover={{
-                    backgroundColor: 'rgba(167, 139, 250, 0.8)',
-                    scale: 1.05,
-                    transition: { duration: 0.2 },
-                  }}
-                >
-                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-ink/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                    ${(height * 50).toLocaleString()}
+                <div className="flex items-start justify-between mb-3">
+                  <div className="w-12 h-12 bg-white/80 rounded-xl flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-taro" />
                   </div>
-                </motion.div>
-              )
-            )}
-          </div>
-
-          <div className="flex justify-between mt-2 text-xs text-ink/40 font-display">
-            <span>jan</span>
-            <span>feb</span>
-            <span>mar</span>
-            <span>apr</span>
-            <span>may</span>
-            <span>jun</span>
-            <span>jul</span>
-            <span>aug</span>
-            <span>sep</span>
-            <span>oct</span>
-            <span>nov</span>
-            <span>dec</span>
-          </div>
-        </motion.div>
+                </div>
+                <h4 className="font-display font-semibold text-ink mb-1">{card.title}</h4>
+                <p className="font-display text-sm text-ink/60">{card.description}</p>
+              </motion.button>
+            );
+          })}
+        </div>
       </motion.div>
-    </motion.div>
-  );
-}
 
-function StatCard({
-  title,
-  value,
-  icon: Icon,
-  color,
-  trend,
-  trendDirection,
-  accentBg,
-}: {
-  title: string;
-  value: string | number;
-  icon: any;
-  color: string;
-  trend?: string;
-  trendDirection?: 'up' | 'down' | 'neutral';
-  accentBg?: string;
-}) {
-  const getColorClasses = (colorName: string) => {
-    const colors = {
-      blue: 'bg-blue-500/10 text-blue-600',
-      taro: 'bg-violet-500/10 text-violet-600',
-      green: 'bg-green-500/10 text-green-600',
-      red: 'bg-red-500/10 text-red-600',
-      orange: 'bg-orange-500/10 text-orange-600',
-      purple: 'bg-purple-500/10 text-purple-600',
-      indigo: 'bg-indigo-500/10 text-indigo-600',
-      emerald: 'bg-emerald-500/10 text-emerald-600',
-    };
-    return colors[colorName as keyof typeof colors] || 'bg-gray-500/10 text-gray-600';
-  };
-
-  const getTrendIcon = () => {
-    switch (trendDirection) {
-      case 'up':
-        return '↗';
-      case 'down':
-        return '↘';
-      default:
-        return '→';
-    }
-  };
-
-  const getTrendColor = () => {
-    switch (trendDirection) {
-      case 'up':
-        return 'text-green-600';
-      case 'down':
-        return 'text-red-500';
-      default:
-        return 'text-gray-500';
-    }
-  };
-
-  return (
-    <motion.div
-      className={`${accentBg || 'bg-milk-tea/70'} backdrop-blur-sm rounded-xl p-6 border shadow-lg hover:shadow-xl transition-shadow`}
-      whileHover={{
-        scale: 1.02,
-        y: -2,
-        transition: { duration: 0.2 },
-      }}
-      whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: 'backOut' }}
-    >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <p className="font-display text-ink/60 text-sm font-medium lowercase tracking-wide">
-            {title}
-          </p>
-          <motion.p
-            className="font-display text-2xl font-bold text-ink mt-1 mb-2 lowercase"
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
-            {value}
-          </motion.p>
-          {trend && (
-            <motion.div
-              className="flex items-center gap-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <span className={`font-display text-sm font-medium ${getTrendColor()}`}>
-                {getTrendIcon()}
-              </span>
-              <p className="font-display text-ink/50 text-xs lowercase">{trend}</p>
-            </motion.div>
+      {/* Recent Activity */}
+      <motion.div
+        className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 1.0 }}
+      >
+        <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+          Recent Activity
+        </h3>
+        <div className="space-y-3">
+          {stats.recentActivity.length > 0 ? (
+            stats.recentActivity.slice(0, 6).map((activity, index) => (
+              <motion.div
+                key={activity.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 1.1 + index * 0.05 }}
+                className="flex items-start gap-4 p-4 bg-milk-tea/30 rounded-2xl hover:bg-milk-tea/50 transition-colors"
+              >
+                <div className="w-2 h-2 rounded-full bg-taro mt-2 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="font-display font-medium text-ink">
+                    {activity.action.replace('_', ' ')}
+                  </p>
+                  <p className="text-sm text-ink/60 truncate">
+                    {activity.user.name || activity.user.email}
+                    {activity.project && ` • ${activity.project.name}`} - {activity.description}
+                  </p>
+                </div>
+                <span className="text-xs text-ink/40 whitespace-nowrap">
+                  {new Date(activity.createdAt).toLocaleDateString()}
+                </span>
+              </motion.div>
+            ))
+          ) : (
+            <div className="text-center py-8 text-ink/50">
+              <p className="font-display">No recent activity</p>
+            </div>
           )}
         </div>
-        <motion.div
-          className={`p-3 rounded-lg flex-shrink-0 ${getColorClasses(color)}`}
-          whileHover={{ rotate: 5, scale: 1.1 }}
-          transition={{ duration: 0.2 }}
-        >
-          <Icon className="w-6 h-6" />
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
+      </motion.div>
 
-function ActivityItem({
-  action,
-  description,
-  time,
-  type,
-}: {
-  action: string;
-  description: string;
-  time: string;
-  type: 'user' | 'project' | 'payment' | 'contract';
-}) {
-  const getIconAndColor = () => {
-    switch (action.toLowerCase()) {
-      case 'message_sent':
-        return {
-          icon: '💬',
-          color: 'bg-blue-100 text-blue-600',
-          bgColor: 'from-blue-50 to-blue-100',
-        };
-      case 'contract_signed':
-      case 'contract_created':
-        return {
-          icon: '📄',
-          color: 'bg-green-100 text-green-600',
-          bgColor: 'from-green-50 to-green-100',
-        };
-      case 'invoice_sent':
-      case 'payment_received':
-        return {
-          icon: '💰',
-          color: 'bg-yellow-100 text-yellow-600',
-          bgColor: 'from-yellow-50 to-yellow-100',
-        };
-      case 'project_created':
-      case 'project_updated':
-        return {
-          icon: '📁',
-          color: 'bg-purple-100 text-purple-600',
-          bgColor: 'from-purple-50 to-purple-100',
-        };
-      case 'client_invited':
-      case 'user_registered':
-        return {
-          icon: '👤',
-          color: 'bg-indigo-100 text-indigo-600',
-          bgColor: 'from-indigo-50 to-indigo-100',
-        };
-      default:
-        return {
-          icon: '📌',
-          color: 'bg-gray-100 text-gray-600',
-          bgColor: 'from-gray-50 to-gray-100',
-        };
-    }
-  };
-
-  const { icon, color, bgColor } = getIconAndColor();
-
-  return (
-    <motion.div
-      className={`flex items-center space-x-3 p-3 rounded-lg transition-colors border bg-gradient-to-r ${bgColor} hover:shadow-md`}
-      whileHover={{
-        scale: 1.02,
-        y: -1,
-        transition: { duration: 0.2 },
-      }}
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.3, ease: 'backOut' }}
-    >
+      {/* Revenue Chart */}
       <motion.div
-        className={`w-10 h-10 ${color} rounded-full flex items-center justify-center flex-shrink-0 shadow-sm text-lg`}
-        whileHover={{ rotate: 5, scale: 1.05 }}
-        transition={{ duration: 0.2 }}
+        className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 1.2 }}
       >
-        {icon}
-      </motion.div>
-      <div className="flex-1">
-        <p className="font-display text-ink font-medium lowercase">{action.replace('_', ' ')}</p>
-        <p className="font-display text-ink/60 text-sm lowercase">{description}</p>
-      </div>
-      <span className="font-display text-ink/50 text-xs lowercase flex-shrink-0">{time}</span>
-    </motion.div>
-  );
-}
+        <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+          Revenue Overview
+        </h3>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <p className="font-display text-sm text-ink/60">This Month</p>
+            <p className="font-display text-3xl font-bold text-ink">
+              ${stats.monthlyRevenue.toLocaleString()}
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="font-display text-sm text-matcha flex items-center gap-1 justify-end">
+              <span className="text-2xl">↗</span> +{Math.floor(stats.monthlyRevenue * 0.15)}%
+            </p>
+            <p className="font-display text-xs text-ink/50">vs last month</p>
+          </div>
+        </div>
 
-function ActionButton({
-  icon: Icon,
-  label,
-  onClick,
-  color,
-  hoverColor,
-}: {
-  icon: any;
-  label: string;
-  onClick: () => void;
-  color?: string;
-  hoverColor?: string;
-}) {
-  return (
-    <motion.button
-      onClick={onClick}
-      className={`flex items-center space-x-2 p-3 bg-gradient-to-r ${color || 'from-taro/15 to-brown-sugar/15'} rounded-lg transition-all duration-300 group border border-white/40 backdrop-blur-sm shadow-sm hover:shadow-lg`}
-      whileHover={{
-        scale: 1.05,
-        y: -2,
-        backgroundImage: `linear-gradient(to right, ${hoverColor?.split(' ')[0]?.replace('from-', '') || 'rgba(167, 139, 250, 0.25)'}, ${hoverColor?.split(' ')[2]?.replace('to-', '') || 'rgba(139, 92, 246, 0.25)'})`,
-        transition: { duration: 0.2 },
-      }}
-      whileTap={{ scale: 0.95 }}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, ease: 'backOut' }}
-    >
-      <motion.div whileHover={{ rotate: 10, scale: 1.1 }} transition={{ duration: 0.2 }}>
-        <Icon className="w-5 h-5 text-gray-700 group-hover:text-gray-800" />
+        {/* Simple Bar Chart */}
+        <div className="relative h-48 flex items-end justify-between gap-2">
+          {[65, 45, 80, 55, 90, 70, 85, 95, 75, 60, 88, stats.monthlyRevenue / 100].map(
+            (height, index) => (
+              <motion.div
+                key={index}
+                className="bg-gradient-to-t from-taro/60 to-taro/40 rounded-t-lg flex-1 min-h-[8px] relative group cursor-pointer"
+                style={{ height: `${Math.max(height * 0.8, 8)}%` }}
+                initial={{ height: 0 }}
+                animate={{ height: `${Math.max(height * 0.8, 8)}%` }}
+                transition={{ delay: 1.4 + index * 0.05, duration: 0.5, ease: 'easeOut' }}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: 'rgba(167, 139, 250, 0.8)',
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-ink/90 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
+                  ${(height * 50).toLocaleString()}
+                </div>
+              </motion.div>
+            )
+          )}
+        </div>
+
+        <div className="flex justify-between mt-4 text-xs text-ink/40 font-display">
+          {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(
+            (month) => (
+              <span key={month}>{month}</span>
+            )
+          )}
+        </div>
       </motion.div>
-      <span className="font-display text-sm font-medium text-ink lowercase group-hover:font-semibold transition-all duration-200">
-        {label}
-      </span>
-    </motion.button>
+    </div>
   );
 }
 
@@ -905,7 +566,6 @@ function AdminTasksView({ projects }: { projects: any[] }) {
   const fetchAllTasks = async () => {
     setIsLoadingStats(true);
     try {
-      // Fetch tasks from all projects
       const taskPromises = projects.map((project) =>
         fetch(`/api/tasks?projectId=${project.id}`)
           .then((res) => (res.ok ? res.json() : []))
@@ -958,7 +618,7 @@ function AdminTasksView({ projects }: { projects: any[] }) {
   if (projects.length === 0) {
     return (
       <motion.div
-        className="bg-white/60 backdrop-blur-lg rounded-xl p-12 border border-brown-sugar/20 shadow-lg text-center"
+        className="bg-white/70 backdrop-blur-lg rounded-3xl p-12 border-2 border-brown-sugar/20 shadow-xl text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -966,63 +626,56 @@ function AdminTasksView({ projects }: { projects: any[] }) {
         <div className="w-16 h-16 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckSquare className="w-8 h-8 text-taro/60" />
         </div>
-        <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase">
-          no projects yet
-        </h3>
-        <p className="text-ink/60 mb-6">create projects to start managing tasks</p>
+        <h3 className="font-display text-xl font-semibold text-ink mb-2">No projects yet</h3>
+        <p className="text-ink/60">Create projects to start managing tasks</p>
       </motion.div>
     );
   }
 
   return (
-    <motion.div
-      className="space-y-6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-    >
+    <div className="space-y-6">
       {/* View Mode Switcher & Filters */}
       <motion.div
-        className="bg-white/60 backdrop-blur-lg rounded-xl p-4 border border-brown-sugar/20 shadow-lg"
+        className="bg-white/70 backdrop-blur-lg rounded-2xl p-6 border-2 border-brown-sugar/20 shadow-lg"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
+        transition={{ duration: 0.4 }}
       >
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* View Mode Toggle */}
           <div className="flex items-center gap-3">
-            <span className="font-display text-sm font-medium text-ink/70 lowercase">view:</span>
-            <div className="flex bg-white/70 rounded-lg p-1 border border-brown-sugar/10">
+            <span className="font-display text-sm font-medium text-ink/70">View:</span>
+            <div className="flex bg-milk-tea/50 rounded-xl p-1 border border-brown-sugar/20">
               <button
                 onClick={() => setViewMode('single')}
-                className={`px-4 py-2 rounded font-display text-sm lowercase transition-all ${
+                className={`px-4 py-2 rounded-lg font-display text-sm transition-all ${
                   viewMode === 'single'
-                    ? 'bg-taro text-white shadow-sm'
+                    ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-md'
                     : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
                 }`}
               >
-                single project
+                Single Project
               </button>
               <button
                 onClick={() => setViewMode('overview')}
-                className={`px-4 py-2 rounded font-display text-sm lowercase transition-all ${
+                className={`px-4 py-2 rounded-lg font-display text-sm transition-all ${
                   viewMode === 'overview'
-                    ? 'bg-taro text-white shadow-sm'
+                    ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-md'
                     : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
                 }`}
               >
-                overview
+                Overview
               </button>
             </div>
           </div>
 
-          {/* Project Selector (only for single project view) */}
+          {/* Project Selector */}
           {viewMode === 'single' && (
             <div className="flex-1 max-w-md">
               <select
                 value={selectedProjectId}
                 onChange={(e) => setSelectedProjectId(e.target.value)}
-                className="w-full px-4 py-2 bg-white/70 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro/40 transition-all font-display text-ink text-sm"
+                className="w-full px-4 py-3 bg-white/90 border-2 border-brown-sugar/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-taro/30 focus:border-taro transition-all font-display text-ink shadow-sm"
               >
                 {projects.map((project) => (
                   <option key={project.id} value={project.id}>
@@ -1036,150 +689,109 @@ function AdminTasksView({ projects }: { projects: any[] }) {
       </motion.div>
 
       {/* Task Overview Statistics */}
-      {viewMode === 'overview' && (
+      {viewMode === 'overview' && taskStats && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
+          className="space-y-6"
         >
-          {isLoadingStats ? (
-            <div className="bg-white/60 backdrop-blur-lg rounded-xl p-8 border border-brown-sugar/20 shadow-lg text-center">
+          {/* Main Stats Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {[
+              { title: 'Total Tasks', value: taskStats.total, icon: '📊', color: 'blue' },
+              { title: 'In Progress', value: taskStats.inProgress, icon: '⚡', color: 'taro' },
+              { title: 'Completed', value: taskStats.completed, icon: '✅', color: 'matcha' },
+              {
+                title: 'High Priority',
+                value: taskStats.highPriority,
+                icon: '🔥',
+                color: 'strawberry',
+              },
+              { title: 'Overdue', value: taskStats.overdue, icon: '⚠️', color: 'thai-tea' },
+            ].map((stat, index) => (
               <motion.div
-                className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-4"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              />
-              <p className="font-display text-ink/70 lowercase">loading task statistics...</p>
-            </div>
-          ) : taskStats ? (
-            <div className="space-y-6">
-              {/* Main Stats Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                <TaskStatCard
-                  title="total tasks"
-                  value={taskStats.total}
-                  icon="📊"
-                  color="bg-blue-50 border-blue-100"
-                  textColor="text-blue-600"
-                />
-                <TaskStatCard
-                  title="in progress"
-                  value={taskStats.inProgress}
-                  icon="⚡"
-                  color="bg-violet-50 border-violet-100"
-                  textColor="text-violet-600"
-                />
-                <TaskStatCard
-                  title="completed"
-                  value={taskStats.completed}
-                  icon="✅"
-                  color="bg-green-50 border-green-100"
-                  textColor="text-green-600"
-                />
-                <TaskStatCard
-                  title="high priority"
-                  value={taskStats.highPriority}
-                  icon="🔥"
-                  color="bg-red-50 border-red-100"
-                  textColor="text-red-600"
-                />
-                <TaskStatCard
-                  title="overdue"
-                  value={taskStats.overdue}
-                  icon="⚠️"
-                  color="bg-orange-50 border-orange-100"
-                  textColor="text-orange-600"
-                  isAlert={taskStats.overdue > 0}
-                />
-              </div>
+                key={stat.title}
+                className={`bg-white/70 backdrop-blur-sm rounded-2xl p-6 border-2 border-brown-sugar/20 shadow-lg`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                whileHover={{ scale: 1.03, y: -2 }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-3xl">{stat.icon}</span>
+                  {stat.title === 'Overdue' && stat.value > 0 && (
+                    <motion.div
+                      className="w-3 h-3 bg-red-500 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  )}
+                </div>
+                <p className="font-display text-sm text-ink/60 mb-1">{stat.title}</p>
+                <p className="font-display text-3xl font-bold text-ink">{stat.value}</p>
+              </motion.div>
+            ))}
+          </div>
 
-              {/* Status Breakdown */}
-              <div className="bg-white/60 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg">
-                <h3 className="font-display text-lg font-semibold text-ink mb-4 lowercase">
-                  task distribution
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                  {[
-                    { label: 'backlog', value: taskStats.backlog, color: 'bg-gray-200' },
-                    { label: 'todo', value: taskStats.todo, color: 'bg-blue-200' },
-                    {
-                      label: 'in progress',
-                      value: taskStats.inProgress,
-                      color: 'bg-violet-200',
-                    },
-                    { label: 'in review', value: taskStats.inReview, color: 'bg-yellow-200' },
-                    { label: 'completed', value: taskStats.completed, color: 'bg-green-200' },
-                    { label: 'blocked', value: taskStats.blocked, color: 'bg-red-200' },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="bg-white/50 rounded-lg p-3 border border-brown-sugar/10"
-                    >
-                      <div className={`w-full h-2 ${item.color} rounded-full mb-2`}></div>
-                      <p className="font-display text-xs text-ink/60 lowercase mb-1">
-                        {item.label}
-                      </p>
-                      <p className="font-display text-lg font-bold text-ink">{item.value}</p>
+          {/* Project-wise Breakdown */}
+          <motion.div
+            className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.5 }}
+          >
+            <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+              Tasks by Project
+            </h3>
+            <div className="space-y-4">
+              {projects.map((project) => {
+                const projectTasks = allTasks.filter((t) => t.projectId === project.id);
+                const completedCount = projectTasks.filter((t) => t.status === 'COMPLETED').length;
+                const progressPercent =
+                  projectTasks.length > 0
+                    ? Math.round((completedCount / projectTasks.length) * 100)
+                    : 0;
+
+                return (
+                  <motion.button
+                    key={project.id}
+                    className="w-full bg-milk-tea/50 rounded-2xl p-6 border-2 border-brown-sugar/20 hover:border-taro/40 transition-all text-left shadow-md hover:shadow-lg"
+                    whileHover={{ scale: 1.01, y: -2 }}
+                    onClick={() => {
+                      setSelectedProjectId(project.id);
+                      setViewMode('single');
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-display font-semibold text-ink text-lg">
+                        {project.name}
+                      </h4>
+                      <span className="font-display text-sm text-ink/60 bg-white/60 px-3 py-1 rounded-full">
+                        {projectTasks.length} tasks
+                      </span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Project-wise Task Breakdown */}
-              <div className="bg-white/60 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg">
-                <h3 className="font-display text-lg font-semibold text-ink mb-4 lowercase">
-                  tasks by project
-                </h3>
-                <div className="space-y-3">
-                  {projects.map((project) => {
-                    const projectTasks = allTasks.filter((t) => t.projectId === project.id);
-                    const completedCount = projectTasks.filter(
-                      (t) => t.status === 'COMPLETED'
-                    ).length;
-                    const progressPercent =
-                      projectTasks.length > 0
-                        ? Math.round((completedCount / projectTasks.length) * 100)
-                        : 0;
-
-                    return (
+                    <div className="w-full bg-white/60 rounded-full h-3 mb-2">
                       <motion.div
-                        key={project.id}
-                        className="bg-white/50 rounded-lg p-4 border border-brown-sugar/10 hover:shadow-md transition-shadow cursor-pointer"
-                        whileHover={{ scale: 1.01, y: -1 }}
-                        onClick={() => {
-                          setSelectedProjectId(project.id);
-                          setViewMode('single');
-                        }}
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-display font-medium text-ink lowercase">
-                            {project.name}
-                          </h4>
-                          <span className="text-xs font-display text-ink/60">
-                            {projectTasks.length} tasks
-                          </span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div
-                            className="h-2 rounded-full bg-gradient-to-r from-taro to-brown-sugar transition-all"
-                            style={{ width: `${progressPercent}%` }}
-                          />
-                        </div>
-                        <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs font-display text-ink/60">
-                            {completedCount} completed
-                          </span>
-                          <span className="text-xs font-display font-medium text-taro">
-                            {progressPercent}%
-                          </span>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
+                        className="h-3 rounded-full bg-gradient-to-r from-taro to-brown-sugar"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progressPercent}%` }}
+                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-sm text-ink/60">
+                        {completedCount} completed
+                      </span>
+                      <span className="font-display text-sm font-semibold text-taro">
+                        {progressPercent}%
+                      </span>
+                    </div>
+                  </motion.button>
+                );
+              })}
             </div>
-          ) : null}
+          </motion.div>
         </motion.div>
       )}
 
@@ -1202,47 +814,6 @@ function AdminTasksView({ projects }: { projects: any[] }) {
           />
         </motion.div>
       )}
-    </motion.div>
-  );
-}
-
-function TaskStatCard({
-  title,
-  value,
-  icon,
-  color,
-  textColor,
-  isAlert = false,
-}: {
-  title: string;
-  value: number;
-  icon: string;
-  color: string;
-  textColor: string;
-  isAlert?: boolean;
-}) {
-  return (
-    <motion.div
-      className={`${color} backdrop-blur-sm rounded-xl p-4 border shadow-lg hover:shadow-xl transition-all relative`}
-      whileHover={{ scale: 1.03, y: -2 }}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      {isAlert && value > 0 && (
-        <motion.div
-          className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full"
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
-      )}
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <p className="font-display text-xs text-ink/60 uppercase tracking-wide mb-1">{title}</p>
-          <p className={`font-display text-2xl font-bold ${textColor}`}>{value}</p>
-        </div>
-        <span className="text-2xl">{icon}</span>
-      </div>
-    </motion.div>
+    </div>
   );
 }
