@@ -5,12 +5,26 @@ import { Task, TaskStatus, Priority, User as UserType } from '@prisma/client';
 import KanbanBoard from './KanbanBoard';
 import TaskModal from './TaskModal';
 import TimelineView from './TimelineView';
+import ListView from './ListView';
+import GanttView from './GanttView';
+import AnalyticsDashboard from './AnalyticsDashboard';
 import AdvancedFilters from './AdvancedFilters';
 import BulkOperations from './BulkOperations';
 import KeyboardShortcutsHelp from './KeyboardShortcutsHelp';
+import PresenceIndicator from '@/components/realtime/PresenceIndicator';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { useRealtime } from '@/hooks/useRealtime';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Filter, LayoutGrid, Calendar as CalendarIcon, Keyboard } from 'lucide-react';
+import {
+  Plus,
+  Search,
+  LayoutGrid,
+  Calendar as CalendarIcon,
+  Keyboard,
+  List as ListIcon,
+  BarChart3,
+  TrendingUp,
+} from 'lucide-react';
 
 interface ProjectTaskBoardProps {
   projectId: string;
@@ -28,7 +42,9 @@ export default function ProjectTaskBoard({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState<'kanban' | 'timeline'>('kanban');
+  const [viewMode, setViewMode] = useState<'kanban' | 'timeline' | 'list' | 'gantt' | 'analytics'>(
+    'kanban'
+  );
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
   const [showShortcuts, setShowShortcuts] = useState(false);
 
@@ -40,6 +56,19 @@ export default function ProjectTaskBoard({
     tags: [] as string[],
     dateRange: { start: null as string | null, end: null as string | null },
     overdue: false,
+  });
+
+  // Real-time collaboration
+  const { onlineUsers, isConnected } = useRealtime({
+    projectId,
+    onTaskCreated: (task) => setTasks((prev) => [...prev, task]),
+    onTaskUpdated: (task) => setTasks((prev) => prev.map((t) => (t.id === task.id ? task : t))),
+    onTaskDeleted: (taskId) => setTasks((prev) => prev.filter((t) => t.id !== taskId)),
+    onTaskMoved: async (data) => {
+      // Refresh tasks to get updated order
+      await fetchTasks();
+    },
+    enabled: true,
   });
 
   // Fetch tasks
@@ -313,6 +342,13 @@ export default function ProjectTaskBoard({
           </div>
 
           <div className="flex items-center gap-3 flex-wrap">
+            {/* Presence Indicator */}
+            <PresenceIndicator
+              users={onlineUsers}
+              isConnected={isConnected}
+              currentUserId={currentUser.id}
+            />
+
             {/* View Mode Toggle */}
             <div className="flex bg-white/70 rounded-lg p-1 border border-brown-sugar/20">
               <motion.button
@@ -324,6 +360,7 @@ export default function ProjectTaskBoard({
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                title="Kanban Board"
               >
                 <LayoutGrid className="w-4 h-4" />
               </motion.button>
@@ -336,8 +373,48 @@ export default function ProjectTaskBoard({
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                title="Timeline View"
               >
                 <CalendarIcon className="w-4 h-4" />
+              </motion.button>
+              <motion.button
+                onClick={() => setViewMode('list')}
+                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                  viewMode === 'list'
+                    ? 'bg-taro text-white shadow-sm'
+                    : 'text-ink/60 hover:bg-taro/10'
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                title="List View"
+              >
+                <ListIcon className="w-4 h-4" />
+              </motion.button>
+              <motion.button
+                onClick={() => setViewMode('gantt')}
+                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                  viewMode === 'gantt'
+                    ? 'bg-taro text-white shadow-sm'
+                    : 'text-ink/60 hover:bg-taro/10'
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                title="Gantt Chart"
+              >
+                <BarChart3 className="w-4 h-4" />
+              </motion.button>
+              <motion.button
+                onClick={() => setViewMode('analytics')}
+                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                  viewMode === 'analytics'
+                    ? 'bg-taro text-white shadow-sm'
+                    : 'text-ink/60 hover:bg-taro/10'
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                title="Analytics Dashboard"
+              >
+                <TrendingUp className="w-4 h-4" />
               </motion.button>
             </div>
 
@@ -421,7 +498,7 @@ export default function ProjectTaskBoard({
 
       {/* View Content */}
       <AnimatePresence mode="wait">
-        {viewMode === 'kanban' ? (
+        {viewMode === 'kanban' && (
           <motion.div
             key="kanban"
             className="bg-gradient-to-b from-milk-tea/30 to-white rounded-2xl border-2 border-brown-sugar/20 p-6"
@@ -438,7 +515,9 @@ export default function ProjectTaskBoard({
               onAddTask={handleAddTask}
             />
           </motion.div>
-        ) : (
+        )}
+
+        {viewMode === 'timeline' && (
           <motion.div
             key="timeline"
             initial={{ opacity: 0, y: 20 }}
@@ -447,6 +526,42 @@ export default function ProjectTaskBoard({
             transition={{ duration: 0.3 }}
           >
             <TimelineView tasks={filteredTasks} onTaskClick={handleTaskClick} />
+          </motion.div>
+        )}
+
+        {viewMode === 'list' && (
+          <motion.div
+            key="list"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ListView tasks={filteredTasks} onTaskClick={handleTaskClick} />
+          </motion.div>
+        )}
+
+        {viewMode === 'gantt' && (
+          <motion.div
+            key="gantt"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <GanttView tasks={filteredTasks} onTaskClick={handleTaskClick} />
+          </motion.div>
+        )}
+
+        {viewMode === 'analytics' && (
+          <motion.div
+            key="analytics"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <AnalyticsDashboard tasks={tasks} projectName={projectName} />
           </motion.div>
         )}
       </AnimatePresence>

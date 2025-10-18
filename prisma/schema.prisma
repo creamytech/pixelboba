@@ -459,3 +459,94 @@ model Comment {
   @@index([taskId])
 }
 
+enum RecurrencePattern {
+  DAILY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+model TaskTemplate {
+  id             String   @id @default(cuid())
+  name           String
+  description    String?  @db.Text
+  priority       Priority @default(MEDIUM)
+  estimatedHours Float?
+  tags           String[]
+  checklist      Json?    // Array of checklist items
+  isPublic       Boolean  @default(false) // Available to all projects
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  createdById String
+  projectId   String? // If null, template is global
+}
+
+model BoardTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  tasks       Json     // Array of template tasks
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdById String
+}
+
+model RecurringTask {
+  id               String            @id @default(cuid())
+  title            String
+  description      String?           @db.Text
+  priority         Priority          @default(MEDIUM)
+  pattern          RecurrencePattern
+  interval         Int               @default(1) // Every N days/weeks/months
+  startDate        DateTime
+  endDate          DateTime?
+  lastCreated      DateTime?
+  nextDue          DateTime
+  isActive         Boolean           @default(true)
+  estimatedHours   Float?
+  tags             String[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  // Relations
+  projectId    String
+  assignedToId String?
+  createdById  String
+}
+
+model AutoAssignmentRule {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  conditions  Json     // Conditions to match (priority, tags, etc.)
+  assignToId  String   // User to assign to
+  isActive    Boolean  @default(true)
+  priority    Int      @default(0) // Higher priority rules checked first
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projectId String
+}
+
+model TaskReminder {
+  id         String    @id @default(cuid())
+  taskId     String
+  userId     String
+  remindAt   DateTime
+  isSent     Boolean   @default(false)
+  sentAt     DateTime?
+  message    String?
+  type       String    @default("DUE_DATE") // DUE_DATE, CUSTOM
+  createdAt  DateTime  @default(now())
+
+  @@index([remindAt, isSent])
+  @@index([taskId])
+  @@index([userId])
+}
+
