@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Filter, Edit, Trash2, Send, DollarSign } from 'lucide-react';
+import { Plus, Search, Filter, Edit, Trash2, Send, DollarSign, Download } from 'lucide-react';
 import { Invoice, InvoiceStatus } from '@/types/portal';
+import Pagination from '@/components/common/Pagination';
+import { usePagination } from '@/hooks/usePagination';
+import BulkActionBar, { useBulkSelection } from '@/components/common/BulkActionBar';
 
 export default function InvoiceManager() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -39,6 +42,28 @@ export default function InvoiceManager() {
     return matchesSearch && matchesStatus;
   });
 
+  // Use pagination hook
+  const {
+    paginatedData: paginatedInvoices,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    goToPage,
+    setItemsPerPage,
+    totalItems,
+  } = usePagination({ data: filteredInvoices, initialItemsPerPage: 20 });
+
+  // Use bulk selection hook
+  const {
+    selectedIds,
+    selectedCount,
+    selectedItems,
+    toggleSelection,
+    selectAll,
+    clearSelection,
+    isSelected,
+  } = useBulkSelection(filteredInvoices);
+
   const totalRevenue = invoices
     .filter((inv) => inv.status === 'PAID')
     .reduce((sum, inv) => sum + inv.totalAmount, 0);
@@ -53,6 +78,98 @@ export default function InvoiceManager() {
     'PAID',
     'OVERDUE',
     'CANCELLED',
+  ];
+
+  // Bulk actions handlers
+  const handleBulkDelete = async () => {
+    if (!confirm(`Are you sure you want to delete ${selectedCount} invoice(s)?`)) return;
+
+    try {
+      await Promise.all(
+        Array.from(selectedIds).map((id) =>
+          fetch(`/api/admin/invoices/${id}`, { method: 'DELETE' })
+        )
+      );
+      clearSelection();
+      fetchInvoices();
+    } catch (error) {
+      console.error('Error deleting invoices:', error);
+      alert('Failed to delete some invoices');
+    }
+  };
+
+  const handleBulkExport = () => {
+    const csvContent = [
+      ['Invoice #', 'Client', 'Amount', 'Due Date', 'Status'],
+      ...selectedItems.map((inv) => [
+        inv.number,
+        inv.client.name || inv.client.email,
+        inv.totalAmount.toString(),
+        new Date(inv.dueDate).toLocaleDateString(),
+        inv.status,
+      ]),
+    ]
+      .map((row) => row.join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `invoices-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleBulkSend = async () => {
+    const draftInvoices = selectedItems.filter((inv) => inv.status === 'DRAFT');
+    if (draftInvoices.length === 0) {
+      alert('No draft invoices selected');
+      return;
+    }
+
+    if (!confirm(`Are you sure you want to send ${draftInvoices.length} invoice(s)?`)) return;
+
+    try {
+      await Promise.all(
+        draftInvoices.map((inv) =>
+          fetch(`/api/admin/invoices/${inv.id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'send' }),
+          })
+        )
+      );
+      clearSelection();
+      fetchInvoices();
+      alert(`Successfully sent ${draftInvoices.length} invoice(s)`);
+    } catch (error) {
+      console.error('Error sending invoices:', error);
+      alert('Failed to send some invoices');
+    }
+  };
+
+  const bulkActions = [
+    {
+      id: 'send',
+      label: 'Send',
+      icon: <Send className="w-4 h-4" />,
+      onClick: handleBulkSend,
+      disabled: !selectedItems.some((inv) => inv.status === 'DRAFT'),
+    },
+    {
+      id: 'export',
+      label: 'Export',
+      icon: <Download className="w-4 h-4" />,
+      onClick: handleBulkExport,
+    },
+    {
+      id: 'delete',
+      label: 'Delete',
+      icon: <Trash2 className="w-4 h-4" />,
+      onClick: handleBulkDelete,
+      variant: 'danger' as const,
+    },
   ];
 
   return (
@@ -143,25 +260,57 @@ export default function InvoiceManager() {
         ) : filteredInvoices.length === 0 ? (
           <div className="p-12 text-center text-ink/50">no invoices found</div>
         ) : (
-          <table className="w-full">
-            <thead className="bg-milk-tea/20">
-              <tr>
-                <th className="text-left p-4 font-medium text-ink">invoice #</th>
-                <th className="text-left p-4 font-medium text-ink">client</th>
-                <th className="text-left p-4 font-medium text-ink">amount</th>
-                <th className="text-left p-4 font-medium text-ink">due date</th>
-                <th className="text-left p-4 font-medium text-ink">status</th>
-                <th className="text-left p-4 font-medium text-ink">actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <AnimatePresence>
-                {filteredInvoices.map((invoice) => (
-                  <InvoiceRow key={invoice.id} invoice={invoice} onUpdate={fetchInvoices} />
-                ))}
-              </AnimatePresence>
-            </tbody>
-          </table>
+          <>
+            <table className="w-full">
+              <thead className="bg-milk-tea/20">
+                <tr>
+                  <th className="text-left p-4 font-medium text-ink w-12">
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedCount === filteredInvoices.length && filteredInvoices.length > 0
+                      }
+                      onChange={(e) => (e.target.checked ? selectAll() : clearSelection())}
+                      className="w-4 h-4 text-taro bg-white border-ink/20 rounded focus:ring-taro/20"
+                    />
+                  </th>
+                  <th className="text-left p-4 font-medium text-ink">invoice #</th>
+                  <th className="text-left p-4 font-medium text-ink">client</th>
+                  <th className="text-left p-4 font-medium text-ink">amount</th>
+                  <th className="text-left p-4 font-medium text-ink">due date</th>
+                  <th className="text-left p-4 font-medium text-ink">status</th>
+                  <th className="text-left p-4 font-medium text-ink">actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <AnimatePresence>
+                  {paginatedInvoices.map((invoice) => (
+                    <InvoiceRow
+                      key={invoice.id}
+                      invoice={invoice}
+                      onUpdate={fetchInvoices}
+                      isSelected={isSelected(invoice.id)}
+                      onToggleSelect={() => toggleSelection(invoice.id)}
+                    />
+                  ))}
+                </AnimatePresence>
+              </tbody>
+            </table>
+
+            {/* Pagination */}
+            {filteredInvoices.length > 0 && (
+              <div className="border-t border-ink/10 p-4">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={totalItems}
+                  onItemsPerPageChange={setItemsPerPage}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -177,11 +326,30 @@ export default function InvoiceManager() {
           />
         )}
       </AnimatePresence>
+
+      {/* Bulk Action Bar */}
+      <BulkActionBar
+        selectedCount={selectedCount}
+        totalCount={filteredInvoices.length}
+        actions={bulkActions}
+        onClear={clearSelection}
+        onSelectAll={selectAll}
+      />
     </div>
   );
 }
 
-function InvoiceRow({ invoice, onUpdate }: { invoice: Invoice; onUpdate: () => void }) {
+function InvoiceRow({
+  invoice,
+  onUpdate,
+  isSelected,
+  onToggleSelect,
+}: {
+  invoice: Invoice;
+  onUpdate: () => void;
+  isSelected: boolean;
+  onToggleSelect: () => void;
+}) {
   const [loading, setLoading] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -252,6 +420,14 @@ function InvoiceRow({ invoice, onUpdate }: { invoice: Invoice; onUpdate: () => v
       exit={{ opacity: 0, y: -20 }}
       className="border-b border-ink/5 hover:bg-milk-tea/10 transition-colors"
     >
+      <td className="p-4">
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={onToggleSelect}
+          className="w-4 h-4 text-taro bg-white border-ink/20 rounded focus:ring-taro/20"
+        />
+      </td>
       <td className="p-4">
         <div className="font-medium text-ink">{invoice.number}</div>
         <div className="text-sm text-ink/60">{invoice.title}</div>

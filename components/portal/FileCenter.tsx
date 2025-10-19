@@ -17,6 +17,8 @@ import {
   Filter,
 } from 'lucide-react';
 import { File as PortalFile, Project } from '@/types/portal';
+import Pagination from '@/components/common/Pagination';
+import { usePagination } from '@/hooks/usePagination';
 
 interface FileCenterProps {
   projects: Project[];
@@ -135,6 +137,17 @@ export default function FileCenter({ projects }: FileCenterProps) {
       file.originalName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       file.project?.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Use pagination hook
+  const {
+    paginatedData: paginatedFiles,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    goToPage,
+    setItemsPerPage,
+    totalItems,
+  } = usePagination({ data: filteredFiles, initialItemsPerPage: 24 });
 
   const totalSize = files.reduce((sum, file) => sum + file.size, 0);
 
@@ -278,7 +291,7 @@ export default function FileCenter({ projects }: FileCenterProps) {
           <div className="p-6">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               <AnimatePresence>
-                {filteredFiles.map((file) => (
+                {paginatedFiles.map((file) => (
                   <FileGridItem
                     key={file.id}
                     file={file}
@@ -288,31 +301,61 @@ export default function FileCenter({ projects }: FileCenterProps) {
                 ))}
               </AnimatePresence>
             </div>
+
+            {/* Pagination for grid view */}
+            {filteredFiles.length > 0 && (
+              <div className="mt-6">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={totalItems}
+                  onItemsPerPageChange={setItemsPerPage}
+                />
+              </div>
+            )}
           </div>
         ) : (
-          <table className="w-full">
-            <thead className="bg-milk-tea/20">
-              <tr>
-                <th className="text-left p-4 font-medium text-ink">name</th>
-                <th className="text-left p-4 font-medium text-ink">project</th>
-                <th className="text-left p-4 font-medium text-ink">size</th>
-                <th className="text-left p-4 font-medium text-ink">uploaded</th>
-                <th className="text-left p-4 font-medium text-ink">actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <AnimatePresence>
-                {filteredFiles.map((file) => (
-                  <FileListItem
-                    key={file.id}
-                    file={file}
-                    onDownload={() => downloadFile(file)}
-                    onDelete={() => deleteFile(file.id)}
-                  />
-                ))}
-              </AnimatePresence>
-            </tbody>
-          </table>
+          <div>
+            <table className="w-full">
+              <thead className="bg-milk-tea/20">
+                <tr>
+                  <th className="text-left p-4 font-medium text-ink">name</th>
+                  <th className="text-left p-4 font-medium text-ink">project</th>
+                  <th className="text-left p-4 font-medium text-ink">size</th>
+                  <th className="text-left p-4 font-medium text-ink">uploaded</th>
+                  <th className="text-left p-4 font-medium text-ink">actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <AnimatePresence>
+                  {paginatedFiles.map((file) => (
+                    <FileListItem
+                      key={file.id}
+                      file={file}
+                      onDownload={() => downloadFile(file)}
+                      onDelete={() => deleteFile(file.id)}
+                    />
+                  ))}
+                </AnimatePresence>
+              </tbody>
+            </table>
+
+            {/* Pagination for list view */}
+            {filteredFiles.length > 0 && (
+              <div className="border-t border-ink/10 p-4">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={totalItems}
+                  onItemsPerPageChange={setItemsPerPage}
+                />
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

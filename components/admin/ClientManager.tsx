@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search, Edit, Trash2, Mail, Phone, Building, Eye } from 'lucide-react';
 import { User } from '@/types/portal';
 import ClientProfileView from './ClientProfileView';
+import Pagination from '@/components/common/Pagination';
+import { usePagination } from '@/hooks/usePagination';
 
 export default function ClientManager() {
   const [clients, setClients] = useState<User[]>([]);
@@ -61,6 +63,17 @@ export default function ClientManager() {
       client.company?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Use pagination hook
+  const {
+    paginatedData: paginatedClients,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    goToPage,
+    setItemsPerPage,
+    totalItems,
+  } = usePagination({ data: filteredClients, initialItemsPerPage: 12 });
+
   // Show client profile view if a client is selected
   if (selectedClientId) {
     return (
@@ -105,7 +118,7 @@ export default function ClientManager() {
       {/* Clients Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
-          {filteredClients.map((client) => (
+          {paginatedClients.map((client) => (
             <ClientCard
               key={client.id}
               client={client}
@@ -115,6 +128,20 @@ export default function ClientManager() {
           ))}
         </AnimatePresence>
       </div>
+
+      {/* Pagination */}
+      {filteredClients.length > 0 && (
+        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-ink/10">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={goToPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={totalItems}
+            onItemsPerPageChange={setItemsPerPage}
+          />
+        </div>
+      )}
 
       {/* Edit Client Modal */}
       {editingClient && (

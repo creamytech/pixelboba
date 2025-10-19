@@ -7,6 +7,8 @@ import { useDropzone } from 'react-dropzone';
 import NextImage from 'next/image';
 import { Project, Message, File as PortalFile } from '@/types/portal';
 import OnlineStatusIndicator from '@/components/common/OnlineStatusIndicator';
+import { usePusher } from '@/hooks/usePusher';
+import { CHANNELS, PUSHER_EVENTS } from '@/lib/pusher';
 
 interface MessageCenterProps {
   projects: Project[];
@@ -50,7 +52,15 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
       lastActiveAt: Date | null;
     }>
   >([]);
+  const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set());
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Real-time messaging with Pusher
+  const { subscribe, isConnected } = usePusher({
+    channelName: selectedProject ? CHANNELS.project(selectedProject) : '',
+    enabled: !!selectedProject,
+  });
 
   useEffect(() => {
     if (selectedProject) {
@@ -68,6 +78,43 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
     const interval = setInterval(fetchUserStatus, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  // Subscribe to real-time message events
+  useEffect(() => {
+    if (!selectedProject || !subscribe) return;
+
+    // Handle new messages
+    const handleNewMessage = (data: any) => {
+      if (data.message && data.message.id) {
+        setMessages((prev) => {
+          // Avoid duplicates
+          if (prev.some((m) => m.id === data.message.id)) return prev;
+          return [...prev, data.message];
+        });
+      }
+    };
+
+    // Handle typing indicators
+    const handleTypingStart = (data: any) => {
+      if (data.userId) {
+        setTypingUsers((prev) => new Set(prev).add(data.userId));
+      }
+    };
+
+    const handleTypingStop = (data: any) => {
+      if (data.userId) {
+        setTypingUsers((prev) => {
+          const next = new Set(prev);
+          next.delete(data.userId);
+          return next;
+        });
+      }
+    };
+
+    subscribe(PUSHER_EVENTS.MESSAGE_NEW, handleNewMessage);
+    subscribe(PUSHER_EVENTS.MESSAGE_TYPING_START, handleTypingStart);
+    subscribe(PUSHER_EVENTS.MESSAGE_TYPING_STOP, handleTypingStop);
+  }, [selectedProject, subscribe]);
 
   const fetchMessages = async (projectId: string) => {
     setLoading(true);

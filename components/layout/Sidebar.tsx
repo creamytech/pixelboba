@@ -18,6 +18,7 @@ import {
   Sparkles,
   Menu,
   X,
+  BarChart3,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -28,17 +29,20 @@ interface SidebarProps {
     role?: string;
   };
   onLogout?: () => void;
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
 }
 
 interface NavItem {
   label: string;
   href: string;
+  id: string;
   icon: React.ReactNode;
   badge?: number;
-  subItems?: { label: string; href: string }[];
+  subItems?: { label: string; href: string; id: string }[];
 }
 
-export default function Sidebar({ user, onLogout }: SidebarProps) {
+export default function Sidebar({ user, onLogout, activeTab, onTabChange }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
@@ -63,53 +67,71 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
 
   const navItems: NavItem[] = [
     {
-      label: 'Dashboard',
+      label: 'Overview',
       href: '/admin',
+      id: 'overview',
       icon: <LayoutDashboard className="w-5 h-5" />,
     },
     {
-      label: 'Projects',
-      href: '/admin/projects',
-      icon: <FolderKanban className="w-5 h-5" />,
-      badge: 3,
-    },
-    {
       label: 'Tasks',
-      href: '/admin/tasks',
+      href: '/admin',
+      id: 'tasks',
       icon: <CheckSquare className="w-5 h-5" />,
-      badge: 12,
     },
     {
-      label: 'Analytics',
-      href: '/admin/analytics',
-      icon: <TrendingUp className="w-5 h-5" />,
+      label: 'Projects',
+      href: '/admin',
+      id: 'projects',
+      icon: <FolderKanban className="w-5 h-5" />,
     },
     {
-      label: 'Team',
-      href: '/admin/team',
+      label: 'Clients',
+      href: '/admin',
+      id: 'clients',
       icon: <Users className="w-5 h-5" />,
     },
     {
-      label: 'Templates',
-      href: '/admin/templates',
+      label: 'Contracts',
+      href: '/admin',
+      id: 'contracts',
       icon: <FileText className="w-5 h-5" />,
-      subItems: [
-        { label: 'Task Templates', href: '/admin/templates/tasks' },
-        { label: 'Board Templates', href: '/admin/templates/boards' },
-      ],
+    },
+    {
+      label: 'Invoices',
+      href: '/admin',
+      id: 'invoices',
+      icon: <TrendingUp className="w-5 h-5" />,
+    },
+    {
+      label: 'Analytics',
+      href: '/admin',
+      id: 'analytics',
+      icon: <BarChart3 className="w-5 h-5" />,
+    },
+    {
+      label: 'Invites',
+      href: '/admin',
+      id: 'invites',
+      icon: <Sparkles className="w-5 h-5" />,
     },
     {
       label: 'Settings',
-      href: '/admin/settings',
+      href: '/admin',
+      id: 'settings',
       icon: <Settings className="w-5 h-5" />,
     },
   ];
 
-  const isActive = (href: string) => {
-    if (href === '/admin') {
-      return pathname === href;
+  const isActive = (item: NavItem) => {
+    // If onTabChange is provided, use activeTab for state management
+    if (onTabChange && activeTab) {
+      return activeTab === item.id;
     }
-    return pathname?.startsWith(href);
+    // Otherwise, fall back to pathname checking for routing
+    if (item.href === '/admin') {
+      return pathname === item.href;
+    }
+    return pathname?.startsWith(item.href);
   };
 
   const toggleExpand = (label: string) => {
@@ -230,95 +252,101 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
           {/* Navigation */}
           <nav className="flex-1 p-4 overflow-y-auto scrollbar-hide">
             <div className="space-y-2">
-              {navItems.map((item) => (
-                <div key={item.label}>
-                  <motion.div whileHover={{ x: isCollapsed ? 0 : 4 }} whileTap={{ scale: 0.98 }}>
-                    <Link
-                      href={item.href}
-                      onClick={(e) => {
-                        if (item.subItems) {
-                          e.preventDefault();
-                          toggleExpand(item.label);
-                        }
-                      }}
-                      className={`
+              {navItems.map((item) => {
+                const itemIsActive = isActive(item);
+                const handleClick = (e: React.MouseEvent) => {
+                  if (onTabChange) {
+                    e.preventDefault();
+                    onTabChange(item.id);
+                    setIsMobileOpen(false);
+                  } else if (item.subItems) {
+                    e.preventDefault();
+                    toggleExpand(item.label);
+                  }
+                };
+
+                return (
+                  <div key={item.label}>
+                    <motion.div whileHover={{ x: isCollapsed ? 0 : 4 }} whileTap={{ scale: 0.98 }}>
+                      <Link
+                        href={item.href}
+                        onClick={handleClick}
+                        className={`
                         relative flex items-center gap-3 px-4 py-3 rounded-2xl
                         transition-all duration-300 group
                         ${
-                          isActive(item.href)
+                          itemIsActive
                             ? 'bg-gradient-to-r from-taro to-taro/80 text-white shadow-lg shadow-taro/30'
                             : 'text-ink/60 hover:bg-milk-tea/30 hover:text-ink'
                         }
                       `}
-                    >
-                      {/* Active Bubble Indicator */}
-                      {isActive(item.href) && (
-                        <motion.div
-                          className="absolute -left-1 w-1.5 h-8 bg-brown-sugar rounded-full"
-                          layoutId="activeIndicator"
-                          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                        />
-                      )}
+                      >
+                        {/* Active Bubble Indicator */}
+                        {itemIsActive && (
+                          <motion.div
+                            className="absolute -left-1 w-1.5 h-8 bg-brown-sugar rounded-full"
+                            layoutId="activeIndicator"
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                          />
+                        )}
 
-                      {/* Icon */}
-                      <div className={isActive(item.href) ? 'text-white' : 'text-taro'}>
-                        {item.icon}
-                      </div>
+                        {/* Icon */}
+                        <div className={itemIsActive ? 'text-white' : 'text-taro'}>{item.icon}</div>
 
-                      {/* Label */}
-                      <AnimatePresence>
-                        {!isCollapsed && (
-                          <motion.span
-                            className="font-display font-medium text-sm flex-1"
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: 'auto' }}
-                            exit={{ opacity: 0, width: 0 }}
+                        {/* Label */}
+                        <AnimatePresence>
+                          {!isCollapsed && (
+                            <motion.span
+                              className="font-display font-medium text-sm flex-1"
+                              initial={{ opacity: 0, width: 0 }}
+                              animate={{ opacity: 1, width: 'auto' }}
+                              exit={{ opacity: 0, width: 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              {item.label}
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+
+                        {/* Badge */}
+                        {!isCollapsed && item.badge && (
+                          <motion.div
+                            className="bg-brown-sugar text-white text-xs font-bold px-2 py-0.5 rounded-full"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: 'spring', damping: 15 }}
+                          >
+                            {item.badge}
+                          </motion.div>
+                        )}
+
+                        {/* Expand Arrow */}
+                        {!isCollapsed && item.subItems && (
+                          <motion.div
+                            animate={{ rotate: expandedItem === item.label ? 90 : 0 }}
                             transition={{ duration: 0.2 }}
                           >
-                            {item.label}
-                          </motion.span>
+                            <ChevronRight className="w-4 h-4" />
+                          </motion.div>
                         )}
-                      </AnimatePresence>
+                      </Link>
+                    </motion.div>
 
-                      {/* Badge */}
-                      {!isCollapsed && item.badge && (
+                    {/* Sub-items */}
+                    <AnimatePresence>
+                      {!isCollapsed && item.subItems && expandedItem === item.label && (
                         <motion.div
-                          className="bg-brown-sugar text-white text-xs font-bold px-2 py-0.5 rounded-full"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: 'spring', damping: 15 }}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden ml-4 mt-2 space-y-1"
                         >
-                          {item.badge}
-                        </motion.div>
-                      )}
-
-                      {/* Expand Arrow */}
-                      {!isCollapsed && item.subItems && (
-                        <motion.div
-                          animate={{ rotate: expandedItem === item.label ? 90 : 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </motion.div>
-                      )}
-                    </Link>
-                  </motion.div>
-
-                  {/* Sub-items */}
-                  <AnimatePresence>
-                    {!isCollapsed && item.subItems && expandedItem === item.label && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden ml-4 mt-2 space-y-1"
-                      >
-                        {item.subItems.map((subItem) => (
-                          <Link
-                            key={subItem.href}
-                            href={subItem.href}
-                            className={`
+                          {item.subItems.map((subItem) => (
+                            <Link
+                              key={subItem.href}
+                              href={subItem.href}
+                              className={`
                               flex items-center gap-2 px-4 py-2 rounded-xl text-sm
                               transition-all duration-200
                               ${
@@ -327,16 +355,17 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
                                   : 'text-ink/50 hover:bg-milk-tea/20 hover:text-ink/70'
                               }
                             `}
-                          >
-                            <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                            {subItem.label}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                            >
+                              <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                              {subItem.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
           </nav>
 

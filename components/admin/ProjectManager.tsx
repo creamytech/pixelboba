@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search, Filter, Edit, Trash2, Eye, Calendar, User } from 'lucide-react';
 import { Project, ProjectStatus } from '@/types/portal';
 import BobaProgressIndicator from '@/components/portal/BobaProgressIndicator';
+import Pagination from '@/components/common/Pagination';
+import { usePagination } from '@/hooks/usePagination';
 
 export default function ProjectManager() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -55,6 +57,17 @@ export default function ProjectManager() {
     const matchesStatus = statusFilter === 'ALL' || project.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  // Use pagination hook
+  const {
+    paginatedData: paginatedProjects,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    goToPage,
+    setItemsPerPage,
+    totalItems,
+  } = usePagination({ data: filteredProjects, initialItemsPerPage: 10 });
 
   const statusOptions: (ProjectStatus | 'ALL')[] = [
     'ALL',
@@ -125,18 +138,34 @@ export default function ProjectManager() {
         ) : filteredProjects.length === 0 ? (
           <div className="p-12 text-center text-ink/50">no projects found</div>
         ) : (
-          <div className="grid gap-6 p-6">
-            <AnimatePresence>
-              {filteredProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  onDelete={() => deleteProject(project.id)}
-                  onUpdate={fetchProjects}
+          <>
+            <div className="grid gap-6 p-6">
+              <AnimatePresence>
+                {paginatedProjects.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    onDelete={() => deleteProject(project.id)}
+                    onUpdate={fetchProjects}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {/* Pagination */}
+            {filteredProjects.length > 0 && (
+              <div className="border-t border-ink/10 p-4">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={totalItems}
+                  onItemsPerPageChange={setItemsPerPage}
                 />
-              ))}
-            </AnimatePresence>
-          </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 

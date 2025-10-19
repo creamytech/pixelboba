@@ -8,6 +8,12 @@
       "maxDuration": 30
     }
   },
+  "crons": [
+    {
+      "path": "/api/automation/run",
+      "schedule": "0 9 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",

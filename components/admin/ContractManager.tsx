@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search, Filter, Edit, Trash2, Send, FileCheck, Eye, X, User } from 'lucide-react';
 import { Contract, ContractStatus, User as UserType } from '@/types/portal';
+import Pagination from '@/components/common/Pagination';
+import { usePagination } from '@/hooks/usePagination';
 
 export default function ContractManager() {
   const [contracts, setContracts] = useState<Contract[]>([]);
@@ -68,6 +70,17 @@ export default function ContractManager() {
     const matchesStatus = statusFilter === 'ALL' || contract.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  // Use pagination hook
+  const {
+    paginatedData: paginatedContracts,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    goToPage,
+    setItemsPerPage,
+    totalItems,
+  } = usePagination({ data: filteredContracts, initialItemsPerPage: 20 });
 
   const statusOptions: (ContractStatus | 'ALL')[] = [
     'ALL',
@@ -140,12 +153,26 @@ export default function ContractManager() {
           </thead>
           <tbody>
             <AnimatePresence>
-              {filteredContracts.map((contract) => (
+              {paginatedContracts.map((contract) => (
                 <ContractRow key={contract.id} contract={contract} />
               ))}
             </AnimatePresence>
           </tbody>
         </table>
+
+        {/* Pagination */}
+        {filteredContracts.length > 0 && (
+          <div className="border-t border-ink/10 p-4">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={goToPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={totalItems}
+              onItemsPerPageChange={setItemsPerPage}
+            />
+          </div>
+        )}
       </div>
 
       {/* Create Contract Modal */}

@@ -8,13 +8,9 @@ import {
   FolderOpen,
   FileText,
   CreditCard,
-  Settings,
-  Plus,
-  TrendingUp,
   DollarSign,
   Calendar,
   CheckSquare,
-  MessageCircle,
 } from 'lucide-react';
 import Sidebar from '@/components/layout/Sidebar';
 import DashboardHeader from '@/components/layout/DashboardHeader';
@@ -27,6 +23,7 @@ import AdminSettings from '@/components/admin/AdminSettings';
 import InviteManager from '@/components/admin/InviteManager';
 import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
+import AnalyticsDashboard from '@/components/admin/AnalyticsDashboard';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Session } from 'next-auth';
 
@@ -118,17 +115,6 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
     );
   }
 
-  const navItems = [
-    { id: 'overview', name: 'Overview', icon: TrendingUp },
-    { id: 'tasks', name: 'Tasks', icon: CheckSquare },
-    { id: 'projects', name: 'Projects', icon: FolderOpen },
-    { id: 'clients', name: 'Clients', icon: Users },
-    { id: 'contracts', name: 'Contracts', icon: FileText },
-    { id: 'invoices', name: 'Invoices', icon: CreditCard },
-    { id: 'invites', name: 'Invites', icon: Plus },
-    { id: 'settings', name: 'Settings', icon: Settings },
-  ];
-
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'overview':
@@ -143,6 +129,8 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         return <ContractManager />;
       case 'invoices':
         return <InvoiceManager />;
+      case 'analytics':
+        return <AnalyticsDashboard />;
       case 'invites':
         return <InviteManager />;
       case 'settings':
@@ -219,6 +207,8 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
           role: 'Admin',
         }}
         onLogout={() => signOut({ callbackUrl: '/' })}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
       />
 
       {/* Main Content */}
@@ -230,37 +220,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
       >
         <DashboardHeader userName={session?.user?.name || 'Admin'} />
 
-        {/* Tab Navigation */}
-        <motion.div
-          className="mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="flex flex-wrap gap-2 bg-white/70 backdrop-blur-lg rounded-2xl p-3 border-2 border-brown-sugar/20 shadow-lg">
-            {navItems.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <motion.button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-xl font-display font-medium transition-all ${
-                    isActive
-                      ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-md'
-                      : 'text-ink/70 hover:bg-milk-tea/50 hover:text-ink'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span className="hidden sm:inline">{tab.name}</span>
-                </motion.button>
-              );
-            })}
-          </div>
-        </motion.div>
-
+        {/* Content Area */}
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, y: 20 }}

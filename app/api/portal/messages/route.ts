@@ -371,6 +371,21 @@ export async function POST(request: NextRequest) {
         file: message.file || undefined,
       }));
 
+      // Trigger Pusher event for real-time updates
+      try {
+        const { triggerPusherEvent, CHANNELS, PUSHER_EVENTS } = await import('@/lib/pusher');
+        for (const message of formattedMessages) {
+          await triggerPusherEvent(CHANNELS.project(projectId), PUSHER_EVENTS.MESSAGE_NEW, {
+            message,
+            senderId: session.user.id,
+            projectId,
+          });
+        }
+      } catch (pusherError) {
+        console.error('Error triggering Pusher event:', pusherError);
+        // Don't fail the request if Pusher fails
+      }
+
       // Return the first message for compatibility with existing frontend
       // The frontend will refetch all messages anyway
       return NextResponse.json(formattedMessages[0] || { success: true });

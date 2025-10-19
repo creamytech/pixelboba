@@ -24,14 +24,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get Stripe configuration from settings
-    const settings = await getAdminSettings();
-    const stripeSecretKey = settings.payments.stripeSecretKey;
-    const stripePublishableKey = settings.payments.stripePublishableKey;
+    // Get Stripe configuration from environment variables first, then fall back to settings
+    let stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    let stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+
+    // If not in environment, try to get from admin settings
+    if (!stripeSecretKey) {
+      const settings = await getAdminSettings();
+      stripeSecretKey = settings.payments.stripeSecretKey;
+      stripePublishableKey = settings.payments.stripePublishableKey;
+    }
 
     if (!stripeSecretKey) {
       return NextResponse.json(
-        { error: 'Stripe is not configured. Please contact support.' },
+        {
+          error:
+            'Stripe is not configured. Please add STRIPE_SECRET_KEY to your environment variables or configure in admin settings.',
+        },
         { status: 500 }
       );
     }

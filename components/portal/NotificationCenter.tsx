@@ -14,6 +14,8 @@ import {
   X,
 } from 'lucide-react';
 import { Notification, NotificationType } from '@/types/portal';
+import Pagination from '@/components/common/Pagination';
+import { usePagination } from '@/hooks/usePagination';
 
 const notificationConfig: Record<NotificationType, { icon: any; color: string; bg: string }> = {
   MESSAGE: { icon: MessageSquare, color: 'text-blue-600', bg: 'bg-blue-100' },
@@ -94,6 +96,17 @@ export default function NotificationCenter() {
   const filteredNotifications =
     filter === 'all' ? notifications : notifications.filter((n) => !n.isRead);
 
+  // Use pagination hook
+  const {
+    paginatedData: paginatedNotifications,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    goToPage,
+    setItemsPerPage,
+    totalItems,
+  } = usePagination({ data: filteredNotifications, initialItemsPerPage: 15 });
+
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   if (loading) {
@@ -170,17 +183,33 @@ export default function NotificationCenter() {
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-ink/5">
-            <AnimatePresence>
-              {filteredNotifications.map((notification) => (
-                <NotificationItem
-                  key={notification.id}
-                  notification={notification}
-                  onMarkAsRead={() => markAsRead(notification.id)}
-                  onDelete={() => deleteNotification(notification.id)}
+          <div>
+            <div className="divide-y divide-ink/5">
+              <AnimatePresence>
+                {paginatedNotifications.map((notification) => (
+                  <NotificationItem
+                    key={notification.id}
+                    notification={notification}
+                    onMarkAsRead={() => markAsRead(notification.id)}
+                    onDelete={() => deleteNotification(notification.id)}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {/* Pagination */}
+            {filteredNotifications.length > 0 && (
+              <div className="border-t border-ink/10 p-4">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={totalItems}
+                  onItemsPerPageChange={setItemsPerPage}
                 />
-              ))}
-            </AnimatePresence>
+              </div>
+            )}
           </div>
         )}
       </div>
