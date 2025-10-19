@@ -29,6 +29,7 @@ interface KanbanBoardProps {
   onTaskMove?: (taskId: string, newStatus: TaskStatus, newOrder: number) => Promise<void>;
   onTaskClick?: (task: Task) => void;
   onAddTask?: (status: TaskStatus) => void;
+  currentUser?: { id: string; role: string; email: string };
 }
 
 const columns: { id: TaskStatus; title: string; icon: string }[] = [
@@ -46,6 +47,7 @@ export default function KanbanBoard({
   onTaskMove,
   onTaskClick,
   onAddTask,
+  currentUser,
 }: KanbanBoardProps) {
   const [tasks, setTasks] = useState(initialTasks);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -159,6 +161,15 @@ export default function KanbanBoard({
       }
     }
 
+    // Check if client is trying to move to a restricted column
+    if (currentUser?.role === 'CLIENT' && targetStatus !== 'TODO' && targetStatus !== 'BACKLOG') {
+      // Show error message and revert
+      alert('You can only move tasks to Todo or Backlog columns');
+      // Revert the optimistic update from handleDragOver
+      setTasks(initialTasks);
+      return;
+    }
+
     // Get the current column tasks
     const columnTasks = tasksByStatus[targetStatus];
     const oldIndex = columnTasks.findIndex((t) => t.id === activeId);
@@ -206,18 +217,24 @@ export default function KanbanBoard({
       onDragEnd={handleDragEnd}
     >
       <div className="flex gap-4 overflow-x-auto pb-4 px-1">
-        {columns.map((column) => (
-          <KanbanColumn
-            key={column.id}
-            id={column.id}
-            title={column.title}
-            icon={column.icon}
-            color={column.id}
-            tasks={tasksByStatus[column.id]}
-            onAddTask={() => onAddTask?.(column.id)}
-            onTaskClick={onTaskClick}
-          />
-        ))}
+        {columns.map((column) => {
+          // For clients, only allow adding tasks to TODO or BACKLOG
+          const canAddTask =
+            currentUser?.role !== 'CLIENT' || column.id === 'TODO' || column.id === 'BACKLOG';
+
+          return (
+            <KanbanColumn
+              key={column.id}
+              id={column.id}
+              title={column.title}
+              icon={column.icon}
+              color={column.id}
+              tasks={tasksByStatus[column.id]}
+              onAddTask={canAddTask ? () => onAddTask?.(column.id) : undefined}
+              onTaskClick={onTaskClick}
+            />
+          );
+        })}
       </div>
 
       {/* Drag Overlay */}

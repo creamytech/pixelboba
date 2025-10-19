@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { TaskStatus } from '@prisma/client';
+import { triggerPusherEvent, PUSHER_EVENTS, CHANNELS } from '@/lib/pusher';
 
 // POST /api/tasks/[id]/move - Move a task to a new status/position
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
@@ -43,6 +44,14 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     const body = await request.json();
     const { status, newOrder } = body as { status: TaskStatus; newOrder: number };
+
+    // Clients can only move tasks to TODO or BACKLOG
+    if (user.role === 'CLIENT' && status !== 'TODO' && status !== 'BACKLOG') {
+      return NextResponse.json(
+        { error: 'Clients can only move tasks to Todo or Backlog columns' },
+        { status: 403 }
+      );
+    }
 
     if (!status || newOrder === undefined) {
       return NextResponse.json({ error: 'Status and newOrder are required' }, { status: 400 });
@@ -115,6 +124,15 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         },
       });
 
+      // Broadcast task moved event via Pusher
+      await triggerPusherEvent(CHANNELS.project(task.projectId), PUSHER_EVENTS.TASK_MOVED, {
+        taskId: updatedTask.id,
+        oldStatus: task.status,
+        newStatus: status,
+        newOrder,
+        task: updatedTask,
+      });
+
       return NextResponse.json(updatedTask);
     } else {
       // Moving within the same status (reordering)
@@ -182,6 +200,16 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
             },
           },
         },
+      });
+
+      // Broadcast task moved event via Pusher (reordering)
+      await triggerPusherEvent(CHANNELS.project(task.projectId), PUSHER_EVENTS.TASK_MOVED, {
+        taskId: updatedTask.id,
+        oldStatus: task.status,
+        newStatus: task.status,
+        oldOrder: task.order,
+        newOrder,
+        task: updatedTask,
       });
 
       return NextResponse.json(updatedTask);

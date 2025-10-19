@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { TaskStatus, Priority } from '@prisma/client';
+import { triggerPusherEvent, PUSHER_EVENTS, CHANNELS } from '@/lib/pusher';
 
 // GET /api/tasks - List tasks with optional filters
 export async function GET(request: NextRequest) {
@@ -152,6 +153,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Clients can only create tasks in TODO or BACKLOG
+    if (user.role === 'CLIENT' && status !== 'TODO' && status !== 'BACKLOG') {
+      return NextResponse.json(
+        { error: 'Clients can only create tasks in Todo or Backlog columns' },
+        { status: 403 }
+      );
+    }
+
     // Get the highest order number for this status to place new task at the end
     const lastTask = await prisma.task.findFirst({
       where: { projectId, status },
@@ -198,6 +207,9 @@ export async function POST(request: NextRequest) {
         },
       },
     });
+
+    // Broadcast task created event via Pusher
+    await triggerPusherEvent(CHANNELS.project(projectId), PUSHER_EVENTS.TASK_CREATED, task);
 
     return NextResponse.json(task, { status: 201 });
   } catch (error) {

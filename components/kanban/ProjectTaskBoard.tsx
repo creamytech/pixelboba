@@ -513,6 +513,7 @@ export default function ProjectTaskBoard({
               onTaskMove={handleTaskMove}
               onTaskClick={handleTaskClick}
               onAddTask={handleAddTask}
+              currentUser={currentUser}
             />
           </motion.div>
         )}
