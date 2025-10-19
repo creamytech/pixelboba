@@ -175,7 +175,12 @@ export default async function NewDashboardPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} delay={0.2 + index * 0.1} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                delay={0.2 + index * 0.1}
+                href={`/admin/projects/${project.id}`}
+              />
             ))}
           </div>
         </div>
