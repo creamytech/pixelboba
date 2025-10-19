@@ -61,7 +61,7 @@ export async function processInvoiceReminders() {
       // Create notification for client
       await prisma.notification.create({
         data: {
-          userId: invoice.clientId,
+          recipientId: invoice.clientId,
           type: 'INVOICE',
           title: 'Invoice Payment Reminder',
           message: `Invoice ${invoice.number} is ${daysOverdue} days overdue. Amount: $${invoice.totalAmount}`,
@@ -154,7 +154,7 @@ export async function processContractExpiryReminders() {
     const expiringContracts = await prisma.contract.findMany({
       where: {
         status: 'SIGNED',
-        expiryDate: {
+        expiresAt: {
           gte: now,
           lte: thirtyDaysFromNow,
         },
@@ -174,13 +174,13 @@ export async function processContractExpiryReminders() {
 
     for (const contract of expiringContracts) {
       const daysUntilExpiry = Math.floor(
-        (new Date(contract.expiryDate!).getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+        (new Date(contract.expiresAt!).getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
       );
 
       // Create notification
       await prisma.notification.create({
         data: {
-          userId: contract.clientId,
+          recipientId: contract.clientId,
           type: 'CONTRACT',
           title: 'Contract Expiring Soon',
           message: `Your contract "${contract.title}" will expire in ${daysUntilExpiry} days.`,
@@ -213,10 +213,12 @@ export async function processProjectPhaseAdvancement() {
   console.log('[Automation] Checking for project phase advancement...');
 
   try {
-    // Find active projects with all tasks completed
+    // Find active projects with all tasks completed (not COMPLETED, PAUSED, or CANCELLED)
     const projects = await prisma.project.findMany({
       where: {
-        status: 'ACTIVE',
+        status: {
+          notIn: ['COMPLETED', 'PAUSED', 'CANCELLED'],
+        },
       },
       include: {
         tasks: {
@@ -250,7 +252,7 @@ export async function processProjectPhaseAdvancement() {
         // Create notification for client
         await prisma.notification.create({
           data: {
-            userId: project.clientId,
+            recipientId: project.clientId,
             type: 'PROJECT_UPDATE',
             title: 'Project Completed!',
             message: `Your project "${project.name}" has been completed. All tasks are done!`,

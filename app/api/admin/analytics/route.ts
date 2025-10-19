@@ -128,8 +128,18 @@ export async function GET(request: NextRequest) {
     // Calculate project completion stats
     const projectCompletion = {
       completed: projects.filter((p) => p.status === 'COMPLETED').length,
-      inProgress: projects.filter((p) => p.status === 'ACTIVE').length,
-      notStarted: projects.filter((p) => p.status === 'PENDING').length,
+      inProgress: projects.filter((p) =>
+        [
+          'DISCOVERY',
+          'WIREFRAMING',
+          'DESIGN',
+          'DEVELOPMENT',
+          'TESTING',
+          'LAUNCH',
+          'MAINTENANCE',
+        ].includes(p.status)
+      ).length,
+      notStarted: projects.filter((p) => p.status === 'PAUSED').length,
     };
 
     // Calculate project stats by status

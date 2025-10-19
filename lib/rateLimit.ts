@@ -81,11 +81,11 @@ export class RateLimiter {
    */
   private cleanup() {
     const now = Date.now();
-    for (const [key, entry] of rateLimitStore.entries()) {
+    Array.from(rateLimitStore.entries()).forEach(([key, entry]) => {
       if (now >= entry.resetTime) {
         rateLimitStore.delete(key);
       }
-    }
+    });
   }
 }
 
