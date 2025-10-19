@@ -33,7 +33,7 @@ interface ChatMessage {
 }
 
 export default function MessageCenter({ projects }: MessageCenterProps) {
-  const [selectedProject, setSelectedProject] = useState<string>(projects[0]?.id || '');
+  const [selectedProject, setSelectedProject] = useState<string>('direct');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -119,7 +119,11 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   const fetchMessages = async (projectId: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/portal/messages?projectId=${projectId}`);
+      const url =
+        projectId === 'direct'
+          ? '/api/portal/messages'
+          : `/api/portal/messages?projectId=${projectId}`;
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setMessages(data.messages);
@@ -191,6 +195,37 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
     if (!newMessage.trim() && uploadingFiles.length === 0 && selectedFiles.length === 0) return;
 
     try {
+      // For direct messages, use simple JSON API (no file support for now)
+      if (selectedProject === 'direct') {
+        if (!newMessage.trim()) return;
+
+        // Find first admin/owner to send to
+        const adminUser = adminUsers.find((u) => u.role === 'ADMIN' || u.role === 'OWNER');
+        if (!adminUser) {
+          console.error('No admin user found to send message to');
+          return;
+        }
+
+        const response = await fetch('/api/portal/messages/direct', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            content: newMessage.trim(),
+            recipientId: adminUser.id,
+          }),
+        });
+
+        if (response.ok) {
+          setNewMessage('');
+          fetchMessages('direct');
+        } else {
+          const errorData = await response.json();
+          console.error('API Error:', response.status, errorData);
+        }
+        return;
+      }
+
+      // For project messages, use FormData for file support
       const formData = new FormData();
       formData.append('content', newMessage.trim());
       formData.append('projectId', selectedProject);
@@ -299,6 +334,20 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
           className="flex-1 overflow-y-auto touch-pan-y"
           style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
         >
+          {/* Direct Messages Option */}
+          <button
+            onClick={() => setSelectedProject('direct')}
+            className={`w-full p-4 text-left border-b border-ink/5 transition-colors ${
+              selectedProject === 'direct'
+                ? 'bg-taro/10 border-l-4 border-l-taro'
+                : 'hover:bg-milk-tea/20'
+            }`}
+          >
+            <div className="font-medium text-ink">Direct Messages</div>
+            <div className="text-sm text-ink/60 mt-1">Chat with your project manager</div>
+          </button>
+
+          {/* Project Messages */}
           {projects.map((project) => (
             <button
               key={project.id}
@@ -326,9 +375,13 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-display text-lg font-semibold text-ink">
-                {selectedProjectData?.name}
+                {selectedProject === 'direct' ? 'Direct Messages' : selectedProjectData?.name}
               </h3>
-              <p className="text-sm text-ink/60">{selectedProjectData?.description}</p>
+              <p className="text-sm text-ink/60">
+                {selectedProject === 'direct'
+                  ? 'Private conversation with your project manager'
+                  : selectedProjectData?.description}
+              </p>
             </div>
             <div className="text-right">
               <div className="text-xs text-ink/60 mb-1">Team Status</div>
@@ -500,25 +553,27 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
               isDragActive ? 'border-taro bg-taro/5' : 'border-ink/20 bg-white/70 hover:bg-white'
             }`}
           >
-            <div className="flex items-center space-x-2">
-              <div {...getRootProps()} className="cursor-pointer">
-                <input {...getInputProps()} />
-                <div
-                  className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10"
-                  title="Upload new files"
-                >
-                  <Plus size={20} />
+            {selectedProject !== 'direct' && (
+              <div className="flex items-center space-x-2">
+                <div {...getRootProps()} className="cursor-pointer">
+                  <input {...getInputProps()} />
+                  <div
+                    className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10"
+                    title="Upload new files"
+                  >
+                    <Plus size={20} />
+                  </div>
                 </div>
-              </div>
 
-              <button
-                onClick={handleFileLibraryOpen}
-                className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10"
-                title="Select from file library"
-              >
-                <FolderOpen size={20} />
-              </button>
-            </div>
+                <button
+                  onClick={handleFileLibraryOpen}
+                  className="text-ink/60 hover:text-taro transition-colors p-1 rounded hover:bg-taro/10"
+                  title="Select from file library"
+                >
+                  <FolderOpen size={20} />
+                </button>
+              </div>
+            )}
 
             <input
               type="text"

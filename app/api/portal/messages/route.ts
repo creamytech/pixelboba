@@ -12,65 +12,116 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const projectId = searchParams.get('projectId');
 
-    if (!projectId) {
-      return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
-    }
-
     try {
       const { prisma } = await import('@/lib/prisma');
 
-      // Verify user has access to this project
-      let project;
-      if (session.user.role === 'CLIENT') {
-        project = await prisma.project.findFirst({
+      let messages;
+
+      // If no projectId, fetch direct messages
+      if (!projectId) {
+        // Fetch direct messages between client and admin/owner
+        messages = await prisma.message.findMany({
           where: {
-            id: projectId,
-            clientId: session.user.id,
+            OR: [
+              {
+                // Messages sent to this user
+                recipientId: session.user.id,
+              },
+              {
+                // Messages sent by this user
+                senderId: session.user.id,
+                recipientId: { not: null }, // Ensure it's a direct message
+              },
+            ],
           },
+          include: {
+            sender: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                image: true,
+              },
+            },
+            file: {
+              select: {
+                originalName: true,
+                url: true,
+                mimetype: true,
+              },
+            },
+          },
+          orderBy: { createdAt: 'asc' },
+        });
+
+        // Mark direct messages as read
+        await prisma.message.updateMany({
+          where: {
+            recipientId: session.user.id,
+            senderId: { not: session.user.id },
+            isRead: false,
+          },
+          data: { isRead: true },
         });
       } else {
-        // Admin/Owner can access any project
-        project = await prisma.project.findUnique({
-          where: { id: projectId },
+        // Fetch project-based messages
+        // Verify user has access to this project
+        let project;
+        if (session.user.role === 'CLIENT') {
+          project = await prisma.project.findFirst({
+            where: {
+              id: projectId,
+              clientId: session.user.id,
+            },
+          });
+        } else {
+          // Admin/Owner can access any project
+          project = await prisma.project.findUnique({
+            where: { id: projectId },
+          });
+        }
+
+        if (!project) {
+          return NextResponse.json(
+            { error: 'Project not found or access denied' },
+            { status: 404 }
+          );
+        }
+
+        messages = await prisma.message.findMany({
+          where: { projectId },
+          include: {
+            sender: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                image: true,
+              },
+            },
+            file: {
+              select: {
+                originalName: true,
+                url: true,
+                mimetype: true,
+              },
+            },
+          },
+          orderBy: { createdAt: 'asc' },
+        });
+
+        // Mark project messages as read
+        await prisma.message.updateMany({
+          where: {
+            projectId,
+            senderId: { not: session.user.id },
+            isRead: false,
+          },
+          data: { isRead: true },
         });
       }
-
-      if (!project) {
-        return NextResponse.json({ error: 'Project not found or access denied' }, { status: 404 });
-      }
-
-      const messages = await prisma.message.findMany({
-        where: { projectId },
-        include: {
-          sender: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              role: true,
-              image: true,
-            },
-          },
-          file: {
-            select: {
-              originalName: true,
-              url: true,
-              mimetype: true,
-            },
-          },
-        },
-        orderBy: { createdAt: 'asc' },
-      });
-
-      // Mark messages as read for this user
-      await prisma.message.updateMany({
-        where: {
-          projectId,
-          senderId: { not: session.user.id },
-          isRead: false,
-        },
-        data: { isRead: true },
-      });
 
       // Override sender name with display name for admin users
       let displayName: string | null = null;
@@ -120,13 +171,15 @@ export async function POST(request: NextRequest) {
 
     const formData = await request.formData();
     const content = formData.get('content') as string;
-    const projectId = formData.get('projectId') as string;
+    const projectId = formData.get('projectId') as string | null;
+    const recipientId = formData.get('recipientId') as string | null;
     const fileCount = parseInt((formData.get('fileCount') as string) || '0');
     const existingFileCount = parseInt((formData.get('existingFileCount') as string) || '0');
 
     console.log('Portal message POST received:', {
       content: content?.trim(),
       projectId,
+      recipientId,
       fileCount,
       existingFileCount,
       hasContent: !!content?.trim(),
@@ -134,15 +187,14 @@ export async function POST(request: NextRequest) {
       hasExistingFiles: existingFileCount > 0,
     });
 
-    if ((!content?.trim() && fileCount === 0 && existingFileCount === 0) || !projectId) {
-      console.log('Validation failed:', {
-        contentEmpty: !content?.trim(),
-        noFiles: fileCount === 0,
-        noExistingFiles: existingFileCount === 0,
-        noProjectId: !projectId,
-      });
+    // Validate: need content or files, and either projectId or recipientId
+    if (!content?.trim() && fileCount === 0 && existingFileCount === 0) {
+      return NextResponse.json({ error: 'Message content or files are required' }, { status: 400 });
+    }
+
+    if (!projectId && !recipientId) {
       return NextResponse.json(
-        { error: 'Content or files and project ID are required' },
+        { error: 'Either projectId or recipientId is required' },
         { status: 400 }
       );
     }
@@ -151,31 +203,44 @@ export async function POST(request: NextRequest) {
       const { prisma } = await import('@/lib/prisma');
       const { uploadFile } = await import('@/lib/upload');
 
-      // Verify user has access to this project
+      // For project-based messages, verify user has access
       let project;
-      if (session.user.role === 'CLIENT') {
-        project = await prisma.project.findFirst({
-          where: {
-            id: projectId,
-            clientId: session.user.id,
-          },
-        });
-      } else {
-        // Admin/Owner can send messages to any project
-        project = await prisma.project.findUnique({
-          where: { id: projectId },
-        });
-      }
+      if (projectId) {
+        if (session.user.role === 'CLIENT') {
+          project = await prisma.project.findFirst({
+            where: {
+              id: projectId,
+              clientId: session.user.id,
+            },
+          });
+        } else {
+          // Admin/Owner can send messages to any project
+          project = await prisma.project.findUnique({
+            where: { id: projectId },
+          });
+        }
 
-      if (!project) {
-        return NextResponse.json({ error: 'Project not found or access denied' }, { status: 404 });
+        if (!project) {
+          return NextResponse.json(
+            { error: 'Project not found or access denied' },
+            { status: 404 }
+          );
+        }
       }
 
       // Handle multiple file uploads and existing files
       const createdMessages = [];
 
+      // File uploads only supported for project messages
+      if (!projectId && (fileCount > 0 || existingFileCount > 0)) {
+        return NextResponse.json(
+          { error: 'File uploads not supported for direct messages' },
+          { status: 400 }
+        );
+      }
+
       // Handle new file uploads
-      if (fileCount > 0) {
+      if (fileCount > 0 && projectId) {
         for (let i = 0; i < fileCount; i++) {
           const file = formData.get(`file_${i}`) as File;
           if (file) {
@@ -236,7 +301,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Handle existing files from library
-      if (existingFileCount > 0) {
+      if (existingFileCount > 0 && projectId) {
         for (let i = 0; i < existingFileCount; i++) {
           const existingFileId = formData.get(`existingFileId_${i}`) as string;
           if (existingFileId) {
@@ -371,19 +436,21 @@ export async function POST(request: NextRequest) {
         file: message.file || undefined,
       }));
 
-      // Trigger Pusher event for real-time updates
-      try {
-        const { triggerPusherEvent, CHANNELS, PUSHER_EVENTS } = await import('@/lib/pusher');
-        for (const message of formattedMessages) {
-          await triggerPusherEvent(CHANNELS.project(projectId), PUSHER_EVENTS.MESSAGE_NEW, {
-            message,
-            senderId: session.user.id,
-            projectId,
-          });
+      // Trigger Pusher event for real-time updates (only for project messages)
+      if (projectId) {
+        try {
+          const { triggerPusherEvent, CHANNELS, PUSHER_EVENTS } = await import('@/lib/pusher');
+          for (const message of formattedMessages) {
+            await triggerPusherEvent(CHANNELS.project(projectId), PUSHER_EVENTS.MESSAGE_NEW, {
+              message,
+              senderId: session.user.id,
+              projectId,
+            });
+          }
+        } catch (pusherError) {
+          console.error('Error triggering Pusher event:', pusherError);
+          // Don't fail the request if Pusher fails
         }
-      } catch (pusherError) {
-        console.error('Error triggering Pusher event:', pusherError);
-        // Don't fail the request if Pusher fails
       }
 
       // Return the first message for compatibility with existing frontend
