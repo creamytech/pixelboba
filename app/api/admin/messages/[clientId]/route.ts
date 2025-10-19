@@ -14,12 +14,21 @@ export async function GET(request: NextRequest, { params }: { params: { clientId
 
     const { clientId } = params;
 
-    // Get messages from projects belonging to this client
+    // Get direct messages between admin and client
     const messages = await prisma.message.findMany({
       where: {
-        project: {
-          clientId: clientId,
-        },
+        OR: [
+          {
+            // Messages from client to admin
+            senderId: clientId,
+            recipientId: session.user.id,
+          },
+          {
+            // Messages from admin to client
+            senderId: session.user.id,
+            recipientId: clientId,
+          },
+        ],
       },
       include: {
         sender: {
@@ -76,7 +85,7 @@ export async function POST(request: NextRequest, { params }: { params: { clientI
 
     const { clientId } = params;
     const body = await request.json();
-    const { content, projectId } = body;
+    const { content } = body;
 
     if (!content?.trim()) {
       return NextResponse.json({ error: 'Message content required' }, { status: 400 });
@@ -100,32 +109,13 @@ export async function POST(request: NextRequest, { params }: { params: { clientI
       return NextResponse.json({ error: 'Client not found' }, { status: 404 });
     }
 
-    // Verify projectId is provided and belongs to client
-    if (!projectId) {
-      return NextResponse.json({ error: 'Project ID is required for messaging' }, { status: 400 });
-    }
-
-    const project = await prisma.project.findFirst({
-      where: {
-        id: projectId,
-        clientId: clientId,
-      },
-    });
-
-    if (!project) {
-      return NextResponse.json(
-        { error: 'Project not found or does not belong to client' },
-        { status: 404 }
-      );
-    }
-
-    // Create message
+    // Create direct message to client
     const message = await prisma.message.create({
       data: {
         content: content.trim(),
         type: 'TEXT',
         senderId: sender.id,
-        projectId: projectId,
+        recipientId: clientId,
         isRead: false,
       },
       include: {

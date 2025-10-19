@@ -142,7 +142,8 @@ model User {
 
   // Portal relations
   projects          Project[]
-  messages          Message[]
+  sentMessages      Message[]      @relation("MessageSender")
+  receivedMessages  Message[]      @relation("MessageRecipient")
   contracts         Contract[]
   invoices          Invoice[]
   sentNotifications Notification[] @relation("NotificationSender")
@@ -206,12 +207,14 @@ model Message {
   updatedAt DateTime    @updatedAt
 
   // Relations
-  senderId  String
-  sender    User     @relation(fields: [senderId], references: [id])
-  projectId String?
-  project   Project? @relation(fields: [projectId], references: [id])
-  fileId    String?
-  file      File?    @relation(fields: [fileId], references: [id])
+  senderId    String
+  sender      User     @relation("MessageSender", fields: [senderId], references: [id])
+  recipientId String?
+  recipient   User?    @relation("MessageRecipient", fields: [recipientId], references: [id])
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id])
+  fileId      String?
+  file        File?    @relation(fields: [fileId], references: [id])
 }
 
 model Contract {

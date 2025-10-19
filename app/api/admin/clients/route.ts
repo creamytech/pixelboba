@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
           _count: {
             select: {
               projects: true,
-              messages: true,
+              receivedMessages: true,
             },
           },
           projects: {
