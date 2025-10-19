@@ -15,7 +15,14 @@ const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     formats: ['image/webp', 'image/avif'],
-    domains: [],
+    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+    ],
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,
