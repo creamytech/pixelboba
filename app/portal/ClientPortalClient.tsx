@@ -42,6 +42,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   const [portalData, setPortalData] = useState<PortalData | null>(null);
   const [loading, setLoading] = useState(true);
   const [runOnboarding, setRunOnboarding] = useState(false);
+  const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
 
   // Initialize online status tracking
   useOnlineStatus();
@@ -200,7 +201,13 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <DashboardView data={portalData} />;
+        return (
+          <DashboardView
+            data={portalData}
+            expandedProjectId={expandedProjectId}
+            setExpandedProjectId={setExpandedProjectId}
+          />
+        );
       case 'tasks':
         return <TasksView data={portalData} />;
       case 'messages':
@@ -264,7 +271,13 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           </div>
         );
       default:
-        return <DashboardView data={portalData} />;
+        return (
+          <DashboardView
+            data={portalData}
+            expandedProjectId={expandedProjectId}
+            setExpandedProjectId={setExpandedProjectId}
+          />
+        );
     }
   };
 
@@ -307,7 +320,15 @@ export default function ClientPortalClient({ session }: { session: Session }) {
 }
 
 // Dashboard View Component
-function DashboardView({ data }: { data: PortalData }) {
+function DashboardView({
+  data,
+  expandedProjectId,
+  setExpandedProjectId,
+}: {
+  data: PortalData;
+  expandedProjectId: string | null;
+  setExpandedProjectId: (id: string | null) => void;
+}) {
   const activeProjects = data.projects.filter(
     (p) => !['COMPLETED', 'CANCELLED'].includes(p.status)
   );
@@ -435,23 +456,123 @@ function DashboardView({ data }: { data: PortalData }) {
             <div className="space-y-6">
               {/* Project Cards */}
               <div className="grid grid-cols-1 gap-6">
-                {projectsForCards.map((project, index) => (
-                  <ProjectCard key={project.id} project={project} delay={0.2 + index * 0.1} />
-                ))}
-              </div>
+                {projectsForCards.map((project, index) => {
+                  const fullProject = activeProjects.find((p) => p.id === project.id);
+                  const isExpanded = expandedProjectId === project.id;
 
-              {/* Website Previews for projects with URLs */}
-              <div data-tour="website-preview">
-                {activeProjects.map(
-                  (project, index) =>
-                    project.websiteUrl && (
-                      <WebsitePreview
-                        key={`preview-${project.id}`}
-                        url={project.websiteUrl}
-                        projectName={project.name}
+                  return (
+                    <div key={project.id}>
+                      <ProjectCard
+                        project={project}
+                        delay={0.2 + index * 0.1}
+                        onClick={() => setExpandedProjectId(isExpanded ? null : project.id)}
                       />
-                    )
-                )}
+
+                      {/* Expanded Project Details */}
+                      {isExpanded && fullProject && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mt-4 bg-white/70 backdrop-blur-sm border-2 border-brown-sugar/10 rounded-3xl overflow-hidden shadow-lg"
+                        >
+                          <div className="p-6 space-y-6">
+                            {/* Project Description */}
+                            {fullProject.description && (
+                              <div>
+                                <h3 className="font-display font-bold text-lg text-ink mb-2">
+                                  About This Project
+                                </h3>
+                                <p className="text-ink/70">{fullProject.description}</p>
+                              </div>
+                            )}
+
+                            {/* Milestones */}
+                            {fullProject.milestones && fullProject.milestones.length > 0 && (
+                              <div>
+                                <h3 className="font-display font-bold text-lg text-ink mb-3">
+                                  Milestones
+                                </h3>
+                                <div className="space-y-2">
+                                  {fullProject.milestones.map((milestone, idx) => (
+                                    <div
+                                      key={idx}
+                                      className={`flex items-center justify-between p-3 rounded-xl ${
+                                        milestone.completedAt
+                                          ? 'bg-green-50 border border-green-200'
+                                          : 'bg-milk-tea/30 border border-brown-sugar/10'
+                                      }`}
+                                    >
+                                      <div className="flex items-center gap-3">
+                                        <div
+                                          className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                                            milestone.completedAt
+                                              ? 'bg-green-500 text-white'
+                                              : 'bg-brown-sugar/20 text-ink/40'
+                                          }`}
+                                        >
+                                          {milestone.completedAt ? '✓' : idx + 1}
+                                        </div>
+                                        <span className="font-medium text-ink">
+                                          {milestone.title}
+                                        </span>
+                                      </div>
+                                      {milestone.completedAt && (
+                                        <span className="text-xs text-green-600">
+                                          Completed{' '}
+                                          {new Date(milestone.completedAt).toLocaleDateString()}
+                                        </span>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Website Preview */}
+                            {fullProject.websiteUrl && (
+                              <div data-tour="website-preview">
+                                <h3 className="font-display font-bold text-lg text-ink mb-3">
+                                  Live Website Preview
+                                </h3>
+                                <WebsitePreview
+                                  url={fullProject.websiteUrl}
+                                  projectName={fullProject.name}
+                                />
+                              </div>
+                            )}
+
+                            {/* Project Timeline */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="p-4 bg-taro/10 rounded-xl">
+                                <p className="text-xs text-ink/60 mb-1">Started</p>
+                                <p className="font-semibold text-ink">
+                                  {new Date(fullProject.createdAt).toLocaleDateString('en-US', {
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                  })}
+                                </p>
+                              </div>
+                              {fullProject.deadline && (
+                                <div className="p-4 bg-brown-sugar/10 rounded-xl">
+                                  <p className="text-xs text-ink/60 mb-1">Target Completion</p>
+                                  <p className="font-semibold text-ink">
+                                    {new Date(fullProject.deadline).toLocaleDateString('en-US', {
+                                      month: 'long',
+                                      day: 'numeric',
+                                      year: 'numeric',
+                                    })}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ) : (
