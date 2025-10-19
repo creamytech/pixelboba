@@ -302,6 +302,24 @@ export default function PortalSidebar({
             </div>
           </nav>
 
+          {/* Collapse Toggle - Desktop Only */}
+          <div className="hidden lg:flex items-center justify-center p-2 border-t border-brown-sugar/10">
+            <motion.button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="w-8 h-8 bg-white border-2 border-brown-sugar/20 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-shadow"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              <motion.div
+                animate={{ rotate: isCollapsed ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ChevronLeft className="w-4 h-4 text-taro" />
+              </motion.div>
+            </motion.button>
+          </div>
+
           {/* User Profile Card */}
           <div className="relative p-4 border-t border-brown-sugar/10">
             <motion.div
@@ -364,18 +382,6 @@ export default function PortalSidebar({
               )}
             </motion.div>
           </div>
-
-          {/* Collapse Toggle - Desktop Only */}
-          <motion.button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden lg:flex absolute -right-3 top-20 w-6 h-6 bg-white border-2 border-brown-sugar/20 rounded-full items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <motion.div animate={{ rotate: isCollapsed ? 180 : 0 }} transition={{ duration: 0.3 }}>
-              <ChevronLeft className="w-3 h-3 text-taro" />
-            </motion.div>
-          </motion.button>
         </div>
       </motion.aside>
     </>
