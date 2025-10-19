@@ -56,6 +56,14 @@ export default function ClientPortalClient({ session }: { session: Session }) {
       const response = await fetch('/api/portal/dashboard');
       if (response.ok) {
         const data = await response.json();
+        console.log('Portal data received:', data);
+        console.log(
+          'Projects with websiteUrl:',
+          data.projects?.map((p: any) => ({
+            name: p.name,
+            websiteUrl: p.websiteUrl,
+          }))
+        );
         setPortalData(data);
 
         // Check if user needs onboarding
