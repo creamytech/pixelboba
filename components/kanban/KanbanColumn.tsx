@@ -112,20 +112,22 @@ export default function KanbanColumn({
             </button>
           </div>
 
-          {/* Add Task Button */}
-          <button
-            onClick={onAddTask}
-            className={`
-              w-full flex items-center justify-center gap-2 py-2 px-3
-              rounded-lg border-2 border-dashed transition-all
-              ${config.bg} ${config.text} border-current/30
-              hover:border-current/50 hover:bg-white/30
-              font-medium text-sm
-            `}
-          >
-            <Plus className="w-4 h-4" />
-            Add Task
-          </button>
+          {/* Add Task Button - Only show if onAddTask is provided */}
+          {onAddTask && (
+            <button
+              onClick={onAddTask}
+              className={`
+                w-full flex items-center justify-center gap-2 py-2 px-3
+                rounded-lg border-2 border-dashed transition-all
+                ${config.bg} ${config.text} border-current/30
+                hover:border-current/50 hover:bg-white/30
+                font-medium text-sm
+              `}
+            >
+              <Plus className="w-4 h-4" />
+              Add Task
+            </button>
+          )}
         </div>
 
         {/* Column Body - Droppable Area */}

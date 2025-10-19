@@ -194,11 +194,19 @@ export default function TaskModal({
                           onChange={(e) => setStatus(e.target.value as TaskStatus)}
                           className="w-full px-3 py-2 border-2 border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro"
                         >
-                          {statusOptions.map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </option>
-                          ))}
+                          {statusOptions
+                            .filter((opt) => {
+                              // Clients can only select TODO or BACKLOG
+                              if (currentUser?.role === 'CLIENT') {
+                                return opt.value === 'TODO' || opt.value === 'BACKLOG';
+                              }
+                              return true;
+                            })
+                            .map((opt) => (
+                              <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                              </option>
+                            ))}
                         </select>
                       ) : (
                         <div
