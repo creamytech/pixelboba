@@ -52,7 +52,6 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
   const [activeTab, setActiveTab] = useState('overview');
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showMessageCenter, setShowMessageCenter] = useState(false);
   const [projects, setProjects] = useState([]);
 
   // Initialize online status tracking
@@ -125,6 +124,8 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         return <ProjectManager />;
       case 'clients':
         return <ClientManager />;
+      case 'messages':
+        return <AdminMessageCenter />;
       case 'contracts':
         return <ContractManager />;
       case 'invoices':
@@ -230,11 +231,6 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
           {renderActiveTab()}
         </motion.div>
       </motion.main>
-
-      {/* Admin Message Center Modal */}
-      {showMessageCenter && (
-        <AdminMessageCenter projects={projects} onClose={() => setShowMessageCenter(false)} />
-      )}
     </div>
   );
 }

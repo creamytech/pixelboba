@@ -19,6 +19,7 @@ import {
   Menu,
   X,
   BarChart3,
+  MessageSquare,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -89,6 +90,12 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
       href: '/admin',
       id: 'clients',
       icon: <Users className="w-5 h-5" />,
+    },
+    {
+      label: 'Messages',
+      href: '/admin',
+      id: 'messages',
+      icon: <MessageSquare className="w-5 h-5" />,
     },
     {
       label: 'Contracts',
