@@ -15,6 +15,7 @@ import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
 import NotificationPreferences from '@/components/portal/NotificationPreferences';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
+import WebsitePreview from '@/components/portal/WebsitePreview';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import {
   FolderKanban,
@@ -315,10 +316,25 @@ function DashboardView({ data }: { data: PortalData }) {
           </div>
 
           {projectsForCards.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6">
-              {projectsForCards.map((project, index) => (
-                <ProjectCard key={project.id} project={project} delay={0.2 + index * 0.1} />
-              ))}
+            <div className="space-y-6">
+              {/* Project Cards */}
+              <div className="grid grid-cols-1 gap-6">
+                {projectsForCards.map((project, index) => (
+                  <ProjectCard key={project.id} project={project} delay={0.2 + index * 0.1} />
+                ))}
+              </div>
+
+              {/* Website Previews for projects with URLs */}
+              {activeProjects.map(
+                (project, index) =>
+                  project.websiteUrl && (
+                    <WebsitePreview
+                      key={`preview-${project.id}`}
+                      url={project.websiteUrl}
+                      projectName={project.name}
+                    />
+                  )
+              )}
             </div>
           ) : (
             <motion.div
