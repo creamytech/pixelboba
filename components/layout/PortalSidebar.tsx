@@ -156,7 +156,7 @@ export default function PortalSidebar({
               : undefined,
         }}
       >
-        <div className="flex flex-col h-full relative overflow-hidden">
+        <div className="flex flex-col h-full relative overflow-x-visible overflow-y-hidden">
           {/* Floating Bubble Decorations */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <motion.div
