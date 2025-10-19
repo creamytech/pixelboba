@@ -144,7 +144,7 @@ export default function PortalSidebar({
       {/* Sidebar */}
       <motion.aside
         className={`
-          fixed left-0 top-0 h-screen bg-gradient-to-b from-milk-tea/20 via-white to-taro/10 border-r-2 border-brown-sugar/10 backdrop-blur-xl z-50
+          fixed left-0 top-0 h-screen bg-gradient-to-b from-milk-tea/20 via-white to-taro/10 border-r-2 border-brown-sugar/10 backdrop-blur-xl z-50 overflow-visible
           ${isMobileOpen ? 'shadow-2xl' : ''}
         `}
         animate={{ width: isCollapsed ? '80px' : '280px' }}

@@ -172,7 +172,7 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
       {/* Sidebar */}
       <motion.aside
         className={`
-          fixed left-0 top-0 h-screen bg-gradient-to-b from-taro/10 via-white to-milk-tea/20 border-r-2 border-brown-sugar/10 backdrop-blur-xl z-50
+          fixed left-0 top-0 h-screen bg-gradient-to-b from-taro/10 via-white to-milk-tea/20 border-r-2 border-brown-sugar/10 backdrop-blur-xl z-50 overflow-visible
           ${isMobileOpen ? 'shadow-2xl' : ''}
         `}
         initial={false}
