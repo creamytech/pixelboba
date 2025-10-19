@@ -493,14 +493,19 @@ function CreateInvoiceModal({
     dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 days from now
     notes: '',
   });
-  const [items, setItems] = useState([{ description: '', quantity: 1, rate: 0 }]);
+  const [items, setItems] = useState([
+    { description: '', quantity: 1, rate: 0, stripeProductId: '', stripePriceId: '' },
+  ]);
   const [clients, setClients] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [stripeProducts, setStripeProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     fetchClients();
     fetchProjects();
+    fetchStripeProducts();
   }, []);
 
   const fetchClients = async () => {
@@ -527,8 +532,42 @@ function CreateInvoiceModal({
     }
   };
 
+  const fetchStripeProducts = async () => {
+    try {
+      const response = await fetch('/api/admin/stripe/products');
+      if (response.ok) {
+        const data = await response.json();
+        setStripeProducts(data.products);
+      }
+    } catch (error) {
+      console.error('Error fetching Stripe products:', error);
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
+
   const addItem = () => {
-    setItems([...items, { description: '', quantity: 1, rate: 0 }]);
+    setItems([
+      ...items,
+      { description: '', quantity: 1, rate: 0, stripeProductId: '', stripePriceId: '' },
+    ]);
+  };
+
+  const selectStripeProduct = (index: number, productId: string, priceId: string) => {
+    const product = stripeProducts.find((p) => p.id === productId);
+    const price = product?.prices.find((p: any) => p.id === priceId);
+
+    if (product && price) {
+      const updatedItems = [...items];
+      updatedItems[index] = {
+        ...updatedItems[index],
+        description: product.name + (product.description ? ` - ${product.description}` : ''),
+        rate: (price.unitAmount || 0) / 100, // Convert from cents to dollars
+        stripeProductId: productId,
+        stripePriceId: priceId,
+      };
+      setItems(updatedItems);
+    }
   };
 
   const removeItem = (index: number) => {
@@ -664,48 +703,83 @@ function CreateInvoiceModal({
 
               <div className="space-y-3 max-h-60 overflow-y-auto">
                 {items.map((item, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-12 gap-2 items-center p-3 bg-milk-tea/10 rounded-lg"
-                  >
-                    <div className="col-span-6">
-                      <input
-                        type="text"
-                        placeholder="Description"
-                        value={item.description}
-                        onChange={(e) => updateItem(index, 'description', e.target.value)}
-                        className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
-                      />
-                    </div>
-                    <div className="col-span-2">
-                      <input
-                        type="number"
-                        placeholder="Qty"
-                        min="1"
-                        value={item.quantity}
-                        onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value))}
-                        className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
-                      />
-                    </div>
-                    <div className="col-span-3">
-                      <input
-                        type="number"
-                        placeholder="Rate"
-                        min="0"
-                        step="0.01"
-                        value={item.rate}
-                        onChange={(e) => updateItem(index, 'rate', parseFloat(e.target.value))}
-                        className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
-                      />
-                    </div>
-                    <div className="col-span-1">
-                      <button
-                        type="button"
-                        onClick={() => removeItem(index)}
-                        className="p-1 text-red-500 hover:text-red-700"
-                      >
-                        <Trash2 size={14} />
-                      </button>
+                  <div key={index} className="p-3 bg-milk-tea/10 rounded-lg space-y-2">
+                    {/* Stripe Product Selector */}
+                    {!loadingProducts && stripeProducts.length > 0 && (
+                      <div className="pb-2 border-b border-brown-sugar/10">
+                        <label className="text-xs font-medium text-ink/60 mb-1 block">
+                          or select from stripe products
+                        </label>
+                        <select
+                          value={item.stripePriceId}
+                          onChange={(e) => {
+                            const priceId = e.target.value;
+                            if (priceId) {
+                              const product = stripeProducts.find((p) =>
+                                p.prices.some((price: any) => price.id === priceId)
+                              );
+                              if (product) {
+                                selectStripeProduct(index, product.id, priceId);
+                              }
+                            }
+                          }}
+                          className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                        >
+                          <option value="">-- select stripe product --</option>
+                          {stripeProducts.map((product) =>
+                            product.prices.map((price: any) => (
+                              <option key={price.id} value={price.id}>
+                                {product.name} - ${(price.unitAmount / 100).toFixed(2)}
+                                {price.recurring ? ` / ${price.recurring.interval}` : ''}
+                                {product.description ? ` (${product.description})` : ''}
+                              </option>
+                            ))
+                          )}
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Manual Entry Fields */}
+                    <div className="grid grid-cols-12 gap-2 items-center">
+                      <div className="col-span-6">
+                        <input
+                          type="text"
+                          placeholder="Description"
+                          value={item.description}
+                          onChange={(e) => updateItem(index, 'description', e.target.value)}
+                          className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <input
+                          type="number"
+                          placeholder="Qty"
+                          min="1"
+                          value={item.quantity}
+                          onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value))}
+                          className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                        />
+                      </div>
+                      <div className="col-span-3">
+                        <input
+                          type="number"
+                          placeholder="Rate"
+                          min="0"
+                          step="0.01"
+                          value={item.rate}
+                          onChange={(e) => updateItem(index, 'rate', parseFloat(e.target.value))}
+                          className="w-full px-2 py-1 text-sm bg-milk-tea/50 border border-brown-sugar/20 rounded focus:outline-none focus:ring-1 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                        />
+                      </div>
+                      <div className="col-span-1">
+                        <button
+                          type="button"
+                          onClick={() => removeItem(index)}
+                          className="p-1 text-red-500 hover:text-red-700"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
