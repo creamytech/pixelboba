@@ -135,36 +135,46 @@ export default function OnboardingTour({ run, onComplete, onSkip }: OnboardingTo
       disableBeacon: true,
     },
     {
-      target: '[data-tour="dashboard-metrics"]',
+      target: 'body',
       content: (
         <div>
-          <p className="mb-2">
-            Your dashboard shows key metrics at a glance - active projects, progress, pending
-            invoices, and more.
-          </p>
-          <p className="text-sm text-ink/60">
-            These update in real-time as your projects progress.
+          <h4 className="font-semibold text-ink mb-3">Your Dashboard</h4>
+          <p className="mb-3">The main dashboard gives you an overview of everything:</p>
+          <ul className="text-sm text-ink/70 space-y-2 my-3">
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Key Metrics</strong> - Active projects, completed tasks, pending items, and
+                overall progress
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Project Cards</strong> - View progress, tasks, and deadlines for each
+                project
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Recent Activity</strong> - Stay updated on the latest changes and updates
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Quick Actions</strong> - Jump directly to messages, invoices, or contracts
+              </div>
+            </li>
+          </ul>
+          <p className="text-sm text-ink/60 mt-3">
+            Everything updates in real-time as your projects progress!
           </p>
         </div>
       ),
       title: 'Dashboard Overview',
-      placement: 'bottom',
-    },
-    {
-      target: '[data-tour="projects-section"]',
-      content: (
-        <div>
-          <p className="mb-2">
-            Here you&apos;ll see all your active projects. Each card shows progress, tasks, and
-            deadlines.
-          </p>
-          <p className="text-sm text-ink/60">
-            Click on a project card to view detailed information and tasks.
-          </p>
-        </div>
-      ),
-      title: 'Your Projects',
-      placement: 'top',
+      placement: 'center',
     },
     {
       target: 'body',
@@ -209,6 +219,12 @@ export default function OnboardingTour({ run, onComplete, onSkip }: OnboardingTo
               <span className="text-taro">•</span>
               <div>
                 <strong>Notifications</strong> - Stay updated on all project activity
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Settings</strong> - Manage your notification preferences
               </div>
             </li>
           </ul>
@@ -273,12 +289,11 @@ export default function OnboardingTour({ run, onComplete, onSkip }: OnboardingTo
           arrowColor: 'transparent',
         },
         overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
           mixBlendMode: 'normal',
         },
         spotlight: {
-          borderRadius: '16px',
-          boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.6)',
+          display: 'none',
         },
       }}
     />
