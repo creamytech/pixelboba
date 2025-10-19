@@ -151,20 +151,22 @@ export default function OnboardingTour({ run, onComplete, onSkip }: OnboardingTo
             <li className="flex items-start gap-2">
               <span className="text-taro">•</span>
               <div>
-                <strong>Project Cards</strong> - View progress, tasks, and deadlines for each
+                <strong>Your Projects</strong> - View progress, tasks, and deadlines for each active
                 project
               </div>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-taro">•</span>
               <div>
-                <strong>Recent Activity</strong> - Stay updated on the latest changes and updates
+                <strong>Recent Activity</strong> - Track the latest updates, messages, and
+                milestones
               </div>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-taro">•</span>
               <div>
-                <strong>Quick Actions</strong> - Jump directly to messages, invoices, or contracts
+                <strong>Quick Access Buttons</strong> - Messages, Invoices, and Contracts shortcuts
+                at the bottom
               </div>
             </li>
           </ul>
