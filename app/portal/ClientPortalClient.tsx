@@ -16,6 +16,7 @@ import NotificationCenter from '@/components/portal/NotificationCenter';
 import NotificationPreferences from '@/components/portal/NotificationPreferences';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import WebsitePreview from '@/components/portal/WebsitePreview';
+import OnboardingTour from '@/components/portal/OnboardingTour';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import {
   FolderKanban,
@@ -40,6 +41,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [portalData, setPortalData] = useState<PortalData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [runOnboarding, setRunOnboarding] = useState(false);
 
   // Initialize online status tracking
   useOnlineStatus();
@@ -54,11 +56,91 @@ export default function ClientPortalClient({ session }: { session: Session }) {
       if (response.ok) {
         const data = await response.json();
         setPortalData(data);
+
+        // Check if user needs onboarding
+        if (data.user && !data.user.onboardingCompleted) {
+          // Delay onboarding slightly to let the UI render
+          setTimeout(() => {
+            setRunOnboarding(true);
+          }, 1000);
+        }
       }
     } catch (error) {
       console.error('Error fetching portal data:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleOnboardingComplete = async () => {
+    setRunOnboarding(false);
+
+    // Mark onboarding as completed
+    try {
+      await fetch('/api/portal/onboarding', {
+        method: 'POST',
+      });
+
+      // Update local state
+      if (portalData) {
+        setPortalData({
+          ...portalData,
+          user: {
+            ...portalData.user,
+            onboardingCompleted: true,
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Error completing onboarding:', error);
+    }
+  };
+
+  const handleOnboardingSkip = async () => {
+    setRunOnboarding(false);
+
+    // Mark onboarding as completed (even if skipped)
+    try {
+      await fetch('/api/portal/onboarding', {
+        method: 'POST',
+      });
+
+      // Update local state
+      if (portalData) {
+        setPortalData({
+          ...portalData,
+          user: {
+            ...portalData.user,
+            onboardingCompleted: true,
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Error skipping onboarding:', error);
+    }
+  };
+
+  const handleReplayTour = async () => {
+    // Reset onboarding status
+    try {
+      await fetch('/api/portal/onboarding', {
+        method: 'DELETE',
+      });
+
+      // Update local state and start tour
+      if (portalData) {
+        setPortalData({
+          ...portalData,
+          user: {
+            ...portalData.user,
+            onboardingCompleted: false,
+          },
+        });
+      }
+
+      setRunOnboarding(true);
+    } catch (error) {
+      console.error('Error replaying tour:', error);
     }
   };
 
@@ -153,8 +235,32 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         );
       case 'preferences':
         return (
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
-            <NotificationPreferences />
+          <div className="space-y-6">
+            <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
+              <NotificationPreferences />
+            </div>
+
+            {/* Replay Onboarding Tour */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-gradient-to-br from-taro/10 to-brown-sugar/10 backdrop-blur-sm rounded-3xl p-6 border-2 border-taro/20 shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-display font-bold text-lg text-ink mb-1">Portal Tour</h3>
+                  <p className="text-sm text-ink/60">
+                    New to the portal? Take a guided tour to learn about all the features.
+                  </p>
+                </div>
+                <button
+                  onClick={handleReplayTour}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-taro to-brown-sugar text-white font-medium hover:shadow-lg transition-all"
+                >
+                  Start Tour
+                </button>
+              </div>
+            </motion.div>
           </div>
         );
       default:
@@ -189,6 +295,13 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           {renderActiveTab()}
         </motion.div>
       </AnimatePresence>
+
+      {/* Onboarding Tour */}
+      <OnboardingTour
+        run={runOnboarding}
+        onComplete={handleOnboardingComplete}
+        onSkip={handleOnboardingSkip}
+      />
     </PortalLayout>
   );
 }
@@ -300,7 +413,10 @@ function DashboardView({ data }: { data: PortalData }) {
       />
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        data-tour="dashboard-metrics"
+      >
         {metrics.map((metric, index) => (
           <MetricCard key={metric.title} {...metric} delay={index * 0.1} />
         ))}
@@ -309,7 +425,7 @@ function DashboardView({ data }: { data: PortalData }) {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Projects - 2/3 width */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-6" data-tour="projects-section">
           <div className="mb-4">
             <h2 className="font-display font-bold text-2xl text-ink mb-2">Your Projects</h2>
             <p className="text-ink/60 text-sm">Track progress and manage your active projects</p>
@@ -325,16 +441,18 @@ function DashboardView({ data }: { data: PortalData }) {
               </div>
 
               {/* Website Previews for projects with URLs */}
-              {activeProjects.map(
-                (project, index) =>
-                  project.websiteUrl && (
-                    <WebsitePreview
-                      key={`preview-${project.id}`}
-                      url={project.websiteUrl}
-                      projectName={project.name}
-                    />
-                  )
-              )}
+              <div data-tour="website-preview">
+                {activeProjects.map(
+                  (project, index) =>
+                    project.websiteUrl && (
+                      <WebsitePreview
+                        key={`preview-${project.id}`}
+                        url={project.websiteUrl}
+                        projectName={project.name}
+                      />
+                    )
+                )}
+              </div>
             </div>
           ) : (
             <motion.div

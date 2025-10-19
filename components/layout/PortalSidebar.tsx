@@ -235,6 +235,7 @@ export default function PortalSidebar({
                   >
                     <button
                       onClick={() => onTabChange(item.id)}
+                      data-tour={`sidebar-${item.id}`}
                       className={`
                       relative flex items-center gap-3 px-4 py-3 rounded-2xl w-full
                       transition-all duration-300 group

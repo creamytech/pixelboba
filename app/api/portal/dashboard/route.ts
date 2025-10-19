@@ -84,6 +84,7 @@ export async function GET(request: NextRequest) {
           company: user.company,
           image: user.image,
           createdAt: user.createdAt,
+          onboardingCompleted: user.onboardingCompleted,
         },
         projects: user.projects.map((project) => ({
           ...project,

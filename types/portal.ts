@@ -7,6 +7,7 @@ export interface User {
   company?: string;
   image?: string;
   emailPreferences?: EmailPreferences;
+  onboardingCompleted?: boolean;
   createdAt: Date;
 }
 
