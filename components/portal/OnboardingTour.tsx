@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Joyride, { CallBackProps, STATUS, Step, TooltipRenderProps } from 'react-joyride';
 import { motion } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check } from 'lucide-react';
@@ -10,6 +10,8 @@ interface OnboardingTourProps {
   onComplete: () => void;
   onSkip: () => void;
 }
+
+type DeviceType = 'desktop' | 'tablet' | 'mobile';
 
 // Custom tooltip component with brand styling
 function CustomTooltip({
@@ -162,110 +164,59 @@ export default function OnboardingTour({ run, onComplete, onSkip }: OnboardingTo
         </div>
       ),
       title: 'Your Projects',
-      placement: 'bottom',
-    },
-    {
-      target: '[data-tour="website-preview"]',
-      content: (
-        <div>
-          <p className="mb-2">
-            Once your website is live, you&apos;ll see a preview here! You can view it on different
-            devices (desktop, tablet, mobile).
-          </p>
-          <p className="text-sm text-ink/60">
-            Click the &quot;Visit Site&quot; button to open it in a new tab.
-          </p>
-        </div>
-      ),
-      title: 'Live Website Preview',
       placement: 'top',
-      spotlightClicks: false,
     },
     {
-      target: '[data-tour="sidebar-messages"]',
+      target: 'body',
       content: (
         <div>
-          <p className="mb-2">
-            Chat with your project manager here. Get quick responses and keep all project
-            communication in one place.
+          <p className="mb-3">
+            Use the sidebar on the left to navigate between different sections:
           </p>
-          <p className="text-sm text-ink/60">You&apos;ll get notifications for new messages.</p>
+          <ul className="text-sm text-ink/70 space-y-2 my-3">
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Tasks</strong> - Manage project tasks on a kanban board (you can add to
+                Todo/Backlog)
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Messages</strong> - Chat with your project manager in real-time
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Invoices</strong> - View and pay invoices securely
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Contracts</strong> - Review and eSign contracts with DocuSign
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Files</strong> - Access all project files and uploads
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-taro">•</span>
+              <div>
+                <strong>Notifications</strong> - Stay updated on all project activity
+              </div>
+            </li>
+          </ul>
+          <p className="text-sm text-ink/60 mt-3">Click any tab to explore that section!</p>
         </div>
       ),
-      title: 'Messages',
-      placement: 'right',
-    },
-    {
-      target: '[data-tour="sidebar-tasks"]',
-      content: (
-        <div>
-          <p className="mb-2">
-            View and manage project tasks on a kanban board. You can add new tasks to
-            &quot;Todo&quot; or &quot;Backlog&quot; columns.
-          </p>
-          <p className="text-sm text-ink/60">
-            Drag and drop tasks between Todo and Backlog. Your admin manages the workflow stages.
-          </p>
-        </div>
-      ),
-      title: 'Task Board',
-      placement: 'right',
-    },
-    {
-      target: '[data-tour="sidebar-files"]',
-      content: (
-        <div>
-          <p className="mb-2">
-            Access all your project files here - designs, documents, assets, and more.
-          </p>
-          <p className="text-sm text-ink/60">
-            You can upload files and download any files shared with you.
-          </p>
-        </div>
-      ),
-      title: 'Files',
-      placement: 'right',
-    },
-    {
-      target: '[data-tour="sidebar-invoices"]',
-      content: (
-        <div>
-          <p className="mb-2">View and pay invoices here. We accept all major payment methods.</p>
-          <p className="text-sm text-ink/60">
-            You&apos;ll get email notifications when new invoices are available.
-          </p>
-        </div>
-      ),
-      title: 'Invoices',
-      placement: 'right',
-    },
-    {
-      target: '[data-tour="sidebar-contracts"]',
-      content: (
-        <div>
-          <p className="mb-2">
-            Review and sign contracts electronically using DocuSign integration.
-          </p>
-          <p className="text-sm text-ink/60">
-            All signed contracts are securely stored here for your records.
-          </p>
-        </div>
-      ),
-      title: 'Contracts',
-      placement: 'right',
-    },
-    {
-      target: '[data-tour="sidebar-notifications"]',
-      content: (
-        <div>
-          <p className="mb-2">Stay updated with all project notifications and activity.</p>
-          <p className="text-sm text-ink/60">
-            You can customize notification preferences in the settings tab.
-          </p>
-        </div>
-      ),
-      title: 'Notifications',
-      placement: 'right',
+      title: 'Portal Navigation',
+      placement: 'center',
     },
     {
       target: 'body',
@@ -273,8 +224,8 @@ export default function OnboardingTour({ run, onComplete, onSkip }: OnboardingTo
         <div>
           <p className="mb-4">You&apos;re all set! 🎉</p>
           <p className="text-sm text-ink/60 mb-4">
-            You can replay this tour anytime from the Settings tab. If you have any questions,
-            don&apos;t hesitate to message us!
+            You can replay this tour anytime from the <strong>Settings</strong> tab. If you have any
+            questions, don&apos;t hesitate to message us!
           </p>
           <p className="text-sm font-medium text-taro">
             Ready to get started? Let&apos;s build something amazing together! 🧋
