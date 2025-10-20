@@ -185,9 +185,21 @@ export default function BobaClubFAQ() {
                   with Taro
                 </h3>
 
-                <p className="text-center text-white/90 font-medium text-lg mb-8">
-                  Prefer to email?
+                <p className="text-center text-white/90 font-medium text-lg mb-6">
+                  Give us a call or send an email
                 </p>
+
+                {/* Phone Button */}
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full bg-white hover:bg-white/90 text-ink py-6 text-lg font-bold rounded-full transition-all duration-200 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5 mb-4"
+                >
+                  <a href="tel:+17542434766" className="flex items-center justify-center gap-2">
+                    <span>(754) 243-4766</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </a>
+                </Button>
 
                 {/* Email Button */}
                 <Button
