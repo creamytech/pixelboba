@@ -206,8 +206,15 @@ export default function Footer() {
           {/* Contact Column */}
           <div>
             <h4 className="font-semibold text-lg mb-4">get in touch</h4>
-            <div className="space-y-2 text-gray-400">
-              <p>ready to make your project pop?</p>
+            <div className="space-y-3 text-gray-400">
+              <p className="mb-3">ready to make your project pop?</p>
+              <a
+                href="tel:+17542434766"
+                className="flex items-center space-x-2 hover:text-white transition-colors duration-200 font-semibold"
+              >
+                <span>📞</span>
+                <span>(754) 243-4766</span>
+              </a>
               <Link
                 href="mailto:hello@pixelboba.com"
                 className="flex items-center space-x-2 hover:text-white transition-colors duration-200"

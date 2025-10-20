@@ -6,11 +6,11 @@ import StartProjectForm from '@/components/form/StartProjectForm';
 export const metadata: Metadata = {
   title: 'Start Your Project | Fort Lauderdale Web Design',
   description:
-    'Tell us about your project and get a custom web design proposal within 24 hours. No calls, no meetings - just a quick form and we will take care of the rest.',
+    'Tell us about your project and get a custom web design proposal within 24 hours. Call (754) 243-4766 or fill out our quick form.',
   openGraph: {
     title: 'Start Your Project | Fort Lauderdale Web Design',
     description:
-      'Tell us about your project and get a custom web design proposal within 24 hours. No calls, no meetings - just a quick form and we will take care of the rest.',
+      'Tell us about your project and get a custom web design proposal within 24 hours. Call (754) 243-4766 or fill out our quick form.',
     url: 'https://pixelboba.com/start',
     siteName: 'pixel boba',
     images: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Start Your Project | Fort Lauderdale Web Design',
     description:
-      'Tell us about your project and get a custom web design proposal within 24 hours. No calls, no meetings - just a quick form and we will take care of the rest.',
+      'Tell us about your project and get a custom web design proposal within 24 hours. Call (754) 243-4766 or fill out our quick form.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -47,12 +47,17 @@ export default function StartProjectPage() {
               <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
                 let&apos;s build something great
               </h1>
-              <p className="text-xl md:text-2xl text-gray-700 mb-4 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed max-w-3xl mx-auto">
                 Tell us about your project, and we&apos;ll send you a custom proposal within 24
                 hours.
               </p>
-              <p className="text-lg text-gray-600 lowercase leading-relaxed max-w-2xl mx-auto">
-                no calls, no meetings, just a quick form and we&apos;ll take it from there.
+              <p className="text-lg text-gray-600 lowercase mb-3">
+                prefer to talk? give us a call:
+              </p>
+              <p className="text-2xl font-bold text-taro">
+                <a href="tel:+17542434766" className="hover:text-deep-taro transition-colors">
+                  (754) 243-4766
+                </a>
               </p>
             </div>
           </div>

@@ -199,7 +199,8 @@ export default function StartProjectForm() {
         <h3 className="text-3xl font-bold text-ink mb-4 lowercase">project submitted! 🧋</h3>
         <p className="text-gray-600 mb-6 max-w-md mx-auto leading-relaxed">
           Thanks! We&apos;ve received your project details and sent you a confirmation email.
-          We&apos;ll review everything and send you a custom proposal within 24 hours.
+          We&apos;ll review everything and send you a custom proposal within 24 hours. Questions?
+          Call us at (754) 243-4766.
         </p>
         <div className="bg-milk-tea/20 rounded-xl p-4 mb-6">
           <p className="text-sm text-gray-600">💌 Check your inbox for confirmation details</p>
@@ -479,7 +480,10 @@ export default function StartProjectForm() {
       )}
 
       <p className="mt-4 text-sm text-gray-500 text-center">
-        We&apos;ll respond within 24 hours with a custom proposal
+        We&apos;ll respond within 24 hours with a custom proposal. Or call us:{' '}
+        <a href="tel:+17542434766" className="font-semibold text-taro hover:text-deep-taro">
+          (754) 243-4766
+        </a>
       </p>
     </motion.form>
   );

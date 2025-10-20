@@ -265,8 +265,17 @@ export default function SaaSPage() {
               <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-6 lowercase">
                 ready to grow your saas?
               </h2>
-              <p className="text-xl text-gray-600 mb-8 lowercase">
-                get a custom saas website design proposal within 24 hours. no calls required.
+              <p className="text-xl text-gray-600 mb-4 lowercase">
+                get a custom saas website design proposal within 24 hours.
+              </p>
+              <p className="text-lg text-gray-600 mb-8 lowercase">
+                call us:{' '}
+                <a
+                  href="tel:+17542434766"
+                  className="font-bold text-taro hover:text-deep-taro transition-colors"
+                >
+                  (754) 243-4766
+                </a>
               </p>
               <Button asChild size="lg" className="bg-taro hover:bg-deep-taro text-white px-8 py-4">
                 <Link href="/start" className="inline-flex items-center space-x-2">

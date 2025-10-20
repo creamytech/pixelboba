@@ -102,14 +102,28 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto lowercase leading-relaxed"
+              className="text-lg md:text-xl text-gray-700 mb-4 max-w-2xl mx-auto lowercase leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              clean code. live previews from day one. websites that actually convert. no calls, no
-              confusion.
+              clean code. live previews from day one. websites that actually convert.
             </motion.p>
+
+            <motion.div
+              className="flex items-center justify-center gap-2 mb-8 text-gray-700"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <span className="text-lg font-semibold text-taro">call us:</span>
+              <a
+                href="tel:+17542434766"
+                className="text-xl font-bold text-ink hover:text-taro transition-colors duration-300"
+              >
+                (754) 243-4766
+              </a>
+            </motion.div>
 
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-lg mx-auto"

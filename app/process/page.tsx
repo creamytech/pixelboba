@@ -11,11 +11,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'Our Web Design Process | 3-Step Workflow',
   description:
-    'A simple 3-step Fort Lauderdale web design process. No meetings, no calls, just clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses.',
+    'A simple 3-step Fort Lauderdale web design process. Clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses. Call (754) 243-4766.',
   openGraph: {
     title: 'Our Web Design Process | 3-Step Workflow',
     description:
-      'A simple 3-step Fort Lauderdale web design process. No meetings, no calls, just clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses.',
+      'A simple 3-step Fort Lauderdale web design process. Clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses. Call (754) 243-4766.',
     url: 'https://pixelboba.com/process',
     siteName: 'pixel boba',
     images: [
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Our Web Design Process | 3-Step Workflow',
     description:
-      'A simple 3-step Fort Lauderdale web design process. No meetings, no calls, just clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses.',
+      'A simple 3-step Fort Lauderdale web design process. Clear steps, clean builds, and quick turnarounds. Discovery, design & build, launch & support for South Florida businesses. Call (754) 243-4766.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -91,9 +91,18 @@ export default function ProcessPage() {
               <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
                 our process
               </h1>
-              <p className="text-xl md:text-2xl text-gray-700 mb-12 lowercase leading-relaxed max-w-3xl mx-auto">
-                a simple workflow that keeps things moving. no meetings, no calls, just clear steps,
-                clean builds, and quick turnarounds.
+              <p className="text-xl md:text-2xl text-gray-700 mb-8 lowercase leading-relaxed max-w-3xl mx-auto">
+                a simple workflow that keeps things moving. clear steps, clean builds, and quick
+                turnarounds.
+              </p>
+              <p className="text-lg text-gray-600 mb-12 lowercase">
+                questions? call us:{' '}
+                <a
+                  href="tel:+17542434766"
+                  className="font-bold text-taro hover:text-deep-taro transition-colors"
+                >
+                  (754) 243-4766
+                </a>
               </p>
 
               {/* Quick nav links */}

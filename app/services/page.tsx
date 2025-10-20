@@ -15,11 +15,11 @@ import BrewStrength from '@/components/services/BrewStrength';
 export const metadata: Metadata = {
   title: 'Web Design Services & Pricing | Fort Lauderdale',
   description:
-    'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
+    'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing - call (754) 243-4766 or get a custom proposal within 24 hours.',
   openGraph: {
     title: 'Web Design Services & Pricing | Fort Lauderdale',
     description:
-      'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
+      'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing - call (754) 243-4766 or get a custom proposal within 24 hours.',
     url: 'https://pixelboba.com/services',
     siteName: 'pixel boba',
     images: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Web Design Services & Pricing | Fort Lauderdale',
     description:
-      'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing with no calls needed - get a custom proposal by email within 24 hours.',
+      'Professional Fort Lauderdale web design services. Next.js development, React websites, SaaS & ecommerce solutions. Competitive pricing - call (754) 243-4766 or get a custom proposal within 24 hours.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -334,8 +334,13 @@ export default function ServicesPage() {
                 <h2 className="font-display text-4xl font-bold text-ink mb-4 lowercase">
                   start your project
                 </h2>
-                <p className="text-lg text-gray-600 lowercase">
-                  tell us what you need, no calls, just a quick form
+                <p className="text-lg text-gray-600 lowercase mb-3">
+                  tell us what you need - call us or fill out the form below
+                </p>
+                <p className="text-xl font-semibold text-taro lowercase">
+                  <a href="tel:+17542434766" className="hover:text-deep-taro transition-colors">
+                    (754) 243-4766
+                  </a>
                 </p>
               </div>
               <StartProjectForm />

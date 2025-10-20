@@ -109,15 +109,27 @@ export default function CTASection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <p className="text-lg">
-              or drop us a line at{' '}
-              <a
-                href="mailto:hello@pixelboba.com"
-                className="text-white font-semibold hover:text-milk-tea transition-colors duration-200 underline decoration-2 underline-offset-4"
-              >
-                hello@pixelboba.com
-              </a>
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+              <p className="text-lg">
+                call us:{' '}
+                <a
+                  href="tel:+17542434766"
+                  className="text-white font-bold hover:text-milk-tea transition-colors duration-200"
+                >
+                  (754) 243-4766
+                </a>
+              </p>
+              <span className="hidden sm:inline text-white/50">|</span>
+              <p className="text-lg">
+                email:{' '}
+                <a
+                  href="mailto:hello@pixelboba.com"
+                  className="text-white font-semibold hover:text-milk-tea transition-colors duration-200 underline decoration-2 underline-offset-4"
+                >
+                  hello@pixelboba.com
+                </a>
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       </div>

@@ -7,11 +7,11 @@ import StickyCTA from '@/components/common/StickyCTA';
 export const metadata: Metadata = {
   title: 'Contact | Web Design Quote in 24 Hours | Fort Lauderdale',
   description:
-    'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
+    'Get a custom Fort Lauderdale web design proposal within 24 hours. Call (754) 243-4766 or fill out our project form. Professional website design quotes.',
   openGraph: {
     title: 'Contact | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
-      'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
+      'Get a custom Fort Lauderdale web design proposal within 24 hours. Call (754) 243-4766 or fill out our project form. Professional website design quotes.',
     url: 'https://pixelboba.com/contact',
     siteName: 'pixel boba',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contact | Web Design Quote in 24 Hours | Fort Lauderdale',
     description:
-      'Get a custom Fort Lauderdale web design proposal within 24 hours. No calls required - just fill out our project form and we&apos;ll get brewing. Professional website design quotes.',
+      'Get a custom Fort Lauderdale web design proposal within 24 hours. Call (754) 243-4766 or fill out our project form. Professional website design quotes.',
     images: ['https://pixelboba.com/Pixel_Boba_Icon_PNG.png'],
   },
   alternates: {
@@ -40,7 +40,7 @@ const faqs = [
   {
     question: 'what information do you need to get started?',
     answer:
-      'Just fill out our project form with your goals, timeline, and any examples you like. We handle the rest through email.',
+      'Just fill out our project form with your goals, timeline, and any examples you like. You can also give us a call at (754) 243-4766.',
   },
   {
     question: 'can you work with our existing branding?',
@@ -60,12 +60,12 @@ const faqs = [
   {
     question: "what if we're not happy with the design?",
     answer:
-      'We share working previews throughout the process so there are no surprises. Most issues get resolved during our regular check-ins via email.',
+      'We share working previews throughout the process so there are no surprises. Most issues get resolved during our regular check-ins.',
   },
   {
     question: 'what if I need changes during the project?',
     answer:
-      "We share working code previews as we build, so you can see exactly what you're getting. Changes happen via email feedback.",
+      "We share working code previews as we build, so you can see exactly what you're getting. Send us your feedback and we'll make it happen.",
   },
   {
     question: 'do you work with wordpress or shopify?',
@@ -133,10 +133,20 @@ export default function ContactPage() {
               <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
                 let&apos;s brew something together
               </h1>
-              <p className="text-xl md:text-2xl text-gray-700 mb-12 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
+              <p className="text-xl md:text-2xl text-gray-700 mb-8 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
                 tell us about your project. we&apos;ll send you a custom proposal within 24 hours.
-                no calls, no pressure.
               </p>
+
+              {/* Phone Number */}
+              <div className="flex items-center justify-center gap-3 mb-12">
+                <span className="text-2xl font-semibold text-taro lowercase">call us:</span>
+                <a
+                  href="tel:+17542434766"
+                  className="text-3xl font-bold text-ink hover:text-taro transition-colors duration-300"
+                >
+                  (754) 243-4766
+                </a>
+              </div>
 
               {/* Primary CTA */}
               <div className="mb-12">
@@ -150,7 +160,7 @@ export default function ContactPage() {
                   </span>
                 </Link>
                 <p className="text-gray-600 mt-4 lowercase font-medium text-lg">
-                  ✨ response within 24 hours, no calls required
+                  ✨ response within 24 hours
                 </p>
               </div>
 
@@ -182,7 +192,16 @@ export default function ContactPage() {
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase">
                   quick info
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  <div className="group">
+                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">phone</h3>
+                    <a
+                      href="tel:+17542434766"
+                      className="text-taro hover:text-deep-taro transition-colors duration-200 font-semibold group-hover:scale-105 inline-block"
+                    >
+                      (754) 243-4766
+                    </a>
+                  </div>
                   <div className="group">
                     <h3 className="font-bold text-ink mb-3 lowercase text-lg">email</h3>
                     <a
