@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -10,7 +13,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const notificationId = params.id;
+    const { id: notificationId } = await params;
 
     // Delete notification, but only if it belongs to the current user
     await prisma.notification.delete({

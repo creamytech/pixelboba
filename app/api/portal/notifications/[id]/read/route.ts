@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -10,7 +10,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const notificationId = params.id;
+    const { id: notificationId } = await params;
 
     // Update notification as read, but only if it belongs to the current user
     const notification = await prisma.notification.update({

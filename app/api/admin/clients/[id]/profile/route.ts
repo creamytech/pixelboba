@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const clientId = params.id;
+    const { id: clientId } = await params;
 
     try {
       // Fetch client data

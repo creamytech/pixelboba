@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 // PATCH - Update auto-assignment rule
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -14,8 +14,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     const body = await request.json();
     const { name, description, conditions, assignToId, isActive, priority } = body;
 
+    const { id } = await params;
     const rule = await prisma.autoAssignmentRule.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...(name && { name }),
         ...(description !== undefined && { description }),
@@ -34,15 +35,19 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 }
 
 // DELETE - Delete auto-assignment rule
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
+    const { id } = await params;
     await prisma.autoAssignmentRule.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });

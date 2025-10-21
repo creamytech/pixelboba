@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -15,9 +15,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { id } = await params;
 
       const project = await prisma.project.findUnique({
-        where: { id: params.id },
+        where: { id },
         include: {
           client: {
             select: {
@@ -67,7 +68,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -83,9 +84,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { id } = await params;
 
       const existingProject = await prisma.project.findUnique({
-        where: { id: params.id },
+        where: { id },
         include: { client: { select: { name: true } } },
       });
 
@@ -94,7 +96,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
 
       const updatedProject = await prisma.project.update({
-        where: { id: params.id },
+        where: { id },
         data: {
           ...(name && { name }),
           ...(description !== undefined && { description }),
@@ -139,7 +141,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
             action: 'project_updated',
             description: changes.join(', '),
             userId: session.user.id,
-            projectId: params.id,
+            projectId: id,
           },
         });
       }
@@ -155,7 +157,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -168,9 +173,10 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { id } = await params;
 
       const project = await prisma.project.findUnique({
-        where: { id: params.id },
+        where: { id },
         select: { name: true },
       });
 
@@ -179,7 +185,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       }
 
       await prisma.project.delete({
-        where: { id: params.id },
+        where: { id },
       });
 
       // Create activity log

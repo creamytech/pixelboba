@@ -6,7 +6,7 @@ import { TaskStatus } from '@prisma/client';
 import { triggerPusherEvent, PUSHER_EVENTS, CHANNELS } from '@/lib/pusher';
 
 // POST /api/tasks/[id]/move - Move a task to a new status/position
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -22,8 +22,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    const { id } = await params;
     const task = await prisma.task.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         project: {
           select: {
@@ -97,7 +98,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       }
 
       const updatedTask = await prisma.task.update({
-        where: { id: params.id },
+        where: { id },
         data: updateData,
         include: {
           assignedTo: {
@@ -175,7 +176,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
       // Update the task's order
       const updatedTask = await prisma.task.update({
-        where: { id: params.id },
+        where: { id },
         data: { order: newOrder },
         include: {
           assignedTo: {

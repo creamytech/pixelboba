@@ -6,7 +6,7 @@ import { authOptions } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { projectId: string; filename: string } }
+  { params }: { params: Promise<{ projectId: string; filename: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { projectId, filename } = params;
+    const { projectId, filename } = await params;
     const { prisma } = await import('@/lib/prisma');
 
     // Verify user has access to this project

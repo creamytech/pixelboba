@@ -4,7 +4,10 @@ import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 // GET messages between admin and a specific client
-export async function GET(request: NextRequest, { params }: { params: { clientId: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ clientId: string }> }
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -12,7 +15,7 @@ export async function GET(request: NextRequest, { params }: { params: { clientId
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { clientId } = params;
+    const { clientId } = await params;
 
     // Get direct messages between admin and client
     const messages = await prisma.message.findMany({
@@ -75,7 +78,10 @@ export async function GET(request: NextRequest, { params }: { params: { clientId
 }
 
 // POST - Send message to client
-export async function POST(request: NextRequest, { params }: { params: { clientId: string } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ clientId: string }> }
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -83,7 +89,7 @@ export async function POST(request: NextRequest, { params }: { params: { clientI
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { clientId } = params;
+    const { clientId } = await params;
     const body = await request.json();
     const { content } = body;
 

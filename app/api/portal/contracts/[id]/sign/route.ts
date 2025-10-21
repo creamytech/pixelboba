@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { DocuSignService } from '@/lib/docusign';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -11,7 +11,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const contractId = params.id;
+    const { id: contractId } = await params;
     const { signatureData } = await request.json();
 
     // Find the contract
@@ -143,7 +143,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   }
 }
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -151,7 +151,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const contractId = params.id;
+    const { id: contractId } = await params;
 
     // Get contract with DocuSign envelope ID
     const contract = await prisma.contract.findFirst({

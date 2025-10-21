@@ -27,9 +27,9 @@ import { Button } from '@/components/ui/button';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface WorkPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -40,7 +40,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: WorkPageProps): Promise<Metadata> {
-  const work = await getWorkBySlug(params.slug);
+  const { slug } = await params;
+  const work = await getWorkBySlug(slug);
 
   if (!work) {
     return {
@@ -54,7 +55,7 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
     openGraph: {
       title: `${work.frontmatter.title} Case Study | Web Design Portfolio`,
       description: `${work.frontmatter.summary} see how pixel boba transformed this client's online presence with custom web design and development.`,
-      url: `https://pixelboba.com/work/${params.slug}`,
+      url: `https://pixelboba.com/work/${slug}`,
       siteName: 'pixel boba',
       images: work.frontmatter.cover
         ? [
@@ -76,13 +77,14 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
       images: work.frontmatter.cover ? [work.frontmatter.cover] : [],
     },
     alternates: {
-      canonical: `https://pixelboba.com/work/${params.slug}`,
+      canonical: `https://pixelboba.com/work/${slug}`,
     },
   };
 }
 
 export default async function WorkPage({ params }: WorkPageProps) {
-  const work = await getWorkBySlug(params.slug);
+  const { slug } = await params;
+  const work = await getWorkBySlug(slug);
 
   if (!work) {
     notFound();
@@ -96,7 +98,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
     '@type': 'CreativeWork',
     name: frontmatter.title,
     description: frontmatter.summary,
-    url: `https://pixelboba.com/work/${params.slug}`,
+    url: `https://pixelboba.com/work/${slug}`,
     image: frontmatter.cover || 'https://pixelboba.com/Pixel_Boba_Icon_PNG.png',
     datePublished: frontmatter.publishedAt,
     creator: {
@@ -129,7 +131,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
             items={[
               { label: 'home', href: '/' },
               { label: 'portfolio', href: '/work' },
-              { label: frontmatter.title.toLowerCase(), href: `/work/${params.slug}` },
+              { label: frontmatter.title.toLowerCase(), href: `/work/${slug}` },
             ]}
           />
         </div>

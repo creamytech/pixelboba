@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -15,7 +15,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const clientId = params.id;
+    const { id: clientId } = await params;
     const updateData = await request.json();
 
     try {
@@ -52,7 +52,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -65,7 +68,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const clientId = params.id;
+    const { id: clientId } = await params;
 
     try {
       // Delete client (this will cascade to related records based on schema)

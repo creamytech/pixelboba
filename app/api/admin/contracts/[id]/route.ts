@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { DocuSignService } from '@/lib/docusign';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user || (session.user.role !== 'ADMIN' && session.user.role !== 'OWNER')) {
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const contractId = params.id;
+    const { id: contractId } = await params;
 
     const contract = await prisma.contract.findUnique({
       where: { id: contractId },
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user || (session.user.role !== 'ADMIN' && session.user.role !== 'OWNER')) {
@@ -92,7 +92,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const contractId = params.id;
+    const { id: contractId } = await params;
     const body = await request.json();
     const { title, content, status, expiresAt, projectId } = body;
 
@@ -251,7 +251,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user || (session.user.role !== 'ADMIN' && session.user.role !== 'OWNER')) {
@@ -259,7 +262,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
 
     const { prisma } = await import('@/lib/prisma');
-    const contractId = params.id;
+    const { id: contractId } = await params;
 
     const contract = await prisma.contract.findUnique({
       where: { id: contractId },

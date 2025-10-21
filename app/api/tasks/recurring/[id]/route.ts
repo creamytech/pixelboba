@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { add } from 'date-fns';
 
 // PATCH - Update recurring task
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -27,11 +27,13 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       assignedToId,
     } = body;
 
+    const { id } = await params;
+
     // Recalculate next due if pattern or interval changed
     let nextDue;
     if (pattern || interval) {
       const existingTask = await prisma.recurringTask.findUnique({
-        where: { id: params.id },
+        where: { id },
       });
 
       if (existingTask) {
@@ -63,7 +65,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     }
 
     const recurringTask = await prisma.recurringTask.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...(title && { title }),
         ...(description !== undefined && { description }),
@@ -88,15 +90,19 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 }
 
 // DELETE - Delete recurring task
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
+    const { id } = await params;
     await prisma.recurringTask.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });

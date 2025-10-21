@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import Stripe from 'stripe';
 import { getSettingValue } from '@/lib/settings';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -17,9 +17,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { id } = await params;
 
       const invoice = await prisma.invoice.findUnique({
-        where: { id: params.id },
+        where: { id },
         include: {
           client: {
             select: {
@@ -53,7 +54,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -69,10 +70,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { id } = await params;
 
       // First, get the current invoice
       const currentInvoice = await prisma.invoice.findUnique({
-        where: { id: params.id },
+        where: { id },
         include: { items: true },
       });
 
@@ -96,7 +98,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       if (items !== undefined) updateData.totalAmount = totalAmount;
 
       const invoice = await prisma.invoice.update({
-        where: { id: params.id },
+        where: { id },
         data: updateData,
         include: {
           client: {
@@ -120,13 +122,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       if (items && Array.isArray(items)) {
         // Delete existing items
         await prisma.invoiceItem.deleteMany({
-          where: { invoiceId: params.id },
+          where: { invoiceId: id },
         });
 
         // Create new items
         await prisma.invoiceItem.createMany({
           data: items.map((item: any) => ({
-            invoiceId: params.id,
+            invoiceId: id,
             description: item.description,
             quantity: item.quantity,
             rate: item.rate,
@@ -156,7 +158,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -169,9 +174,10 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { id } = await params;
 
       const invoice = await prisma.invoice.findUnique({
-        where: { id: params.id },
+        where: { id },
       });
 
       if (!invoice) {
@@ -180,12 +186,12 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
       // Delete invoice items first
       await prisma.invoiceItem.deleteMany({
-        where: { invoiceId: params.id },
+        where: { invoiceId: id },
       });
 
       // Delete invoice
       await prisma.invoice.delete({
-        where: { id: params.id },
+        where: { id },
       });
 
       // Create activity log
@@ -210,7 +216,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 }
 
 // Send invoice via Stripe
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -229,6 +235,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     try {
       const { prisma } = await import('@/lib/prisma');
+      const { id } = await params;
 
       // Get Stripe secret key from settings or fallback to environment variable
       const stripeSecretKey =
@@ -257,7 +264,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       });
 
       const invoice = await prisma.invoice.findUnique({
-        where: { id: params.id },
+        where: { id },
         include: {
           client: true,
           items: true,
@@ -315,7 +322,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
       // Update our database
       const updatedInvoice = await prisma.invoice.update({
-        where: { id: params.id },
+        where: { id },
         data: {
           status: 'SENT',
           stripeInvoiceId: stripeInvoice.id,
