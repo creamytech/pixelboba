@@ -16,7 +16,7 @@ import NotificationCenter from '@/components/portal/NotificationCenter';
 import NotificationPreferences from '@/components/portal/NotificationPreferences';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import WebsitePreview from '@/components/portal/WebsitePreview';
-import OnboardingTour from '@/components/portal/OnboardingTour';
+// import OnboardingTour from '@/components/portal/OnboardingTour'; // Temporarily disabled for React 18 compatibility
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import {
   FolderKanban,
@@ -317,12 +317,12 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Onboarding Tour */}
-      <OnboardingTour
+      {/* Onboarding Tour - Temporarily disabled for React 18 compatibility */}
+      {/* <OnboardingTour
         run={runOnboarding}
         onComplete={handleOnboardingComplete}
         onSkip={handleOnboardingSkip}
-      />
+      /> */}
     </PortalLayout>
   );
 }
