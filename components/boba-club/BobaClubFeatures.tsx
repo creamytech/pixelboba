@@ -21,27 +21,27 @@ import {
 } from 'lucide-react';
 
 const includedFeatures = [
-  { icon: InfinityIcon, text: 'Unlimited design requests' },
-  { icon: Zap, text: 'One active request at a time' },
+  { icon: InfinityIcon, text: 'Unlimited dev + design requests' },
+  { icon: Zap, text: 'One request at a time (two for Enterprise)' },
   { icon: RefreshCw, text: 'Unlimited revisions' },
-  { icon: Clock, text: '24-48 hour delivery' },
-  { icon: Share2, text: 'Social graphics and carousels' },
+  { icon: Clock, text: '24-72 hour delivery (based on tier)' },
+  { icon: Globe, text: 'Full web development (React, Next.js, TypeScript)' },
+  { icon: Monitor, text: 'Webflow development & custom features' },
   { icon: Palette, text: 'Branding, logos, and visual systems' },
-  { icon: Sparkles, text: 'Custom illustrations and icons' },
-  { icon: Monitor, text: 'Web and app UI mockups' },
-  { icon: Globe, text: 'Landing pages and creative campaigns' },
-  { icon: Mail, text: 'Email templates, pitch decks, and print materials' },
-  { icon: FileText, text: 'Webflow or front-end support' },
-  { icon: Users, text: 'Up to 2 users per account' },
-  { icon: Download, text: 'Full ownership of all files' },
+  { icon: Sparkles, text: 'Custom UI/UX design & illustrations' },
+  { icon: Share2, text: 'Social graphics, marketing materials, and carousels' },
+  { icon: Mail, text: 'Email templates, pitch decks, and landing pages' },
+  { icon: FileText, text: 'API integrations & database development' },
+  { icon: Users, text: '1-5 users (based on tier)' },
+  { icon: Download, text: 'Full ownership of all code & files' },
   { icon: PauseCircle, text: 'Pause or cancel anytime' },
 ];
 
 const notIncluded = [
-  { icon: X, text: '3D rendering' },
-  { icon: X, text: 'Long-form video or motion projects' },
-  { icon: X, text: 'Magazine-style print layouts' },
-  { icon: X, text: 'Copywriting or photography' },
+  { icon: X, text: '3D rendering or complex animations' },
+  { icon: X, text: 'Long-form video production' },
+  { icon: X, text: 'Native mobile app development (iOS/Android)' },
+  { icon: X, text: 'Copywriting or photography services' },
 ];
 
 export default function BobaClubFeatures() {
@@ -61,10 +61,11 @@ export default function BobaClubFeatures() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-4">
-            Everything Your Brand Needs to Look Amazing
+            Everything Your Brand Needs to Build & Grow
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            All the flavor, no limits. Get unlimited access to professional design services.
+            All the flavor, no limits. Get unlimited access to professional web development and
+            design services.
           </p>
         </motion.div>
 

@@ -8,20 +8,20 @@ const steps = [
   {
     number: '01',
     title: 'subscribe',
-    description: 'choose your plan and join instantly',
+    description: 'choose your tier and join instantly',
     tooltip: null,
   },
   {
     number: '02',
     title: 'request',
-    description: 'add unlimited designs to your queue',
+    description: 'add unlimited dev + design to your queue',
     tooltip:
-      'Add as many design requests as you need to your queue. We work through them one at a time to ensure quality.',
+      'Add as many web development and design requests as you need to your queue. We work through them one (or two for Enterprise) at a time to ensure quality.',
   },
   {
     number: '03',
     title: 'receive',
-    description: 'get designs back in 24-48 hours',
+    description: 'get projects back in 24-72 hours',
     tooltip: null,
   },
   {

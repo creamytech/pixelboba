@@ -40,7 +40,7 @@ export default function BobaClubHero() {
           className="inline-block mb-8"
         >
           <div className="bg-white border-4 border-ink rounded-full px-6 py-2 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-            <p className="font-bold text-ink">unlimited design for a flat monthly fee</p>
+            <p className="font-bold text-ink">unlimited web development + design</p>
           </div>
         </motion.div>
 
@@ -51,7 +51,7 @@ export default function BobaClubHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
         >
-          design on
+          build on
           <br />
           <span className="italic text-taro">tap.</span>
         </motion.h1>
@@ -63,7 +63,7 @@ export default function BobaClubHero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
         >
-          Unlimited design requests for creators and brands at a flat monthly rate
+          Unlimited web development and design requests for one flat monthly rate
         </motion.p>
 
         {/* Pricing surface */}
@@ -73,7 +73,9 @@ export default function BobaClubHero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.25, ease: 'easeOut' }}
         >
-          <span className="font-display text-2xl md:text-3xl font-black text-ink">$3,000</span>
+          <span className="font-display text-2xl md:text-3xl font-black text-ink">
+            starting at $1,995
+          </span>
           <span className="text-sm text-ink/60 font-medium">/month</span>
         </motion.div>
 
@@ -84,8 +86,8 @@ export default function BobaClubHero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
         >
-          subscribe and request as many designs as you need. delivered fast. revised until perfect.
-          pause anytime.
+          subscribe and request as many dev + design projects as you need. delivered fast. revised
+          until perfect. pause anytime.
         </motion.p>
 
         {/* Big CTA buttons */}
