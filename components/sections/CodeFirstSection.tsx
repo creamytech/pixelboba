@@ -1,75 +1,73 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Code, Zap, Eye } from 'lucide-react';
+import Image from 'next/image';
+import { Icon } from '@iconify/react';
 
 const benefits = [
   {
-    icon: Code,
-    title: 'working previews from day one',
+    icon: 'ph:monitor-duotone',
+    title: 'See Your Site From Day One',
     description:
-      "See exactly what you're getting with live code previews. No mockups, no guesswork.",
+      'Watch your website come to life in real-time. No waiting weeks for the big reveal.',
   },
   {
-    icon: Zap,
-    title: 'performance and accessibility built in',
+    icon: 'ph:lightning-duotone',
+    title: 'Works Perfect on All Devices',
     description:
-      'Every build meets high performance standards. Fast loading, keyboard navigation, screen reader friendly.',
+      'Looks amazing and loads fast on phones, tablets, and computers. Your visitors will love it.',
   },
   {
-    icon: Eye,
-    title: 'no endless revisions',
-    description:
-      "Clear previews mean fewer surprises. You know what you're getting before we call it done.",
+    icon: 'ph:eye-duotone',
+    title: 'No Endless Back-and-Forth',
+    description: "See exactly what you're getting as we build it. Fewer revisions, faster launch.",
   },
 ];
 
 export default function CodeFirstSection() {
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="font-display text-4xl md:text-5xl font-bold text-ink mb-4 lowercase"
+    <section className="relative py-24 px-4 md:px-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-block bg-white px-8 py-4 rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] mb-8">
+            <span className="font-black text-lg text-ink flex items-center gap-2">
+              <Icon icon="ph:rocket-launch-duotone" className="w-6 h-6 text-deep-taro" />
+              How We Work Different
+            </span>
+          </div>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-ink leading-tight max-w-4xl mx-auto">
+            Skip the
+            <span className="italic text-[#7C3AED]"> Waiting</span>,
+            <br />
+            See Your Site Live
+          </h2>
+        </motion.div>
+
+        {/* Benefit cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {benefits.map((benefit, index) => (
+            <motion.div
+              key={benefit.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -6, scale: 1.02 }}
             >
-              why code first works better
-            </motion.h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-taro to-matcha mx-auto rounded-full"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {benefits.map((benefit, index) => {
-              const Icon = benefit.icon;
-              return (
-                <motion.div
-                  key={benefit.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  className="text-center group"
-                >
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-br from-taro/10 to-matcha/10 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-105 transition-transform duration-300">
-                      <Icon className="w-10 h-10 text-taro" />
-                    </div>
-
-                    {/* Pearl accents */}
-                    <div className="absolute -top-1 -right-2 w-4 h-4 bg-matcha rounded-full opacity-60"></div>
-                    <div className="absolute -bottom-2 -left-1 w-3 h-3 bg-taro/60 rounded-full opacity-40"></div>
-                  </div>
-
-                  <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase leading-tight">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-600 lowercase leading-relaxed">{benefit.description}</p>
-                </motion.div>
-              );
-            })}
-          </div>
+              <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] h-full hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                <Icon icon={benefit.icon} className="w-16 h-16 text-deep-taro mb-6" />
+                <h3 className="text-2xl font-black text-ink mb-4 leading-tight">{benefit.title}</h3>
+                <p className="text-lg font-bold text-ink/70 leading-snug">{benefit.description}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

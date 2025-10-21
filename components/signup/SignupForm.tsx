@@ -155,7 +155,7 @@ export default function SignupForm() {
       <div className="min-h-screen bg-milk-tea flex items-center justify-center">
         <DashboardPearlField />
         <div className="relative z-10 max-w-md mx-auto text-center p-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 border border-brown-sugar/20 shadow-lg">
+          <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl">❌</span>
             </div>
@@ -182,7 +182,7 @@ export default function SignupForm() {
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 max-w-md w-full"
       >
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 border border-brown-sugar/20 shadow-lg">
+        <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-taro/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -206,7 +206,7 @@ export default function SignupForm() {
           <button
             onClick={handleGoogleSignup}
             disabled={loading}
-            className="w-full flex items-center justify-center space-x-3 bg-white border border-brown-sugar/20 rounded-lg py-3 px-4 font-medium text-ink hover:bg-gray-50 transition-colors disabled:opacity-50 mb-6"
+            className="w-full flex items-center justify-center space-x-3 bg-white border-3 border-ink rounded-xl py-3 px-4 font-black text-ink hover:bg-cream shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all disabled:opacity-50 mb-6"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -249,7 +249,7 @@ export default function SignupForm() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full pl-10 pr-4 py-3 bg-cream border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] text-ink font-bold"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -280,7 +280,7 @@ export default function SignupForm() {
                   minLength={6}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full pl-10 pr-10 py-3 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full pl-10 pr-10 py-3 bg-cream border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] text-ink font-bold"
                   placeholder="Create a password"
                 />
                 <button
@@ -303,7 +303,7 @@ export default function SignupForm() {
                   minLength={6}
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full pl-10 pr-4 py-3 bg-cream border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] text-ink font-bold"
                   placeholder="Confirm your password"
                 />
               </div>
@@ -312,7 +312,7 @@ export default function SignupForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center space-x-2 bg-taro text-white py-3 rounded-lg font-medium hover:bg-taro/80 transition-colors disabled:opacity-50"
+              className="w-full flex items-center justify-center space-x-2 bg-[#7C3AED] text-white py-3 rounded-full font-black border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all disabled:opacity-50"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

@@ -43,9 +43,9 @@ export default function ContactForm() {
     message: '',
   });
 
-  const budgetOptions = ['$5k - $10k', '$10k - $25k', '$25k - $50k', '$50k+', 'not sure yet'];
+  const budgetOptions = ['$5k - $10k', '$10k - $25k', '$25k - $50k', '$50k+', 'Not Sure Yet'];
 
-  const timelineOptions = ['asap', '1-2 months', '3-6 months', '6+ months', 'just exploring'];
+  const timelineOptions = ['ASAP', '1-2 Months', '3-6 Months', '6+ Months', 'Just Exploring'];
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -53,7 +53,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus({ type: 'loading', message: 'sending your message...' });
+    setStatus({ type: 'loading', message: 'Sending your message...' });
 
     try {
       const response = await fetch('/api/contact', {
@@ -69,7 +69,7 @@ export default function ContactForm() {
       if (response.ok) {
         setStatus({
           type: 'success',
-          message: data.message || 'thank you! your message has been sent successfully.',
+          message: data.message || 'Thank you! Your message has been sent successfully.',
         });
 
         // Reset form
@@ -84,20 +84,20 @@ export default function ContactForm() {
       } else {
         setStatus({
           type: 'error',
-          message: data.error || 'something went wrong. please try again.',
+          message: data.error || 'Something went wrong. Please try again.',
         });
       }
     } catch (error) {
       setStatus({
         type: 'error',
-        message: 'failed to send message. please try again later.',
+        message: 'Failed to send message. Please try again later.',
       });
     }
   };
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-xl p-8"
+      className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -107,20 +107,20 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-              name *
+              Name *
             </label>
             <Input
               id="name"
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              placeholder="your full name"
+              placeholder="Your Full Name"
               required
             />
           </div>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              email *
+              Email *
             </label>
             <Input
               id="email"
@@ -136,14 +136,14 @@ export default function ContactForm() {
         {/* Company */}
         <div>
           <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-            company
+            Company
           </label>
           <Input
             id="company"
             type="text"
             value={formData.company}
             onChange={(e) => handleInputChange('company', e.target.value)}
-            placeholder="your company name"
+            placeholder="Your Company Name"
           />
         </div>
 
@@ -151,14 +151,14 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-2">
-              budget range
+              Budget Range
             </label>
             <Select
               value={formData.budget}
               onValueChange={(value) => handleInputChange('budget', value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="select budget range" />
+                <SelectValue placeholder="Select Budget Range" />
               </SelectTrigger>
               <SelectContent>
                 {budgetOptions.map((option) => (
@@ -171,14 +171,14 @@ export default function ContactForm() {
           </div>
           <div>
             <label htmlFor="timeline" className="block text-sm font-medium text-gray-700 mb-2">
-              timeline
+              Timeline
             </label>
             <Select
               value={formData.timeline}
               onValueChange={(value) => handleInputChange('timeline', value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="when do you need this?" />
+                <SelectValue placeholder="When Do You Need This?" />
               </SelectTrigger>
               <SelectContent>
                 {timelineOptions.map((option) => (
@@ -194,13 +194,13 @@ export default function ContactForm() {
         {/* Message */}
         <div>
           <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-            project details *
+            Project Details *
           </label>
           <Textarea
             id="message"
             value={formData.message}
             onChange={(e) => handleInputChange('message', e.target.value)}
-            placeholder="tell us about your project, goals, and any specific requirements..."
+            placeholder="Tell us about your project, goals, and any specific requirements..."
             rows={6}
             required
           />
@@ -229,25 +229,24 @@ export default function ContactForm() {
         )}
 
         {/* Submit Button */}
-        <Button
+        <button
           type="submit"
           disabled={status.type === 'loading'}
-          className="w-full bg-taro hover:bg-deep-taro text-white py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="w-full bg-[#7C3AED] text-white py-4 px-6 rounded-full text-lg font-black border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] disabled:hover:translate-x-0 disabled:hover:translate-y-0 flex items-center justify-center gap-2"
         >
           {status.type === 'loading' ? (
-            'sending...'
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Sending...</span>
+            </>
           ) : (
             <>
-              <Send className="w-5 h-5 mr-2" />
-              send message
+              <Send className="w-5 h-5" />
+              <span>Send Message</span>
             </>
           )}
-        </Button>
+        </button>
       </form>
-
-      {/* Decorative pearls */}
-      <div className="absolute -top-2 -right-2 w-6 h-6 bg-taro/20 rounded-full" />
-      <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-matcha/20 rounded-full" />
     </motion.div>
   );
 }

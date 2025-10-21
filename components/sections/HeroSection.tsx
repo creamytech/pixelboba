@@ -1,210 +1,110 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import FloatingPearls from '@/components/common/FloatingPearls';
-import ValueBadges from '@/components/sections/ValueBadges';
-import LighthouseBadges from '@/components/sections/LighthouseBadges';
 import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { Icon } from '@iconify/react';
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  if (!mounted) {
-    return <div className="h-screen" />;
-  }
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-milk-tea via-background to-taro/5">
-      {/* Animated 3D Floating Pearls Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => {
-          const size = Math.random() * 60 + 40; // 40-100px
-          const left = Math.random() * 100; // 0-100%
-          const animationDuration = Math.random() * 10 + 15; // 15-25s
-          const delay = Math.random() * -20; // stagger start times
-          const opacity = Math.random() * 0.15 + 0.05; // 0.05-0.2
-          const colorClasses = ['bg-taro', 'bg-matcha', 'bg-milk-tea'];
-          const colorClass = colorClasses[Math.floor(Math.random() * colorClasses.length)];
-
-          return (
-            <motion.div
-              key={i}
-              className={`absolute bottom-0 rounded-full ${colorClass} blur-sm`}
-              style={{
-                width: size,
-                height: size,
-                left: `${left}%`,
-                opacity: opacity,
-              }}
-              animate={{
-                y: [0, -window.innerHeight - 200],
-                x: [0, Math.sin(i) * 100],
-                scale: [1, 1.2, 0.8, 1],
-              }}
-              transition={{
-                duration: animationDuration,
-                repeat: Infinity,
-                delay: delay,
-                ease: 'linear',
-              }}
-            />
-          );
-        })}
-      </div>
-
-      {/* Lighthouse Badges */}
-      <LighthouseBadges />
-
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
-            <motion.h1
-              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-ink mb-4 leading-tight lowercase"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              websites as{' '}
-              <motion.span
-                className="relative inline-block"
-                animate={{
-                  rotate: [0, -1, 1, -1, 0],
-                  scale: [1, 1.02, 1],
-                }}
-                transition={{
-                  duration: 0.3,
-                  delay: 1.5,
-                  times: [0, 0.25, 0.5, 0.75, 1],
-                }}
-              >
-                <span className="relative z-10 text-taro">smooth</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-taro/20 to-matcha/20 blur-xl scale-110"></span>
-              </motion.span>{' '}
-              as your favorite boba
-            </motion.h1>
-
-            <motion.p
-              className="text-lg md:text-xl text-gray-700 mb-4 max-w-2xl mx-auto lowercase leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              clean code. live previews from day one. websites that actually convert.
-            </motion.p>
-
-            <motion.div
-              className="flex items-center justify-center gap-2 mb-8 text-gray-700"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <span className="text-lg font-semibold text-taro">call us:</span>
-              <a
-                href="tel:+17542434766"
-                className="text-xl font-bold text-ink hover:text-taro transition-colors duration-300"
-              >
-                (754) 243-4766
-              </a>
-            </motion.div>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-lg mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <Button
-                asChild
-                size="lg"
-                className="group w-full sm:w-auto bg-taro hover:bg-deep-taro text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-taro/30 lowercase min-h-[3.5rem]"
-              >
-                <Link href="/start">
-                  start now
-                  <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
-              </Button>
-
-              <Button
-                asChild
-                variant="ghost"
-                size="lg"
-                className="group w-full sm:w-auto border-2 border-taro/30 text-taro hover:bg-taro/5 hover:border-taro px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 lowercase min-h-[3.5rem]"
-              >
-                <Link href="/process">
-                  see our process
-                  <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1 opacity-70">
-                    →
-                  </span>
-                </Link>
-              </Button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1 }}
-      >
+    <div className="relative py-12 sm:py-16 md:py-20 lg:py-32 px-4 sm:px-6 md:px-8 overflow-hidden">
+      {/* Main content - centered */}
+      <div className="max-w-5xl mx-auto text-center relative z-10">
+        {/* Intro badge */}
         <motion.div
-          className="w-6 h-10 border-2 border-taro rounded-full flex justify-center"
-          animate={
-            prefersReducedMotion
-              ? {}
-              : {
-                  y: [0, 5, 0],
-                }
-          }
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          className="flex justify-center mb-8 sm:mb-10 md:mb-12"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
         >
-          <motion.div
-            className="w-2 h-3 bg-taro rounded-full mt-2"
-            animate={
-              prefersReducedMotion
-                ? {}
-                : {
-                    y: [0, 10, 0],
-                    opacity: [1, 0.3, 1],
-                  }
-            }
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
+          <div className="inline-flex items-center gap-2 sm:gap-3 bg-[#7C3AED] text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full border-[3px] sm:border-[4px] border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+            <Icon icon="ph:fire-duotone" className="w-6 h-6 sm:w-7 sm:h-7" />
+            <span className="font-black text-sm sm:text-base tracking-wide">
+              Fort Lauderdale&apos;s Favorite Web Studio
+            </span>
+          </div>
         </motion.div>
-      </motion.div>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/10 via-transparent to-transparent pointer-events-none" />
-    </section>
+        {/* Massive headline */}
+        <motion.h1
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-ink mb-6 sm:mb-8 md:mb-10 leading-[0.95] sm:leading-[0.9] px-2"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+        >
+          Websites That Get You
+          <br />
+          <span className="italic text-[#7C3AED]">More Customers</span>
+        </motion.h1>
+
+        {/* Subheadline */}
+        <motion.p
+          className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-ink/70 mb-8 sm:mb-10 md:mb-14 font-bold leading-snug sm:leading-tight max-w-4xl mx-auto px-4"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          Your new website in 2-4 weeks. No meetings. Just results.
+        </motion.p>
+
+        {/* CTA buttons */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center mb-8 sm:mb-10 md:mb-12 px-4"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+        >
+          <Link
+            href="/start"
+            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 md:px-12 py-5 sm:py-6 bg-gradient-to-br from-taro to-deep-taro text-white text-base sm:text-lg md:text-xl font-black rounded-full border-[3px] sm:border-[4px] border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] active:shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] md:hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all min-h-[60px] sm:min-h-auto"
+          >
+            <span className="text-center">Get My Website Quote (2 Min)</span>
+            <Icon icon="ph:arrow-right-bold" className="w-5 h-5 sm:w-6 sm:h-6" />
+          </Link>
+
+          <a
+            href="tel:+17542434766"
+            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 md:px-12 py-5 sm:py-6 bg-white text-ink text-base sm:text-lg md:text-xl font-black rounded-full border-[3px] sm:border-[4px] border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] active:shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] md:hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all min-h-[60px] sm:min-h-auto"
+          >
+            <Icon icon="ph:phone-duotone" className="w-5 h-5 sm:w-6 sm:h-6" />
+            (754) 243-4766
+          </a>
+        </motion.div>
+
+        {/* Animated stats strip */}
+        <motion.div
+          className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8 bg-white px-6 sm:px-8 md:px-10 py-6 sm:py-6 rounded-3xl sm:rounded-full border-[3px] sm:border-[4px] border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] mx-4"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+        >
+          <div className="text-center">
+            <div className="text-3xl sm:text-4xl font-black text-[#7C3AED] flex items-center justify-center gap-2">
+              <Icon icon="ph:confetti-duotone" className="w-8 h-8 sm:w-9 sm:h-9" />
+              30+
+            </div>
+            <div className="text-xs sm:text-sm font-bold text-ink/60">Happy Clients</div>
+          </div>
+          <div className="hidden sm:block w-px h-12 bg-ink/20"></div>
+          <div className="w-full sm:w-px h-px sm:h-12 bg-ink/20 sm:hidden"></div>
+          <div className="text-center">
+            <div className="text-3xl sm:text-4xl font-black text-[#7C3AED] flex items-center justify-center gap-2">
+              <Icon icon="ph:lightning-duotone" className="w-8 h-8 sm:w-9 sm:h-9" />
+              2-4
+            </div>
+            <div className="text-xs sm:text-sm font-bold text-ink/60">Weeks Average</div>
+          </div>
+          <div className="hidden sm:block w-px h-12 bg-ink/20"></div>
+          <div className="w-full sm:w-px h-px sm:h-12 bg-ink/20 sm:hidden"></div>
+          <div className="text-center">
+            <div className="text-3xl sm:text-4xl font-black text-[#7C3AED] flex items-center justify-center gap-2">
+              <Icon icon="ph:palm-tree-duotone" className="w-8 h-8 sm:w-9 sm:h-9" />
+              100%
+            </div>
+            <div className="text-xs sm:text-sm font-bold text-ink/60">South Florida</div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
 }

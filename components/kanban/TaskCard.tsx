@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, MessageCircle, Paperclip, User, Clock, AlertCircle } from 'lucide-react';
 import { format, formatDistanceToNow, isPast } from 'date-fns';
 import { Task, User as UserType } from '@prisma/client';
+import { Icon } from '@iconify/react';
 
 interface TaskCardProps {
   task: Task & {
@@ -20,22 +21,22 @@ const priorityConfig = {
   LOW: {
     color: 'bg-matcha/10 text-matcha border-matcha/20',
     label: 'Low',
-    icon: '●',
+    icon: 'ph:circle-duotone',
   },
   MEDIUM: {
     color: 'bg-brown-sugar/10 text-brown-sugar border-brown-sugar/20',
     label: 'Medium',
-    icon: '●●',
+    icon: 'ph:circles-three-duotone',
   },
   HIGH: {
     color: 'bg-orange-100 text-orange-700 border-orange-200',
     label: 'High',
-    icon: '●●●',
+    icon: 'ph:warning-duotone',
   },
   URGENT: {
     color: 'bg-red-100 text-red-700 border-red-200',
     label: 'Urgent',
-    icon: '🔥',
+    icon: 'ph:fire-duotone',
   },
 };
 
@@ -68,11 +69,11 @@ export default function TaskCard({ task, onClick, isDragging = false }: TaskCard
       <div className="absolute top-3 right-3">
         <div
           className={`
-          px-2 py-1 rounded-full text-xs font-bold border
+          px-2 py-1 rounded-full text-xs font-bold border flex items-center gap-1
           ${priority.color}
         `}
         >
-          <span className="mr-1">{priority.icon}</span>
+          <Icon icon={priority.icon} className="w-3.5 h-3.5" />
           {priority.label}
         </div>
       </div>

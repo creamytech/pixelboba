@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { Icon } from '@iconify/react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import PriceCard from '@/components/services/PriceCard';
+import PricingSelector from '@/components/services/PricingSelector';
 import CTABanner from '@/components/services/CTABanner';
 import HowItWorks from '@/components/services/HowItWorks';
 import StartProjectForm from '@/components/form/StartProjectForm';
@@ -10,7 +11,6 @@ import PlatformsSection from '@/components/sections/PlatformsSection';
 import ProcessPreview from '@/components/services/ProcessPreview';
 import WhatsIncluded from '@/components/services/WhatsIncluded';
 import ComparisonTable from '@/components/services/ComparisonTable';
-import BrewStrength from '@/components/services/BrewStrength';
 
 export const metadata: Metadata = {
   title: 'Web Design Services & Pricing | Fort Lauderdale',
@@ -119,130 +119,71 @@ export default function ServicesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
-      <Header />
-      <main className="pt-20">
+      <Header>
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
-                services & pricing
-              </h1>
-              <CTABanner />
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-cream">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 text-center">
+            <div className="inline-block bg-deep-taro px-6 py-3 rounded-full border-[3px] border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] mb-8">
+              <span className="font-black text-white text-sm sm:text-base uppercase tracking-wider flex items-center gap-2">
+                <Icon icon="ph:lightning-duotone" className="w-5 h-5" />
+                Simple Pricing, No Surprises
+              </span>
             </div>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-ink mb-6 leading-tight">
+              What We Build
+            </h1>
+            <p className="text-xl sm:text-2xl md:text-3xl text-ink/70 font-bold mb-10 max-w-3xl mx-auto">
+              Professional websites that get you more customers. Fast delivery, transparent pricing.
+            </p>
           </div>
         </section>
 
         {/* What's Included Section */}
         <WhatsIncluded />
 
-        {/* Pricing Cards */}
-        <section className="pb-20">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[1600px] mx-auto py-8">
-              <PriceCard
-                title="starter brew"
-                price="starting at $1,500"
-                deliveryTime="1–2 weeks"
-                badge="quick start"
-                description="refresh your existing site with modern design and improved performance"
-                features={[
-                  'mobile-optimized',
-                  '1:1 code preview updates',
-                  'launch-ready in 1–2 weeks',
-                  'modern design refresh',
-                  'speed improvements',
-                  'seo audit included',
-                ]}
-              />
-              <PriceCard
-                title="custom blend"
-                price="starting at $3,500"
-                deliveryTime="3–4 weeks"
-                highlighted={true}
-                description="brand new website built from scratch with custom features"
-                features={[
-                  'mobile-optimized',
-                  '1:1 code preview updates',
-                  'launch-ready in 3–4 weeks',
-                  'custom design & development',
-                  'cms integration',
-                  'contact forms & analytics',
-                  '1 month free support',
-                ]}
-              />
-              <PriceCard
-                title="full flavor"
-                price="starting at $8,000"
-                deliveryTime="6–8 weeks"
-                description="complex websites with advanced features and integrations"
-                features={[
-                  'mobile-optimized',
-                  '1:1 code preview updates',
-                  'launch-ready in 6–8 weeks',
-                  'everything in custom blend',
-                  'advanced functionality',
-                  'third-party integrations',
-                  'custom animations',
-                  'user authentication',
-                  '3 months free support',
-                ]}
-              />
-              <PriceCard
-                title="refills"
-                price="starting at $99/month"
-                badge="peace of mind"
-                description="keep your website updated, secure, and performing at its best"
-                features={[
-                  'monthly updates & backups',
-                  'security monitoring',
-                  'performance optimization',
-                  'content updates (2 hours)',
-                  'priority support',
-                  'uptime monitoring',
-                  'monthly reports',
-                ]}
-              />
-            </div>
+        {/* Pricing Selector */}
+        <PricingSelector />
 
-            {/* Add-ons Section */}
-            <div className="mt-16 max-w-4xl mx-auto">
-              <div className="bg-gradient-to-br from-white to-milk-tea/20 rounded-2xl p-10 border-2 border-ink/10 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <h3 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase text-center">
-                  popular add-ons
+        {/* Add-ons Section */}
+        <section className="pb-20 bg-cream">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white rounded-3xl p-8 sm:p-10 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-ink mb-8 text-center">
+                  Popular Add-Ons
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-4">
-                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
-                      <span className="text-gray-700 font-semibold lowercase">
-                        branding & logo design
+                    <div className="flex justify-between items-center p-4 sm:p-5 bg-cream rounded-2xl border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                      <span className="text-ink font-black text-sm sm:text-base">
+                        Branding & Logo Design
                       </span>
-                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
-                        starting at $750
+                      <span className="font-black text-deep-taro text-sm sm:text-base whitespace-nowrap ml-2">
+                        $750+
                       </span>
                     </div>
-                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
-                      <span className="text-gray-700 font-semibold lowercase">
-                        custom animations
+                    <div className="flex justify-between items-center p-4 sm:p-5 bg-cream rounded-2xl border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                      <span className="text-ink font-black text-sm sm:text-base">
+                        Custom Animations
                       </span>
-                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
-                        starting at $500
+                      <span className="font-black text-deep-taro text-sm sm:text-base whitespace-nowrap ml-2">
+                        $500+
                       </span>
                     </div>
                   </div>
                   <div className="space-y-4">
-                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
-                      <span className="text-gray-700 font-semibold lowercase">ecommerce setup</span>
-                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
-                        starting at $2,500
+                    <div className="flex justify-between items-center p-4 sm:p-5 bg-cream rounded-2xl border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                      <span className="text-ink font-black text-sm sm:text-base">
+                        E-Commerce Setup
+                      </span>
+                      <span className="font-black text-deep-taro text-sm sm:text-base whitespace-nowrap ml-2">
+                        $2,500+
                       </span>
                     </div>
-                    <div className="group flex justify-between items-center p-5 bg-white rounded-xl border border-ink/10 hover:border-taro/30 hover:shadow-md transition-all duration-300">
-                      <span className="text-gray-700 font-semibold lowercase">
-                        seo optimization package
-                      </span>
-                      <span className="font-bold text-taro lowercase group-hover:scale-110 transition-transform duration-300">
-                        starting at $1,200
+                    <div className="flex justify-between items-center p-4 sm:p-5 bg-cream rounded-2xl border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                      <span className="text-ink font-black text-sm sm:text-base">SEO Package</span>
+                      <span className="font-black text-deep-taro text-sm sm:text-base whitespace-nowrap ml-2">
+                        $1,200+
                       </span>
                     </div>
                   </div>
@@ -255,70 +196,6 @@ export default function ServicesPage() {
         {/* Comparison Table */}
         <ComparisonTable />
 
-        {/* Process Preview */}
-        <ProcessPreview />
-
-        {/* Featured Services */}
-        <section className="py-20 bg-gradient-to-b from-transparent to-milk-tea/10">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-12 text-center lowercase">
-                specialized services
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="group bg-white rounded-2xl p-8 border border-ink/10 shadow-md hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:-translate-y-2">
-                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
-                    next.js development
-                  </h3>
-                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">
-                    the espresso shot of web frameworks. bold, fast, and packs a serious punch.
-                    server-side rendering for lightning speed and seo that actually works.
-                  </p>
-                  <Link
-                    href="/services/nextjs-development"
-                    className="inline-flex items-center text-taro hover:text-deep-taro font-semibold lowercase transition-all duration-200 group-hover:translate-x-1"
-                  >
-                    learn more
-                    <span className="ml-2">→</span>
-                  </Link>
-                </div>
-                <div className="group bg-white rounded-2xl p-8 border border-ink/10 shadow-md hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:-translate-y-2">
-                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
-                    e-commerce development
-                  </h3>
-                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">
-                    online stores that sell like cold boba on a hot day. shopify, stripe, and
-                    checkout flows smooth enough to drink through a straw.
-                  </p>
-                  <Link
-                    href="/services/ecommerce-development"
-                    className="inline-flex items-center text-taro hover:text-deep-taro font-semibold lowercase transition-all duration-200 group-hover:translate-x-1"
-                  >
-                    learn more
-                    <span className="ml-2">→</span>
-                  </Link>
-                </div>
-                <div className="group bg-white rounded-2xl p-8 border border-ink/10 shadow-md hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:-translate-y-2">
-                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
-                    saas website design
-                  </h3>
-                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">
-                    websites that convert visitors into customers faster than you can say &ldquo;add
-                    tapioca pearls.&rdquo; built for software companies ready to grow.
-                  </p>
-                  <Link
-                    href="/services/saas-website-design"
-                    className="inline-flex items-center text-taro hover:text-deep-taro font-semibold lowercase transition-all duration-200 group-hover:translate-x-1"
-                  >
-                    learn more
-                    <span className="ml-2">→</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Platforms Section */}
         <PlatformsSection />
 
@@ -326,28 +203,30 @@ export default function ServicesPage() {
         <HowItWorks />
 
         {/* Project Form */}
-        <section id="start-project" className="py-20 bg-milk-tea/20">
+        <section id="start-project" className="py-16 sm:py-20 bg-cream">
           <div id="start"></div>
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="font-display text-4xl font-bold text-ink mb-4 lowercase">
-                  start your project
-                </h2>
-                <p className="text-lg text-gray-600 lowercase mb-3">
-                  tell us what you need - call us or fill out the form below
-                </p>
-                <p className="text-xl font-semibold text-taro lowercase">
-                  <a href="tel:+17542434766" className="hover:text-deep-taro transition-colors">
-                    (754) 243-4766
-                  </a>
-                </p>
-              </div>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-ink mb-4 sm:mb-6">
+                Ready to Get Started?
+              </h2>
+              <p className="text-xl sm:text-2xl text-ink/70 font-bold mb-4">
+                Call Us or Fill Out the Form Below
+              </p>
+              <a
+                href="tel:+17542434766"
+                className="inline-flex items-center gap-2 text-2xl sm:text-3xl font-black text-deep-taro hover:text-taro transition-colors"
+              >
+                <Icon icon="ph:phone-duotone" className="w-8 h-8 sm:w-9 sm:h-9" />
+                (754) 243-4766
+              </a>
+            </div>
+            <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
               <StartProjectForm />
             </div>
           </div>
         </section>
-      </main>
+      </Header>
       <Footer />
     </div>
   );

@@ -30,7 +30,7 @@ export default function BobaClubStickyButton() {
         y: isVisible ? 0 : 100,
       }}
       transition={{ duration: 0.4, type: 'spring', stiffness: 300, damping: 25 }}
-      className="fixed bottom-8 right-8 z-50"
+      className="hidden md:block fixed bottom-8 right-8 z-50"
     >
       <div className="relative">
         <CheckoutButton

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, Circle, ArrowRight } from 'lucide-react';
 import { Milestone } from '@/types/portal';
+import { Icon } from '@iconify/react';
 
 interface MilestoneTrackerProps {
   milestones?: Milestone[];
@@ -75,14 +76,14 @@ export default function MilestoneTracker({
 
   const getPhaseIcon = (title: string) => {
     const icons = {
-      discovery: '🔍',
-      design: '🎨',
-      development: '⚡',
-      qa: '🧪',
-      launch: '🚀',
+      discovery: 'ph:magnifying-glass-duotone',
+      design: 'ph:palette-duotone',
+      development: 'ph:lightning-duotone',
+      qa: 'ph:flask-duotone',
+      launch: 'ph:rocket-launch-duotone',
     };
     const key = title.toLowerCase() as keyof typeof icons;
-    return icons[key] || '📋';
+    return icons[key] || 'ph:note-duotone';
   };
 
   const getPhaseColor = (index: number, isCompleted: boolean, isCurrent: boolean) => {
@@ -135,7 +136,7 @@ export default function MilestoneTracker({
           transition={{ duration: 0.3 }}
         >
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-green-600">🎉</span>
+            <Icon icon="ph:confetti-duotone" className="w-5 h-5 text-green-600" />
             <h4 className="font-display text-sm font-semibold text-green-700 lowercase">
               recent milestone updates
             </h4>
@@ -149,7 +150,7 @@ export default function MilestoneTracker({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                <span className="text-green-600">✅</span>
+                <Icon icon="ph:check-circle-duotone" className="w-5 h-5 text-green-600" />
                 <span className="font-medium text-green-700">{milestone.title}</span>
                 <span className="text-green-600">•</span>
                 <span className="text-green-600/80">
@@ -206,9 +207,11 @@ export default function MilestoneTracker({
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.3, delay: index * 0.1 + 0.2 }}
                 >
-                  <span className="text-lg">
-                    {isCompleted ? '✅' : getPhaseIcon(milestone.title)}
-                  </span>
+                  {isCompleted ? (
+                    <Icon icon="ph:check-circle-duotone" className="w-8 h-8 text-green-600" />
+                  ) : (
+                    <Icon icon={getPhaseIcon(milestone.title)} className="w-8 h-8" />
+                  )}
                 </motion.div>
 
                 {/* Content */}

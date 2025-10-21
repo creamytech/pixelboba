@@ -1,156 +1,156 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { Icon } from '@iconify/react';
 
 const services = [
   {
-    title: 'fresh design',
-    icon: '🎨',
-    description:
-      'Modern, mobile-first designs that make your brand stand out and turn visitors into buyers',
+    icon: 'ph:sparkle-duotone',
+    title: 'Designs That Sell',
+    description: 'Beautiful, modern websites that make people want to click "buy" or "contact us".',
   },
   {
-    title: 'fast performance',
-    icon: '⚡',
+    icon: 'ph:lightning-duotone',
+    title: 'Lightning Fast',
     description:
-      'Lightning-fast websites built with cutting-edge tech for better SEO and user experience',
+      'Your site loads in under 2 seconds. Fast sites = more customers and better Google rankings.',
   },
   {
-    title: 'live previews',
-    icon: '👀',
-    description: 'See your site come to life from day one. no waiting weeks for the big reveal',
+    icon: 'ph:eye-duotone',
+    title: 'See It Live Daily',
+    description:
+      'Watch your site get built in real-time. Give feedback as we go. No surprises at the end.',
+  },
+];
+
+const pricing = [
+  {
+    price: '$1,500+',
+    title: 'Redesigns',
+    description: 'Refresh your existing site',
+    color: 'from-[#C4B5FD] to-[#A78BFA]',
+  },
+  {
+    price: '$3,500+',
+    title: 'Custom Builds',
+    description: 'Brand new websites',
+    color: 'from-[#A78BFA] to-[#7C3AED]',
+    featured: true,
+  },
+  {
+    price: '$8,000+',
+    title: 'Advanced',
+    description: 'Complex functionality',
+    color: 'from-[#88C159] to-[#6BA541]',
   },
 ];
 
 export default function ServicesPreview() {
   return (
-    <section className="py-20 bg-milk-tea/20">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="font-display text-4xl md:text-5xl font-bold text-ink mb-4 lowercase"
-            >
-              websites that work
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl text-gray-600 lowercase max-w-2xl mx-auto"
-            >
-              professional websites starting at $1,500. no endless meetings, just results.
-            </motion.p>
-          </div>
+    <div className="relative py-24 px-4 md:px-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-ink mb-6 leading-tight">
+            Websites That Bring In
+            <br />
+            <span className="italic text-[#7C3AED]">Real Business</span>
+          </h2>
+          <p className="text-2xl md:text-3xl text-ink/70 font-bold leading-tight max-w-3xl mx-auto">
+            Starting at $1,500. Done in 2-4 weeks. No meetings, just results.
+          </p>
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative bg-white rounded-2xl p-8 shadow-md border border-ink/10 hover:shadow-2xl hover:shadow-taro/10 transition-all duration-300 hover:border-taro/40 overflow-hidden"
+        {/* Service cards */}
+        <div className="grid md:grid-cols-3 gap-6 mb-20">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -4, scale: 1.02 }}
+            >
+              <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] h-full hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                <Icon icon={service.icon} className="w-16 h-16 text-deep-taro mb-4" />
+                <h3 className="text-2xl font-black text-ink mb-4 leading-tight">{service.title}</h3>
+                <p className="text-lg font-bold text-ink/70 leading-snug">{service.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Pricing section - big bold header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <div className="inline-block bg-matcha px-8 py-4 rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] mb-8">
+            <span className="font-black text-xl text-white flex items-center gap-2">
+              <Icon icon="ph:currency-dollar-duotone" className="w-6 h-6" />
+              Transparent Pricing, No Surprises
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Pricing cards */}
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {pricing.map((tier, index) => (
+            <motion.div
+              key={tier.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -6, scale: 1.03 }}
+              className={tier.featured ? 'md:-mt-4 md:mb-4' : ''}
+            >
+              <div
+                className={`relative bg-gradient-to-br ${tier.color} rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all ${tier.featured ? 'ring-4 ring-matcha ring-offset-4 ring-offset-cream' : ''}`}
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-taro/5 via-transparent to-matcha/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                <div className="text-center relative z-10">
-                  <motion.div
-                    className="text-5xl mb-6"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                  >
-                    {service.icon}
-                  </motion.div>
-                  <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 lowercase leading-relaxed text-base">
-                    {service.description}
-                  </p>
-                </div>
-
-                {/* Animated pearl accents */}
-                <motion.div
-                  className="absolute top-6 right-6 w-4 h-4 bg-taro/30 rounded-full"
-                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                ></motion.div>
-                <motion.div
-                  className="absolute bottom-6 left-6 w-3 h-3 bg-matcha/40 rounded-full"
-                  animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-                ></motion.div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Pricing highlight */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="relative bg-gradient-to-r from-taro/10 via-taro/5 to-matcha/10 rounded-3xl p-10 mb-12 text-center border-2 border-taro/20 overflow-hidden shadow-lg"
-          >
-            {/* Decorative background elements */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-taro/10 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-matcha/10 rounded-full blur-3xl"></div>
-
-            <div className="relative z-10">
-              <h3 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase">
-                transparent pricing, no surprises
-              </h3>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-6">
-                <div className="text-center group cursor-default">
-                  <div className="text-3xl md:text-4xl font-bold text-taro lowercase mb-2 group-hover:scale-110 transition-transform duration-300">
-                    redesigns from $1,500
+                {tier.featured && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-matcha px-6 py-2 rounded-full border-4 border-ink">
+                    <span className="font-black text-sm text-white">MOST POPULAR</span>
                   </div>
-                  <div className="text-gray-600 lowercase font-medium">
-                    refresh your existing site
-                  </div>
-                </div>
-                <div className="hidden md:block w-px h-16 bg-taro/30"></div>
-                <div className="text-center group cursor-default">
-                  <div className="text-3xl md:text-4xl font-bold text-taro lowercase mb-2 group-hover:scale-110 transition-transform duration-300">
-                    custom builds from $3,500
-                  </div>
-                  <div className="text-gray-600 lowercase font-medium">brand new websites</div>
-                </div>
-                <div className="hidden md:block w-px h-16 bg-taro/30"></div>
-                <div className="text-center group cursor-default">
-                  <div className="text-3xl md:text-4xl font-bold text-taro lowercase mb-2 group-hover:scale-110 transition-transform duration-300">
-                    advanced from $8,000
-                  </div>
-                  <div className="text-gray-600 lowercase font-medium">complex functionality</div>
+                )}
+                <div className="text-center text-white">
+                  <div className="text-6xl font-black mb-2">{tier.price}</div>
+                  <div className="text-2xl font-black mb-3">{tier.title}</div>
+                  <p className="text-lg font-bold opacity-90">{tier.description}</p>
                 </div>
               </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-center"
-          >
-            <Link
-              href="/services"
-              className="group inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
-            >
-              view all services + pricing
-              <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* CTA button */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <Link
+            href="/services"
+            className="inline-flex items-center justify-center px-12 py-6 bg-[#7C3AED] text-white text-xl font-black rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+          >
+            View All Services + Pricing →
+          </Link>
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 }

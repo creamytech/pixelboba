@@ -40,7 +40,7 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-milk-tea to-white">
+    <section className="py-20 bg-gradient-to-br from-milk-tea to-cream">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"

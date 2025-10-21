@@ -157,7 +157,7 @@ export default function PricingSection() {
                     }`}
                     variant={pkg.popular ? 'default' : 'outline'}
                   >
-                    <Link href="/contact">get started</Link>
+                    <Link href="/contact">Get Started</Link>
                   </Button>
                 </div>
 

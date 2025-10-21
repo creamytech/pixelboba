@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { Icon } from '@iconify/react';
 
 export default function BobaClubSuccessPage() {
   const router = useRouter();
@@ -50,7 +51,9 @@ export default function BobaClubSuccessPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
-          <div className="text-red-500 text-5xl mb-4">⚠️</div>
+          <div className="mb-4">
+            <Icon icon="ph:warning-duotone" className="w-20 h-20 text-red-500 mx-auto" />
+          </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Oops!</h1>
           <p className="text-gray-600 mb-6">{error}</p>
           <button
@@ -68,7 +71,9 @@ export default function BobaClubSuccessPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
-          <div className="text-6xl mb-4">🎉</div>
+          <div className="mb-4">
+            <Icon icon="ph:confetti-duotone" className="w-24 h-24 text-taro mx-auto" />
+          </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Welcome to Boba Club!</h1>
           <p className="text-gray-600 mb-6">
             Your subscription is active! Check your email for login credentials and payment
@@ -89,7 +94,9 @@ export default function BobaClubSuccessPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
-        <div className="text-6xl mb-4">✨</div>
+        <div className="mb-4">
+          <Icon icon="ph:sparkle-duotone" className="w-24 h-24 text-taro mx-auto" />
+        </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-4">You&apos;re all set!</h1>
         <p className="text-gray-600 mb-6">
           Your Boba Club subscription is active. Redirecting you to the dashboard...

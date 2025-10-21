@@ -7,6 +7,8 @@ import FeedbackSection from '@/components/process/FeedbackSection';
 import QualityChecklist from '@/components/process/QualityChecklist';
 import ProcessFAQ from '@/components/process/ProcessFAQ';
 import StickyCTA from '@/components/common/StickyCTA';
+import Image from 'next/image';
+import { Icon } from '@iconify/react';
 
 export const metadata: Metadata = {
   title: 'Our Web Design Process | 3-Step Workflow',
@@ -43,235 +45,211 @@ export const metadata: Metadata = {
 const processSteps = [
   {
     stepNumber: '1',
-    title: 'shake: define the flavor',
+    title: 'Shake: Define the Flavor',
     description:
-      'turn your project form into a clear brief with sitemap, wireframes, and tech plan.',
-    whatYouGet: 'project brief, clickable prototype, and timeline',
+      'Turn your project form into a clear brief with sitemap, wireframes, and tech plan.',
+    whatYouGet: 'Project brief, clickable prototype, and timeline',
     timing: '3–5 days',
   },
   {
     stepNumber: '2',
-    title: 'brew: design meets code',
-    description: 'create your visual design and develop the site with live previews throughout.',
-    whatYouGet: 'figma designs, staging site, and progress updates',
+    title: 'Brew: Design Meets Code',
+    description: 'Create your visual design and develop the site with live previews throughout.',
+    whatYouGet: 'Figma designs, staging site, and progress updates',
     timing: '2–5 weeks',
   },
   {
     stepNumber: '3',
-    title: 'pop: review your build live',
-    description: "test your site, provide feedback, and fine-tune every detail until it's perfect.",
-    whatYouGet: 'live preview, feedback rounds, and final adjustments',
+    title: 'Pop: Review Your Build Live',
+    description: "Test your site, provide feedback, and fine-tune every detail until it's perfect.",
+    whatYouGet: 'Live preview, feedback rounds, and final adjustments',
     timing: '3–5 days',
   },
   {
     stepNumber: '4',
-    title: 'launch: go public',
-    description: 'deploy your site, set up analytics, and make it available to the world.',
-    whatYouGet: 'live site, analytics setup, and performance monitoring',
+    title: 'Launch: Go Public',
+    description: 'Deploy your site, set up analytics, and make it available to the world.',
+    whatYouGet: 'Live site, analytics setup, and performance monitoring',
     timing: '1–2 days',
   },
   {
     stepNumber: '5',
-    title: 'refill: keep it fresh',
-    description: 'ongoing support and updates to keep your site running smoothly.',
-    whatYouGet: 'monthly updates, security patches, and priority support',
-    timing: 'ongoing',
+    title: 'Refill: Keep It Fresh',
+    description: 'Ongoing support and updates to keep your site running smoothly.',
+    whatYouGet: 'Monthly updates, security patches, and priority support',
+    timing: 'Ongoing',
   },
 ];
 
 export default function ProcessPage() {
   return (
     <div className="min-h-screen">
-      <Header />
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
-                our process
+      <Header>
+        <div className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
+          {/* Floating cat decoration */}
+          <div className="absolute top-10 right-[8%] w-32 h-32 opacity-20 hidden md:block">
+            <Image src="/03.svg" alt="" width={128} height={128} className="w-full h-full" />
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            {/* Badge */}
+            <div className="text-center mb-20">
+              <div className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] px-6 py-3 rounded-full border-2 border-[#7C3AED]/20 mb-8">
+                <span className="font-black text-sm uppercase tracking-wider flex items-center gap-2">
+                  <Icon icon="ph:arrows-clockwise-duotone" className="w-5 h-5" />
+                  Our Process
+                </span>
+              </div>
+
+              {/* Hero */}
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-ink mb-8 leading-tight">
+                How We <span className="italic text-[#7C3AED]">Build</span>
               </h1>
-              <p className="text-xl md:text-2xl text-gray-700 mb-8 lowercase leading-relaxed max-w-3xl mx-auto">
-                a simple workflow that keeps things moving. clear steps, clean builds, and quick
+              <p className="text-2xl md:text-3xl text-ink/70 font-bold leading-tight max-w-3xl mx-auto mb-8">
+                A simple workflow that keeps things moving. Clear steps, clean builds, and quick
                 turnarounds.
               </p>
-              <p className="text-lg text-gray-600 mb-12 lowercase">
-                questions? call us:{' '}
-                <a
-                  href="tel:+17542434766"
-                  className="font-bold text-taro hover:text-deep-taro transition-colors"
-                >
+              <p className="text-2xl font-black text-[#7C3AED]">
+                <a href="tel:+17542434766" className="hover:text-[#A78BFA] transition-colors">
                   (754) 243-4766
                 </a>
               </p>
-
-              {/* Quick nav links */}
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <a
-                  href="/services"
-                  className="group inline-flex items-center text-taro hover:text-deep-taro transition-all duration-200 lowercase font-semibold px-4 py-2 rounded-lg hover:bg-taro/10"
-                >
-                  services & pricing
-                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
-                <span className="text-gray-300">|</span>
-                <a
-                  href="/work"
-                  className="group inline-flex items-center text-taro hover:text-deep-taro transition-all duration-200 lowercase font-semibold px-4 py-2 rounded-lg hover:bg-taro/10"
-                >
-                  see our work
-                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
-              </div>
             </div>
-          </div>
-        </section>
 
-        {/* Process Steps */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-6 lowercase">
-                  how we brew your website
-                </h2>
-                <p className="text-lg text-gray-600 lowercase">
-                  here&apos;s what happens in each phase of your project
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Process Steps */}
+            <div className="mb-20">
+              <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 text-center">
+                How We <span className="italic text-[#7C3AED]">Brew</span> Your Website
+              </h2>
+              <p className="text-2xl text-ink/70 font-bold text-center mb-12">
+                Here&apos;s What Happens in Each Phase of Your Project
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
                 {processSteps.map((step, index) => (
-                  <StepCard
+                  <div
                     key={step.stepNumber}
-                    stepNumber={step.stepNumber}
-                    title={step.title}
-                    description={step.description}
-                    whatYouGet={step.whatYouGet}
-                    timing={step.timing}
-                    delay={index * 0.1}
-                  />
+                    className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                  >
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="bg-[#FDB97A] text-ink px-4 py-2 rounded-full font-black text-lg border-3 border-ink">
+                        {step.stepNumber}
+                      </div>
+                      <div className="bg-[#7C3AED]/10 text-[#7C3AED] px-4 py-2 rounded-full border-2 border-[#7C3AED]/20">
+                        <span className="font-black text-sm">{step.timing}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-black text-ink mb-3">{step.title}</h3>
+                    <p className="text-lg font-bold text-ink/70 mb-4">{step.description}</p>
+                    <div className="bg-cream rounded-2xl p-4 border-2 border-ink/10">
+                      <p className="text-sm font-black text-ink mb-2">What You Get:</p>
+                      <p className="text-sm font-bold text-ink/70">{step.whatYouGet}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Client Dashboard Section */}
-        <section className="py-20 bg-gradient-to-b from-white to-milk-tea/10">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              {/* Section Header */}
-              <div className="text-center mb-16">
-                <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-8 lowercase">
-                  your dashboard
-                </h2>
-                <div className="max-w-3xl mx-auto">
-                  <p className="text-xl text-gray-600 mb-8 lowercase">
-                    once we kick off, you&apos;ll get access to your own pixel boba dashboard. all
-                    project communication happens here. no messy email chains or lost files:
-                  </p>
+            {/* Client Dashboard Section */}
+            <div className="mb-20">
+              <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 text-center">
+                Your <span className="italic text-[#7C3AED]">Dashboard</span>
+              </h2>
+              <p className="text-2xl text-ink/70 font-bold text-center mb-12 max-w-3xl mx-auto">
+                Once we kick off, you&apos;ll get access to your own Pixel Boba dashboard. All
+                project communication happens here. No messy email chains or lost files.
+              </p>
 
-                  {/* Feature List */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-3 h-3 bg-taro rounded-full mt-2 flex-shrink-0"></div>
-                      <div>
-                        <p className="text-gray-600 leading-relaxed lowercase">
-                          <strong className="text-ink">progress tracking</strong> → see where your
-                          site is at in real time.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-4">
-                      <div className="w-3 h-3 bg-matcha rounded-full mt-2 flex-shrink-0"></div>
-                      <div>
-                        <p className="text-gray-600 leading-relaxed lowercase">
-                          <strong className="text-ink">messaging</strong> → drop feedback and
-                          questions directly inside the project space.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-4">
-                      <div className="w-3 h-3 bg-milk-tea rounded-full mt-2 flex-shrink-0"></div>
-                      <div>
-                        <p className="text-gray-600 leading-relaxed lowercase">
-                          <strong className="text-ink">invoices & payments</strong> → simple,
-                          transparent, and always available.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-4">
-                      <div className="w-3 h-3 bg-taro/60 rounded-full mt-2 flex-shrink-0"></div>
-                      <div>
-                        <p className="text-gray-600 leading-relaxed lowercase">
-                          <strong className="text-ink">live previews</strong> → click through your
-                          site as it&apos;s being built, not weeks later.
-                        </p>
-                      </div>
-                    </div>
+              {/* Dashboard Features */}
+              <div className="grid md:grid-cols-2 gap-6 mb-12">
+                <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="mb-4">
+                    <Icon icon="ph:chart-line-up-duotone" className="w-16 h-16 text-deep-taro" />
                   </div>
-
-                  <p className="text-lg text-gray-600 lowercase">
-                    the dashboard keeps the whole process smooth and stress-free, so you always know
-                    what&apos;s happening without chasing updates.
+                  <h3 className="text-2xl font-black text-ink mb-3">Progress Tracking</h3>
+                  <p className="text-lg font-bold text-ink/70">
+                    See where your site is at in real-time.
+                  </p>
+                </div>
+                <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="mb-4">
+                    <Icon icon="ph:chat-circle-dots-duotone" className="w-16 h-16 text-deep-taro" />
+                  </div>
+                  <h3 className="text-2xl font-black text-ink mb-3">Messaging</h3>
+                  <p className="text-lg font-bold text-ink/70">
+                    Drop feedback and questions directly inside the project space.
+                  </p>
+                </div>
+                <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="mb-4">
+                    <Icon icon="ph:credit-card-duotone" className="w-16 h-16 text-deep-taro" />
+                  </div>
+                  <h3 className="text-2xl font-black text-ink mb-3">Invoices & Payments</h3>
+                  <p className="text-lg font-bold text-ink/70">
+                    Simple, transparent, and always available.
+                  </p>
+                </div>
+                <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="mb-4">
+                    <Icon icon="ph:eye-duotone" className="w-16 h-16 text-deep-taro" />
+                  </div>
+                  <h3 className="text-2xl font-black text-ink mb-3">Live Previews</h3>
+                  <p className="text-lg font-bold text-ink/70">
+                    Click through your site as it&apos;s being built, not weeks later.
                   </p>
                 </div>
               </div>
 
-              {/* Dashboard Mockup */}
               <DashboardMockup />
 
-              {/* Additional Context */}
-              <div className="text-center mt-12">
-                <p className="text-sm text-gray-500 lowercase max-w-2xl mx-auto">
-                  this is a real client dashboard from a recent project. your dashboard will look
+              <div className="text-center mt-8">
+                <p className="text-lg font-bold text-ink/60">
+                  This is a real client dashboard from a recent project. Your dashboard will look
                   similar with your project details, timeline, and team messages.
                 </p>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Feedback Section */}
-        <FeedbackSection />
+            {/* Feedback Section */}
+            <div className="mb-20">
+              <FeedbackSection />
+            </div>
 
-        {/* Quality Checklist */}
-        <QualityChecklist />
+            {/* Quality Checklist */}
+            <div className="mb-20">
+              <QualityChecklist />
+            </div>
 
-        {/* FAQ Section */}
-        <ProcessFAQ />
+            {/* FAQ Section */}
+            <div className="mb-20">
+              <ProcessFAQ />
+            </div>
 
-        {/* Bottom CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-taro/10 to-matcha/10">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="font-display text-4xl font-bold text-ink mb-6 lowercase">
-                ready to start moving?
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 lowercase">
-                no phone calls, no discovery meetings, just fill out our project form and we&apos;ll
-                get brewing.
-              </p>
-              <a
-                href="/start"
-                className="group inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
-              >
-                start your project
-                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </a>
+            {/* Bottom CTA with cat */}
+            <div className="relative">
+              <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-10">
+                <Image src="/01.svg" alt="" width={120} height={120} className="w-28 h-28" />
+              </div>
+
+              <div className="text-center bg-white border-4 border-ink rounded-3xl shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] p-12 pt-20">
+                <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 leading-tight">
+                  Ready To Start Moving?
+                </h2>
+                <p className="text-2xl text-ink/70 font-bold mb-8">
+                  No phone calls, no discovery meetings—just fill out our project form and
+                  we&apos;ll get brewing.
+                </p>
+                <a
+                  href="/start"
+                  className="inline-flex items-center px-12 py-6 bg-[#FDB97A] text-ink text-xl font-black rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                >
+                  START YOUR PROJECT →
+                </a>
+              </div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </Header>
       <Footer />
-
-      {/* Sticky CTA */}
       <StickyCTA />
     </div>
   );

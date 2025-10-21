@@ -6,111 +6,166 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-
-  const springConfig = { damping: 25, stiffness: 700 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
 
   useEffect(() => {
     setMounted(true);
 
     const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      setCursorPos({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseEnter = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.tagName === 'A' ||
-        target.tagName === 'BUTTON' ||
-        target.closest('a') ||
-        target.closest('button')
-      ) {
-        setIsHovering(true);
+    const handleMouseDown = () => {
+      setClicked(true);
+      setTimeout(() => setClicked(false), 200);
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target;
+      if (target instanceof HTMLElement) {
+        if (
+          target.tagName === 'A' ||
+          target.tagName === 'BUTTON' ||
+          target.closest('a') ||
+          target.closest('button')
+        ) {
+          setIsHovering(true);
+        } else {
+          setIsHovering(false);
+        }
       }
     };
 
-    const handleMouseLeave = () => {
-      setIsHovering(false);
-    };
-
     window.addEventListener('mousemove', moveCursor);
-    document.addEventListener('mouseenter', handleMouseEnter, true);
-    document.addEventListener('mouseleave', handleMouseLeave, true);
-
-    // Detect hover state for interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select');
-    interactiveElements.forEach((el) => {
-      el.addEventListener('mouseenter', () => setIsHovering(true));
-      el.addEventListener('mouseleave', () => setIsHovering(false));
-    });
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseover', handleMouseOver);
 
     return () => {
       window.removeEventListener('mousemove', moveCursor);
-      document.removeEventListener('mouseenter', handleMouseEnter, true);
-      document.removeEventListener('mouseleave', handleMouseLeave, true);
-      interactiveElements.forEach((el) => {
-        el.removeEventListener('mouseenter', () => setIsHovering(true));
-        el.removeEventListener('mouseleave', () => setIsHovering(false));
-      });
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, [cursorX, cursorY]);
+  }, []);
 
   if (!mounted) return null;
 
   return (
     <>
-      {/* Main cursor - pixel/boba pearl */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+      {/* Main cursor - Thick arrow pointer */}
+      <div
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          transform: `translate(${cursorPos.x}px, ${cursorPos.y}px)`,
         }}
       >
         <motion.div
           animate={{
-            scale: isHovering ? 1.5 : 1,
-            opacity: isHovering ? 0.6 : 0.8,
+            scale: clicked ? 0.85 : isHovering ? 1.15 : 1,
           }}
-          transition={{ duration: 0.2 }}
-          className="relative -translate-x-1/2 -translate-y-1/2"
+          transition={{ type: 'spring', stiffness: 500, damping: 20 }}
         >
-          {/* Pixel cursor - small pearl */}
-          <div className="w-3 h-3 bg-taro rounded-full" />
-
-          {/* Outer ring on hover */}
-          {isHovering && (
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 0.3 }}
-              className="absolute inset-0 -m-2 w-7 h-7 border-2 border-taro rounded-full"
+          {/* Thick arrow cursor SVG */}
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="drop-shadow-lg"
+          >
+            {/* Main arrow body - Tan fill */}
+            <path
+              d="M4 4 L4 24 L11 17 L15 26 L18 25 L14 16 L22 16 L4 4 Z"
+              fill="#F5E6D3"
+              stroke="rgba(58,0,29,1)"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
             />
-          )}
+            {/* Inner highlight for depth */}
+            <path
+              d="M6 6 L6 20 L10.5 15.5 L13.5 22.5 L15.5 21.8 L12.5 15 L19 15 L6 6 Z"
+              fill="rgba(255,255,255,0.3)"
+            />
+          </svg>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Trail effect - smaller pearls */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-difference hidden md:block"
+      {/* Trailing cursor - Smaller version */}
+      <div
+        className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:block"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          transform: `translate(${cursorPos.x}px, ${cursorPos.y}px)`,
+          transition: 'transform 0.15s ease-out',
         }}
       >
         <motion.div
           animate={{
-            scale: isHovering ? 0.8 : 1,
-            opacity: isHovering ? 0.3 : 0.4,
+            scale: isHovering ? 0.5 : 0.7,
+            opacity: isHovering ? 0.2 : 0.4,
           }}
-          transition={{ duration: 0.3, delay: 0.05 }}
-          className="w-2 h-2 bg-matcha rounded-full -translate-x-1/2 -translate-y-1/2"
-        />
-      </motion.div>
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 4 L4 24 L11 17 L15 26 L18 25 L14 16 L22 16 L4 4 Z"
+              fill="rgba(58,0,29,0.6)"
+            />
+          </svg>
+        </motion.div>
+      </div>
+
+      {/* Click ripple effect */}
+      {clicked && (
+        <div
+          className="fixed top-0 left-0 pointer-events-none z-[9997] hidden md:block"
+          style={{
+            transform: `translate(${cursorPos.x}px, ${cursorPos.y}px)`,
+          }}
+        >
+          <motion.div
+            className="absolute border-3 border-ink rounded-full"
+            initial={{ width: '20px', height: '20px', opacity: 1 }}
+            animate={{ width: '60px', height: '60px', opacity: 0 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          />
+        </div>
+      )}
+
+      {/* Hover glow effect */}
+      {isHovering && (
+        <div
+          className="fixed top-0 left-0 pointer-events-none z-[9997] hidden md:block"
+          style={{
+            transform: `translate(${cursorPos.x}px, ${cursorPos.y}px)`,
+          }}
+        >
+          <motion.div
+            className="absolute bg-taro rounded-full blur-xl"
+            initial={{ width: 0, height: 0, opacity: 0 }}
+            animate={{
+              width: '40px',
+              height: '40px',
+              opacity: 0.3,
+            }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
+      )}
+
+      <style jsx global>{`
+        @media (min-width: 768px) {
+          * {
+            cursor: none !important;
+          }
+        }
+      `}</style>
     </>
   );
 }

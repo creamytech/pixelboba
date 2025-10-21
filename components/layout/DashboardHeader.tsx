@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Bell } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Icon } from '@iconify/react';
 
 interface DashboardHeaderProps {
   userName: string;
@@ -11,19 +12,19 @@ interface DashboardHeaderProps {
 
 export default function DashboardHeader({ userName, notificationCount = 0 }: DashboardHeaderProps) {
   const [greeting, setGreeting] = useState('');
-  const [emoji, setEmoji] = useState('👋');
+  const [icon, setIcon] = useState('ph:hand-waving-duotone');
 
   useEffect(() => {
     const hour = new Date().getHours();
     if (hour < 12) {
       setGreeting('Good Morning');
-      setEmoji('☀️');
+      setIcon('ph:sun-duotone');
     } else if (hour < 18) {
       setGreeting('Good Afternoon');
-      setEmoji('🌤️');
+      setIcon('ph:cloud-sun-duotone');
     } else {
       setGreeting('Good Evening');
-      setEmoji('🌙');
+      setIcon('ph:moon-duotone');
     }
   }, []);
 
@@ -38,13 +39,12 @@ export default function DashboardHeader({ userName, notificationCount = 0 }: Das
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2 lg:gap-3 mb-2"
           >
-            <motion.span
-              className="text-3xl lg:text-4xl flex-shrink-0"
+            <motion.div
               animate={{ rotate: [0, 14, -8, 14, 0] }}
               transition={{ duration: 1.5, delay: 0.5 }}
             >
-              {emoji}
-            </motion.span>
+              <Icon icon={icon} className="w-8 h-8 lg:w-10 lg:h-10 text-deep-taro flex-shrink-0" />
+            </motion.div>
             <h1 className="font-display font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-ink truncate">
               {greeting},{' '}
               <span className="bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">

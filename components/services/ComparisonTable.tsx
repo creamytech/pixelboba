@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Check, X } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 const tiers = [
   { name: 'Starter Brew', price: '$1,500' },
@@ -10,62 +9,55 @@ const tiers = [
 ];
 
 const features = [
-  { name: 'Mobile-Optimized Design', starter: true, custom: true, full: true },
-  { name: '1:1 Code Preview Updates', starter: true, custom: true, full: true },
-  { name: 'Custom Design & Development', starter: false, custom: true, full: true },
-  { name: 'CMS Integration', starter: false, custom: true, full: true },
-  { name: 'Contact Forms & Analytics', starter: true, custom: true, full: true },
-  { name: 'Advanced Functionality', starter: false, custom: false, full: true },
-  { name: 'Third-Party Integrations', starter: false, custom: false, full: true },
-  { name: 'Custom Animations', starter: false, custom: false, full: true },
-  { name: 'User Authentication', starter: false, custom: false, full: true },
-  { name: 'Database Integration', starter: false, custom: false, full: true },
-  { name: 'Revision Rounds', starter: '2', custom: '3', full: 'Unlimited' },
-  { name: 'Free Support Period', starter: 'Launch', custom: '1 Month', full: '3 Months' },
+  { name: 'Works perfectly on phones & tablets', starter: true, custom: true, full: true },
+  { name: 'Live previews as we build', starter: true, custom: true, full: true },
+  { name: 'Fully custom design', starter: false, custom: true, full: true },
+  { name: 'Easy content management', starter: false, custom: true, full: true },
+  { name: 'Contact forms & visitor tracking', starter: true, custom: true, full: true },
+  { name: 'Advanced features & functionality', starter: false, custom: false, full: true },
+  { name: 'Connect your tools & services', starter: false, custom: false, full: true },
+  { name: 'Custom animations & effects', starter: false, custom: false, full: true },
+  { name: 'User login & accounts', starter: false, custom: false, full: true },
+  { name: 'Custom databases & data', starter: false, custom: false, full: true },
+  { name: 'Design changes included', starter: '2 rounds', custom: '3 rounds', full: 'Unlimited' },
+  { name: 'Free support after launch', starter: 'At launch', custom: '1 month', full: '3 months' },
 ];
 
 export default function ComparisonTable() {
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-4 lowercase">
-            compare tiers
+    <section className="py-20 md:py-32 px-4 sm:px-6 md:px-8 bg-cream">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16 md:mb-20">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-ink mb-4 sm:mb-6">
+            compare <span className="italic text-[#7C3AED]">tiers</span>
           </h2>
-          <p className="text-xl text-gray-600 lowercase">find the perfect brew for your needs</p>
-        </motion.div>
+          <p className="text-lg sm:text-xl md:text-2xl font-bold text-ink/70">
+            find the perfect brew for your needs
+          </p>
+        </div>
 
         {/* Mobile View - Cards */}
-        <div className="block lg:hidden space-y-8">
+        <div className="block lg:hidden space-y-10">
           {tiers.map((tier, tierIndex) => (
-            <motion.div
+            <div
               key={tier.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: tierIndex * 0.1 }}
-              className={`relative bg-white rounded-2xl p-6 border-2 shadow-lg ${
-                tier.popular ? 'border-taro ring-2 ring-taro/20' : 'border-ink/10'
+              className={`relative bg-white rounded-3xl p-8 md:p-10 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] ${
+                tier.popular ? 'border-[#FDB97A]' : ''
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-taro text-white px-4 py-2 rounded-full text-sm font-semibold lowercase">
-                    most popular
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <div className="bg-matcha px-6 py-2 rounded-full border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+                    <span className="font-black text-sm text-white uppercase">most popular</span>
                   </div>
                 </div>
               )}
-              <h3 className="font-display text-2xl font-bold text-ink mb-2 lowercase">
-                {tier.name}
-              </h3>
-              <div className="text-3xl font-bold text-taro mb-6 lowercase">{tier.price}</div>
-              <div className="space-y-3">
+              <h3 className="text-3xl md:text-4xl font-black text-ink mb-3">{tier.name}</h3>
+              <div className="text-4xl md:text-5xl font-black text-[#7C3AED] mb-8">
+                {tier.price}
+              </div>
+              <div className="space-y-4">
                 {features.map((feature) => {
                   const value =
                     tierIndex === 0
@@ -77,111 +69,149 @@ export default function ComparisonTable() {
                     <div key={feature.name} className="flex items-start gap-3">
                       {typeof value === 'boolean' ? (
                         value ? (
-                          <Check className="w-5 h-5 text-taro flex-shrink-0 mt-0.5" />
+                          <Icon
+                            icon="ph:check-circle-duotone"
+                            className="w-7 h-7 text-matcha flex-shrink-0 mt-0.5"
+                          />
                         ) : (
-                          <X className="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5" />
+                          <Icon
+                            icon="ph:x-circle-duotone"
+                            className="w-7 h-7 text-ink/30 flex-shrink-0 mt-0.5"
+                          />
                         )
                       ) : (
-                        <div className="w-5 h-5 flex-shrink-0 mt-0.5"></div>
+                        <Icon
+                          icon="ph:sparkle-duotone"
+                          className="w-7 h-7 text-deep-taro flex-shrink-0 mt-0.5"
+                        />
                       )}
-                      <span className="text-gray-700 text-sm">
-                        {feature.name}
-                        {typeof value !== 'boolean' && `: ${value}`}
-                      </span>
+                      <div className="flex-1">
+                        <span className="text-lg font-bold text-ink block leading-snug">
+                          {feature.name}
+                        </span>
+                        {typeof value !== 'boolean' && (
+                          <span className="text-lg font-black text-[#7C3AED] block mt-1">
+                            {value}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Desktop View - Table */}
-        <div className="hidden lg:block overflow-x-auto pt-12">
-          <motion.table
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="w-full border-collapse"
-          >
-            <thead>
-              <tr>
-                <th className="p-4 text-left font-display text-lg text-gray-600 lowercase border-b-2 border-ink/10">
-                  feature
-                </th>
-                {tiers.map((tier) => (
-                  <th
-                    key={tier.name}
-                    className={`p-4 text-center border-b-2 ${
-                      tier.popular ? 'border-taro' : 'border-ink/10'
-                    }`}
-                  >
-                    <div className="relative pt-2">
+        <div className="hidden lg:block">
+          <div className="bg-white rounded-3xl border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-cream border-b-4 border-ink">
+                  <th className="p-8 text-left text-2xl font-black text-ink">feature</th>
+                  {tiers.map((tier) => (
+                    <th key={tier.name} className="p-8 text-center relative">
                       {tier.popular && (
-                        <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                          <div className="bg-taro text-white px-3 py-1 rounded-full text-xs font-semibold lowercase shadow-lg">
-                            most popular
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                          <div className="bg-matcha px-6 py-2 rounded-full border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+                            <span className="font-black text-sm text-white uppercase">popular</span>
                           </div>
                         </div>
                       )}
-                      <div className="font-display text-2xl font-bold text-ink mb-2 lowercase">
-                        {tier.name}
-                      </div>
-                      <div className="text-xl font-bold text-taro lowercase">{tier.price}</div>
-                    </div>
-                  </th>
+                      <div className="text-3xl font-black text-ink mb-3">{tier.name}</div>
+                      <div className="text-4xl font-black text-[#7C3AED]">{tier.price}</div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {features.map((feature, index) => (
+                  <tr
+                    key={feature.name}
+                    className={`border-b-2 border-ink/10 hover:bg-cream/50 transition-colors ${
+                      index % 2 === 0 ? 'bg-white' : 'bg-cream/30'
+                    }`}
+                  >
+                    <td className="p-8 text-lg font-bold text-ink">{feature.name}</td>
+                    <td className="p-6 text-center">
+                      {typeof feature.starter === 'boolean' ? (
+                        feature.starter ? (
+                          <Icon
+                            icon="ph:check-circle-duotone"
+                            className="w-10 h-10 text-matcha mx-auto"
+                          />
+                        ) : (
+                          <Icon
+                            icon="ph:x-circle-duotone"
+                            className="w-10 h-10 text-ink/30 mx-auto"
+                          />
+                        )
+                      ) : (
+                        <div>
+                          <Icon
+                            icon="ph:sparkle-duotone"
+                            className="w-8 h-8 text-deep-taro mx-auto mb-1"
+                          />
+                          <span className="text-lg font-black text-[#7C3AED]">
+                            {feature.starter}
+                          </span>
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-6 text-center bg-[#7C3AED]/5">
+                      {typeof feature.custom === 'boolean' ? (
+                        feature.custom ? (
+                          <Icon
+                            icon="ph:check-circle-duotone"
+                            className="w-10 h-10 text-matcha mx-auto"
+                          />
+                        ) : (
+                          <Icon
+                            icon="ph:x-circle-duotone"
+                            className="w-10 h-10 text-ink/30 mx-auto"
+                          />
+                        )
+                      ) : (
+                        <div>
+                          <Icon
+                            icon="ph:sparkle-duotone"
+                            className="w-8 h-8 text-deep-taro mx-auto mb-1"
+                          />
+                          <span className="text-lg font-black text-[#7C3AED]">
+                            {feature.custom}
+                          </span>
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-6 text-center">
+                      {typeof feature.full === 'boolean' ? (
+                        feature.full ? (
+                          <Icon
+                            icon="ph:check-circle-duotone"
+                            className="w-10 h-10 text-matcha mx-auto"
+                          />
+                        ) : (
+                          <Icon
+                            icon="ph:x-circle-duotone"
+                            className="w-10 h-10 text-ink/30 mx-auto"
+                          />
+                        )
+                      ) : (
+                        <div>
+                          <Icon
+                            icon="ph:sparkle-duotone"
+                            className="w-8 h-8 text-deep-taro mx-auto mb-1"
+                          />
+                          <span className="text-lg font-black text-[#7C3AED]">{feature.full}</span>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {features.map((feature, index) => (
-                <motion.tr
-                  key={feature.name}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="border-b border-ink/5 hover:bg-taro/5 transition-colors"
-                >
-                  <td className="p-4 text-gray-700 lowercase">{feature.name}</td>
-                  <td className="p-4 text-center">
-                    {typeof feature.starter === 'boolean' ? (
-                      feature.starter ? (
-                        <Check className="w-5 h-5 text-taro mx-auto" />
-                      ) : (
-                        <X className="w-5 h-5 text-gray-300 mx-auto" />
-                      )
-                    ) : (
-                      <span className="text-gray-700 font-medium">{feature.starter}</span>
-                    )}
-                  </td>
-                  <td className="p-4 text-center bg-taro/5">
-                    {typeof feature.custom === 'boolean' ? (
-                      feature.custom ? (
-                        <Check className="w-5 h-5 text-taro mx-auto" />
-                      ) : (
-                        <X className="w-5 h-5 text-gray-300 mx-auto" />
-                      )
-                    ) : (
-                      <span className="text-gray-700 font-medium">{feature.custom}</span>
-                    )}
-                  </td>
-                  <td className="p-4 text-center">
-                    {typeof feature.full === 'boolean' ? (
-                      feature.full ? (
-                        <Check className="w-5 h-5 text-taro mx-auto" />
-                      ) : (
-                        <X className="w-5 h-5 text-gray-300 mx-auto" />
-                      )
-                    ) : (
-                      <span className="text-gray-700 font-medium">{feature.full}</span>
-                    )}
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </motion.table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>

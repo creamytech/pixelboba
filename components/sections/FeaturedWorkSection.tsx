@@ -135,7 +135,7 @@ export default function FeaturedWorkSection() {
             href="/work"
             className="inline-block bg-taro text-white px-8 py-3 rounded-lg font-semibold hover:bg-deep-taro transition-colors duration-300"
           >
-            view all work
+            View All Work
           </Link>
         </motion.div>
       </div>

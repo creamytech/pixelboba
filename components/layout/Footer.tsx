@@ -2,14 +2,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Instagram, Mail, Linkedin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Instagram, Linkedin } from 'lucide-react';
 import { siteConfig } from '@/lib/seo';
-import { useState } from 'react';
+import CatIllustration from '@/components/decorative/CatIllustration';
 
-// Custom X (Twitter) Icon Component
 const XIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -18,15 +14,15 @@ const XIcon = ({ className }: { className?: string }) => (
 
 const footerNavigation = {
   main: [
-    { name: 'work', href: '/work' },
-    { name: 'services', href: '/services' },
-    { name: 'process', href: '/process' },
-    { name: 'about', href: '/about' },
-    { name: 'contact', href: '/contact' },
+    { name: 'Work', href: '/work' },
+    { name: 'Services', href: '/services' },
+    { name: 'Process', href: '/process' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
   ],
   legal: [
-    { name: 'privacy policy', href: '/legal/privacy' },
-    { name: 'terms of service', href: '/legal/terms' },
+    { name: 'Privacy Policy', href: '/legal/privacy' },
+    { name: 'Terms of Service', href: '/legal/terms' },
   ],
   social: [
     { name: 'LinkedIn', href: 'https://www.linkedin.com/company/pixel-boba/', icon: Linkedin },
@@ -36,165 +32,59 @@ const footerNavigation = {
 };
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!email || !email.includes('@')) {
-      setSubmitStatus('error');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setEmail('');
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Newsletter subscription error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
-    <footer className="bg-slate-bg text-white">
-      {/* Newsletter Section */}
-      <div className="border-b border-gray-800">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-2xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h3 className="font-display text-3xl font-bold mb-4">want the tea? 🧋</h3>
-              <p className="text-gray-400 mb-8">
-                get fresh insights on web design, our latest projects, and the occasional boba meme.
-                straight to your inbox.
-              </p>
+    <footer className="relative bg-cream overflow-hidden">
+      <CatIllustration
+        src="/01.svg"
+        position="top-center"
+        size="sm"
+        opacity={0.4}
+        flipHorizontal
+        hideOnMobile
+      />
 
-              {submitStatus === 'success' ? (
-                <div className="bg-taro/20 border border-taro/30 rounded-lg p-4 mb-6">
-                  <p className="text-white font-medium">you&apos;re in! 🧋</p>
-                  <p className="text-gray-300 text-sm">check your inbox for the good stuff.</p>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubscribe}
-                  className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-                >
-                  <Input
-                    type="email"
-                    placeholder="enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                    disabled={isSubmitting}
-                    required
-                  />
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-taro hover:bg-deep-taro text-white whitespace-nowrap disabled:opacity-50"
-                  >
-                    {isSubmitting ? 'subscribing...' : 'subscribe'}
-                  </Button>
-                </form>
-              )}
-
-              {submitStatus === 'error' && (
-                <div className="mt-4 text-red-400 text-sm">
-                  oops, spilled the boba. try again or email us at hello@pixelboba.com
-                </div>
-              )}
-
-              {/* Floating pearls animation */}
-              <div className="relative mt-8 h-16 overflow-hidden">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-3 h-3 bg-taro rounded-full"
-                    style={{ left: `${20 + i * 15}%` }}
-                    animate={{
-                      y: [-20, -40, -20],
-                      opacity: [0.3, 0.8, 0.3],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                      ease: 'easeInOut',
-                    }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Column */}
-          <div className="md:col-span-2">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
+      <div className="max-w-[900px] mx-auto px-8 py-12 md:py-16">
+        <div className="grid md:grid-cols-3 gap-12 mb-12">
+          <div>
+            <Link href="/" className="inline-block mb-4">
               <Image
-                src="/brand/Pixel_Boba_Logo_White.svg"
-                alt="pixel boba"
-                width={200}
-                height={67}
-                className="h-16 w-auto"
+                src="/brand/Pixel_Boba_Icon_H_Black1.svg"
+                alt="Pixel Boba"
+                width={140}
+                height={42}
+                className="w-auto h-9"
               />
             </Link>
-
-            {/* Social Links */}
-            <div className="flex space-x-4">
+            <p className="text-sm text-ink/60 mb-4">
+              Fort Lauderdale&apos;s creative web studio. Building websites that actually convert.
+            </p>
+            <div className="flex gap-4">
               {footerNavigation.social.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <Link
+                  <a
                     key={item.name}
                     href={item.href}
-                    className="p-2 bg-gray-800 hover:bg-taro rounded-lg transition-colors duration-200"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="text-ink/60 hover:text-ink transition-colors"
+                    aria-label={item.name}
                   >
                     <Icon className="w-5 h-5" />
-                  </Link>
+                  </a>
                 );
               })}
             </div>
           </div>
 
-          {/* Navigation Column */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">navigation</h4>
+            <h3 className="font-semibold text-ink mb-4">Navigation</h3>
             <ul className="space-y-2">
               {footerNavigation.main.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                    className="text-sm text-ink/60 hover:text-ink transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -203,45 +93,33 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Column */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">get in touch</h4>
-            <div className="space-y-3 text-gray-400">
-              <p className="mb-3">ready to make your project pop?</p>
-              <a
-                href="tel:+17542434766"
-                className="flex items-center space-x-2 hover:text-white transition-colors duration-200 font-semibold"
-              >
-                <span>📞</span>
-                <span>(754) 243-4766</span>
-              </a>
-              <Link
-                href="mailto:hello@pixelboba.com"
-                className="flex items-center space-x-2 hover:text-white transition-colors duration-200"
-              >
-                <Mail className="w-4 h-4" />
-                <span>hello@pixelboba.com</span>
-              </Link>
-            </div>
+            <h3 className="font-semibold text-ink mb-4">Get In Touch</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="tel:+17542434766" className="text-ink/60 hover:text-ink transition-colors">
+                  (754) 243-4766
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:hello@pixelboba.com"
+                  className="text-ink/60 hover:text-ink transition-colors"
+                >
+                  hello@pixelboba.com
+                </a>
+              </li>
+              <li className="text-ink/60">Fort Lauderdale, FL</li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} pixel boba llc. all rights reserved.
-            </div>
-
-            <div className="flex space-x-6">
+        <div className="border-t border-ink/5 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-ink/60">
+            <div>© {new Date().getFullYear()} Pixel Boba. All rights reserved.</div>
+            <div className="flex gap-6">
               {footerNavigation.legal.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
-                >
+                <Link key={item.name} href={item.href} className="hover:text-ink transition-colors">
                   {item.name}
                 </Link>
               ))}

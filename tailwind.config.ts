@@ -14,7 +14,7 @@ const config: Config = {
       center: true,
       padding: '2rem',
       screens: {
-        '2xl': '1400px',
+        '2xl': '900px',
       },
     },
     extend: {
@@ -52,7 +52,7 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // Brand colors - Bubble Tea Palette
+        // Brand colors - Bubble Tea Palette (Pomegranate-inspired warmth)
         'milk-tea': '#F5E9DA',
         taro: '#A78BFA',
         'deep-taro': '#7C3AED',
@@ -60,16 +60,22 @@ const config: Config = {
         matcha: '#88C159',
         'thai-tea': '#E97730',
         strawberry: '#FF6B9D',
-        ink: '#0F172A',
+        ink: '#3a001d', // Warmer deep ink
         'slate-bg': '#111827',
-        // Expanded palette
-        cream: '#FFFBF5',
+        // Expanded palette - Warm & Playful
+        cream: '#FFFAF0', // Warmer peachy cream
+        'warm-cream': '#FFFBF5',
+        coral: '#FF6F89', // Pomegranate accent
         'pearl-black': '#2C1810',
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      borderWidth: {
+        '3': '3px',
+        '4': '4px',
       },
       keyframes: {
         'accordion-down': {

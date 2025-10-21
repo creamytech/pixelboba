@@ -179,7 +179,7 @@ export default function StartProjectForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-2xl p-12 shadow-xl border border-gray-100 text-center relative overflow-hidden"
+        className="bg-white rounded-3xl p-12 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] text-center relative"
       >
         {/* Decorative elements */}
         <div className="absolute top-4 right-6 w-3 h-3 bg-taro/20 rounded-full"></div>
@@ -202,8 +202,10 @@ export default function StartProjectForm() {
           We&apos;ll review everything and send you a custom proposal within 24 hours. Questions?
           Call us at (754) 243-4766.
         </p>
-        <div className="bg-milk-tea/20 rounded-xl p-4 mb-6">
-          <p className="text-sm text-gray-600">💌 Check your inbox for confirmation details</p>
+        <div className="bg-[#FDB97A] rounded-2xl p-4 mb-6 border-3 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+          <p className="text-sm text-ink font-black">
+            💌 check your inbox for confirmation details
+          </p>
         </div>
         <button
           type="button"
@@ -222,7 +224,7 @@ export default function StartProjectForm() {
               honeypot: '',
             });
           }}
-          className="text-taro hover:text-deep-taro transition-colors duration-200 font-medium lowercase"
+          className="text-[#7C3AED] hover:text-deep-taro transition-colors duration-200 font-black lowercase inline-flex items-center gap-2"
         >
           submit another project →
         </button>
@@ -236,13 +238,8 @@ export default function StartProjectForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl p-6 md:p-8 shadow-xl border border-gray-100 relative overflow-hidden"
+      className="bg-white rounded-3xl p-6 md:p-8 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] relative"
     >
-      {/* Decorative elements */}
-      <div className="absolute top-4 right-6 w-3 h-3 bg-taro/20 rounded-full"></div>
-      <div className="absolute bottom-6 left-6 w-4 h-4 bg-matcha/20 rounded-full"></div>
-      <div className="absolute top-1/2 right-4 w-2 h-2 bg-taro/30 rounded-full"></div>
-
       {/* Header */}
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-ink mb-2 lowercase">tell us about your project</h3>
@@ -272,8 +269,8 @@ export default function StartProjectForm() {
             value={formData.name}
             onChange={handleInputChange}
             placeholder="Your Name"
-            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro ${
-              errors.name ? 'border-red-300' : 'border-gray-300'
+            className={`w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold ${
+              errors.name ? 'border-red-500' : 'border-ink'
             }`}
             aria-describedby={errors.name ? 'name-error' : undefined}
             required
@@ -297,8 +294,8 @@ export default function StartProjectForm() {
             value={formData.email}
             onChange={handleInputChange}
             placeholder="your@email.com"
-            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro ${
-              errors.email ? 'border-red-300' : 'border-gray-300'
+            className={`w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold ${
+              errors.email ? 'border-red-500' : 'border-ink'
             }`}
             aria-describedby={errors.email ? 'email-error' : undefined}
             required
@@ -323,7 +320,7 @@ export default function StartProjectForm() {
           value={formData.company}
           onChange={handleInputChange}
           placeholder="Your Company Name (Optional)"
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
+          className="w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold"
         />
       </div>
 
@@ -340,7 +337,7 @@ export default function StartProjectForm() {
                   type="checkbox"
                   checked={formData.services.includes(service)}
                   onChange={() => handleCheckboxChange(service)}
-                  className="w-4 h-4 text-taro border-gray-300 rounded focus:ring-taro/20 focus:ring-2"
+                  className="w-5 h-5 text-[#7C3AED] border-2 border-ink rounded focus:ring-[#7C3AED]/20 focus:ring-2"
                 />
                 <span className="ml-3 text-gray-700 lowercase">{service}</span>
               </label>
@@ -364,8 +361,8 @@ export default function StartProjectForm() {
           name="budget"
           value={formData.budget}
           onChange={handleInputChange}
-          className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro ${
-            errors.budget ? 'border-red-300' : 'border-gray-300'
+          className={`w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold ${
+            errors.budget ? 'border-red-500' : 'border-ink'
           }`}
           aria-describedby={errors.budget ? 'budget-error' : undefined}
           required
@@ -396,7 +393,7 @@ export default function StartProjectForm() {
           onChange={handleInputChange}
           placeholder="Describe the pages or features you need (Optional)"
           rows={3}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
+          className="w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold"
         />
       </div>
 
@@ -415,7 +412,7 @@ export default function StartProjectForm() {
           value={formData.timeline}
           onChange={handleInputChange}
           placeholder="When do you need this completed? (Optional)"
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
+          className="w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold"
         />
       </div>
 
@@ -431,7 +428,7 @@ export default function StartProjectForm() {
           onChange={handleInputChange}
           placeholder="Share URLs of your current site or sites you like (Optional)"
           rows={3}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
+          className="w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold"
         />
       </div>
 
@@ -450,7 +447,7 @@ export default function StartProjectForm() {
           onChange={handleInputChange}
           placeholder="Any additional details about your project (Optional)"
           rows={3}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro"
+          className="w-full px-4 py-3 border-3 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-bold"
         />
       </div>
 
@@ -459,11 +456,16 @@ export default function StartProjectForm() {
         <motion.button
           type="submit"
           disabled={isSubmitting}
-          whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-          whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-          className="w-full bg-taro text-white py-4 px-6 rounded-lg font-semibold hover:bg-taro/90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed lowercase"
+          className="w-full bg-[#7C3AED] text-white py-4 px-6 rounded-full text-lg font-black border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] disabled:hover:translate-x-0 disabled:hover:translate-y-0 lowercase"
         >
-          {isSubmitting ? 'sending...' : 'send project details'}
+          {isSubmitting ? (
+            <div className="flex items-center justify-center gap-2">
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>sending...</span>
+            </div>
+          ) : (
+            'send project details'
+          )}
         </motion.button>
       </div>
 

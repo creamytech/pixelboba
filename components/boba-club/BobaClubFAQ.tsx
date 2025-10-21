@@ -180,9 +180,9 @@ export default function BobaClubFAQ() {
 
                 {/* Text */}
                 <h3 className="font-display text-4xl font-black text-white text-center mb-3 leading-tight">
-                  Get in touch
+                  get in touch
                   <br />
-                  with Taro
+                  with taro
                 </h3>
 
                 <p className="text-center text-white/90 font-medium text-lg mb-6">

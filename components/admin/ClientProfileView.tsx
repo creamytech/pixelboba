@@ -22,6 +22,7 @@ import {
   Target,
   CheckCircle,
 } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import BobaProgressIndicator from '@/components/portal/BobaProgressIndicator';
 
 interface ClientProfileData {
@@ -656,8 +657,8 @@ function MilestonesTab({
       const projectName = projects.find((p) => p.id === selectedProject)?.name || 'Project';
       const title =
         milestoneType === 'MILESTONE'
-          ? `🎯 Milestone Achieved: ${projectName}`
-          : `📢 Progress Update: ${projectName}`;
+          ? `Milestone Achieved: ${projectName}`
+          : `Progress Update: ${projectName}`;
 
       const success = await onSendMilestone(selectedProject, title, milestoneContent);
       if (success) {
@@ -724,8 +725,8 @@ function MilestonesTab({
                   onChange={(e) => setMilestoneType(e.target.value as 'MILESTONE' | 'UPDATE')}
                   className="w-full p-2 border border-brown-sugar/20 rounded-lg bg-white/70"
                 >
-                  <option value="MILESTONE">🎯 Milestone Achieved</option>
-                  <option value="UPDATE">📢 Progress Update</option>
+                  <option value="MILESTONE">Milestone Achieved</option>
+                  <option value="UPDATE">Progress Update</option>
                 </select>
               </div>
             </div>

@@ -3,11 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 :root {
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
 
-  --background: 0 0% 100%;
+  --background: 40 100% 97%;
   --foreground: 222.2 84% 4.9%;
   --card: 0 0% 100%;
   --card-foreground: 222.2 84% 4.9%;
@@ -60,8 +70,8 @@ body {
   background: hsl(var(--background));
   font-family: var(--font-sans);
   overflow-x: hidden;
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 1.1em;
+  line-height: 1.3;
 }
 
 /* Subtle grain texture overlay for depth */
@@ -96,8 +106,8 @@ body::after {
 
 @media (max-width: 768px) {
   body {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 1em;
+    line-height: 1.4;
   }
 
   /* Ensure buttons are big enough for touch */
@@ -235,4 +245,31 @@ select:focus-visible {
   *:focus-visible {
     outline-width: 4px;
   }
+}
+
+/* Typography improvements matching Pomegranate style */
+h1 {
+  font-size: 2em;
+  margin: 20px 0;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 20px 0;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.25em;
+  margin: 15px 0;
+  line-height: 1.3;
+}
+
+p {
+  margin: 10px 0;
+}
+
+section {
+  padding: 20px 0;
 }

@@ -11,6 +11,7 @@ import {
   Calendar,
   CheckCircle2,
 } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 export default function DashboardMockup() {
   return (
@@ -41,7 +42,7 @@ export default function DashboardMockup() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-lg">🧋</span>
+                <Icon icon="ph:drop-duotone" className="w-5 h-5 text-white" />
               </div>
               <div>
                 <div className="font-semibold text-gray-900">client portal</div>
@@ -168,7 +169,7 @@ export default function DashboardMockup() {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-gray-600">ACTIVE PROJECTS</span>
                 <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <span className="text-orange-600">🔥</span>
+                  <Icon icon="ph:fire-duotone" className="w-5 h-5 text-orange-600" />
                 </div>
               </div>
               <div className="text-2xl font-bold text-gray-900">1</div>
@@ -188,7 +189,7 @@ export default function DashboardMockup() {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-gray-600">PENDING INVOICES</span>
                 <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                  <span className="text-yellow-600">💰</span>
+                  <Icon icon="ph:currency-dollar-duotone" className="w-5 h-5 text-yellow-600" />
                 </div>
               </div>
               <div className="text-2xl font-bold text-gray-900">1</div>

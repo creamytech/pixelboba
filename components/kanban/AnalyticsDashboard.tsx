@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   AlertTriangle,
 } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import { format, subDays, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns';
 
 interface AnalyticsDashboardProps {
@@ -317,23 +318,27 @@ export default function AnalyticsDashboard({ tasks, projectName }: AnalyticsDash
         <h3 className="font-display font-semibold text-ink mb-4 lowercase">insights</h3>
         <div className="space-y-2">
           {metrics.completionRate > 70 && (
-            <p className="text-sm text-green-700 font-display">
-              ✅ Excellent completion rate! Keep up the great work.
+            <p className="text-sm text-green-700 font-display flex items-center gap-2">
+              <Icon icon="ph:check-circle-duotone" className="w-5 h-5" />
+              Excellent completion rate! Keep up the great work.
             </p>
           )}
           {metrics.velocity < 2 && (
-            <p className="text-sm text-orange-700 font-display">
-              ⚠️ Velocity is low. Consider breaking down large tasks.
+            <p className="text-sm text-orange-700 font-display flex items-center gap-2">
+              <Icon icon="ph:warning-duotone" className="w-5 h-5" />
+              Velocity is low. Consider breaking down large tasks.
             </p>
           )}
           {metrics.overdueTasks > 5 && (
-            <p className="text-sm text-red-700 font-display">
-              🚨 High number of overdue tasks. Prioritize catching up.
+            <p className="text-sm text-red-700 font-display flex items-center gap-2">
+              <Icon icon="ph:warning-octagon-duotone" className="w-5 h-5" />
+              High number of overdue tasks. Prioritize catching up.
             </p>
           )}
           {metrics.blockedTasks > 3 && (
-            <p className="text-sm text-orange-700 font-display">
-              ⚠️ Several tasks are blocked. Review and unblock where possible.
+            <p className="text-sm text-orange-700 font-display flex items-center gap-2">
+              <Icon icon="ph:warning-duotone" className="w-5 h-5" />
+              Several tasks are blocked. Review and unblock where possible.
             </p>
           )}
         </div>

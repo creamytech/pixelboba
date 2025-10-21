@@ -41,8 +41,9 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      <Header />
-      <AboutPageClient />
+      <Header>
+        <AboutPageClient />
+      </Header>
       <Footer />
       <StickyCTA />
     </div>

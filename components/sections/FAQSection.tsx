@@ -51,9 +51,9 @@ const faqs = [
       "we can manage everything for you or work with your existing setup. we typically recommend modern hosting solutions like vercel or netlify for optimal performance, but we're flexible based on your preferences and requirements.",
   },
   {
-    question: 'how do we get started?',
+    question: 'How do we get started?',
     answer:
-      "simply contact us through our contact form or email. we'll schedule a discovery call to understand your needs, provide a detailed proposal, and create a timeline that works for both parties. most projects can start within 1-2 weeks of agreement.",
+      "Simply contact us through our contact form or email. We'll schedule a discovery call to understand your needs, provide a detailed proposal, and create a timeline that works for both parties. Most projects can start within 1-2 weeks of agreement.",
   },
 ];
 
@@ -65,7 +65,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-cream">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"

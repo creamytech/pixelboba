@@ -3,91 +3,100 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Icon } from '@iconify/react';
 
 export default function BobaClubHero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-milk-tea pt-20">
-      {/* Colorful blob decorations - static on mobile for performance */}
-      <div className="absolute top-20 right-10 w-64 h-64 bg-taro rounded-full blur-3xl opacity-40 md:hidden" />
-      <div className="absolute bottom-20 left-10 w-80 h-80 bg-matcha rounded-full blur-3xl opacity-30 md:hidden" />
-
-      {/* Animated blobs on desktop only */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Floating cat decorations */}
       <motion.div
-        className="absolute top-20 right-10 w-64 h-64 bg-taro rounded-full blur-3xl opacity-40 hidden md:block"
+        className="absolute top-20 right-[8%] w-32 h-32 opacity-20 hidden md:block"
         animate={{
-          scale: [1, 1.2, 1],
-          x: [0, 50, 0],
-          y: [0, -30, 0],
+          y: [0, -20, 0],
+          rotate: [-5, 5, -5],
         }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      >
+        <Image src="/01.svg" alt="" width={128} height={128} className="w-full h-full" />
+      </motion.div>
       <motion.div
-        className="absolute bottom-20 left-10 w-80 h-80 bg-matcha rounded-full blur-3xl opacity-30 hidden md:block"
+        className="absolute bottom-20 left-[8%] w-32 h-32 opacity-20 hidden md:block"
         animate={{
-          scale: [1, 1.3, 1],
-          x: [0, -40, 0],
-          y: [0, 40, 0],
+          y: [0, 20, 0],
+          rotate: [5, -5, 5],
         }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-      />
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      >
+        <Image src="/03.svg" alt="" width={128} height={128} className="w-full h-full" />
+      </motion.div>
 
       <div className="container mx-auto px-4 relative z-10 text-center max-w-5xl">
-        {/* Big, bold badge */}
+        {/* Purple badge */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
           className="inline-block mb-8"
         >
-          <div className="bg-white border-4 border-ink rounded-full px-6 py-2 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-            <p className="font-bold text-ink">unlimited web development + design</p>
+          <div className="bg-[#7C3AED]/10 text-[#7C3AED] px-6 py-3 rounded-full border-2 border-[#7C3AED]/20">
+            <p className="font-black text-sm uppercase tracking-wider flex items-center gap-2">
+              <Icon icon="ph:coffee-duotone" className="w-4 h-4" />
+              Unlimited Web Development + Design
+            </p>
           </div>
         </motion.div>
 
         {/* Massive headline */}
         <motion.h1
-          className="font-display text-6xl md:text-8xl lg:text-[10rem] font-black text-ink mb-6 leading-[0.85]"
+          className="text-6xl md:text-8xl lg:text-9xl font-black text-ink mb-8 leading-[0.9]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
         >
-          build on
+          Build On
           <br />
-          <span className="italic text-taro">tap.</span>
+          <span className="italic text-[#7C3AED]">Tap.</span>
         </motion.h1>
 
         {/* Explainer tagline */}
         <motion.p
-          className="text-xl md:text-2xl text-ink font-bold mb-4 max-w-3xl mx-auto"
+          className="text-2xl md:text-3xl text-ink/70 font-bold mb-6 max-w-3xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
         >
-          Unlimited web development and design requests for one flat monthly rate
+          Unlimited web development and design requests for one flat monthly rate.
         </motion.p>
 
-        {/* Pricing surface */}
+        {/* Pricing badge */}
         <motion.div
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-taro/10 to-matcha/10 border-2 border-ink/20 rounded-full px-5 py-2 mb-8"
+          className="inline-flex items-center gap-3 bg-white px-8 py-4 rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.25, ease: 'easeOut' }}
         >
-          <span className="font-display text-2xl md:text-3xl font-black text-ink">
-            starting at $1,995
-          </span>
-          <span className="text-sm text-ink/60 font-medium">/month</span>
+          <span className="text-3xl md:text-4xl font-black text-ink">Starting at $1,995</span>
+          <span className="text-lg text-ink/60 font-bold">/month</span>
         </motion.div>
 
         {/* Punchy subheadline */}
         <motion.p
-          className="text-lg md:text-xl text-ink/70 mb-12 max-w-3xl mx-auto font-medium"
+          className="text-xl md:text-2xl text-ink/70 font-bold mb-12 max-w-3xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
         >
-          subscribe and request as many dev + design projects as you need. delivered fast. revised
-          until perfect. pause anytime.
+          Subscribe and request as many dev + design projects as you need. Delivered fast. Revised
+          until perfect. Pause anytime.
         </motion.p>
 
         {/* Big CTA buttons */}
@@ -97,35 +106,23 @@ export default function BobaClubHero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.35, ease: 'easeOut' }}
         >
-          <Button
-            asChild
-            size="lg"
-            className="group bg-gradient-to-r from-taro to-deep-taro hover:from-deep-taro hover:to-taro text-white px-14 py-8 text-xl font-black rounded-full shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transition-all duration-200 hover:translate-x-1 hover:translate-y-1 border-4 border-ink relative overflow-hidden"
+          <a
+            href="#pricing"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center px-12 py-6 bg-[#FDB97A] text-ink text-xl font-black rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
           >
-            <a
-              href="#pricing"
-              className="relative z-10 flex items-center gap-2"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              <span className="w-3 h-3 bg-white rounded-full animate-pulse" />
-              <span>join boba club</span>
-              <span className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-2">
-                →
-              </span>
-            </a>
-          </Button>
+            Join Boba Club →
+          </a>
 
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="border-4 border-ink text-ink hover:bg-ink hover:text-white px-14 py-8 text-xl font-bold rounded-full transition-all duration-200"
+          <a
+            href="mailto:hello@pixelboba.com"
+            className="inline-flex items-center px-12 py-6 bg-white text-ink text-xl font-black rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
           >
-            <a href="mailto:hello@pixelboba.com">contact us</a>
-          </Button>
+            Contact Us
+          </a>
         </motion.div>
 
         {/* Trust badges */}
@@ -133,43 +130,20 @@ export default function BobaClubHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.4, ease: 'easeOut' }}
-          className="flex flex-wrap items-center justify-center gap-8 text-sm text-ink/60"
+          className="flex flex-wrap items-center justify-center gap-8"
         >
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-matcha rounded-full animate-pulse" />
-            <span className="font-medium">24-48 hour delivery</span>
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border-2 border-ink/10">
+            <Icon icon="ph:lightning-duotone" className="w-6 h-6 text-matcha" />
+            <span className="font-bold text-ink">24-48 Hour Delivery</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-taro rounded-full animate-pulse" />
-            <span className="font-medium">unlimited revisions</span>
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border-2 border-ink/10">
+            <Icon icon="ph:arrows-clockwise-duotone" className="w-6 h-6 text-deep-taro" />
+            <span className="font-bold text-ink">Unlimited Revisions</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-brown-sugar rounded-full animate-pulse" />
-            <span className="font-medium">pause or cancel anytime</span>
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border-2 border-ink/10">
+            <Icon icon="ph:pause-circle-duotone" className="w-6 h-6 text-matcha" />
+            <span className="font-bold text-ink">Pause Anytime</span>
           </div>
-        </motion.div>
-
-        {/* Big emoji decoration */}
-        <motion.div
-          className="absolute -right-10 top-1/4 text-9xl hidden lg:block"
-          animate={{
-            rotate: [0, 10, -10, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          🧋
-        </motion.div>
-
-        <motion.div
-          className="absolute -left-10 bottom-1/4 text-8xl hidden lg:block"
-          animate={{
-            rotate: [0, -10, 10, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          ✨
         </motion.div>
       </div>
     </section>

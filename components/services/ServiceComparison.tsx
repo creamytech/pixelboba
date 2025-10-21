@@ -82,7 +82,7 @@ const services: Service[] = [
 
 export default function ServiceComparison() {
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-milk-tea/10">
+    <section className="py-20 bg-gradient-to-b from-cream to-milk-tea/10">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"

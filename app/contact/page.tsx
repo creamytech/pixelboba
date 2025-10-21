@@ -3,6 +3,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import StickyCTA from '@/components/common/StickyCTA';
+import Image from 'next/image';
+import { Icon } from '@iconify/react';
 
 export const metadata: Metadata = {
   title: 'Contact | Web Design Quote in 24 Hours | Fort Lauderdale',
@@ -38,57 +40,57 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: 'what information do you need to get started?',
+    question: 'What information do you need to get started?',
     answer:
       'Just fill out our project form with your goals, timeline, and any examples you like. You can also give us a call at (754) 243-4766.',
   },
   {
-    question: 'can you work with our existing branding?',
+    question: 'Can you work with our existing branding?',
     answer:
       "Absolutely! Send us your brand guidelines, logos, and color schemes. We'll make sure everything stays on-brand.",
   },
   {
-    question: 'do you offer payment plans?',
+    question: 'Do you offer payment plans?',
     answer:
       'Yes, we typically split projects into 2-3 payments: deposit, midpoint, and final. Larger projects can be broken down further.',
   },
   {
-    question: 'how long does a typical project take?',
+    question: 'How long does a typical project take?',
     answer:
       '2-6 weeks depending on scope. Website redesigns take 1-3 weeks, custom builds take 3-5 weeks, advanced builds take 4-6 weeks.',
   },
   {
-    question: "what if we're not happy with the design?",
+    question: "What if we're not happy with the design?",
     answer:
       'We share working previews throughout the process so there are no surprises. Most issues get resolved during our regular check-ins.',
   },
   {
-    question: 'what if I need changes during the project?',
+    question: 'What if I need changes during the project?',
     answer:
       "We share working code previews as we build, so you can see exactly what you're getting. Send us your feedback and we'll make it happen.",
   },
   {
-    question: 'do you work with wordpress or shopify?',
+    question: 'Do you work with WordPress or Shopify?',
     answer:
       'We build custom sites with Next.js and React for better performance. We can integrate with headless CMS or ecommerce APIs if needed.',
   },
   {
-    question: 'what about ongoing maintenance?',
+    question: 'What about ongoing maintenance?',
     answer:
       'Our care plans start at $99/month for content updates, security patches, and bug fixes. No long-term contracts required.',
   },
   {
-    question: 'can you help with seo?',
+    question: 'Can you help with SEO?',
     answer:
       'Every site includes basic SEO optimization. Our advanced SEO package starts at $750 for keyword research and content strategy.',
   },
   {
-    question: 'how do you handle rush projects?',
+    question: 'How do you handle rush projects?',
     answer:
-      'We can expedite projects with our priority timeline - typically 50% faster delivery for an additional 25% fee. Just mention your deadline in the project form.',
+      'We can expedite projects with our priority timeline—typically 50% faster delivery for an additional 25% fee. Just mention your deadline in the project form.',
   },
   {
-    question: 'do you work with wix, squarespace, or wordpress?',
+    question: 'Do you work with Wix, Squarespace, or WordPress?',
     answer:
       'We specialize in custom Next.js builds for better performance and flexibility. We can integrate with headless CMS or migrate from existing platforms.',
   },
@@ -124,160 +126,181 @@ export default function ContactPage() {
           __html: JSON.stringify(faqSchema),
         }}
       />
-      <Header />
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-milk-tea via-background to-taro/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-ink mb-8 lowercase leading-tight">
-                let&apos;s brew something together
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-700 mb-8 lowercase max-w-3xl mx-auto px-4 leading-relaxed">
-                tell us about your project. we&apos;ll send you a custom proposal within 24 hours.
-              </p>
+      <Header>
+        <div className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
+          {/* Floating cat decoration */}
+          <div className="absolute top-10 right-[8%] w-32 h-32 opacity-20 hidden md:block">
+            <Image src="/02.svg" alt="" width={128} height={128} className="w-full h-full" />
+          </div>
 
-              {/* Phone Number */}
-              <div className="flex items-center justify-center gap-3 mb-12">
-                <span className="text-2xl font-semibold text-taro lowercase">call us:</span>
+          <div className="max-w-5xl mx-auto relative z-10">
+            {/* Badge */}
+            <div className="text-center mb-20">
+              <div className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] px-6 py-3 rounded-full border-2 border-[#7C3AED]/20 mb-8">
+                <span className="font-black text-sm uppercase tracking-wider flex items-center gap-2">
+                  <Icon icon="ph:chat-circle-dots-duotone" className="w-5 h-5" />
+                  Get In Touch
+                </span>
+              </div>
+
+              {/* Hero */}
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-ink mb-8 leading-tight">
+                Let&apos;s Brew Something <span className="italic text-[#7C3AED]">Together</span>
+              </h1>
+              <p className="text-2xl md:text-3xl text-ink/70 font-bold leading-tight max-w-3xl mx-auto">
+                Tell us about your project. We&apos;ll send you a custom proposal within 24 hours.
+              </p>
+            </div>
+
+            {/* Contact Cards */}
+            <div className="grid md:grid-cols-3 gap-6 mb-20">
+              {/* Phone */}
+              <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] text-center hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                <div className="mb-4">
+                  <Icon icon="ph:phone-duotone" className="w-16 h-16 text-deep-taro mx-auto" />
+                </div>
+                <h3 className="text-2xl font-black text-ink mb-3">Call Us</h3>
                 <a
                   href="tel:+17542434766"
-                  className="text-3xl font-bold text-ink hover:text-taro transition-colors duration-300"
+                  className="text-lg font-bold text-[#7C3AED] hover:text-[#A78BFA] transition-colors"
                 >
                   (754) 243-4766
                 </a>
               </div>
 
-              {/* Primary CTA */}
-              <div className="mb-12">
-                <Link
-                  href="/start"
-                  className="group inline-flex items-center bg-taro text-white px-10 py-5 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 text-xl hover:scale-105"
-                >
-                  get your custom proposal
-                  <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
-                <p className="text-gray-600 mt-4 lowercase font-medium text-lg">
-                  ✨ response within 24 hours
-                </p>
-              </div>
-
-              {/* Secondary option */}
-              <div className="max-w-md mx-auto bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-taro/20 shadow-md">
-                <p className="text-gray-700 mb-4 lowercase font-medium text-lg">
-                  <strong className="text-ink">just browsing?</strong> shoot us an email. we love
-                  talking shop (and boba).
-                </p>
+              {/* Email */}
+              <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] text-center hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                <div className="mb-4">
+                  <Icon icon="ph:envelope-duotone" className="w-16 h-16 text-deep-taro mx-auto" />
+                </div>
+                <h3 className="text-2xl font-black text-ink mb-3">Email Us</h3>
                 <a
                   href="mailto:hello@pixelboba.com"
-                  className="group inline-flex items-center text-taro hover:text-deep-taro transition-all duration-200 font-semibold text-lg px-4 py-2 rounded-lg hover:bg-taro/10"
+                  className="text-lg font-bold text-[#7C3AED] hover:text-[#A78BFA] transition-colors"
                 >
                   hello@pixelboba.com
-                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
                 </a>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Contact Info */}
-        <section className="pb-10">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="bg-gradient-to-br from-milk-tea/30 to-taro/10 rounded-2xl p-10 border border-taro/20 shadow-md">
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8 lowercase">
-                  quick info
+              {/* Form */}
+              <div className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] text-center hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                <div className="mb-4">
+                  <Icon
+                    icon="ph:note-pencil-duotone"
+                    className="w-16 h-16 text-deep-taro mx-auto"
+                  />
+                </div>
+                <h3 className="text-2xl font-black text-ink mb-3">Start Your Project</h3>
+                <Link
+                  href="/start"
+                  className="text-lg font-bold text-[#7C3AED] hover:text-[#A78BFA] transition-colors"
+                >
+                  Fill Out Form →
+                </Link>
+              </div>
+            </div>
+
+            {/* Quick Info */}
+            <div className="mb-20">
+              <div className="bg-white rounded-3xl p-10 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                <h2 className="text-4xl md:text-5xl font-black text-ink mb-8 text-center">
+                  Quick Info
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                  <div className="group">
-                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">phone</h3>
-                    <a
-                      href="tel:+17542434766"
-                      className="text-taro hover:text-deep-taro transition-colors duration-200 font-semibold group-hover:scale-105 inline-block"
-                    >
-                      (754) 243-4766
-                    </a>
-                  </div>
-                  <div className="group">
-                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">email</h3>
-                    <a
-                      href="mailto:hello@pixelboba.com"
-                      className="text-taro hover:text-deep-taro transition-colors duration-200 font-semibold group-hover:scale-105 inline-block"
-                    >
-                      hello@pixelboba.com
-                    </a>
+                <div className="grid md:grid-cols-4 gap-8 text-center">
+                  <div>
+                    <div className="mb-3">
+                      <Icon
+                        icon="ph:lightning-duotone"
+                        className="w-12 h-12 text-deep-taro mx-auto"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-black text-ink mb-2">24 Hours</h3>
+                    <p className="text-lg font-bold text-ink/70">Response Time</p>
                   </div>
                   <div>
-                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">response time</h3>
-                    <p className="text-gray-700 lowercase font-medium">within 24 hours</p>
+                    <div className="mb-3">
+                      <Icon
+                        icon="ph:map-pin-duotone"
+                        className="w-12 h-12 text-deep-taro mx-auto"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-black text-ink mb-2">Fort Lauderdale</h3>
+                    <p className="text-lg font-bold text-ink/70">South Florida</p>
                   </div>
                   <div>
-                    <h3 className="font-bold text-ink mb-3 lowercase text-lg">project timeline</h3>
-                    <p className="text-gray-700 lowercase font-medium">2-6 weeks typical</p>
+                    <div className="mb-3">
+                      <Icon icon="ph:rocket-duotone" className="w-12 h-12 text-deep-taro mx-auto" />
+                    </div>
+                    <h3 className="text-2xl font-black text-ink mb-2">2-6 Weeks</h3>
+                    <p className="text-lg font-bold text-ink/70">Typical Timeline</p>
+                  </div>
+                  <div>
+                    <div className="mb-3">
+                      <Icon
+                        icon="ph:hundred-duotone"
+                        className="w-12 h-12 text-deep-taro mx-auto"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-black text-ink mb-2">Custom</h3>
+                    <p className="text-lg font-bold text-ink/70">Every Proposal</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* FAQ Section */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-display text-4xl font-bold text-ink mb-12 text-center lowercase">
-                frequently asked questions
+            {/* FAQ Section */}
+            <div className="mb-20">
+              <h2 className="text-5xl md:text-6xl font-black text-ink mb-12 text-center">
+                Frequently Asked <span className="italic text-[#7C3AED]">Questions</span>
               </h2>
-              <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 {faqs.map((faq, index) => (
                   <div
                     key={index}
-                    className="group bg-white rounded-2xl p-8 shadow-md border border-ink/10 hover:shadow-xl hover:shadow-taro/10 hover:border-taro/30 transition-all duration-300"
+                    className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                   >
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-ink mb-4 lowercase group-hover:text-taro transition-colors duration-300">
-                      {faq.question}
-                    </h3>
-                    <p className="text-gray-600 lowercase leading-relaxed text-lg">{faq.answer}</p>
+                    <div className="mb-4">
+                      <Icon icon="ph:question-duotone" className="w-12 h-12 text-deep-taro" />
+                    </div>
+                    <h3 className="text-xl font-black text-ink mb-3">{faq.question}</h3>
+                    <p className="text-lg font-bold text-ink/70">{faq.answer}</p>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Bottom CTA */}
-        <section className="py-20 bg-gradient-to-r from-taro/10 to-matcha/10">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="font-display text-4xl font-bold text-ink mb-6 lowercase">
-                let&apos;s make something amazing
-              </h2>
-              <p className="text-xl text-gray-600 mb-6 lowercase">
-                brewing up fresh websites for {year}. your order&apos;s up next.
-              </p>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 mb-8 max-w-md mx-auto">
-                <p className="text-sm text-gray-600 lowercase">
-                  🗓️ <strong>taking orders for:</strong> {currentMonth.toLowerCase()} &{' '}
-                  {nextMonth.toLowerCase()} {year}
-                </p>
+            {/* Bottom CTA with cat */}
+            <div className="relative">
+              <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-10">
+                <Image src="/01.svg" alt="" width={120} height={120} className="w-28 h-28" />
               </div>
-              <Link
-                href="/start"
-                className="group inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
-              >
-                secure your spot
-                <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
+
+              <div className="text-center bg-white border-4 border-ink rounded-3xl shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] p-12 pt-20">
+                <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 leading-tight">
+                  Ready to Start?
+                </h2>
+                <p className="text-2xl text-ink/70 font-bold mb-6">
+                  Brewing up fresh websites for {year}. Your order&apos;s up next.
+                </p>
+                <div className="inline-block bg-[#FDB97A] px-6 py-3 rounded-full border-3 border-ink mb-8">
+                  <span className="text-lg font-black text-ink flex items-center gap-2">
+                    <Icon icon="ph:calendar-duotone" className="w-6 h-6" />
+                    Taking orders for {currentMonth} & {nextMonth}
+                  </span>
+                </div>
+                <div>
+                  <Link
+                    href="/start"
+                    className="inline-flex items-center px-12 py-6 bg-[#FDB97A] text-ink text-xl font-black rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                  >
+                    START YOUR PROJECT →
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </Header>
       <Footer />
       <StickyCTA />
     </div>

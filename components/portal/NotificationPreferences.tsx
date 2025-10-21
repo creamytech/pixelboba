@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Mail, Check, X } from 'lucide-react';
 import { EmailPreferences } from '@/types/portal';
+import { Icon } from '@iconify/react';
 
 export default function NotificationPreferences() {
   const [preferences, setPreferences] = useState<EmailPreferences | null>(null);
@@ -189,12 +190,18 @@ export default function NotificationPreferences() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {(['instant', 'daily', 'weekly'] as const).map((freq) => (
+          {(
+            [
+              { value: 'instant', icon: 'ph:lightning-duotone', desc: 'get notified immediately' },
+              { value: 'daily', icon: 'ph:calendar-duotone', desc: 'digest every morning' },
+              { value: 'weekly', icon: 'ph:chart-bar-duotone', desc: 'summary every monday' },
+            ] as const
+          ).map((freq) => (
             <motion.button
-              key={freq}
-              onClick={() => setFrequency(freq)}
+              key={freq.value}
+              onClick={() => setFrequency(freq.value)}
               className={`p-4 rounded-lg border-2 transition-all ${
-                preferences.frequency === freq
+                preferences.frequency === freq.value
                   ? 'border-taro bg-taro/10 text-taro'
                   : 'border-brown-sugar/20 bg-white/50 hover:border-taro/40 text-ink/70'
               }`}
@@ -202,17 +209,9 @@ export default function NotificationPreferences() {
               whileTap={{ scale: 0.98 }}
             >
               <div className="text-center">
-                <div className="text-lg mb-1">
-                  {freq === 'instant' && '⚡'}
-                  {freq === 'daily' && '📅'}
-                  {freq === 'weekly' && '📊'}
-                </div>
-                <div className="font-display font-semibold capitalize text-sm">{freq}</div>
-                <div className="text-xs text-ink/60 mt-1">
-                  {freq === 'instant' && 'get notified immediately'}
-                  {freq === 'daily' && 'digest every morning'}
-                  {freq === 'weekly' && 'summary every monday'}
-                </div>
+                <Icon icon={freq.icon} className="w-8 h-8 mx-auto mb-1" />
+                <div className="font-display font-semibold capitalize text-sm">{freq.value}</div>
+                <div className="text-xs text-ink/60 mt-1">{freq.desc}</div>
               </div>
             </motion.button>
           ))}
@@ -236,43 +235,43 @@ export default function NotificationPreferences() {
             {
               key: 'newMessages',
               label: 'new messages',
-              icon: '💬',
+              icon: 'ph:chat-circle-dots-duotone',
               desc: 'when team members send you messages',
             },
             {
               key: 'projectUpdates',
               label: 'project updates',
-              icon: '📊',
+              icon: 'ph:chart-bar-duotone',
               desc: 'progress updates and status changes',
             },
             {
               key: 'milestoneCompletions',
               label: 'milestone completions',
-              icon: '✅',
+              icon: 'ph:check-circle-duotone',
               desc: 'when project milestones are finished',
             },
             {
               key: 'invoiceNotifications',
               label: 'invoice notifications',
-              icon: '💰',
+              icon: 'ph:currency-dollar-duotone',
               desc: 'new invoices and payment reminders',
             },
             {
               key: 'contractReminders',
               label: 'contract reminders',
-              icon: '📄',
+              icon: 'ph:file-text-duotone',
               desc: 'contracts pending your signature',
             },
             {
               key: 'fileUploads',
               label: 'file uploads',
-              icon: '📁',
+              icon: 'ph:folder-duotone',
               desc: 'when new files are shared with you',
             },
             {
               key: 'weeklyDigest',
               label: 'weekly digest',
-              icon: '📈',
+              icon: 'ph:chart-line-duotone',
               desc: 'weekly summary of all activity',
             },
           ].map((item, index) => (
@@ -284,7 +283,7 @@ export default function NotificationPreferences() {
               transition={{ delay: 0.3 + index * 0.05 }}
             >
               <div className="flex items-center gap-4">
-                <span className="text-lg">{item.icon}</span>
+                <Icon icon={item.icon} className="w-8 h-8 text-taro" />
                 <div>
                   <div className="font-display font-medium text-ink lowercase">{item.label}</div>
                   <div className="text-sm text-ink/60 lowercase">{item.desc}</div>
@@ -318,9 +317,10 @@ export default function NotificationPreferences() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        <p className="text-sm text-ink/70 text-center">
-          💡 <strong>tip:</strong> you can unsubscribe from any email type at any time using the
-          links in our emails
+        <p className="text-sm text-ink/70 text-center flex items-center justify-center gap-2">
+          <Icon icon="ph:lightbulb-duotone" className="w-5 h-5 text-matcha" />
+          <strong>tip:</strong> you can unsubscribe from any email type at any time using the links
+          in our emails
         </p>
       </motion.div>
     </motion.div>

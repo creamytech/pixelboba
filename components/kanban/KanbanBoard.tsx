@@ -33,12 +33,12 @@ interface KanbanBoardProps {
 }
 
 const columns: { id: TaskStatus; title: string; icon: string }[] = [
-  { id: 'BACKLOG', title: 'Backlog', icon: '🧊' },
-  { id: 'TODO', title: 'To Do', icon: '📝' },
-  { id: 'IN_PROGRESS', title: 'In Progress', icon: '🚀' },
-  { id: 'IN_REVIEW', title: 'In Review', icon: '👀' },
-  { id: 'COMPLETED', title: 'Completed', icon: '✓' },
-  { id: 'BLOCKED', title: 'Blocked', icon: '🚫' },
+  { id: 'BACKLOG', title: 'Backlog', icon: 'ph:cube-duotone' },
+  { id: 'TODO', title: 'To Do', icon: 'ph:note-duotone' },
+  { id: 'IN_PROGRESS', title: 'In Progress', icon: 'ph:rocket-launch-duotone' },
+  { id: 'IN_REVIEW', title: 'In Review', icon: 'ph:eye-duotone' },
+  { id: 'COMPLETED', title: 'Completed', icon: 'ph:check-circle-duotone' },
+  { id: 'BLOCKED', title: 'Blocked', icon: 'ph:prohibit-duotone' },
 ];
 
 export default function KanbanBoard({

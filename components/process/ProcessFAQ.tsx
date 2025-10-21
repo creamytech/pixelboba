@@ -60,21 +60,21 @@ export default function ProcessFAQ() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-milk-tea/10 to-white">
+    <section className="py-20 bg-cream">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6 lowercase">
-              frequently asked questions
+            <h2 className="text-4xl md:text-5xl font-black text-ink mb-6">
+              frequently asked <span className="italic text-taro">questions</span>
             </h2>
-            <p className="text-xl text-gray-600 lowercase">
+            <p className="text-xl text-ink/70 font-bold">
               everything you need to know about our no-meetings workflow
             </p>
           </div>
 
           {/* FAQ Items */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
@@ -82,22 +82,20 @@ export default function ProcessFAQ() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="bg-white rounded-xl border border-ink/10 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="bg-white rounded-3xl border-4 border-ink overflow-hidden shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]"
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-milk-tea/5 transition-colors duration-200"
+                  className="w-full flex items-center justify-between p-6 md:p-8 text-left active:bg-cream/50 transition-colors"
                   aria-expanded={openIndex === index}
                 >
-                  <h3 className="font-display text-lg md:text-xl font-bold text-ink lowercase pr-8">
-                    {faq.question}
-                  </h3>
+                  <h3 className="text-lg md:text-xl font-black text-ink pr-8">{faq.question}</h3>
                   <motion.div
                     animate={{ rotate: openIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 bg-deep-taro rounded-full p-2"
                   >
-                    <ChevronDown className="w-6 h-6 text-taro" />
+                    <ChevronDown className="w-6 h-6 text-white" />
                   </motion.div>
                 </button>
 
@@ -110,8 +108,8 @@ export default function ProcessFAQ() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6">
-                        <p className="text-gray-600 leading-relaxed lowercase">{faq.answer}</p>
+                      <div className="px-6 md:px-8 pb-6 md:pb-8 border-t-4 border-ink/10">
+                        <p className="text-ink/70 font-bold leading-relaxed pt-6">{faq.answer}</p>
                       </div>
                     </motion.div>
                   )}
@@ -126,21 +124,21 @@ export default function ProcessFAQ() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-16 text-center bg-gradient-to-br from-taro/5 to-matcha/5 rounded-2xl p-10 border border-taro/10"
+            className="mt-16 text-center bg-white rounded-3xl p-10 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
           >
-            <h3 className="font-display text-2xl font-bold text-ink mb-4 lowercase">
+            <h3 className="text-2xl md:text-3xl font-black text-ink mb-4 lowercase">
               still have questions?
             </h3>
-            <p className="text-gray-600 mb-6 lowercase">
+            <p className="text-ink/70 font-bold mb-6 text-lg">
               we&apos;re here to help. send us a message and we&apos;ll get back to you within 24
               hours.
             </p>
             <a
               href="mailto:hello@pixelboba.com"
-              className="inline-flex items-center bg-taro text-white px-8 py-4 rounded-xl font-semibold hover:bg-deep-taro transition-all duration-300 lowercase shadow-lg hover:shadow-2xl hover:shadow-taro/30 hover:scale-105"
+              className="inline-flex items-center gap-2 bg-deep-taro text-white px-10 py-5 rounded-full font-black text-lg border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
             >
               email us
-              <span className="inline-block ml-2">→</span>
+              <span className="inline-block">→</span>
             </a>
           </motion.div>
         </div>

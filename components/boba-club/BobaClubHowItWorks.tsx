@@ -1,103 +1,76 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { TooltipInfo } from '@/components/ui/tooltip-info';
+import { Icon } from '@iconify/react';
 
 const steps = [
   {
     number: '01',
-    title: 'subscribe',
-    description: 'choose your tier and join instantly',
-    tooltip: null,
+    icon: 'ph:target-duotone',
+    title: 'Subscribe',
+    description: 'Pick a plan and get started today.',
   },
   {
     number: '02',
-    title: 'request',
-    description: 'add unlimited dev + design to your queue',
-    tooltip:
-      'Add as many web development and design requests as you need to your queue. We work through them one (or two for Enterprise) at a time to ensure quality.',
+    icon: 'ph:note-duotone',
+    title: 'Request',
+    description: 'Tell us what you need—unlimited requests.',
   },
   {
     number: '03',
-    title: 'receive',
-    description: 'get projects back in 24-72 hours',
-    tooltip: null,
+    icon: 'ph:lightning-duotone',
+    title: 'Receive',
+    description: 'Get beautiful work in 1-3 days.',
   },
   {
     number: '04',
-    title: 'revise',
-    description: 'request unlimited revisions',
-    tooltip: null,
+    icon: 'ph:arrows-clockwise-duotone',
+    title: 'Revise',
+    description: 'Tweak it until it is perfect.',
   },
   {
     number: '05',
-    title: 'repeat',
-    description: 'pause or cancel anytime',
-    tooltip: null,
+    icon: 'ph:confetti-duotone',
+    title: 'Repeat',
+    description: 'Keep going or pause anytime.',
   },
 ];
 
 export default function BobaClubHowItWorks() {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
-
   return (
-    <section ref={sectionRef} className="py-32 bg-milk-tea">
+    <section className="py-32 bg-cream">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
-        >
-          <h2 className="font-display text-5xl md:text-7xl font-black text-ink mb-4">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-7xl font-black text-ink mb-4">
             simple as
             <br />
-            <span className="italic text-taro">boba.</span>
+            <span className="italic text-[#7C3AED]">boba.</span>
           </h2>
-        </motion.div>
+        </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {steps.map((step, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative"
+          {steps.map((step) => (
+            <div
+              key={step.number}
+              className="bg-white border-4 border-ink rounded-3xl p-6 shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all flex flex-col"
             >
-              {/* Card */}
-              <motion.div
-                className="bg-white border-4 border-ink rounded-3xl p-6 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] flex flex-col group cursor-pointer"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: '12px 12px 0px 0px rgba(15,23,42,1)',
-                  y: -4,
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                {/* Number badge */}
-                <motion.div
-                  className="inline-flex items-center justify-center w-14 h-14 bg-taro text-white rounded-full font-black text-xl mb-4 shadow-lg"
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  {step.number}
-                </motion.div>
+              {/* Icon */}
+              <Icon icon={step.icon} className="w-16 h-16 text-deep-taro mx-auto mb-4" />
 
-                {/* Title */}
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="font-display text-2xl font-black text-ink lowercase">
-                    {step.title}
-                  </h3>
-                  {step.tooltip && <TooltipInfo text={step.tooltip} />}
-                </div>
+              {/* Number badge */}
+              <div className="inline-flex items-center justify-center w-14 h-14 bg-[#7C3AED] text-white rounded-full font-black text-xl mb-4 shadow-lg self-center border-[3px] border-ink">
+                {step.number}
+              </div>
 
-                {/* Description */}
-                <p className="text-ink/60 font-medium text-base leading-snug">{step.description}</p>
-              </motion.div>
-            </motion.div>
+              {/* Title */}
+              <h3 className="text-2xl font-black text-ink lowercase mb-2 text-center">
+                {step.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-ink/70 font-bold text-base leading-snug text-center">
+                {step.description}
+              </p>
+            </div>
           ))}
         </div>
       </div>

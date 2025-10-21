@@ -1,81 +1,64 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { Icon } from '@iconify/react';
 
 const steps = [
   {
-    number: '1',
-    title: 'fill out our project form (takes 2 minutes)',
-    description: 'tell us about your project, budget, and timeline through our simple form',
+    number: '01',
+    icon: 'ph:note-duotone',
+    title: 'fill out our quick form',
+    description: 'tell us about your project in just 2 minutes',
   },
   {
-    number: '2',
-    title: 'tell us what you need + your budget range',
-    description: 'share your specific requirements and let us know your budget expectations',
+    number: '02',
+    icon: 'ph:chat-circle-dots-duotone',
+    title: 'share your vision & budget',
+    description: 'let us know what you need and your budget range',
   },
   {
-    number: '3',
-    title: "we'll send a custom proposal + timeline by email",
-    description: 'receive a detailed proposal with pricing and timeline within 24 hours',
+    number: '03',
+    icon: 'ph:envelope-duotone',
+    title: 'get your custom proposal',
+    description: 'receive pricing and timeline within 24 hours',
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-cream">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-display text-4xl font-bold text-ink mb-4 lowercase">
-              how it works
+            <h2 className="text-5xl md:text-6xl font-black text-ink mb-4">
+              how it <span className="italic text-[#7C3AED]">works</span>
             </h2>
-            <p className="text-lg text-gray-600 lowercase">
+            <p className="text-xl md:text-2xl text-ink/70 font-bold">
               simple, transparent, no phone calls required
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center relative"
+            {steps.map((step) => (
+              <div
+                key={step.number}
+                className="bg-cream rounded-3xl p-8 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all text-center"
               >
-                <div className="relative mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-taro to-taro/80 rounded-full flex items-center justify-center mx-auto relative">
-                    <span className="text-2xl font-bold text-white">{step.number}</span>
-
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-matcha rounded-full"></div>
-                    <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-taro/60 rounded-full"></div>
-                  </div>
-
-                  {index < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gradient-to-r from-taro/30 to-transparent transform translate-x-8"></div>
-                  )}
+                <Icon icon={step.icon} className="w-16 h-16 text-deep-taro mx-auto mb-4" />
+                <div className="inline-block bg-[#7C3AED] text-white px-4 py-2 rounded-full font-black text-lg mb-4 border-[3px] border-ink">
+                  {step.number}
                 </div>
-
-                <div className="px-4">
-                  <h3 className="font-display text-xl font-semibold text-ink mb-3 lowercase">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-600 lowercase leading-relaxed">{step.description}</p>
-                </div>
-              </motion.div>
+                <h3 className="text-2xl font-black text-ink mb-3">{step.title}</h3>
+                <p className="text-lg font-bold text-ink/70 leading-relaxed">{step.description}</p>
+              </div>
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="text-center mt-12"
-          >
-            <p className="text-sm text-gray-500 lowercase">
-              💡 no phone calls, no meetings, no pressure, just clear communication via email
+          <div className="text-center mt-12">
+            <p className="text-lg font-bold text-ink/60 flex items-center justify-center gap-2">
+              <Icon icon="ph:lightbulb-duotone" className="w-6 h-6 text-matcha" />
+              no phone calls, no meetings, no pressure—just clear email communication
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

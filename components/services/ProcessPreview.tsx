@@ -49,65 +49,62 @@ const steps = [
 
 export default function ProcessPreview() {
   return (
-    <section className="py-24 bg-gradient-to-b from-white via-milk-tea/5 to-white">
+    <section className="py-32 bg-cream">
       <div className="container mx-auto px-4">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6 lowercase">
-            how we work
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl font-black text-ink mb-6">
+            how we <span className="italic text-[#7C3AED]">work</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto lowercase">
+          <p className="text-xl md:text-2xl text-ink/70 font-bold max-w-3xl mx-auto">
             simple workflow, no meetings, live previews from day one
           </p>
-        </motion.div>
+        </div>
 
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-16">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <motion.div
                   key={step.number}
-                  className="text-center bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+                  className="text-center bg-white rounded-3xl p-10 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:shadow-[10px_10px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <div className="relative mb-6">
+                  <div className="relative mb-8">
                     {/* Step icon */}
-                    <div className="relative z-10 w-20 h-20 bg-gradient-to-br from-taro to-deep-taro rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <Icon className="w-8 h-8 text-white" />
+                    <div className="relative z-10 w-24 h-24 bg-gradient-to-br from-taro to-deep-taro rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+                      <Icon className="w-10 h-10 text-white" />
                     </div>
 
                     {/* Step number */}
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-matcha text-white rounded-full flex items-center justify-center text-sm font-bold">
+                    <div className="absolute top-0 right-1/4 w-10 h-10 bg-matcha text-white rounded-full flex items-center justify-center text-lg font-black border-4 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]">
                       {step.number}
                     </div>
                   </div>
 
-                  <h3 className="font-display text-2xl font-bold text-ink mb-3 lowercase">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-600 mb-6 lowercase leading-relaxed">{step.description}</p>
+                  <h3 className="font-display text-3xl font-black text-ink mb-4">{step.title}</h3>
+                  <p className="text-ink/70 mb-8 font-bold text-lg leading-relaxed">
+                    {step.description}
+                  </p>
 
                   {/* Step Details */}
-                  <div className="mb-6 space-y-2">
+                  <div className="mb-8 space-y-3">
                     {step.details.map((detail, detailIndex) => (
-                      <div key={detailIndex} className="flex items-center text-sm text-gray-600">
-                        <div className="w-1.5 h-1.5 bg-taro rounded-full mr-3 flex-shrink-0"></div>
-                        <span className="lowercase">{detail}</span>
+                      <div key={detailIndex} className="flex items-start text-base text-ink/70">
+                        <Icon
+                          icon="ph:check-circle-duotone"
+                          className="w-5 h-5 text-matcha mr-3 flex-shrink-0 mt-0.5"
+                        />
+                        <span className="font-bold text-left">{detail}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="bg-milk-tea/20 rounded-full px-4 py-2 inline-block">
-                    <span className="text-sm text-gray-600 font-medium lowercase">{step.time}</span>
+                  <div className="bg-[#FDB97A] rounded-full px-6 py-3 inline-block border-4 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]">
+                    <span className="text-base text-ink font-black">{step.time}</span>
                   </div>
                 </motion.div>
               );

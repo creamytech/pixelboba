@@ -36,7 +36,7 @@ const values = [
 
 export default function OurValues() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-cream">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
