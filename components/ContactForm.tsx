@@ -97,16 +97,19 @@ export default function ContactForm() {
 
   return (
     <motion.div
-      className="bg-white rounded-3xl p-8 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
+      className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-3 sm:border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
         {/* Name & Email */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="name"
+              className="block text-sm sm:text-base font-medium text-gray-700 mb-2"
+            >
               Name *
             </label>
             <Input
@@ -115,11 +118,15 @@ export default function ContactForm() {
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
               placeholder="Your Full Name"
+              className="min-h-[48px] text-base"
               required
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm sm:text-base font-medium text-gray-700 mb-2"
+            >
               Email *
             </label>
             <Input
@@ -128,6 +135,7 @@ export default function ContactForm() {
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               placeholder="your@email.com"
+              className="min-h-[48px] text-base"
               required
             />
           </div>
@@ -135,7 +143,10 @@ export default function ContactForm() {
 
         {/* Company */}
         <div>
-          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="company"
+            className="block text-sm sm:text-base font-medium text-gray-700 mb-2"
+          >
             Company
           </label>
           <Input
@@ -144,25 +155,29 @@ export default function ContactForm() {
             value={formData.company}
             onChange={(e) => handleInputChange('company', e.target.value)}
             placeholder="Your Company Name"
+            className="min-h-[48px] text-base"
           />
         </div>
 
         {/* Budget & Timeline */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           <div>
-            <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="budget"
+              className="block text-sm sm:text-base font-medium text-gray-700 mb-2"
+            >
               Budget Range
             </label>
             <Select
               value={formData.budget}
               onValueChange={(value) => handleInputChange('budget', value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className="min-h-[48px] text-base">
                 <SelectValue placeholder="Select Budget Range" />
               </SelectTrigger>
               <SelectContent>
                 {budgetOptions.map((option) => (
-                  <SelectItem key={option} value={option}>
+                  <SelectItem key={option} value={option} className="text-base">
                     {option}
                   </SelectItem>
                 ))}
@@ -170,19 +185,22 @@ export default function ContactForm() {
             </Select>
           </div>
           <div>
-            <label htmlFor="timeline" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="timeline"
+              className="block text-sm sm:text-base font-medium text-gray-700 mb-2"
+            >
               Timeline
             </label>
             <Select
               value={formData.timeline}
               onValueChange={(value) => handleInputChange('timeline', value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className="min-h-[48px] text-base">
                 <SelectValue placeholder="When Do You Need This?" />
               </SelectTrigger>
               <SelectContent>
                 {timelineOptions.map((option) => (
-                  <SelectItem key={option} value={option}>
+                  <SelectItem key={option} value={option} className="text-base">
                     {option}
                   </SelectItem>
                 ))}
@@ -193,7 +211,10 @@ export default function ContactForm() {
 
         {/* Message */}
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="message"
+            className="block text-sm sm:text-base font-medium text-gray-700 mb-2"
+          >
             Project Details *
           </label>
           <Textarea
@@ -202,6 +223,7 @@ export default function ContactForm() {
             onChange={(e) => handleInputChange('message', e.target.value)}
             placeholder="Tell us about your project, goals, and any specific requirements..."
             rows={6}
+            className="text-base"
             required
           />
         </div>
@@ -232,7 +254,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status.type === 'loading'}
-          className="w-full bg-[#7C3AED] text-white py-4 px-6 rounded-full text-lg font-black border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] disabled:hover:translate-x-0 disabled:hover:translate-y-0 flex items-center justify-center gap-2"
+          className="w-full min-h-[56px] bg-[#7C3AED] text-white py-4 sm:py-5 px-6 rounded-full text-lg sm:text-xl font-black border-3 sm:border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] active:shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] md:hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:active:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] disabled:active:translate-x-0 disabled:active:translate-y-0 disabled:md:hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] disabled:md:hover:translate-x-0 disabled:md:hover:translate-y-0 flex items-center justify-center gap-2"
         >
           {status.type === 'loading' ? (
             <>

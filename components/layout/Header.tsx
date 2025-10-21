@@ -57,23 +57,23 @@ export default function Header({ children }: HeaderProps) {
 
   return (
     <>
-      <header className="pt-24 md:pt-16 pb-0 px-8 md:px-12">
+      <header className="pt-20 sm:pt-24 md:pt-16 pb-0 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="max-w-[1400px] mx-auto relative">
           {/* Main card with 3 stacked solid color bars */}
           <motion.div
-            className="relative bg-white border-4 border-ink rounded-[32px] shadow-[16px_16px_0px_0px_rgba(58,0,29,1)] overflow-visible"
+            className="relative bg-white border-3 sm:border-4 border-ink rounded-2xl sm:rounded-3xl md:rounded-[32px] shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] sm:shadow-[12px_12px_0px_0px_rgba(58,0,29,1)] md:shadow-[16px_16px_0px_0px_rgba(58,0,29,1)] overflow-visible"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             {/* Desktop: Buttons and logo - positioned ABOVE card, half on/half off */}
             {/* Mobile: Only logo at top */}
-            <div className="absolute -top-8 md:-top-8 -top-12 left-0 right-0 z-50 px-8 flex items-start justify-between">
+            <div className="absolute -top-8 sm:-top-10 md:-top-8 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 flex items-start justify-between">
               {/* Menu button - Desktop only */}
               <div className="relative hidden md:block">
                 <motion.button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="bg-white text-ink px-6 py-3 rounded-full font-black border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] flex items-center gap-2 text-sm"
+                  className="bg-white text-ink px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-black border-3 sm:border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] sm:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] flex items-center gap-2 text-sm min-h-[44px]"
                   whileHover={{
                     scale: 1.05,
                     boxShadow: '6px 6px 0px 0px rgba(58,0,29,1)',
@@ -148,7 +148,7 @@ export default function Header({ children }: HeaderProps) {
                     alt="Pixel Boba"
                     width={700}
                     height={210}
-                    className="w-auto h-32 md:h-36"
+                    className="w-auto h-24 sm:h-28 md:h-32 lg:h-36"
                     priority
                   />
                 </Link>
@@ -162,7 +162,7 @@ export default function Header({ children }: HeaderProps) {
               >
                 <Link
                   href="/start"
-                  className="inline-block bg-[#7C3AED] text-white px-6 py-3 rounded-full font-black border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all text-sm whitespace-nowrap"
+                  className="inline-flex items-center justify-center min-h-[44px] bg-[#7C3AED] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-black border-3 sm:border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] sm:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all text-sm whitespace-nowrap"
                 >
                   GET STARTED
                 </Link>
@@ -179,8 +179,8 @@ export default function Header({ children }: HeaderProps) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="h-full overflow-y-auto pb-32 pt-8 px-4">
-                    <nav className="flex flex-col gap-4">
+                  <div className="h-full overflow-y-auto pb-32 pt-6 sm:pt-8 px-4 sm:px-6">
+                    <nav className="flex flex-col gap-3 sm:gap-4">
                       {navigation.map((item, index) => (
                         <motion.div
                           key={item.name}
@@ -194,17 +194,20 @@ export default function Header({ children }: HeaderProps) {
                             className="block group"
                           >
                             <div
-                              className={`bg-white border-4 border-ink rounded-3xl shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] p-6 transition-all ${
+                              className={`bg-white border-3 sm:border-4 border-ink rounded-2xl sm:rounded-3xl shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] p-5 sm:p-6 transition-all min-h-[100px] ${
                                 pathname === item.href
                                   ? 'bg-[#7C3AED]/10'
-                                  : 'active:shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] active:translate-x-[3px] active:translate-y-[3px]'
+                                  : 'active:shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px]'
                               }`}
                             >
-                              <Icon icon={item.icon} className="w-14 h-14 text-deep-taro mb-3" />
-                              <h3 className="text-2xl font-black text-ink mb-2 group-active:text-[#7C3AED] transition-colors">
+                              <Icon
+                                icon={item.icon}
+                                className="w-12 h-12 sm:w-14 sm:h-14 text-deep-taro mb-3"
+                              />
+                              <h3 className="text-xl sm:text-2xl font-black text-ink mb-2 group-active:text-[#7C3AED] transition-colors">
                                 {item.name}
                               </h3>
-                              <p className="text-base text-ink/70 font-bold leading-snug">
+                              <p className="text-sm sm:text-base text-ink/70 font-bold leading-snug">
                                 {item.description}
                               </p>
                             </div>
@@ -218,39 +221,46 @@ export default function Header({ children }: HeaderProps) {
             </AnimatePresence>
 
             {/* First bar - medium taro */}
-            <div className="h-12 bg-[#A78BFA] rounded-t-[28px]" />
+            <div className="h-10 sm:h-12 bg-[#A78BFA] rounded-t-2xl sm:rounded-t-3xl md:rounded-t-[28px]" />
 
             {/* Second bar - deep taro */}
-            <div className="h-12 bg-[#7C3AED]" />
+            <div className="h-10 sm:h-12 bg-[#7C3AED]" />
 
             {/* Content area */}
-            <div className="bg-cream rounded-b-3xl">{children}</div>
+            <div className="bg-cream rounded-b-2xl sm:rounded-b-3xl">{children}</div>
           </motion.div>
         </div>
       </header>
 
       {/* Spacer for footer */}
-      <div className="h-24"></div>
+      <div className="h-20 sm:h-24"></div>
 
       {/* Mobile Floating Side Buttons */}
       <div className="md:hidden">
         {/* Menu Button - Left Side */}
         <motion.button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="fixed left-4 bottom-8 z-[110] bg-white text-ink p-5 rounded-full font-black border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]"
+          className="fixed left-3 sm:left-4 bottom-6 sm:bottom-8 z-[110] bg-white text-ink p-4 sm:p-5 rounded-full font-black border-3 sm:border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] min-w-[56px] min-h-[56px] flex items-center justify-center"
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}
         >
-          {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+          {isMenuOpen ? (
+            <X className="w-6 h-6 sm:w-7 sm:h-7" />
+          ) : (
+            <Menu className="w-6 h-6 sm:w-7 sm:h-7" />
+          )}
         </motion.button>
 
         {/* Get Started Button - Right Side */}
-        <motion.div className="fixed right-4 bottom-8 z-[110]" whileTap={{ scale: 0.95 }}>
+        <motion.div
+          className="fixed right-3 sm:right-4 bottom-6 sm:bottom-8 z-[110]"
+          whileTap={{ scale: 0.95 }}
+        >
           <Link
             href="/start"
-            className="bg-[#7C3AED] text-white p-5 rounded-full font-black border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center"
+            className="bg-[#7C3AED] text-white p-4 sm:p-5 rounded-full font-black border-3 sm:border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center min-w-[56px] min-h-[56px]"
           >
-            <Icon icon="ph:rocket-duotone" className="w-7 h-7" />
+            <Icon icon="ph:rocket-duotone" className="w-6 h-6 sm:w-7 sm:h-7" />
           </Link>
         </motion.div>
       </div>

@@ -90,28 +90,28 @@ export default function BobaClubPricing() {
     <section
       id="pricing"
       ref={sectionRef}
-      className="py-32 bg-cream relative overflow-hidden scroll-mt-20"
+      className="py-16 sm:py-24 md:py-32 bg-cream relative overflow-hidden scroll-mt-20"
     >
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <h2 className="font-display text-5xl md:text-7xl font-black text-ink mb-6">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-ink mb-4 sm:mb-6">
             Choose Your
             <br />
             <span className="italic text-taro">Flavor</span>
           </h2>
-          <p className="text-xl md:text-2xl text-ink/70 font-bold max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl text-ink/70 font-bold max-w-3xl mx-auto px-4">
             Unlimited web development + design for one flat monthly rate.
           </p>
         </motion.div>
 
         {/* Stacked pricing cards */}
-        <div className="max-w-4xl mx-auto space-y-12 mb-20">
+        <div className="max-w-4xl mx-auto space-y-8 sm:space-y-12 mb-12 sm:mb-16 md:mb-20">
           {tiers.map((tier, index) => (
             <motion.div
               key={tier.name}
@@ -122,10 +122,10 @@ export default function BobaClubPricing() {
             >
               {/* Popular badge */}
               {tier.popular && (
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
-                  <div className="bg-[#FDB97A] border-4 border-ink rounded-full px-6 py-3 shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
-                    <p className="font-black text-ink text-sm uppercase flex items-center gap-2">
-                      <Sparkles className="w-4 h-4" />
+                <div className="absolute -top-4 sm:-top-6 left-1/2 -translate-x-1/2 z-20">
+                  <div className="bg-[#FDB97A] border-3 sm:border-4 border-ink rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] sm:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+                    <p className="font-black text-ink text-xs sm:text-sm uppercase flex items-center gap-1 sm:gap-2">
+                      <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
                       Most Popular
                     </p>
                   </div>
@@ -134,54 +134,59 @@ export default function BobaClubPricing() {
 
               {/* Pricing card */}
               <div
-                className={`bg-white border-4 border-ink rounded-3xl p-8 md:p-12 shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:shadow-[10px_10px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all ${
+                className={`bg-white border-3 sm:border-4 border-ink rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] md:hover:shadow-[10px_10px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all ${
                   tier.popular ? 'border-[#FDB97A]' : ''
                 }`}
               >
-                <div className="grid md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10">
                   {/* Left column - Header and Price */}
                   <div className="flex flex-col justify-center">
-                    <div className="mb-6">
-                      <Icon icon={tier.icon} className="w-24 h-24 text-deep-taro mb-6" />
-                      <h3 className="font-display text-4xl md:text-5xl font-black text-ink mb-4">
+                    <div className="mb-4 sm:mb-6">
+                      <Icon
+                        icon={tier.icon}
+                        className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-deep-taro mb-4 sm:mb-6"
+                      />
+                      <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-ink mb-3 sm:mb-4">
                         {tier.name}
                       </h3>
-                      <p className="text-ink/70 font-bold text-lg mb-8">{tier.description}</p>
+                      <p className="text-ink/70 font-bold text-base sm:text-lg mb-6 sm:mb-8">
+                        {tier.description}
+                      </p>
                     </div>
 
                     {/* Price */}
-                    <div className="mb-8">
+                    <div className="mb-6 sm:mb-8">
                       <div className="flex items-baseline gap-2">
-                        <span className="font-display text-6xl md:text-7xl font-black text-ink">
+                        <span className="font-display text-5xl sm:text-6xl md:text-7xl font-black text-ink">
                           ${tier.price.toLocaleString()}
                         </span>
-                        <span className="text-2xl text-ink/70 font-bold">/month</span>
+                        <span className="text-xl sm:text-2xl text-ink/70 font-bold">/month</span>
                       </div>
                     </div>
 
                     {/* CTA Button */}
                     <CheckoutButton
                       size="lg"
-                      className="w-full bg-matcha hover:bg-matcha/90 text-ink py-6 text-xl font-black rounded-full border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
+                      className="w-full min-h-[56px] bg-matcha hover:bg-matcha/90 text-ink py-5 sm:py-6 text-lg sm:text-xl font-black rounded-full border-3 sm:border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] sm:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] active:shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] md:hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all uppercase"
                     >
                       Get Started
                     </CheckoutButton>
 
-                    <p className="text-center text-ink/50 text-base font-bold mt-5">
+                    <p className="text-center text-ink/50 text-sm sm:text-base font-bold mt-4 sm:mt-5">
                       Pause or cancel anytime
                     </p>
                   </div>
 
                   {/* Right column - Features */}
                   <div>
-                    <ul className="space-y-4">
+                    <ul className="space-y-3 sm:space-y-4">
                       {tier.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-3">
+                        <li key={i} className="flex items-start gap-2 sm:gap-3">
                           <Icon
                             icon="ph:check-circle-duotone"
-                            className="w-7 h-7 text-matcha flex-shrink-0 mt-0.5"
+                            className="w-6 h-6 sm:w-7 sm:h-7 text-matcha flex-shrink-0 mt-0.5"
                           />
-                          <span className="text-ink font-bold text-lg leading-relaxed">
+                          <span className="text-ink font-bold text-base sm:text-lg leading-relaxed">
                             {feature}
                           </span>
                         </li>
@@ -199,13 +204,13 @@ export default function BobaClubPricing() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="max-w-4xl mx-auto mb-20 text-center"
+          className="max-w-4xl mx-auto mb-12 sm:mb-16 md:mb-20 text-center"
         >
-          <div className="bg-[#A78BFA]/10 border-4 border-ink rounded-3xl p-10 md:p-12 shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]">
-            <h3 className="font-display text-3xl md:text-4xl font-black text-ink mb-6">
+          <div className="bg-[#A78BFA]/10 border-3 sm:border-4 border-ink rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]">
+            <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-black text-ink mb-4 sm:mb-6">
               Why Boba Club Beats Hiring In-House
             </h3>
-            <p className="text-lg md:text-xl text-ink/70 font-bold max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-ink/70 font-bold max-w-2xl mx-auto leading-relaxed px-4">
               Hiring a senior developer{' '}
               <span className="font-black text-ink">+ designer costs $150K+/year</span> plus
               benefits. Boba Club starts at just{' '}
@@ -219,34 +224,40 @@ export default function BobaClubPricing() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8"
+          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
         >
-          <div className="bg-white rounded-3xl p-10 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
-            <div className="flex items-start gap-5">
-              <div className="w-16 h-16 bg-[#A78BFA]/20 rounded-full flex items-center justify-center flex-shrink-0 border-4 border-ink">
-                <Icon icon="ph:pause-circle-duotone" className="w-8 h-8 text-deep-taro" />
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border-3 sm:border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] md:hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all">
+            <div className="flex items-start gap-4 sm:gap-5">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#A78BFA]/20 rounded-full flex items-center justify-center flex-shrink-0 border-3 sm:border-4 border-ink">
+                <Icon
+                  icon="ph:pause-circle-duotone"
+                  className="w-7 h-7 sm:w-8 sm:h-8 text-deep-taro"
+                />
               </div>
               <div>
-                <h4 className="font-display text-2xl md:text-3xl font-black text-ink mb-3">
+                <h4 className="font-display text-xl sm:text-2xl md:text-3xl font-black text-ink mb-2 sm:mb-3">
                   Pause Anytime
                 </h4>
-                <p className="text-ink/70 font-bold text-base md:text-lg">
+                <p className="text-ink/70 font-bold text-sm sm:text-base md:text-lg leading-relaxed">
                   Temporarily pause your subscription anytime, no sweat.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl p-10 border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
-            <div className="flex items-start gap-5">
-              <div className="w-16 h-16 bg-matcha/20 rounded-full flex items-center justify-center flex-shrink-0 border-4 border-ink">
-                <Icon icon="ph:check-circle-duotone" className="w-8 h-8 text-matcha" />
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border-3 sm:border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] sm:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] md:hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all">
+            <div className="flex items-start gap-4 sm:gap-5">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-matcha/20 rounded-full flex items-center justify-center flex-shrink-0 border-3 sm:border-4 border-ink">
+                <Icon
+                  icon="ph:check-circle-duotone"
+                  className="w-7 h-7 sm:w-8 sm:h-8 text-matcha"
+                />
               </div>
               <div>
-                <h4 className="font-display text-2xl md:text-3xl font-black text-ink mb-3">
+                <h4 className="font-display text-xl sm:text-2xl md:text-3xl font-black text-ink mb-2 sm:mb-3">
                   Try It for a Week
                 </h4>
-                <p className="text-ink/70 font-bold text-base md:text-lg">
+                <p className="text-ink/70 font-bold text-sm sm:text-base md:text-lg leading-relaxed">
                   Not loving it after a week? Get 75% back, no questions asked.
                 </p>
               </div>

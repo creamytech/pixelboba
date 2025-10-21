@@ -82,33 +82,33 @@ const addOns = [
 
 export default function PricingSection() {
   return (
-    <section className="py-20">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-16 md:py-20">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-14 md:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-ink mb-4 sm:mb-6">
             transparent pricing
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             choose the package that best fits your needs. all packages include our signature
             attention to detail and performance optimization.
           </p>
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-14 md:mb-16">
           {packages.map((pkg, index) => {
             const Icon = pkg.icon;
             return (
               <motion.div
                 key={pkg.name}
                 className={`relative bg-white rounded-2xl shadow-xl overflow-hidden ${
-                  pkg.popular ? 'ring-2 ring-taro transform scale-105' : ''
+                  pkg.popular ? 'ring-2 ring-taro md:transform md:scale-105' : ''
                 }`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -123,34 +123,36 @@ export default function PricingSection() {
                 )}
 
                 <div
-                  className={`bg-gradient-to-br ${pkg.color} p-8 text-white ${pkg.popular ? 'pt-12' : ''}`}
+                  className={`bg-gradient-to-br ${pkg.color} p-6 sm:p-8 text-white ${pkg.popular ? 'pt-10 sm:pt-12' : ''}`}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div className="text-right">
-                      <div className="text-3xl font-bold">{pkg.price}</div>
+                      <div className="text-2xl sm:text-3xl font-bold">{pkg.price}</div>
                       <div className="text-sm opacity-90">{pkg.duration}</div>
                     </div>
                   </div>
-                  <h3 className="font-display text-2xl font-bold mb-2">{pkg.name}</h3>
-                  <p className="opacity-90 leading-relaxed">{pkg.description}</p>
+                  <h3 className="font-display text-xl sm:text-2xl font-bold mb-2">{pkg.name}</h3>
+                  <p className="opacity-90 leading-relaxed text-sm sm:text-base">
+                    {pkg.description}
+                  </p>
                 </div>
 
-                <div className="p-8">
-                  <ul className="space-y-4 mb-8">
+                <div className="p-6 sm:p-8">
+                  <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                     {pkg.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
                         <Check className="w-5 h-5 text-matcha mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-600">{feature}</span>
+                        <span className="text-gray-600 text-sm sm:text-base">{feature}</span>
                       </li>
                     ))}
                   </ul>
 
                   <Button
                     asChild
-                    className={`w-full ${
+                    className={`w-full min-h-[48px] text-base sm:text-lg ${
                       pkg.popular
                         ? 'bg-taro hover:bg-deep-taro text-white'
                         : 'border border-taro text-taro hover:bg-taro hover:text-white'
@@ -171,23 +173,25 @@ export default function PricingSection() {
 
         {/* Add-ons */}
         <motion.div
-          className="bg-gray-50 rounded-2xl p-8"
+          className="bg-gray-50 rounded-2xl p-6 sm:p-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <h3 className="font-display text-2xl font-bold text-ink mb-6 text-center">
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-ink mb-4 sm:mb-6 text-center">
             Optional Add-ons
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {addOns.map((addon, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm"
+                className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm min-h-[60px]"
               >
-                <span className="font-medium text-gray-700">{addon.name}</span>
-                <span className="font-bold text-taro">{addon.price}</span>
+                <span className="font-medium text-gray-700 text-sm sm:text-base">{addon.name}</span>
+                <span className="font-bold text-taro text-sm sm:text-base whitespace-nowrap ml-2">
+                  {addon.price}
+                </span>
               </div>
             ))}
           </div>
@@ -195,20 +199,20 @@ export default function PricingSection() {
 
         {/* CTA */}
         <motion.div
-          className="text-center mt-16"
+          className="text-center mt-12 sm:mt-14 md:mt-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-4 sm:mb-6 text-base sm:text-lg px-4">
             need something custom? let&apos;s discuss your specific requirements.
           </p>
           <Button
             asChild
             variant="outline"
             size="lg"
-            className="border-taro text-taro hover:bg-taro hover:text-white"
+            className="border-taro text-taro hover:bg-taro hover:text-white min-h-[48px] text-base sm:text-lg px-6 sm:px-8"
           >
             <Link href="/contact">request custom quote</Link>
           </Button>
