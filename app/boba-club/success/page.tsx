@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Icon } from '@iconify/react';
 
-export default function BobaClubSuccessPage() {
+function BobaClubSuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
@@ -104,5 +104,22 @@ export default function BobaClubSuccessPage() {
         <div className="animate-pulse text-purple-600">Loading your workspace...</div>
       </div>
     </div>
+  );
+}
+
+export default function BobaClubSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <BobaClubSuccessContent />
+    </Suspense>
   );
 }

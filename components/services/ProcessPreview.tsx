@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Clock, Eye, Rocket } from 'lucide-react';
+import { Icon as IconifyIcon } from '@iconify/react';
 
 const steps = [
   {
@@ -94,7 +95,7 @@ export default function ProcessPreview() {
                   <div className="mb-8 space-y-3">
                     {step.details.map((detail, detailIndex) => (
                       <div key={detailIndex} className="flex items-start text-base text-ink/70">
-                        <Icon
+                        <IconifyIcon
                           icon="ph:check-circle-duotone"
                           className="w-5 h-5 text-matcha mr-3 flex-shrink-0 mt-0.5"
                         />
