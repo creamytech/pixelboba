@@ -178,8 +178,14 @@ export default function AboutPageClient() {
 
         {/* CTA with cat */}
         <div className="max-w-3xl mx-auto relative">
-          <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-10">
-            <Image src="/01.svg" alt="" width={120} height={120} className="w-28 h-28" />
+          <div className="absolute -top-20 left-1/2 -translate-x-1/2 z-10">
+            <Image
+              src="/01.svg"
+              alt=""
+              width={160}
+              height={160}
+              className="w-36 h-36 sm:w-40 sm:h-40"
+            />
           </div>
 
           <div className="text-center bg-white border-4 border-ink rounded-3xl shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] p-12 pt-20">
