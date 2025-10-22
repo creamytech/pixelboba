@@ -104,7 +104,7 @@ export default function BobaClubPromo() {
                   </p>
                   <div className="flex items-baseline justify-center gap-2">
                     <span className="font-display text-5xl sm:text-6xl md:text-7xl font-black text-ink">
-                      $1,995
+                      $1,500
                     </span>
                     <span className="text-xl sm:text-2xl text-ink/70 font-bold">/mo</span>
                   </div>
