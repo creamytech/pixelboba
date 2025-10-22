@@ -123,37 +123,67 @@ export default async function WorkPage({ params }: WorkPageProps) {
           __html: JSON.stringify(structuredData),
         }}
       />
-      <Header />
-      <main className="pt-20">
-        {/* Breadcrumb Navigation */}
-        <div className="container mx-auto px-4">
-          <Breadcrumb
-            items={[
-              { label: 'home', href: '/' },
-              { label: 'portfolio', href: '/work' },
-              { label: frontmatter.title.toLowerCase(), href: `/work/${slug}` },
-            ]}
-          />
-        </div>
-
-        {/* Back Navigation */}
-        <div className="container mx-auto px-4 py-6">
-          <Button asChild variant="ghost" className="group">
-            <Link href="/work" className="flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              Back to Work
+      <Header>
+        <div className="py-12 md:py-16 px-4 md:px-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Back Navigation */}
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 mb-8 font-black text-ink hover:text-[#7C3AED] transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              BACK TO WORK
             </Link>
-          </Button>
-        </div>
 
-        {/* Hero Section */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              {/* Large Screenshot Hero */}
+            {/* Hero Section */}
+            <div className="mb-12">
+              {/* Service tags and title */}
+              <div className="mb-8">
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {frontmatter.services?.map((service: string) => (
+                    <span
+                      key={service}
+                      className="px-4 py-2 bg-[#7C3AED]/10 text-[#7C3AED] text-sm font-black rounded-full border-2 border-[#7C3AED]/20 uppercase tracking-wide"
+                    >
+                      {service}
+                    </span>
+                  ))}
+                </div>
+
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-ink mb-6 leading-tight">
+                  {frontmatter.title}
+                </h1>
+
+                <p className="text-xl md:text-2xl text-ink/70 font-bold mb-8 leading-tight">
+                  {frontmatter.summary}
+                </p>
+
+                <div className="flex flex-wrap gap-6 text-base font-bold text-ink/60 mb-8">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    {new Date(frontmatter.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                    })}
+                  </div>
+                  {frontmatter.website && (
+                    <a
+                      href={frontmatter.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#FDB97A] text-ink font-black rounded-full border-3 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                      VISIT WEBSITE
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Large Screenshot with Pomegranate styling */}
               {frontmatter.cover && (
-                <div className="relative mb-12 rounded-2xl overflow-hidden shadow-2xl">
-                  <div className="aspect-[16/10] relative">
+                <div className="relative mb-12 rounded-2xl sm:rounded-3xl overflow-hidden border-4 sm:border-[5px] border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] sm:shadow-[12px_12px_0px_0px_rgba(58,0,29,1)] md:shadow-[16px_16px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="aspect-[16/10] relative bg-cream">
                     <Image
                       src={frontmatter.cover}
                       alt={`${frontmatter.title} - Project Screenshot`}
@@ -162,95 +192,17 @@ export default async function WorkPage({ params }: WorkPageProps) {
                       priority
                       sizes="(max-width: 1200px) 100vw, 1200px"
                     />
-                    {/* Browser Frame Overlay */}
-                    <div className="absolute top-0 left-0 right-0 bg-gray-200 h-8 flex items-center px-4 gap-2">
-                      <div className="flex gap-1.5">
-                        <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      </div>
-                      <div className="flex-1 mx-4">
-                        <div className="bg-white rounded-md px-3 py-1 text-xs text-gray-600 max-w-xs truncate">
-                          {frontmatter.website ||
-                            `${frontmatter.title.toLowerCase().replace(/\s+/g, '-')}.com`}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Overlay with project title */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-8 left-8 text-white">
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {frontmatter.services?.map((service: string) => (
-                          <span
-                            key={service}
-                            className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-sm rounded-full border border-white/30"
-                          >
-                            {service}
-                          </span>
-                        ))}
-                      </div>
-                      <h1 className="font-display text-4xl md:text-6xl font-bold mb-4">
-                        {frontmatter.title}
-                      </h1>
-                    </div>
                   </div>
                 </div>
               )}
-
-              {/* Content without cover image fallback */}
-              {!frontmatter.cover && (
-                <>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {frontmatter.services?.map((service: string) => (
-                      <span
-                        key={service}
-                        className="px-3 py-1 bg-taro/10 text-taro text-sm rounded-full"
-                      >
-                        {service}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h1 className="font-display text-4xl md:text-6xl font-bold text-ink mb-6">
-                    {frontmatter.title}
-                  </h1>
-                </>
-              )}
-
-              <div className="max-w-4xl mx-auto">
-                <p className="text-xl text-gray-600 mb-8">{frontmatter.summary}</p>
-
-                <div className="flex flex-wrap gap-6 text-sm text-gray-500 mb-8">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    {new Date(frontmatter.publishedAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </div>
-                  {frontmatter.website && (
-                    <a
-                      href={frontmatter.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 hover:text-taro transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Visit Website
-                    </a>
-                  )}
-                </div>
-              </div>
 
               {/* Highlights */}
               {frontmatter.highlights && (
-                <div className="bg-gradient-to-br from-taro/5 to-deep-taro/10 rounded-xl p-8 mb-12">
-                  <h3 className="font-display text-2xl font-bold text-ink mb-6 text-center">
+                <div className="bg-white border-4 border-ink rounded-2xl sm:rounded-3xl shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] sm:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] p-8 sm:p-10 md:p-12">
+                  <h3 className="text-3xl md:text-4xl font-black text-ink mb-8 text-center">
                     What We Delivered
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {frontmatter.highlights.map((highlight: string, index: number) => {
                       // Map highlights to appropriate icons
                       const getIcon = (text: string) => {
@@ -303,11 +255,14 @@ export default async function WorkPage({ params }: WorkPageProps) {
                       const IconComponent = getIcon(highlight);
 
                       return (
-                        <div key={index} className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-taro to-deep-taro rounded-lg flex items-center justify-center mt-0.5 shadow-sm">
-                            <IconComponent className="w-4 h-4 text-white" />
+                        <div
+                          key={index}
+                          className="flex items-start gap-4 bg-cream rounded-xl p-4 border-2 border-ink/10"
+                        >
+                          <div className="flex-shrink-0 w-10 h-10 bg-[#7C3AED] rounded-lg flex items-center justify-center mt-0.5 border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]">
+                            <IconComponent className="w-5 h-5 text-white" />
                           </div>
-                          <p className="text-gray-700 font-medium">{highlight}</p>
+                          <p className="text-ink font-bold text-lg leading-snug">{highlight}</p>
                         </div>
                       );
                     })}
@@ -316,231 +271,238 @@ export default async function WorkPage({ params }: WorkPageProps) {
               )}
             </div>
           </div>
-        </section>
+        </div>
+      </Header>
 
-        {/* Before/After Comparison */}
-        {frontmatter.projectType === 'redesign' && (
-          <section className="py-12 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <div className="max-w-6xl mx-auto">
-                <h2 className="font-display text-3xl font-bold text-center mb-8">before & after</h2>
-                {frontmatter.beforeImages && frontmatter.afterImages ? (
-                  <BeforeAfterSlideshow
-                    beforeImages={frontmatter.beforeImages}
-                    afterImages={frontmatter.afterImages}
-                    beforeLabel="before"
-                    afterLabel="after"
-                  />
-                ) : frontmatter.beforeImage && frontmatter.afterImage ? (
-                  <BeforeAfterSlider
-                    beforeImage={frontmatter.beforeImage}
-                    afterImage={frontmatter.afterImage}
-                    beforeLabel="before"
-                    afterLabel="after"
-                  />
-                ) : null}
+      {/* Before/After Comparison */}
+      {frontmatter.projectType === 'redesign' && (
+        <section className="py-16 md:py-20 bg-cream">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-ink text-center mb-12">
+              Before & <span className="italic text-[#7C3AED]">After</span>
+            </h2>
+            <div className="bg-white border-4 border-ink rounded-2xl sm:rounded-3xl shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] sm:shadow-[12px_12px_0px_0px_rgba(58,0,29,1)] overflow-hidden">
+              {frontmatter.beforeImages && frontmatter.afterImages ? (
+                <BeforeAfterSlideshow
+                  beforeImages={frontmatter.beforeImages}
+                  afterImages={frontmatter.afterImages}
+                  beforeLabel="before"
+                  afterLabel="after"
+                />
+              ) : frontmatter.beforeImage && frontmatter.afterImage ? (
+                <BeforeAfterSlider
+                  beforeImage={frontmatter.beforeImage}
+                  afterImage={frontmatter.afterImage}
+                  beforeLabel="before"
+                  afterLabel="after"
+                />
+              ) : null}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Case Study Content */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8">
+          <div className="max-w-5xl mx-auto">
+            {/* Content Blocks - Show different layouts based on project type */}
+            {frontmatter.projectType === 'redesign' ? (
+              // Redesign Layout - Focus on Before/After
+              <div className="space-y-12">
+                {/* Original Content */}
+                <div className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-ink prose-p:text-ink/70 prose-p:font-bold prose-p:text-lg prose-p:leading-relaxed">
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                </div>
               </div>
-            </div>
-          </section>
-        )}
-
-        {/* Case Study Content */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              {/* Content Blocks - Show different layouts based on project type */}
-              {frontmatter.projectType === 'redesign' ? (
-                // Redesign Layout - Focus on Before/After
-                <div className="space-y-12">
-                  {/* Original Content */}
+            ) : (
+              // Custom Build Layout - Full content blocks
+              <div className="space-y-8">
+                {/* Challenge Block */}
+                <div className="bg-white border-4 border-ink rounded-2xl sm:rounded-3xl p-8 sm:p-10 shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#EF4444] to-[#F97316] rounded-xl flex items-center justify-center border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-black text-ink">Challenge</h3>
+                  </div>
                   <div className="prose prose-lg max-w-none">
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                    <p className="text-ink/70 font-bold text-lg leading-relaxed">
+                      The existing solution lacked modern design principles and failed to
+                      effectively showcase the client&apos;s expertise, resulting in low engagement
+                      and missed opportunities.
+                    </p>
                   </div>
                 </div>
-              ) : (
-                // Custom Build Layout - Full content blocks
-                <div className="space-y-16">
-                  {/* Challenge Block */}
-                  <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 border border-red-100">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
-                        <svg
-                          className="w-5 h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z"
-                          />
-                        </svg>
-                      </div>
-                      <h3 className="font-display text-2xl font-bold text-gray-900">Challenge</h3>
+
+                {/* Approach Block */}
+                <div className="bg-white border-4 border-ink rounded-2xl sm:rounded-3xl p-8 sm:p-10 shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-xl flex items-center justify-center border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                        />
+                      </svg>
                     </div>
-                    <div className="prose prose-gray max-w-none">
-                      <p className="text-gray-700 leading-relaxed">
-                        The existing solution lacked modern design principles and failed to
-                        effectively showcase the client&apos;s expertise, resulting in low
-                        engagement and missed opportunities.
-                      </p>
-                    </div>
+                    <h3 className="text-3xl md:text-4xl font-black text-ink">Approach</h3>
                   </div>
-
-                  {/* Approach Block */}
-                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-                        <svg
-                          className="w-5 h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                          />
-                        </svg>
-                      </div>
-                      <h3 className="font-display text-2xl font-bold text-gray-900">Approach</h3>
-                    </div>
-                    <div className="prose prose-gray max-w-none">
-                      <p className="text-gray-700 leading-relaxed">
-                        We conducted comprehensive user research, developed a design system focused
-                        on accessibility and performance, and implemented modern development
-                        practices to create a solution that exceeds industry standards.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Solution Block */}
-                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-                        <svg
-                          className="w-5 h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </div>
-                      <h3 className="font-display text-2xl font-bold text-gray-900">Solution</h3>
-                    </div>
-                    <div className="prose prose-gray max-w-none">
-                      <p className="text-gray-700 leading-relaxed">
-                        The final solution combines beautiful design with technical excellence,
-                        featuring responsive layouts, optimized performance, and intuitive user
-                        interactions that drive measurable business results.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Results with Stats */}
-                  <div className="bg-gradient-to-br from-taro/5 to-deep-taro/10 rounded-2xl p-8 border border-taro/20">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-lg flex items-center justify-center">
-                        <svg
-                          className="w-5 h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                          />
-                        </svg>
-                      </div>
-                      <h3 className="font-display text-2xl font-bold text-gray-900">Results</h3>
-                    </div>
-
-                    <div className="prose prose-gray max-w-none">
-                      <p className="text-gray-700 leading-relaxed">
-                        The new website delivers exceptional performance, significantly improving
-                        user experience and driving business growth.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Original Content */}
                   <div className="prose prose-lg max-w-none">
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                    <p className="text-ink/70 font-bold text-lg leading-relaxed">
+                      We conducted comprehensive user research, developed a design system focused on
+                      accessibility and performance, and implemented modern development practices to
+                      create a solution that exceeds industry standards.
+                    </p>
                   </div>
                 </div>
-              )}
+
+                {/* Solution Block */}
+                <div className="bg-white border-4 border-ink rounded-2xl sm:rounded-3xl p-8 sm:p-10 shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#10B981] to-[#059669] rounded-xl flex items-center justify-center border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-black text-ink">Solution</h3>
+                  </div>
+                  <div className="prose prose-lg max-w-none">
+                    <p className="text-ink/70 font-bold text-lg leading-relaxed">
+                      The final solution combines beautiful design with technical excellence,
+                      featuring responsive layouts, optimized performance, and intuitive user
+                      interactions that drive measurable business results.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Results with Stats */}
+                <div className="bg-white border-4 border-ink rounded-2xl sm:rounded-3xl p-8 sm:p-10 shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#7C3AED] to-[#A78BFA] rounded-xl flex items-center justify-center border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-black text-ink">Results</h3>
+                  </div>
+
+                  <div className="prose prose-lg max-w-none">
+                    <p className="text-ink/70 font-bold text-lg leading-relaxed">
+                      The new website delivers exceptional performance, significantly improving user
+                      experience and driving business growth.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Original Content */}
+                <div className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-ink prose-p:text-ink/70 prose-p:font-bold prose-p:text-lg prose-p:leading-relaxed">
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-20 bg-cream">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8">
+          <div className="max-w-3xl mx-auto relative">
+            {/* Cat peeking over */}
+            <div className="absolute -top-20 left-1/2 -translate-x-1/2 z-10">
+              <Image
+                src="/01.svg"
+                alt=""
+                width={160}
+                height={160}
+                className="w-36 h-36 sm:w-40 sm:h-40"
+              />
             </div>
-          </div>
-        </section>
 
-        {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-taro to-deep-taro relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full blur-sm"></div>
-            <div className="absolute top-32 right-20 w-16 h-16 bg-white rounded-full blur-sm"></div>
-            <div className="absolute bottom-20 left-32 w-12 h-12 bg-white rounded-full blur-sm"></div>
-            <div className="absolute bottom-10 right-10 w-24 h-24 bg-white rounded-full blur-sm"></div>
-          </div>
-
-          <div className="container mx-auto px-4 relative">
-            <div className="max-w-3xl mx-auto text-center text-white">
-              <h2 className="font-display text-4xl font-bold mb-6">Ready for Similar Results?</h2>
-              <p className="text-xl text-taro-100 mb-8">
+            <div className="text-center bg-white border-4 border-ink rounded-3xl shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] p-12 pt-20">
+              <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 leading-tight">
+                Ready for <span className="italic text-[#7C3AED]">Similar Results?</span>
+              </h2>
+              <p className="text-2xl text-ink/70 font-bold mb-8">
                 Let&apos;s discuss how we can transform your digital presence with the same
-                attention to detail and results-driven approach.
+                attention to detail.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-white text-taro hover:bg-milk-tea shadow-lg hover:shadow-xl transition-all"
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
+                <Link
+                  href="/start"
+                  className="inline-flex items-center px-10 py-5 bg-[#FDB97A] text-ink text-xl font-black rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                 >
-                  <Link href="/start">Start Your Project</Link>
-                </Button>
+                  START YOUR PROJECT →
+                </Link>
 
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="border-white text-white hover:bg-white hover:text-taro"
+                <Link
+                  href="/work"
+                  className="inline-flex items-center px-10 py-5 bg-white text-ink text-xl font-black rounded-full border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                 >
-                  <Link href="/work">View More Work</Link>
-                </Button>
+                  VIEW MORE WORK
+                </Link>
               </div>
 
-              <div className="mt-8 flex flex-wrap justify-center gap-8 text-sm text-taro-100">
+              <div className="flex flex-wrap justify-center gap-8 text-base font-bold text-ink/60 border-t-3 border-ink/10 pt-8">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>2-4 week delivery</span>
+                  <Calendar className="w-5 h-5" />
+                  <span>2-6 Week Delivery</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4" />
-                  <span>100 Lighthouse scores</span>
+                  <Zap className="w-5 h-5" />
+                  <span>100 Lighthouse Scores</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  <span>Lifetime support</span>
+                  <Shield className="w-5 h-5" />
+                  <span>Lifetime Support</span>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
       <Footer />
       <StickyCTA />
     </div>
