@@ -11,7 +11,7 @@ const CTASection = dynamic(() => import('@/components/sections/CTASection'));
 const SocialProofSection = dynamic(() => import('@/components/sections/SocialProofSection'));
 const CodeFirstSection = dynamic(() => import('@/components/sections/CodeFirstSection'));
 const BobaClubPromo = dynamic(() => import('@/components/sections/BobaClubPromo'));
-const ContactForm = dynamic(() => import('@/components/forms/ContactForm'));
+const ContactForm = dynamic(() => import('@/components/ContactForm'));
 
 // Boba Club components
 const BobaClubHero = dynamic(() => import('@/components/boba-club/BobaClubHero'));
