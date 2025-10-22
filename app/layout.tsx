@@ -5,6 +5,7 @@ import './globals.css';
 import { siteConfig } from '@/lib/seo';
 import StructuredData from '@/components/StructuredData';
 import Providers from '@/components/providers/Providers';
+import BuilderRegistry from './builder-registry';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'G-Z3342RYND2');
           `}
         </Script>
+        <BuilderRegistry />
         <Providers>{children}</Providers>
       </body>
     </html>
