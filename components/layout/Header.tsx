@@ -141,7 +141,7 @@ export default function Header({ children }: HeaderProps) {
               </div>
 
               {/* Logo - perfectly centered, half on/half off the card */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-8 sm:-translate-y-10 md:-translate-y-12">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-3 sm:-translate-y-4 md:-translate-y-5">
                 <Link href="/" className="pointer-events-auto">
                   <Image
                     src="/brand/Pixel_Boba_Icon_Header2.png"
