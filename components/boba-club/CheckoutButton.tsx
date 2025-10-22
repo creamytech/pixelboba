@@ -10,6 +10,7 @@ interface CheckoutButtonProps {
   children: React.ReactNode;
   size?: 'default' | 'sm' | 'lg' | 'icon';
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  priceId?: string;
 }
 
 export default function CheckoutButton({
@@ -17,6 +18,7 @@ export default function CheckoutButton({
   children,
   size = 'lg',
   variant = 'default',
+  priceId,
 }: CheckoutButtonProps) {
   const { data: session } = useSession();
   const router = useRouter();
@@ -34,7 +36,7 @@ export default function CheckoutButton({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ priceId }),
       });
 
       const data = await response.json();

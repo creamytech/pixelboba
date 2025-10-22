@@ -8,72 +8,70 @@ import { Icon } from '@iconify/react';
 
 const tiers = [
   {
-    name: 'Classic Milk Tea',
+    name: 'Lite Brew',
     icon: 'ph:coffee-duotone',
-    price: 1995,
-    description: 'Perfect for small businesses and startups',
+    price: 1500,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_LITE_BREW_PRICE_ID || '',
+    description: 'Perfect for solo founders or startups.',
     features: [
-      'One project at a time',
-      'Get work in 3 days',
+      'Access to the Pixel Boba Dashboard (1 user)',
+      '1 active request at a time',
+      'Website pages, landing pages, and updates',
+      'Social media and marketing graphics',
+      'Light branding (logos, color palettes, typography)',
+      '3–4 day turnaround per request',
       'Unlimited revisions',
-      'Website pages, updates & fixes',
-      'Graphics for social media & marketing',
-      'Custom landing pages',
-      'Logo & branding design',
-      '1 brand',
-      'Unlimited stock photos',
-      '1 user',
+      'Pause or cancel anytime',
     ],
-    gradient: 'from-gray-100 to-gray-200',
-    borderColor: 'border-gray-300',
-    buttonColor: 'bg-gray-800 hover:bg-gray-700',
+    gradient: 'from-milk-tea to-warm-cream',
+    borderColor: 'border-brown-sugar/30',
+    buttonColor: 'bg-brown-sugar hover:bg-brown-sugar/90',
     popular: false,
   },
   {
-    name: 'Brown Sugar Boba',
+    name: 'Signature Blend',
     icon: 'ph:drop-duotone',
-    price: 3995,
-    description: 'Best for growing businesses and agencies',
+    price: 3000,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_SIGNATURE_BLEND_PRICE_ID || '',
+    description: 'Our most popular — built for growing teams.',
     features: [
-      'One project at a time',
-      'Priority delivery in 2 days',
-      'Unlimited revisions',
-      'Full websites & online stores',
-      'Advanced branding & illustrations',
-      'Custom animations',
-      'Connect your favorite tools',
-      'Customer portals & login areas',
-      'Unlimited brands',
-      'Unlimited stock photos',
+      'Access to Premium Dashboard features',
+      'Real-time project tracking',
+      'Comment threads & file uploads',
+      'Task queue management',
       'Up to 3 users',
+      '2 active requests at a time',
+      'Priority delivery (2-day average turnaround)',
+      'Full websites & online stores',
+      'Advanced branding systems & illustrations',
+      'Custom animations',
+      'Monthly mini-UX review',
+      'Unlimited revisions',
     ],
-    gradient: 'from-amber-700 to-amber-900',
-    borderColor: 'border-amber-600',
+    gradient: 'from-[#FDB97A] to-thai-tea',
+    borderColor: 'border-[#FDB97A]',
     buttonColor: 'bg-matcha hover:bg-matcha/90',
     popular: true,
   },
   {
     name: 'Taro Cloud',
     icon: 'ph:cloud-duotone',
-    price: 6995,
-    description: 'Enterprise solution for maximum growth',
+    price: 6000,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_TARO_CLOUD_PRICE_ID || '',
+    description: 'Full creative power, unlimited brands, and real-time collaboration.',
     features: [
-      'Two projects at a time',
-      'Express delivery in 24 hours',
+      'Enterprise Dashboard Suite',
+      'Manage multiple brands or sub-accounts',
+      'Priority queueing (jump to top of the line)',
+      'Admin panel for your internal team',
+      'Access for up to 5 users',
+      '3 active requests at a time',
+      '24-hour express delivery',
+      'Dedicated creative manager',
+      'Monthly strategy & performance calls',
+      'Performance, SEO & accessibility optimization',
+      'Complex websites, web apps & custom systems',
       'Unlimited revisions',
-      'Full SEO services & Google ranking',
-      'Complex websites & custom systems',
-      'Works perfect on all devices',
-      'Lightning-fast performance',
-      'Accessible for everyone',
-      'Custom animations & effects',
-      'Any platform or technology',
-      'Connect all your tools',
-      'Unlimited brands',
-      'Unlimited stock photos',
-      'Up to 5 users',
-      'Dedicated account manager',
-      'Monthly strategy calls',
     ],
     gradient: 'from-deep-taro to-taro',
     borderColor: 'border-taro',
@@ -101,12 +99,12 @@ export default function BobaClubPricing() {
           className="text-center mb-12 sm:mb-16 md:mb-20"
         >
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-ink mb-4 sm:mb-6">
-            Choose Your
+            Your design team
             <br />
-            <span className="italic text-taro">Flavor</span>
+            <span className="italic text-taro">in a dashboard</span>
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-ink/70 font-bold max-w-3xl mx-auto px-4">
-            Unlimited web development + design for one flat monthly rate.
+            Submit requests, track progress, and sip while we design.
           </p>
         </motion.div>
 
@@ -166,10 +164,11 @@ export default function BobaClubPricing() {
 
                     {/* CTA Button */}
                     <CheckoutButton
+                      priceId={tier.priceId}
                       size="lg"
                       className="w-full min-h-[56px] bg-matcha hover:bg-matcha/90 text-ink py-5 sm:py-6 text-lg sm:text-xl font-black rounded-full border-3 sm:border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] sm:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] active:shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] md:hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] md:hover:translate-x-[-2px] md:hover:translate-y-[-2px] transition-all uppercase"
                     >
-                      Get Started
+                      Join & Get Dashboard Access
                     </CheckoutButton>
 
                     <p className="text-center text-ink/50 text-sm sm:text-base font-bold mt-4 sm:mt-5">
@@ -214,7 +213,7 @@ export default function BobaClubPricing() {
               Hiring a senior developer{' '}
               <span className="font-black text-ink">+ designer costs $150K+/year</span> plus
               benefits. Boba Club starts at just{' '}
-              <span className="font-black text-taro">$24K/year</span>—pause or cancel anytime.
+              <span className="font-black text-taro">$18K/year</span>—pause or cancel anytime.
             </p>
           </div>
         </motion.div>
