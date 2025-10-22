@@ -140,8 +140,8 @@ export default function Header({ children }: HeaderProps) {
                 </AnimatePresence>
               </div>
 
-              {/* Logo - perfectly centered and slightly higher */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-1">
+              {/* Logo - perfectly centered, half on/half off the card */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-8 sm:-translate-y-10 md:-translate-y-12">
                 <Link href="/" className="pointer-events-auto">
                   <Image
                     src="/brand/Pixel_Boba_Icon_Header2.png"
