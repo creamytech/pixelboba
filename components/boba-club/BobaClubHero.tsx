@@ -133,7 +133,7 @@ export default function BobaClubHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.4, ease: 'easeOut' }}
-          className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4"
+          className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4 mb-12 sm:mb-16 md:mb-20"
         >
           <div className="flex items-center gap-2 bg-white px-4 sm:px-5 py-2 sm:py-3 rounded-full border-2 border-ink/10 min-h-[44px]">
             <Icon icon="ph:lightning-duotone" className="w-5 h-5 sm:w-6 sm:h-6 text-matcha" />
@@ -150,6 +150,23 @@ export default function BobaClubHero() {
             <Icon icon="ph:pause-circle-duotone" className="w-5 h-5 sm:w-6 sm:h-6 text-matcha" />
             <span className="font-bold text-sm sm:text-base text-ink">Pause Anytime</span>
           </div>
+        </motion.div>
+
+        {/* Boba Club Card Image */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
+          className="flex justify-center px-4"
+        >
+          <Image
+            src="/boba-club-card.png"
+            alt="Boba Club Membership Card"
+            width={600}
+            height={375}
+            className="w-full max-w-[400px] sm:max-w-[500px] md:max-w-[600px] h-auto rounded-2xl sm:rounded-3xl border-4 sm:border-[5px] border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] sm:shadow-[12px_12px_0px_0px_rgba(58,0,29,1)] md:shadow-[16px_16px_0px_0px_rgba(58,0,29,1)] hover:shadow-[10px_10px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+            priority
+          />
         </motion.div>
       </div>
     </section>

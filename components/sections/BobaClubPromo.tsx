@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
@@ -38,11 +39,15 @@ export default function BobaClubPromo() {
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               {/* Left side - Content */}
               <div>
-                {/* Icon */}
-                <div className="mb-6">
-                  <Icon
-                    icon="ph:coffee-duotone"
-                    className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-deep-taro"
+                {/* Boba Club Card Image */}
+                <div className="mb-6 md:mb-8">
+                  <Image
+                    src="/boba-club-card.png"
+                    alt="Boba Club Membership Card"
+                    width={400}
+                    height={250}
+                    className="w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] h-auto rounded-xl sm:rounded-2xl border-4 border-ink shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]"
+                    priority
                   />
                 </div>
 
