@@ -6,7 +6,6 @@ import StickyCTA from '@/components/common/StickyCTA';
 import WorkGridClient from '@/components/work/WorkGridClient';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { getLayoutStyles } from '@/lib/layout-settings';
 
 export const metadata: Metadata = {
   title: 'Web Design Portfolio | Real Client Results',
@@ -42,7 +41,6 @@ export const metadata: Metadata = {
 
 export default async function WorkPage() {
   const works = await getAllWork();
-  const catStyles = await getLayoutStyles('cta-cat-work');
 
   return (
     <div className="min-h-screen">
@@ -77,11 +75,8 @@ export default async function WorkPage() {
 
           {/* Bottom CTA with cat */}
           <div className="max-w-3xl mx-auto relative">
-            {/* Cat peeking over - Editable in /admin/layout-editor */}
-            <div
-              className="absolute -top-20 left-1/2 -translate-x-1/2 z-10 transition-all duration-300"
-              style={catStyles}
-            >
+            {/* Cat peeking over */}
+            <div className="absolute -top-20 left-1/2 -translate-x-1/2 z-10">
               <Image
                 src="/01.svg"
                 alt=""

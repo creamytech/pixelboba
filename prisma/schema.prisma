@@ -553,30 +553,3 @@ model TaskReminder {
   @@index([taskId])
   @@index([userId])
 }
-
-// Layout settings for visual editor
-model LayoutSetting {
-  id          String   @id @default(cuid())
-  elementId   String   @unique  // e.g., "cta-cat-image", "hero-background"
-  elementType String              // e.g., "image", "section", "text"
-  page        String              // e.g., "home", "work", "contact", "all"
-
-  // Position & Size
-  positionX   Float    @default(0)    // X offset in pixels
-  positionY   Float    @default(0)    // Y offset in pixels
-  width       Float?                  // Width in pixels (optional)
-  height      Float?                  // Height in pixels (optional)
-  scale       Float    @default(1.0)  // Scale multiplier
-
-  // Additional properties
-  rotation    Float    @default(0)    // Rotation in degrees
-  opacity     Float    @default(1.0)  // 0 to 1
-  zIndex      Int      @default(0)    // Stacking order
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([page])
-  @@index([elementId])
-}
-
