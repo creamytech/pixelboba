@@ -28,6 +28,11 @@ interface TeamMember {
   isOwner: boolean;
 }
 
+interface CurrentUserInfo {
+  id: string;
+  isOwner: boolean;
+}
+
 interface TeamInvite {
   id: string;
   email: string;
@@ -54,6 +59,7 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
   const [manager, setManager] = useState<Manager | null>(null);
   const [maxSeats, setMaxSeats] = useState(1);
   const [currentSeats, setCurrentSeats] = useState(1);
+  const [isOwner, setIsOwner] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
@@ -80,6 +86,7 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
         setMaxSeats(data.maxSeats);
         setCurrentSeats(data.currentSeats);
         setManager(data.manager);
+        setIsOwner(data.isCurrentUserOwner ?? false);
       }
 
       if (invitesRes.ok) {
@@ -171,7 +178,7 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
     );
   }
 
-  const canInvite = currentSeats < maxSeats;
+  const canInvite = isOwner && currentSeats < maxSeats;
 
   return (
     <div className="space-y-6">
@@ -186,6 +193,13 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
         <button
           onClick={() => setShowInviteModal(true)}
           disabled={!canInvite || actionLoading}
+          title={
+            !isOwner
+              ? 'Only the account owner can invite members'
+              : currentSeats >= maxSeats
+                ? 'Upgrade to add more team members'
+                : 'Invite a new team member'
+          }
           className="px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <UserPlus className="w-5 h-5" strokeWidth={2.5} />
@@ -340,8 +354,20 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
         </div>
       )}
 
+      {/* Non-Owner Message */}
+      {!isOwner && (
+        <div className="bg-thai-tea/10 border-3 border-thai-tea rounded-xl p-6 text-center">
+          <Icon icon="ph:shield-check-duotone" className="w-12 h-12 text-thai-tea mx-auto mb-4" />
+          <h3 className="font-black text-xl text-ink uppercase mb-2">Team Member Access</h3>
+          <p className="text-ink/70 font-bold">
+            Only the account owner can invite new team members. Contact your organization owner if
+            you need to add someone to the team.
+          </p>
+        </div>
+      )}
+
       {/* Upgrade Prompt */}
-      {!canInvite && maxSeats < 5 && (
+      {isOwner && !canInvite && maxSeats < 5 && (
         <div className="bg-taro/10 border-3 border-taro rounded-xl p-6 text-center">
           <Icon icon="ph:arrow-up-duotone" className="w-12 h-12 text-taro mx-auto mb-4" />
           <h3 className="font-black text-xl text-ink uppercase mb-2">Need More Team Members?</h3>
@@ -404,7 +430,7 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
                   <option value="TEAM_ADMIN">Team Admin</option>
                 </select>
                 <p className="text-ink/70 font-bold text-xs mt-2">
-                  Admins can invite and remove members
+                  Team members will have access to view projects and communicate with the team
                 </p>
               </div>
 

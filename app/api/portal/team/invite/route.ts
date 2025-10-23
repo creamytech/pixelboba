@@ -14,40 +14,85 @@ export async function POST(request: NextRequest) {
 
     const { email, role } = await request.json();
 
-    // Get user's subscription to check tier and seats
+    // Get user's subscription, permissions, and organization
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
       include: {
         subscription: true,
+        permissions: true,
         organization: {
           include: {
+            owner: true,
             members: true,
           },
         },
       },
     });
 
-    if (!user?.subscription || user.subscription.status !== 'ACTIVE') {
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    // Check if user has an active subscription
+    if (!user.subscription || user.subscription.status !== 'ACTIVE') {
       return NextResponse.json(
         { error: 'Active subscription required to invite team members' },
         { status: 403 }
       );
     }
 
+    // ONLY allow the organization owner to invite team members
+    // This prevents invited team members from inviting others
+    if (user.organization && user.organization.ownerId !== user.id) {
+      return NextResponse.json(
+        { error: 'Only the account owner can invite team members' },
+        { status: 403 }
+      );
+    }
+
+    // Check permissions - must have canInviteTeam permission
+    if (!user.permissions?.canInviteTeam) {
+      return NextResponse.json(
+        { error: 'Your subscription plan does not support team invitations' },
+        { status: 403 }
+      );
+    }
+
     // Check seat limits based on tier
+    // Try environment variables first, then fall back to price matching
     const tierLimits: Record<string, number> = {
-      [process.env.NEXT_PUBLIC_STRIPE_LITE_BREW_PRICE_ID || '']: 1, // Lite Brew: 1 user only
-      [process.env.NEXT_PUBLIC_STRIPE_SIGNATURE_BLEND_PRICE_ID || '']: 3, // Signature Blend: 3 users
-      [process.env.NEXT_PUBLIC_STRIPE_TARO_CLOUD_PRICE_ID || '']: 5, // Taro Cloud: 5 users
+      [process.env.NEXT_PUBLIC_STRIPE_LITE_BREW_PRICE_ID || '']: 1,
+      [process.env.NEXT_PUBLIC_STRIPE_SIGNATURE_BLEND_PRICE_ID || '']: 3,
+      [process.env.NEXT_PUBLIC_STRIPE_TARO_CLOUD_PRICE_ID || '']: 5,
     };
 
-    const maxSeats = tierLimits[user.subscription.stripePriceId] || 1;
-    const currentSeats = user.organization?.members.length || 1; // Owner counts as 1
+    let maxSeats = tierLimits[user.subscription.stripePriceId];
+
+    // Fallback: If price ID not found in env vars, detect tier from subscription ID pattern
+    // Admin-granted subscriptions have fake IDs starting with "admin_grant_"
+    if (!maxSeats && user.subscription.stripeSubscriptionId.startsWith('admin_grant_')) {
+      // For admin-granted subscriptions, check the price ID pattern
+      const priceId = user.subscription.stripePriceId.toLowerCase();
+      if (priceId.includes('lite') || priceId.includes('brew')) {
+        maxSeats = 1;
+      } else if (priceId.includes('signature') || priceId.includes('blend')) {
+        maxSeats = 3;
+      } else if (priceId.includes('taro') || priceId.includes('cloud')) {
+        maxSeats = 5;
+      }
+    }
+
+    // Final fallback: default to 1 seat if we can't determine the tier
+    if (!maxSeats) {
+      maxSeats = 1;
+    }
+
+    const currentSeats = user.organization ? user.organization.members.length + 1 : 1; // Owner + members
 
     if (currentSeats >= maxSeats) {
       return NextResponse.json(
         {
-          error: `Your ${getTierName(user.subscription.stripePriceId)} plan supports up to ${maxSeats} user(s). Upgrade to add more team members.`,
+          error: `Your plan supports up to ${maxSeats} user(s). You currently have ${currentSeats} user(s). Upgrade to add more team members.`,
         },
         { status: 403 }
       );
@@ -62,6 +107,7 @@ export async function POST(request: NextRequest) {
           ownerId: user.id,
         },
         include: {
+          owner: true,
           members: true,
         },
       });

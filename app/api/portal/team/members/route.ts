@@ -77,6 +77,7 @@ export async function GET(request: NextRequest) {
         maxSeats: 1,
         currentSeats: 1,
         manager: null,
+        isCurrentUserOwner: true, // User is always owner if no organization exists
       });
     }
 
@@ -99,6 +100,7 @@ export async function GET(request: NextRequest) {
       maxSeats,
       currentSeats: allMembers.length,
       manager: user.organization.manager,
+      isCurrentUserOwner: user.organization.ownerId === user.id,
     });
   } catch (error) {
     console.error('Error fetching team members:', error);
