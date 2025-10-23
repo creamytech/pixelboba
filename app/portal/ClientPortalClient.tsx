@@ -235,6 +235,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
               title="Task Management Locked"
               description="Access the powerful kanban board and task management system with any Boba Club subscription."
               requiredTier="any Boba Club tier"
+              onUpgrade={() => setActiveTab('billing')}
             >
               <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] min-h-[400px]" />
             </LockedFeature>
@@ -249,6 +250,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
               title="Messaging Locked"
               description="Communicate directly with your team through the message center with any Boba Club subscription."
               requiredTier="any Boba Club tier"
+              onUpgrade={() => setActiveTab('billing')}
             >
               <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] min-h-[400px]" />
             </LockedFeature>
@@ -279,6 +281,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
               title="File Management Locked"
               description="Upload, organize, and access your project files with any Boba Club subscription."
               requiredTier="any Boba Club tier"
+              onUpgrade={() => setActiveTab('billing')}
             >
               <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] min-h-[400px]" />
             </LockedFeature>
@@ -304,19 +307,19 @@ export default function ClientPortalClient({ session }: { session: Session }) {
       case 'team':
         return (
           <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
-            <TeamManagement />
+            <TeamManagement onUpgrade={() => setActiveTab('billing')} />
           </div>
         );
       case 'requests':
         return (
           <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
-            <RequestTracking />
+            <RequestTracking onUpgrade={() => setActiveTab('billing')} />
           </div>
         );
       case 'meetings':
         return (
           <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
-            <MeetingScheduler />
+            <MeetingScheduler onUpgrade={() => setActiveTab('billing')} />
           </div>
         );
       case 'preferences':

@@ -154,19 +154,25 @@ export default function Header({ children }: HeaderProps) {
                 </Link>
               </div>
 
-              {/* Get Started button - Desktop only */}
-              <motion.div
-                className="hidden md:block"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/start"
-                  className="inline-flex items-center justify-center min-h-[44px] bg-[#7C3AED] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-black border-3 sm:border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] sm:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all text-sm whitespace-nowrap"
-                >
-                  GET STARTED
-                </Link>
-              </motion.div>
+              {/* Action buttons - Desktop only */}
+              <div className="hidden md:flex items-center gap-3">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="/portal"
+                    className="inline-flex items-center justify-center min-h-[44px] bg-white text-ink px-5 py-2.5 rounded-full font-black border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all text-sm whitespace-nowrap"
+                  >
+                    CLIENT LOGIN
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="/start"
+                    className="inline-flex items-center justify-center min-h-[44px] bg-[#7C3AED] text-white px-5 py-2.5 rounded-full font-black border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all text-sm whitespace-nowrap"
+                  >
+                    GET STARTED
+                  </Link>
+                </motion.div>
+              </div>
             </div>
 
             {/* Mobile Full-Screen Menu */}
@@ -214,6 +220,20 @@ export default function Header({ children }: HeaderProps) {
                           </Link>
                         </motion.div>
                       ))}
+                      {/* Client Login Button */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 + navigation.length * 0.05 }}
+                      >
+                        <Link
+                          href="/portal"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="block w-full px-6 py-4 bg-white text-ink font-black rounded-2xl border-3 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all text-center uppercase text-base"
+                        >
+                          CLIENT LOGIN
+                        </Link>
+                      </motion.div>
                     </nav>
                   </div>
                 </motion.div>

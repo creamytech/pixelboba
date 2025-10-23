@@ -14,7 +14,6 @@ import {
   Loader2,
   Sparkles,
 } from 'lucide-react';
-import TierSelectionModal from './TierSelectionModal';
 
 const TIERS = [
   {
@@ -99,7 +98,6 @@ export default function BillingCenter() {
   const [error, setError] = useState<string | null>(null);
   const [showChangePlanModal, setShowChangePlanModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const [showTierSelectionModal, setShowTierSelectionModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
@@ -180,6 +178,28 @@ export default function BillingCenter() {
     }
   };
 
+  const handleSelectPlan = async (priceId: string) => {
+    try {
+      setActionLoading(true);
+      setError(null);
+
+      // Redirect to Stripe checkout
+      const response = await fetch('/api/boba-club/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId }),
+      });
+
+      if (!response.ok) throw new Error('Failed to create checkout session');
+
+      const { url } = await response.json();
+      window.location.href = url;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to start checkout');
+      setActionLoading(false);
+    }
+  };
+
   const currentTier = getCurrentTier();
 
   if (loading) {
@@ -247,22 +267,23 @@ export default function BillingCenter() {
                 </ul>
 
                 <button
-                  onClick={() => setShowTierSelectionModal(true)}
-                  className="w-full px-6 py-3 bg-taro text-white font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase flex items-center justify-center gap-2"
+                  onClick={() => handleSelectPlan(tier.priceId)}
+                  disabled={actionLoading}
+                  className="w-full px-6 py-3 bg-taro text-white font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  Select Plan
-                  <TrendingUp className="w-4 h-4" />
+                  {actionLoading ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      Select Plan
+                      <TrendingUp className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </div>
             ))}
           </div>
         </div>
-
-        <TierSelectionModal
-          isOpen={showTierSelectionModal}
-          onClose={() => setShowTierSelectionModal(false)}
-          currentTier={null}
-        />
       </>
     );
   }

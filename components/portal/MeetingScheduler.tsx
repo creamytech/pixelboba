@@ -49,7 +49,11 @@ interface Features {
   hasStrategyCalls: boolean;
 }
 
-export default function MeetingScheduler() {
+interface MeetingSchedulerProps {
+  onUpgrade?: () => void;
+}
+
+export default function MeetingScheduler({ onUpgrade }: MeetingSchedulerProps = {}) {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [manager, setManager] = useState<Manager | null>(null);
   const [features, setFeatures] = useState<Features>({

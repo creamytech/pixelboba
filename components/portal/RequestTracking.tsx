@@ -48,7 +48,11 @@ interface Limits {
   slaHours: number;
 }
 
-export default function RequestTracking() {
+interface RequestTrackingProps {
+  onUpgrade?: () => void;
+}
+
+export default function RequestTracking({ onUpgrade }: RequestTrackingProps = {}) {
   const [requests, setRequests] = useState<Request[]>([]);
   const [limits, setLimits] = useState<Limits>({ maxActive: 1, currentActive: 0, slaHours: 84 });
   const [loading, setLoading] = useState(true);
@@ -458,13 +462,13 @@ export default function RequestTracking() {
             You&apos;ve reached your {limits.maxActive} active request limit. Upgrade to handle more
             requests simultaneously.
           </p>
-          <a
-            href="/billing"
+          <button
+            onClick={onUpgrade}
             className="inline-flex items-center gap-2 px-6 py-3 bg-taro text-white font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
           >
             Upgrade Plan
             <Icon icon="ph:arrow-right-duotone" className="w-5 h-5" />
-          </a>
+          </button>
         </div>
       )}
 

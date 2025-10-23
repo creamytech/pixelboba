@@ -2,13 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { Lock, Sparkles } from 'lucide-react';
-import Link from 'next/link';
 
 interface LockedFeatureProps {
   title: string;
   description: string;
   requiredTier?: string;
   children?: React.ReactNode;
+  onUpgrade?: () => void;
 }
 
 export default function LockedFeature({
@@ -16,6 +16,7 @@ export default function LockedFeature({
   description,
   requiredTier = 'any Boba Club tier',
   children,
+  onUpgrade,
 }: LockedFeatureProps) {
   return (
     <div className="relative">
@@ -50,12 +51,12 @@ export default function LockedFeature({
 
           {/* CTA Button */}
           <div className="flex justify-center">
-            <Link
-              href="/billing"
+            <button
+              onClick={onUpgrade}
               className="px-8 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
             >
               See Plans & Upgrade
-            </Link>
+            </button>
           </div>
         </div>
       </motion.div>

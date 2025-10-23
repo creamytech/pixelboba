@@ -44,7 +44,11 @@ interface Manager {
   phone: string | null;
 }
 
-export default function TeamManagement() {
+interface TeamManagementProps {
+  onUpgrade?: () => void;
+}
+
+export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [invites, setInvites] = useState<TeamInvite[]>([]);
   const [manager, setManager] = useState<Manager | null>(null);
@@ -346,13 +350,13 @@ export default function TeamManagement() {
               ? 'Upgrade to Signature Blend (3 users) or Taro Cloud (5 users) to add team members.'
               : 'Upgrade to Taro Cloud to get up to 5 team members.'}
           </p>
-          <a
-            href="/billing"
+          <button
+            onClick={onUpgrade}
             className="inline-flex items-center gap-2 px-6 py-3 bg-taro text-white font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
           >
             Upgrade Plan
             <Icon icon="ph:arrow-right-duotone" className="w-5 h-5" />
-          </a>
+          </button>
         </div>
       )}
 
