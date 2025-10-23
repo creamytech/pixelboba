@@ -1,16 +1,21 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Bell } from 'lucide-react';
+import { Bell, Search } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 
 interface DashboardHeaderProps {
   userName: string;
   notificationCount?: number;
+  onSearchClick?: () => void;
 }
 
-export default function DashboardHeader({ userName, notificationCount = 0 }: DashboardHeaderProps) {
+export default function DashboardHeader({
+  userName,
+  notificationCount = 0,
+  onSearchClick,
+}: DashboardHeaderProps) {
   const [greeting, setGreeting] = useState('');
   const [icon, setIcon] = useState('ph:hand-waving-duotone');
 
@@ -62,25 +67,42 @@ export default function DashboardHeader({ userName, notificationCount = 0 }: Das
           </motion.p>
         </div>
 
-        {/* Notifications */}
+        {/* Actions */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3, delay: 0.3 }}
-          className="relative flex-shrink-0"
+          className="flex items-center gap-2 lg:gap-3 flex-shrink-0"
         >
-          <button className="p-3 lg:p-4 bg-white rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] active:shadow-[1px_1px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] transition-all">
-            <Bell className="w-6 h-6 text-taro" strokeWidth={2.5} />
-            {notificationCount > 0 && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="absolute -top-1 -right-1 min-w-[22px] h-[22px] px-1.5 bg-strawberry rounded-full border-2 border-ink flex items-center justify-center text-white text-xs font-black shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
-              >
-                {notificationCount > 9 ? '9+' : notificationCount}
-              </motion.div>
-            )}
-          </button>
+          {/* Search Button */}
+          {onSearchClick && (
+            <button
+              onClick={onSearchClick}
+              className="p-3 lg:p-4 bg-white rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] active:shadow-[1px_1px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] transition-all group"
+              title="Search (⌘K)"
+            >
+              <Search
+                className="w-6 h-6 text-matcha group-hover:text-taro transition-colors"
+                strokeWidth={2.5}
+              />
+            </button>
+          )}
+
+          {/* Notifications */}
+          <div className="relative">
+            <button className="p-3 lg:p-4 bg-white rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] active:shadow-[1px_1px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] transition-all">
+              <Bell className="w-6 h-6 text-taro" strokeWidth={2.5} />
+              {notificationCount > 0 && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1 -right-1 min-w-[22px] h-[22px] px-1.5 bg-strawberry rounded-full border-2 border-ink flex items-center justify-center text-white text-xs font-black shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
+                >
+                  {notificationCount > 9 ? '9+' : notificationCount}
+                </motion.div>
+              )}
+            </button>
+          </div>
         </motion.div>
       </div>
     </div>

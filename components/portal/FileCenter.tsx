@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
+import EnhancedFileUpload from './EnhancedFileUpload';
 import {
   Upload,
   Download,
@@ -42,7 +42,6 @@ const formatFileSize = (bytes: number) => {
 export default function FileCenter({ projects }: FileCenterProps) {
   const [files, setFiles] = useState<PortalFile[]>([]);
   const [loading, setLoading] = useState(true);
-  const [uploading, setUploading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -70,29 +69,8 @@ export default function FileCenter({ projects }: FileCenterProps) {
     fetchFiles();
   }, [selectedProject, fetchFiles]);
 
-  const uploadFiles = async (newFiles: File[]) => {
-    setUploading(true);
-    const formData = new FormData();
-
-    newFiles.forEach((file) => formData.append('files', file));
-    if (selectedProject !== 'all') {
-      formData.append('projectId', selectedProject);
-    }
-
-    try {
-      const response = await fetch('/api/portal/files/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        fetchFiles();
-      }
-    } catch (error) {
-      console.error('Error uploading files:', error);
-    } finally {
-      setUploading(false);
-    }
+  const handleUploadComplete = () => {
+    fetchFiles();
   };
 
   const deleteFile = async (fileId: string) => {
@@ -126,12 +104,6 @@ export default function FileCenter({ projects }: FileCenterProps) {
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: uploadFiles,
-    multiple: true,
-    maxSize: 50 * 1024 * 1024, // 50MB per file
-  });
-
   const filteredFiles = files.filter(
     (file) =>
       file.originalName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -153,34 +125,13 @@ export default function FileCenter({ projects }: FileCenterProps) {
 
   return (
     <div className="space-y-6">
-      {/* Upload Area */}
-      <div
-        {...getRootProps()}
-        className={`border-4 border-dashed rounded-xl p-8 text-center transition-all cursor-pointer ${
-          isDragActive ? 'border-taro bg-taro/5' : 'border-ink bg-white hover:bg-cream/30'
-        } ${uploading ? 'opacity-50 pointer-events-none' : ''}`}
-      >
-        <input {...getInputProps()} />
-
-        <div className="space-y-4">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
-            <Upload className="w-8 h-8 text-white" />
-          </div>
-
-          <div>
-            <p className="text-lg font-black text-ink uppercase">
-              {uploading ? 'uploading files...' : 'drop files here or click to upload'}
-            </p>
-            <p className="text-sm text-ink/60 mt-1 font-bold">
-              supports images, documents, videos up to 50mb each
-            </p>
-          </div>
-
-          {uploading && (
-            <div className="w-8 h-8 border-4 border-ink/30 border-t-ink rounded-full animate-spin mx-auto" />
-          )}
-        </div>
-      </div>
+      {/* Enhanced Upload Area */}
+      <EnhancedFileUpload
+        projectId={selectedProject === 'all' ? '' : selectedProject}
+        onUploadComplete={handleUploadComplete}
+        maxFiles={10}
+        maxSizeMB={50}
+      />
 
       {/* Stats */}
       <div className="grid sm:grid-cols-3 gap-6">

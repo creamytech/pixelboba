@@ -50,7 +50,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             },
             comments: {
               include: {
-                user: {
+                author: {
                   select: {
                     id: true,
                     name: true,

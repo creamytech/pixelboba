@@ -22,6 +22,7 @@ import TeamManagement from '@/components/portal/TeamManagement';
 import RequestTracking from '@/components/portal/RequestTracking';
 import MeetingScheduler from '@/components/portal/MeetingScheduler';
 import ProjectDetails from '@/components/portal/ProjectDetails';
+import GlobalSearch from '@/components/portal/GlobalSearch';
 // import OnboardingTour from '@/components/portal/OnboardingTour'; // Temporarily disabled for React 18 compatibility
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import {
@@ -54,12 +55,25 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   const [runOnboarding, setRunOnboarding] = useState(false);
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [showGlobalSearch, setShowGlobalSearch] = useState(false);
 
   // Initialize online status tracking
   useOnlineStatus();
 
   useEffect(() => {
     fetchPortalData();
+  }, []);
+
+  // Keyboard shortcut for global search (Cmd+K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setShowGlobalSearch(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const fetchPortalData = async () => {
@@ -227,6 +241,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
             data={portalData}
             expandedProjectId={expandedProjectId}
             setExpandedProjectId={setExpandedProjectId}
+            onSearchClick={() => setShowGlobalSearch(true)}
             onViewProject={(projectId: string) => {
               setSelectedProjectId(projectId);
               setActiveTab('projects');
@@ -444,6 +459,9 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         onComplete={handleOnboardingComplete}
         onSkip={handleOnboardingSkip}
       /> */}
+
+      {/* Global Search */}
+      <GlobalSearch isOpen={showGlobalSearch} onClose={() => setShowGlobalSearch(false)} />
     </PortalLayout>
   );
 }
@@ -453,10 +471,14 @@ function DashboardView({
   data,
   expandedProjectId,
   setExpandedProjectId,
+  onSearchClick,
+  onViewProject,
 }: {
   data: PortalData;
   expandedProjectId: string | null;
   setExpandedProjectId: (id: string | null) => void;
+  onSearchClick?: () => void;
+  onViewProject?: (projectId: string) => void;
 }) {
   const activeProjects = data.projects.filter(
     (p) => !['COMPLETED', 'CANCELLED'].includes(p.status)
@@ -560,6 +582,7 @@ function DashboardView({
       <DashboardHeader
         userName={data.user.name?.split(' ')[0] || 'there'}
         notificationCount={data.unreadMessages + data.pendingInvoices + data.pendingContracts}
+        onSearchClick={onSearchClick}
       />
 
       {/* Metrics Grid */}

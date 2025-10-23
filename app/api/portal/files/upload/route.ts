@@ -12,10 +12,14 @@ export async function POST(request: NextRequest) {
 
     const { prisma } = await import('@/lib/prisma');
     const formData = await request.formData();
+    const file = formData.get('file') as File;
     const files = formData.getAll('files') as File[];
     const projectId = formData.get('projectId') as string;
 
-    if (!files || files.length === 0) {
+    // Support both single file and multiple files
+    const filesToUpload = file ? [file] : files;
+
+    if (!filesToUpload || filesToUpload.length === 0) {
       return NextResponse.json({ error: 'No files provided' }, { status: 400 });
     }
 
@@ -47,7 +51,7 @@ export async function POST(request: NextRequest) {
 
     const uploadedFiles = [];
 
-    for (const file of files) {
+    for (const file of filesToUpload) {
       try {
         // Use a default project if none specified and user is client
         let targetProjectId = projectId;
@@ -96,6 +100,23 @@ export async function POST(request: NextRequest) {
       } catch (fileError) {
         console.error('Error uploading file:', file.name, fileError);
       }
+    }
+
+    // If single file upload, return just the file data with url at root level
+    if (uploadedFiles.length === 1) {
+      const uploadedFile = uploadedFiles[0];
+      return NextResponse.json({
+        success: true,
+        url: uploadedFile.url,
+        id: uploadedFile.id,
+        filename: uploadedFile.filename,
+        originalName: uploadedFile.originalName,
+        mimetype: uploadedFile.mimetype,
+        size: uploadedFile.size,
+        createdAt: uploadedFile.createdAt.toISOString(),
+        uploader: uploadedFile.uploader,
+        project: uploadedFile.project,
+      });
     }
 
     return NextResponse.json({
