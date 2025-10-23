@@ -86,6 +86,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     });
 
     // Create or update subscription in database
+    const currentPeriodStart = new Date((stripeSubscription as any).current_period_start * 1000);
+    const currentPeriodEnd = new Date((stripeSubscription as any).current_period_end * 1000);
+
     const subscription = await prisma.subscription.upsert({
       where: { userId: clientId },
       create: {
@@ -94,16 +97,16 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         stripeSubscriptionId: stripeSubscription.id,
         stripePriceId: priceId,
         status: 'ACTIVE', // Admin-granted subscriptions are immediately active
-        currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+        currentPeriodStart,
+        currentPeriodEnd,
         cancelAtPeriodEnd: false,
       },
       update: {
         stripeSubscriptionId: stripeSubscription.id,
         stripePriceId: priceId,
         status: 'ACTIVE',
-        currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+        currentPeriodStart,
+        currentPeriodEnd,
         cancelAtPeriodEnd: false,
         canceledAt: null,
         pausedAt: null,
