@@ -73,15 +73,17 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       }
     }
 
-    // Create new subscription in Stripe
+    // Create new subscription in Stripe (admin-granted, no payment required)
     const stripeSubscription = await stripe.subscriptions.create({
       customer: stripeCustomerId,
       items: [{ price: priceId }],
-      payment_behavior: 'default_incomplete',
-      payment_settings: { save_default_payment_method: 'on_subscription' },
+      // Skip payment for admin-granted subscriptions
+      collection_method: 'send_invoice',
+      days_until_due: 0,
       metadata: {
         userId: user.id,
         grantedByAdmin: 'true',
+        grantedAt: new Date().toISOString(),
       },
     });
 
@@ -179,11 +181,92 @@ export async function DELETE(
   }
 }
 
-// Helper function to map price IDs to tier permissions
+// Helper function to map price IDs to tier permissions based on Boba Club tiers
 function getTierPermissions(priceId: string) {
-  // You'll need to map your actual Stripe price IDs here
-  // For now, we'll use a basic mapping that can be updated
-  const basePermissions = {
+  const liteBrewPriceId = process.env.NEXT_PUBLIC_STRIPE_LITE_BREW_PRICE_ID;
+  const signatureBlendPriceId = process.env.NEXT_PUBLIC_STRIPE_SIGNATURE_BLEND_PRICE_ID;
+  const taroCloudPriceId = process.env.NEXT_PUBLIC_STRIPE_TARO_CLOUD_PRICE_ID;
+
+  // Lite Brew ($1,500/mo) - Basic tier for solo founders
+  // Features: 1 user, 1 active request, basic dashboard access
+  if (priceId === liteBrewPriceId) {
+    return {
+      canAccessDashboard: true,
+      canAccessProjects: true,
+      canAccessTasks: true,
+      canAccessMessages: true,
+      canAccessFiles: true,
+      canAccessInvoices: true,
+      canAccessContracts: true,
+      canAccessMeetings: false,
+      canAccessTeam: false,
+      canAccessRequests: true, // 1 active request
+      canAccessBilling: false,
+      canUploadFiles: true,
+      canSendMessages: true,
+      canCreateTasks: false, // View only
+      canEditTasks: false,
+      canDeleteTasks: false,
+      canInviteTeam: false, // Only 1 user
+      canViewAnalytics: false,
+      canManageProjects: false,
+    };
+  }
+
+  // Signature Blend ($3,000/mo) - Most popular, for growing teams
+  // Features: Up to 3 users, 2 active requests, premium dashboard, real-time tracking
+  if (priceId === signatureBlendPriceId) {
+    return {
+      canAccessDashboard: true,
+      canAccessProjects: true,
+      canAccessTasks: true,
+      canAccessMessages: true,
+      canAccessFiles: true,
+      canAccessInvoices: true,
+      canAccessContracts: true,
+      canAccessMeetings: true, // Premium feature
+      canAccessTeam: true, // Up to 3 users
+      canAccessRequests: true, // 2 active requests
+      canAccessBilling: true,
+      canUploadFiles: true,
+      canSendMessages: true,
+      canCreateTasks: true, // Task queue management
+      canEditTasks: true,
+      canDeleteTasks: false,
+      canInviteTeam: true, // Up to 3 users
+      canViewAnalytics: true, // Real-time project tracking
+      canManageProjects: false,
+    };
+  }
+
+  // Taro Cloud ($6,000/mo) - Enterprise tier
+  // Features: Up to 5 users, 3 active requests, enterprise dashboard, admin panel, dedicated manager
+  if (priceId === taroCloudPriceId) {
+    return {
+      canAccessDashboard: true,
+      canAccessProjects: true,
+      canAccessTasks: true,
+      canAccessMessages: true,
+      canAccessFiles: true,
+      canAccessInvoices: true,
+      canAccessContracts: true,
+      canAccessMeetings: true,
+      canAccessTeam: true, // Up to 5 users
+      canAccessRequests: true, // 3 active requests
+      canAccessBilling: true,
+      canUploadFiles: true,
+      canSendMessages: true,
+      canCreateTasks: true,
+      canEditTasks: true,
+      canDeleteTasks: true, // Full control
+      canInviteTeam: true, // Up to 5 users
+      canViewAnalytics: true, // Enterprise dashboard
+      canManageProjects: true, // Admin panel access
+    };
+  }
+
+  // Default fallback - minimal permissions
+  return {
     canAccessDashboard: true,
     canAccessProjects: true,
     canAccessTasks: true,
@@ -191,57 +274,17 @@ function getTierPermissions(priceId: string) {
     canAccessFiles: true,
     canAccessInvoices: true,
     canAccessContracts: true,
-    canUploadFiles: true,
+    canAccessMeetings: false,
+    canAccessTeam: false,
+    canAccessRequests: false,
+    canAccessBilling: false,
+    canUploadFiles: false,
     canSendMessages: true,
-  };
-
-  // This is a placeholder - you should map actual Stripe price IDs
-  // to determine which tier they represent
-  if (priceId.includes('matcha') || priceId.includes('basic')) {
-    return {
-      ...basePermissions,
-      canViewAnalytics: false,
-      canAccessMeetings: false,
-      canAccessTeam: false,
-      canAccessRequests: false,
-      canAccessBilling: false,
-      canCreateTasks: false,
-      canEditTasks: false,
-      canDeleteTasks: false,
-      canInviteTeam: false,
-      canManageProjects: false,
-    };
-  }
-
-  if (priceId.includes('taro') || priceId.includes('pro')) {
-    return {
-      ...basePermissions,
-      canAccessMeetings: true,
-      canAccessTeam: true,
-      canAccessRequests: true,
-      canAccessBilling: true,
-      canCreateTasks: true,
-      canEditTasks: true,
-      canViewAnalytics: true,
-      canDeleteTasks: false,
-      canInviteTeam: false,
-      canManageProjects: false,
-    };
-  }
-
-  // Thai Tea / Premium tier
-  return {
-    ...basePermissions,
-    canAccessMeetings: true,
-    canAccessTeam: true,
-    canAccessRequests: true,
-    canAccessBilling: true,
-    canUploadFiles: true,
-    canCreateTasks: true,
-    canEditTasks: true,
-    canDeleteTasks: true,
-    canInviteTeam: true,
-    canViewAnalytics: true,
-    canManageProjects: true,
+    canCreateTasks: false,
+    canEditTasks: false,
+    canDeleteTasks: false,
+    canInviteTeam: false,
+    canViewAnalytics: false,
+    canManageProjects: false,
   };
 }
