@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import PortalSidebar from './PortalSidebar';
+import SubscriptionBadge from '../portal/SubscriptionBadge';
 import { motion } from 'framer-motion';
 
 interface PortalLayoutProps {
@@ -10,6 +11,10 @@ interface PortalLayoutProps {
     name: string;
     email: string;
     image?: string;
+  };
+  subscription?: {
+    tier: string | null;
+    isActive: boolean;
   };
   activeTab: string;
   onTabChange: (tab: string) => void;
@@ -24,6 +29,7 @@ interface PortalLayoutProps {
 export default function PortalLayout({
   children,
   user,
+  subscription,
   activeTab,
   onTabChange,
   badges,
@@ -103,6 +109,13 @@ export default function PortalLayout({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
+        {/* Subscription Badge at top */}
+        {subscription && (
+          <div className="mb-6 flex justify-end">
+            <SubscriptionBadge tierName={subscription.tier} isActive={subscription.isActive} />
+          </div>
+        )}
+
         {children}
       </motion.main>
     </div>

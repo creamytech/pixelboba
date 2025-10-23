@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
             },
             orderBy: { createdAt: 'desc' },
           },
+          subscription: true,
         },
       });
 
@@ -48,6 +49,7 @@ export async function GET(request: NextRequest) {
               },
               orderBy: { createdAt: 'desc' },
             },
+            subscription: true,
           },
         });
       }
@@ -74,6 +76,25 @@ export async function GET(request: NextRequest) {
         }),
       ]);
 
+      // Determine subscription tier name
+      let subscriptionTier = null;
+      let isSubscriptionActive = false;
+
+      if (user.subscription) {
+        isSubscriptionActive =
+          user.subscription.status === 'ACTIVE' && !user.subscription.cancelAtPeriodEnd;
+
+        // Map price ID to tier name
+        const priceId = user.subscription.stripePriceId;
+        if (priceId === process.env.NEXT_PUBLIC_STRIPE_LITE_BREW_PRICE_ID) {
+          subscriptionTier = 'Lite Brew';
+        } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_SIGNATURE_BLEND_PRICE_ID) {
+          subscriptionTier = 'Signature Blend';
+        } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_TARO_CLOUD_PRICE_ID) {
+          subscriptionTier = 'Taro Cloud';
+        }
+      }
+
       const portalData = {
         user: {
           id: user.id,
@@ -85,6 +106,10 @@ export async function GET(request: NextRequest) {
           image: user.image,
           createdAt: user.createdAt,
           onboardingCompleted: user.onboardingCompleted,
+        },
+        subscription: {
+          tier: subscriptionTier,
+          isActive: isSubscriptionActive,
         },
         projects: user.projects.map((project) => ({
           ...project,

@@ -15,6 +15,7 @@ import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
 import NotificationPreferences from '@/components/portal/NotificationPreferences';
 import BillingCenter from '@/components/portal/BillingCenter';
+import LockedFeature from '@/components/portal/LockedFeature';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import WebsitePreview from '@/components/portal/WebsitePreview';
 // import OnboardingTour from '@/components/portal/OnboardingTour'; // Temporarily disabled for React 18 compatibility
@@ -32,6 +33,10 @@ import { Session } from 'next-auth';
 
 interface PortalData {
   user: UserType;
+  subscription: {
+    tier: string | null;
+    isActive: boolean;
+  };
   projects: Project[];
   unreadMessages: number;
   pendingInvoices: number;
@@ -220,8 +225,32 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           />
         );
       case 'tasks':
+        // Lock tasks for non-subscribers
+        if (!portalData.subscription.isActive) {
+          return (
+            <LockedFeature
+              title="Task Management Locked"
+              description="Access the powerful kanban board and task management system with any Boba Club subscription."
+              requiredTier="any Boba Club tier"
+            >
+              <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] min-h-[400px]" />
+            </LockedFeature>
+          );
+        }
         return <TasksView data={portalData} />;
       case 'messages':
+        // Lock messages for non-subscribers
+        if (!portalData.subscription.isActive) {
+          return (
+            <LockedFeature
+              title="Messaging Locked"
+              description="Communicate directly with your team through the message center with any Boba Club subscription."
+              requiredTier="any Boba Club tier"
+            >
+              <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] min-h-[400px]" />
+            </LockedFeature>
+          );
+        }
         return (
           <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <MessageCenter projects={portalData.projects} />
@@ -240,6 +269,18 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           </div>
         );
       case 'files':
+        // Lock file management for non-subscribers
+        if (!portalData.subscription.isActive) {
+          return (
+            <LockedFeature
+              title="File Management Locked"
+              description="Upload, organize, and access your project files with any Boba Club subscription."
+              requiredTier="any Boba Club tier"
+            >
+              <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] min-h-[400px]" />
+            </LockedFeature>
+          );
+        }
         return (
           <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <FileCenter projects={portalData.projects} />
@@ -307,6 +348,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         email: portalData.user.email || '',
         image: portalData.user.image,
       }}
+      subscription={portalData.subscription}
       activeTab={activeTab}
       onTabChange={setActiveTab}
       badges={{
