@@ -205,16 +205,21 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out will-change-transform ${
+        className={`fixed left-0 top-0 h-screen bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out ${
           isCollapsed ? 'w-[80px]' : 'w-[280px]'
-        } -translate-x-full ${
-          // Mobile: show when open
-          isMobileOpen ? 'max-lg:translate-x-0' : ''
-        } ${
-          // Desktop: show when not hidden
-          !isDesktopHidden ? 'lg:translate-x-0' : ''
         }`}
-        style={{ transform: 'translateZ(0)' }}
+        style={{
+          transform:
+            typeof window !== 'undefined' && window.innerWidth >= 1024
+              ? // Desktop
+                isDesktopHidden
+                ? 'translateX(-100%) translateZ(0)'
+                : 'translateX(0) translateZ(0)'
+              : // Mobile
+                isMobileOpen
+                ? 'translateX(0) translateZ(0)'
+                : 'translateX(-100%) translateZ(0)',
+        }}
       >
         <div className="flex flex-col h-full">
           {/* Logo Area */}
