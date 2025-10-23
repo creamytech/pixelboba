@@ -31,7 +31,16 @@
       "WebFetch(domain:www.behance.net)",
       "WebSearch",
       "Bash(git remote add:*)",
-      "WebFetch(domain:pixelboba.com)"
+      "WebFetch(domain:pixelboba.com)",
+      "Bash(Pixel Boba)",
+      "Bash(cat:*)",
+      "Bash(git checkout:*)",
+      "Bash(awk '{print $NF}')",
+      "Bash(powershell:*)",
+      "Bash(del nul)",
+      "Bash(taskkill:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
