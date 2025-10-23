@@ -208,7 +208,13 @@ export default function PortalSidebar({
       <aside
         className={`fixed left-0 top-0 h-screen bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out will-change-transform ${
           isCollapsed ? 'w-[80px]' : 'w-[280px]'
-        } ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} ${!isDesktopHidden ? 'lg:translate-x-0' : 'lg:-translate-x-full'}`}
+        } ${
+          // Mobile behavior (< lg breakpoint)
+          isMobileOpen ? 'translate-x-0' : '-translate-x-full'
+        } ${
+          // Desktop behavior (>= lg breakpoint)
+          !isDesktopHidden ? 'lg:!translate-x-0' : 'lg:!-translate-x-full'
+        }`}
         style={{ transform: 'translateZ(0)' }}
       >
         <div className="flex flex-col h-full">
