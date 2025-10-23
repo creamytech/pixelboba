@@ -250,4 +250,4 @@ Every element of this site reflects our commitment to:
 
 ---
 
-**Made with ❤️ and lots of ☕ by the Pixel Boba team**
+**Made with ❤️ and lots of 🧋 by the Pixel Boba team**
