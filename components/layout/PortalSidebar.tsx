@@ -156,6 +156,19 @@ export default function PortalSidebar({
         )}
       </button>
 
+      {/* Mobile Collapse Toggle - Shows when sidebar is open */}
+      {isMobileOpen && (
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="lg:hidden fixed top-4 z-[60] w-10 h-10 bg-white border-3 border-ink rounded-full flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] active:scale-95 transition-all"
+          style={{ left: isCollapsed ? 'calc(80px + 1rem)' : 'calc(280px + 1rem)' }}
+        >
+          <motion.div animate={{ rotate: isCollapsed ? 180 : 0 }} transition={{ duration: 0.3 }}>
+            <Icon icon="material-symbols:chevron-left" className="w-5 h-5 text-ink" />
+          </motion.div>
+        </button>
+      )}
+
       {/* Mobile Overlay */}
       <AnimatePresence mode="wait">
         {isMobileOpen && (
