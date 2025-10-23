@@ -21,6 +21,7 @@ import WebsitePreview from '@/components/portal/WebsitePreview';
 import TeamManagement from '@/components/portal/TeamManagement';
 import RequestTracking from '@/components/portal/RequestTracking';
 import MeetingScheduler from '@/components/portal/MeetingScheduler';
+import ProjectDetails from '@/components/portal/ProjectDetails';
 // import OnboardingTour from '@/components/portal/OnboardingTour'; // Temporarily disabled for React 18 compatibility
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import {
@@ -52,6 +53,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
   const [runOnboarding, setRunOnboarding] = useState(false);
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
   // Initialize online status tracking
   useOnlineStatus();
@@ -225,7 +227,49 @@ export default function ClientPortalClient({ session }: { session: Session }) {
             data={portalData}
             expandedProjectId={expandedProjectId}
             setExpandedProjectId={setExpandedProjectId}
+            onViewProject={(projectId: string) => {
+              setSelectedProjectId(projectId);
+              setActiveTab('projects');
+            }}
           />
+        );
+      case 'projects':
+        if (selectedProjectId) {
+          return (
+            <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+              <ProjectDetails
+                projectId={selectedProjectId}
+                onBack={() => {
+                  setSelectedProjectId(null);
+                  setActiveTab('dashboard');
+                }}
+              />
+            </div>
+          );
+        }
+        // If no project selected, show project list
+        return (
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+            <h2 className="font-black text-2xl text-ink uppercase mb-6">Your Projects</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {portalData.projects.map((project) => (
+                <button
+                  key={project.id}
+                  onClick={() => setSelectedProjectId(project.id)}
+                  className="text-left bg-cream rounded-lg border-3 border-ink p-6 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                >
+                  <h3 className="font-black text-lg text-ink uppercase mb-2">{project.name}</h3>
+                  {project.description && (
+                    <p className="text-sm text-ink/70 font-bold mb-4">{project.description}</p>
+                  )}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-taro uppercase">{project.status}</span>
+                    <span className="text-xs font-bold text-ink/60">{project.progress}%</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
         );
       case 'tasks':
         // Lock tasks for non-subscribers
