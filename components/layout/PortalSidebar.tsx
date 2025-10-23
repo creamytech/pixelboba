@@ -53,6 +53,7 @@ export default function PortalSidebar({
 }: PortalSidebarProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isDesktopHidden, setIsDesktopHidden] = useState(false);
 
   useEffect(() => {
     setIsMobileOpen(false);
@@ -144,7 +145,7 @@ export default function PortalSidebar({
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Menu Button - Mobile */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         className="lg:hidden fixed top-4 left-4 z-[60] w-12 h-12 bg-white border-4 border-ink rounded-xl flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] active:scale-95 transition-transform"
@@ -153,6 +154,25 @@ export default function PortalSidebar({
           <X className="w-6 h-6 text-ink" strokeWidth={2.5} />
         ) : (
           <Menu className="w-6 h-6 text-ink" strokeWidth={2.5} />
+        )}
+      </button>
+
+      {/* Menu Button - Desktop */}
+      <button
+        onClick={() => setIsDesktopHidden(!isDesktopHidden)}
+        className="hidden lg:block fixed top-4 left-4 z-[60] w-12 h-12 bg-white border-4 border-ink rounded-xl flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+        style={{
+          left: !isDesktopHidden
+            ? isCollapsed
+              ? 'calc(80px + 1rem)'
+              : 'calc(280px + 1rem)'
+            : '1rem',
+        }}
+      >
+        {isDesktopHidden ? (
+          <Menu className="w-6 h-6 text-ink" strokeWidth={2.5} />
+        ) : (
+          <X className="w-6 h-6 text-ink" strokeWidth={2.5} />
         )}
       </button>
 
@@ -188,7 +208,7 @@ export default function PortalSidebar({
       <aside
         className={`fixed left-0 top-0 h-screen bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out will-change-transform ${
           isCollapsed ? 'w-[80px]' : 'w-[280px]'
-        } ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+        } ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} ${!isDesktopHidden ? 'lg:translate-x-0' : ''}`}
         style={{ transform: 'translateZ(0)' }}
       >
         <div className="flex flex-col h-full">
