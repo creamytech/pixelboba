@@ -6,7 +6,7 @@ declare module 'next-auth' {
       id: string;
       email: string;
       name: string;
-      role: 'CLIENT' | 'ADMIN' | 'OWNER';
+      role: 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN';
       image?: string;
     };
   }
@@ -15,7 +15,7 @@ declare module 'next-auth' {
     id: string;
     email: string;
     name: string;
-    role: 'CLIENT' | 'ADMIN' | 'OWNER';
+    role: 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN';
     image?: string;
   }
 }

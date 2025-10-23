@@ -133,7 +133,7 @@ export default function AboutPageClient() {
                   boba).
                 </p>
                 <p className="text-sm font-bold opacity-75 flex items-center justify-center gap-2">
-                  <Icon icon="ph:coffee-duotone" className="w-5 h-5" />
+                  <Icon icon="game-icons:boba" className="w-5 h-5" />
                   Classic milk tea, 50% sweet, extra pearls
                 </p>
               </div>
@@ -160,7 +160,7 @@ export default function AboutPageClient() {
                   design.
                 </p>
                 <p className="text-sm font-bold opacity-75 mb-4 flex items-center justify-center gap-2">
-                  <Icon icon="ph:coffee-duotone" className="w-5 h-5" />
+                  <Icon icon="game-icons:boba" className="w-5 h-5" />
                   Taro milk tea with mango jelly
                 </p>
                 <a

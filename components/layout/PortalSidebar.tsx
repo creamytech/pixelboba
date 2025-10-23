@@ -18,6 +18,9 @@ import {
   Sparkles,
   Menu,
   X,
+  Users,
+  Zap,
+  Calendar,
 } from 'lucide-react';
 
 interface PortalSidebarProps {
@@ -70,6 +73,11 @@ export default function PortalSidebar({
       icon: LayoutDashboard,
     },
     {
+      id: 'requests',
+      label: 'Requests',
+      icon: Zap,
+    },
+    {
       id: 'tasks',
       label: 'Tasks',
       icon: CheckSquare,
@@ -79,6 +87,16 @@ export default function PortalSidebar({
       label: 'Messages',
       icon: MessageSquare,
       badge: badges.messages,
+    },
+    {
+      id: 'meetings',
+      label: 'Meetings',
+      icon: Calendar,
+    },
+    {
+      id: 'team',
+      label: 'Team',
+      icon: Users,
     },
     {
       id: 'invoices',

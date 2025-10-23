@@ -47,6 +47,8 @@ enum Role {
   CLIENT
   ADMIN
   OWNER
+  TEAM_MEMBER
+  TEAM_ADMIN
 }
 
 enum ProjectStatus {
@@ -136,6 +138,11 @@ model User {
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
+  // Team membership - for multi-user subscriptions
+  organizationId String? // Which organization/brand they belong to
+  organization   Organization? @relation("OrganizationMembers", fields: [organizationId], references: [id])
+  ownedOrganization Organization? @relation("OrganizationOwner")
+
   // NextAuth relations
   accounts Account[]
   sessions Session[]
@@ -158,6 +165,9 @@ model User {
   assignedTasks     Task[]         @relation("AssignedTasks")
   createdTasks      Task[]         @relation("CreatedTasks")
   comments          Comment[]
+  managedOrganizations Organization[] @relation("DedicatedManager")
+  teamInvites       TeamInvite[]   @relation("TeamInviteCreator")
+  meetings          Meeting[]
 }
 
 model Project {
@@ -183,6 +193,7 @@ model Project {
   milestones Milestone[]
   activities Activity[]
   tasks      Task[]
+  requests   Request[]
 }
 
 model Milestone {
@@ -552,4 +563,144 @@ model TaskReminder {
   @@index([remindAt, isSent])
   @@index([taskId])
   @@index([userId])
+}
+
+// Organization/Brand model for multi-brand management (Taro Cloud)
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  logo        String?
+  website     String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Owner relation (CLIENT who created organization)
+  ownerId String @unique
+  owner   User   @relation("OrganizationOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  // Dedicated creative manager for Taro Cloud
+  managerId String?
+  manager   User?   @relation("DedicatedManager", fields: [managerId], references: [id])
+
+  // Team members
+  members      User[]         @relation("OrganizationMembers")
+  teamInvites  TeamInvite[]
+  requests     Request[]
+  meetings     Meeting[]
+
+  @@index([ownerId])
+  @@index([managerId])
+}
+
+// Team member invitations for multi-user access
+model TeamInvite {
+  id             String    @id @default(cuid())
+  email          String
+  token          String    @unique
+  role           Role      @default(TEAM_MEMBER)
+  expiresAt      DateTime
+  usedAt         DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User   @relation("TeamInviteCreator", fields: [createdById], references: [id])
+
+  @@index([email])
+  @@index([token])
+  @@index([organizationId])
+}
+
+enum RequestStatus {
+  DRAFT
+  SUBMITTED
+  IN_PROGRESS
+  IN_REVIEW
+  REVISION_REQUESTED
+  COMPLETED
+  CANCELLED
+}
+
+// Active request tracking per tier
+model Request {
+  id             String        @id @default(cuid())
+  title          String
+  description    String        @db.Text
+  status         RequestStatus @default(DRAFT)
+  priority       Priority      @default(MEDIUM)
+
+  // SLA tracking
+  submittedAt    DateTime?
+  startedAt      DateTime?
+  dueDate        DateTime?     // Based on tier SLA
+  completedAt    DateTime?
+
+  // Tier-based SLA (in hours)
+  slaHours       Int?          // 72-96 for Lite, 48 for Signature, 24 for Taro
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  projectId      String?
+  project        Project?      @relation(fields: [projectId], references: [id])
+
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  @@index([status])
+  @@index([priority])
+  @@index([dueDate])
+  @@index([organizationId])
+}
+
+enum MeetingType {
+  UX_REVIEW
+  STRATEGY_CALL
+  ONBOARDING
+  PROJECT_REVIEW
+  GENERAL
+}
+
+enum MeetingStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  RESCHEDULED
+}
+
+// Meeting scheduler for tier-specific calls
+model Meeting {
+  id             String        @id @default(cuid())
+  title          String
+  description    String?       @db.Text
+  type           MeetingType
+  status         MeetingStatus @default(SCHEDULED)
+
+  scheduledAt    DateTime
+  duration       Int           @default(30) // minutes
+  completedAt    DateTime?
+  cancelledAt    DateTime?
+
+  meetingUrl     String?       // Zoom/Google Meet link
+  notes          String?       @db.Text
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  hostId         String
+  host           User          @relation(fields: [hostId], references: [id])
+
+  @@index([scheduledAt])
+  @@index([status])
+  @@index([organizationId])
 }

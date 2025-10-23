@@ -7,7 +7,7 @@ import TierSelectionModal from './TierSelectionModal';
 
 const TIER_CONFIG = {
   'Lite Brew': {
-    icon: 'ph:coffee-duotone',
+    icon: 'game-icons:boba',
     gradient: 'from-milk-tea to-warm-cream',
     borderColor: 'border-brown-sugar',
     bgColor: 'bg-milk-tea/20',

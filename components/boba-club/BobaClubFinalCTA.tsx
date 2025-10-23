@@ -10,7 +10,7 @@ export default function BobaClubFinalCTA() {
         <div className="max-w-4xl mx-auto text-center">
           {/* Big icon */}
           <Icon
-            icon="ph:coffee-duotone"
+            icon="game-icons:boba"
             className="w-32 h-32 md:w-40 md:h-40 text-deep-taro mx-auto mb-12"
           />
 

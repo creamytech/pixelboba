@@ -39,7 +39,7 @@ export default function NotFound() {
                 404
               </h1>
               <div className="absolute inset-0 flex items-center justify-center">
-                <Icon icon="ph:coffee-duotone" className="w-32 h-32 md:w-40 md:h-40 text-taro" />
+                <Icon icon="game-icons:boba" className="w-32 h-32 md:w-40 md:h-40 text-taro" />
               </div>
             </div>
 

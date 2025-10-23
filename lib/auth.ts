@@ -91,11 +91,11 @@ export const authOptions: NextAuthOptions = {
               },
             });
 
-            let userRole: 'CLIENT' | 'ADMIN' | 'OWNER' = 'CLIENT'; // default
+            let userRole: 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN' = 'CLIENT'; // default
 
             if (invite) {
               console.log('Found valid invite for user:', invite.role);
-              userRole = invite.role;
+              userRole = invite.role as 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN';
             } else {
               console.log('No valid invite found, using default CLIENT role');
             }

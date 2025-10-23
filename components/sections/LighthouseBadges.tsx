@@ -1,11 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Coffee, Sparkles, Zap, Heart } from 'lucide-react';
+import { Sparkles, Zap, Heart } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 const floatingElements = [
   {
-    icon: Coffee,
+    icon: 'game-icons:boba',
     text: '247+ cups of boba',
     subtext: 'consumed while coding',
     position: { top: '15%', right: '8%' },
@@ -46,7 +47,8 @@ export default function LighthouseBadges() {
   return (
     <div className="absolute inset-0 pointer-events-none hidden lg:block">
       {floatingElements.map((element, index) => {
-        const Icon = element.icon;
+        const isIconify = typeof element.icon === 'string';
+        const LucideIcon = !isIconify ? element.icon : null;
         return (
           <motion.div
             key={element.text}
@@ -102,7 +104,11 @@ export default function LighthouseBadges() {
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-taro to-deep-taro flex items-center justify-center shadow-lg">
-                  <Icon className="w-5 h-5 text-white" />
+                  {isIconify ? (
+                    <Icon icon={element.icon as string} className="w-5 h-5 text-white" />
+                  ) : (
+                    LucideIcon && <LucideIcon className="w-5 h-5 text-white" />
+                  )}
                 </div>
                 <div className="text-left">
                   <div className="text-sm font-bold text-ink leading-tight lowercase">

@@ -24,7 +24,7 @@ const navigation = [
   {
     name: 'Boba Club',
     href: '/boba-club',
-    icon: 'ph:coffee-duotone',
+    icon: 'game-icons:boba',
     description: 'Ongoing support & unlimited design requests',
   },
   {

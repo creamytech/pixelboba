@@ -49,7 +49,7 @@ export default function BobaClubHero() {
         >
           <div className="bg-[#7C3AED]/10 text-[#7C3AED] px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-[#7C3AED]/20">
             <p className="font-black text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2">
-              <Icon icon="ph:coffee-duotone" className="w-4 h-4" />
+              <Icon icon="game-icons:boba" className="w-4 h-4" />
               <span className="hidden sm:inline">Unlimited Web Development + Design</span>
               <span className="sm:hidden">Unlimited Dev + Design</span>
             </p>

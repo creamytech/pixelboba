@@ -125,7 +125,7 @@ export default function SocialProofSection() {
         >
           {[
             {
-              icon: 'ph:coffee-duotone',
+              icon: 'game-icons:boba',
               text: 'Smooth Process, Zero Stress',
               color: 'text-deep-taro',
             },

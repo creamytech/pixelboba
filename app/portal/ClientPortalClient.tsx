@@ -18,6 +18,9 @@ import BillingCenter from '@/components/portal/BillingCenter';
 import LockedFeature from '@/components/portal/LockedFeature';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import WebsitePreview from '@/components/portal/WebsitePreview';
+import TeamManagement from '@/components/portal/TeamManagement';
+import RequestTracking from '@/components/portal/RequestTracking';
+import MeetingScheduler from '@/components/portal/MeetingScheduler';
 // import OnboardingTour from '@/components/portal/OnboardingTour'; // Temporarily disabled for React 18 compatibility
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import {
@@ -296,6 +299,24 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         return (
           <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <BillingCenter />
+          </div>
+        );
+      case 'team':
+        return (
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+            <TeamManagement />
+          </div>
+        );
+      case 'requests':
+        return (
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+            <RequestTracking />
+          </div>
+        );
+      case 'meetings':
+        return (
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+            <MeetingScheduler />
           </div>
         );
       case 'preferences':

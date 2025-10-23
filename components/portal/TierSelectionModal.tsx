@@ -8,7 +8,7 @@ import { X, Sparkles, Check, TrendingUp, Loader2 } from 'lucide-react';
 const TIERS = [
   {
     name: 'Lite Brew',
-    icon: 'ph:coffee-duotone',
+    icon: 'game-icons:boba',
     price: 1500,
     priceId: process.env.NEXT_PUBLIC_STRIPE_LITE_BREW_PRICE_ID || '',
     description: 'Perfect for solo founders or startups',
