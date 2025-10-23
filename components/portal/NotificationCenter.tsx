@@ -18,12 +18,12 @@ import Pagination from '@/components/common/Pagination';
 import { usePagination } from '@/hooks/usePagination';
 
 const notificationConfig: Record<NotificationType, { icon: any; color: string; bg: string }> = {
-  MESSAGE: { icon: MessageSquare, color: 'text-blue-600', bg: 'bg-blue-100' },
-  INVOICE: { icon: CreditCard, color: 'text-green-600', bg: 'bg-green-100' },
-  CONTRACT: { icon: FileCheck, color: 'text-purple-600', bg: 'bg-purple-100' },
-  PROJECT_UPDATE: { icon: Upload, color: 'text-taro', bg: 'bg-taro/10' },
-  PAYMENT_RECEIVED: { icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-100' },
-  SYSTEM: { icon: Bell, color: 'text-gray-600', bg: 'bg-gray-100' },
+  MESSAGE: { icon: MessageSquare, color: 'text-ink', bg: 'bg-taro' },
+  INVOICE: { icon: CreditCard, color: 'text-ink', bg: 'bg-matcha' },
+  CONTRACT: { icon: FileCheck, color: 'text-ink', bg: 'bg-deep-taro' },
+  PROJECT_UPDATE: { icon: Upload, color: 'text-ink', bg: 'bg-taro' },
+  PAYMENT_RECEIVED: { icon: CheckCircle2, color: 'text-ink', bg: 'bg-matcha' },
+  SYSTEM: { icon: Bell, color: 'text-ink', bg: 'bg-cream' },
 };
 
 export default function NotificationCenter() {
@@ -111,9 +111,9 @@ export default function NotificationCenter() {
 
   if (loading) {
     return (
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 p-8">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-8">
         <div className="flex items-center justify-center">
-          <div className="text-ink/50">loading notifications...</div>
+          <div className="text-ink/50 font-bold uppercase">loading notifications...</div>
         </div>
       </div>
     );
@@ -122,25 +122,27 @@ export default function NotificationCenter() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+      <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <Bell className="w-6 h-6 text-taro" />
+              <div className="w-12 h-12 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+                <Bell className="w-6 h-6 text-white" />
+              </div>
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-brown-sugar text-white text-xs rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-6 h-6 bg-strawberry text-ink text-xs font-black rounded-full border-2 border-ink flex items-center justify-center">
                   {unreadCount}
                 </span>
               )}
             </div>
-            <h2 className="font-display text-2xl font-bold text-ink">notifications</h2>
+            <h2 className="font-display text-2xl font-black text-ink uppercase">notifications</h2>
           </div>
 
           <div className="flex items-center space-x-3">
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value as 'all' | 'unread')}
-              className="px-3 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 uppercase"
             >
               <option value="all">all notifications</option>
               <option value="unread">unread only</option>
@@ -149,7 +151,7 @@ export default function NotificationCenter() {
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="px-4 py-2 text-sm bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+                className="px-4 py-2 text-sm bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all"
               >
                 mark all read
               </button>
@@ -159,32 +161,36 @@ export default function NotificationCenter() {
 
         <div className="grid sm:grid-cols-3 gap-4 text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-taro rounded-full"></div>
-            <span className="text-ink/70">total: {notifications.length}</span>
+            <div className="w-3 h-3 bg-taro rounded-full border-2 border-ink"></div>
+            <span className="text-ink/70 font-bold uppercase">total: {notifications.length}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-brown-sugar rounded-full"></div>
-            <span className="text-ink/70">unread: {unreadCount}</span>
+            <div className="w-3 h-3 bg-strawberry rounded-full border-2 border-ink"></div>
+            <span className="text-ink/70 font-bold uppercase">unread: {unreadCount}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span className="text-ink/70">read: {notifications.length - unreadCount}</span>
+            <div className="w-3 h-3 bg-matcha rounded-full border-2 border-ink"></div>
+            <span className="text-ink/70 font-bold uppercase">
+              read: {notifications.length - unreadCount}
+            </span>
           </div>
         </div>
       </div>
 
       {/* Notifications List */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] overflow-hidden">
         {filteredNotifications.length === 0 ? (
           <div className="p-12 text-center">
-            <Bell className="w-16 h-16 text-ink/30 mx-auto mb-4" />
-            <p className="text-ink/50 text-lg">
+            <div className="w-16 h-16 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center mx-auto mb-4">
+              <Bell className="w-8 h-8 text-white" />
+            </div>
+            <p className="text-ink/50 text-lg font-bold uppercase">
               {filter === 'unread' ? 'no unread notifications' : 'no notifications yet'}
             </p>
           </div>
         ) : (
           <div>
-            <div className="divide-y divide-ink/5">
+            <div className="divide-y-2 divide-ink/10">
               <AnimatePresence>
                 {paginatedNotifications.map((notification) => (
                   <NotificationItem
@@ -199,7 +205,7 @@ export default function NotificationCenter() {
 
             {/* Pagination */}
             {filteredNotifications.length > 0 && (
-              <div className="border-t border-ink/10 p-4">
+              <div className="border-t-4 border-ink p-4">
                 <Pagination
                   currentPage={currentPage}
                   totalPages={totalPages}
@@ -244,13 +250,15 @@ function NotificationItem({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className={`group relative p-6 hover:bg-milk-tea/10 transition-colors ${
-        !notification.isRead ? 'bg-taro/5 border-l-4 border-l-taro' : ''
+      className={`group relative p-6 hover:bg-cream/30 transition-colors ${
+        !notification.isRead ? 'bg-taro/10 border-l-4 border-l-ink' : ''
       }`}
     >
       <div className="flex items-start space-x-4">
         {/* Icon */}
-        <div className={`p-2 rounded-lg ${config.bg} flex-shrink-0`}>
+        <div
+          className={`p-3 rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] ${config.bg} flex-shrink-0`}
+        >
           <Icon className={`w-5 h-5 ${config.color}`} />
         </div>
 
@@ -258,12 +266,16 @@ function NotificationItem({
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <h4 className="font-medium text-ink mb-1">{notification.title}</h4>
-              <p className="text-ink/70 text-sm leading-relaxed">{notification.message}</p>
+              <h4 className="font-black text-ink mb-1 uppercase">{notification.title}</h4>
+              <p className="text-ink/70 text-sm leading-relaxed font-bold">
+                {notification.message}
+              </p>
 
-              <div className="flex items-center space-x-4 mt-3 text-xs text-ink/50">
+              <div className="flex items-center space-x-4 mt-3 text-xs text-ink/50 font-bold">
                 <span>{timeAgo(new Date(notification.createdAt))}</span>
-                {notification.sender && <span>from {notification.sender.name}</span>}
+                {notification.sender && (
+                  <span className="uppercase">from {notification.sender.name}</span>
+                )}
               </div>
             </div>
 
@@ -272,7 +284,7 @@ function NotificationItem({
               {!notification.isRead && (
                 <button
                   onClick={onMarkAsRead}
-                  className="p-1 text-ink/40 hover:text-taro transition-colors"
+                  className="p-1 text-ink/40 hover:text-matcha transition-colors"
                   title="Mark as read"
                 >
                   <CheckCircle2 size={16} />
@@ -280,7 +292,7 @@ function NotificationItem({
               )}
               <button
                 onClick={onDelete}
-                className="p-1 text-ink/40 hover:text-red-500 transition-colors"
+                className="p-1 text-ink/40 hover:text-strawberry transition-colors"
                 title="Delete"
               >
                 <X size={16} />
@@ -291,7 +303,7 @@ function NotificationItem({
 
         {/* Unread Indicator */}
         {!notification.isRead && (
-          <div className="w-2 h-2 bg-taro rounded-full flex-shrink-0 mt-2"></div>
+          <div className="w-3 h-3 bg-strawberry rounded-full border-2 border-ink flex-shrink-0 mt-2"></div>
         )}
       </div>
     </motion.div>

@@ -7,11 +7,11 @@ import { Invoice, InvoiceStatus } from '@/types/portal';
 
 const statusConfig: Record<InvoiceStatus, { color: string; bg: string; label: string; icon: any }> =
   {
-    DRAFT: { color: 'text-gray-600', bg: 'bg-gray-100', label: 'draft', icon: Clock },
-    SENT: { color: 'text-blue-600', bg: 'bg-blue-100', label: 'sent', icon: Calendar },
-    PAID: { color: 'text-green-600', bg: 'bg-green-100', label: 'paid', icon: Check },
-    OVERDUE: { color: 'text-red-600', bg: 'bg-red-100', label: 'overdue', icon: Clock },
-    CANCELLED: { color: 'text-gray-600', bg: 'bg-gray-100', label: 'cancelled', icon: Clock },
+    DRAFT: { color: 'text-ink', bg: 'bg-cream', label: 'DRAFT', icon: Clock },
+    SENT: { color: 'text-ink', bg: 'bg-taro', label: 'SENT', icon: Calendar },
+    PAID: { color: 'text-ink', bg: 'bg-matcha', label: 'PAID', icon: Check },
+    OVERDUE: { color: 'text-ink', bg: 'bg-strawberry', label: 'OVERDUE', icon: Clock },
+    CANCELLED: { color: 'text-ink', bg: 'bg-cream', label: 'CANCELLED', icon: Clock },
   };
 
 export default function InvoiceCenter() {
@@ -106,9 +106,9 @@ export default function InvoiceCenter() {
 
   if (loading) {
     return (
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 p-8">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-8">
         <div className="flex items-center justify-center">
-          <div className="text-ink/50">loading invoices...</div>
+          <div className="text-ink/50 font-bold uppercase">loading invoices...</div>
         </div>
       </div>
     );
@@ -118,14 +118,11 @@ export default function InvoiceCenter() {
     <div className="space-y-6">
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="bg-strawberry border-3 border-ink rounded-xl p-4 shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
           <div className="flex items-center">
-            <X className="w-5 h-5 text-red-600 mr-2" />
-            <span className="text-red-700 text-sm">{error}</span>
-            <button
-              onClick={() => setError('')}
-              className="ml-auto text-red-600 hover:text-red-800"
-            >
+            <X className="w-5 h-5 text-ink mr-2" />
+            <span className="text-ink text-sm font-bold">{error}</span>
+            <button onClick={() => setError('')} className="ml-auto text-ink hover:text-ink/70">
               <X size={16} />
             </button>
           </div>
@@ -140,17 +137,17 @@ export default function InvoiceCenter() {
       </div>
 
       {/* Invoice List */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] overflow-hidden">
         {/* Header */}
-        <div className="p-6 border-b border-ink/10">
+        <div className="p-6 border-b-4 border-ink">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-display text-xl font-semibold text-ink">invoices</h3>
+            <h3 className="font-display text-xl font-black text-ink uppercase">invoices</h3>
 
             {/* Status Filter */}
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as InvoiceStatus | 'ALL')}
-              className="px-3 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 uppercase"
             >
               <option value="ALL">all statuses</option>
               <option value="SENT">sent</option>
@@ -164,17 +161,29 @@ export default function InvoiceCenter() {
         {/* Invoice Table */}
         <div className="overflow-x-auto">
           {filteredInvoices.length === 0 ? (
-            <div className="p-12 text-center text-ink/50">no invoices found</div>
+            <div className="p-12 text-center text-ink/50 font-bold">no invoices found</div>
           ) : (
             <table className="w-full">
-              <thead className="bg-milk-tea/20">
+              <thead className="bg-gradient-to-r from-milk-tea to-cream border-b-4 border-ink">
                 <tr>
-                  <th className="text-left p-4 font-medium text-ink">invoice</th>
-                  <th className="text-left p-4 font-medium text-ink">project</th>
-                  <th className="text-left p-4 font-medium text-ink">amount</th>
-                  <th className="text-left p-4 font-medium text-ink">due date</th>
-                  <th className="text-left p-4 font-medium text-ink">status</th>
-                  <th className="text-left p-4 font-medium text-ink">actions</th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    invoice
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    project
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    amount
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    due date
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    status
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -221,15 +230,24 @@ function SummaryCard({
   icon: any;
   color: string;
 }) {
+  const bgColor =
+    color === 'taro'
+      ? 'from-taro to-deep-taro'
+      : color === 'green-500'
+        ? 'from-matcha to-matcha'
+        : 'from-thai-tea to-thai-tea';
+
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+    <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-ink/60 text-sm font-medium">{title}</p>
-          <p className="text-2xl font-bold text-ink">${amount.toLocaleString()}</p>
+          <p className="text-ink/60 text-sm font-bold uppercase">{title}</p>
+          <p className="text-2xl font-black text-ink">${amount.toLocaleString()}</p>
         </div>
-        <div className={`p-3 rounded-lg bg-${color}/10`}>
-          <Icon className={`w-6 h-6 text-${color}`} />
+        <div
+          className={`w-12 h-12 bg-gradient-to-br ${bgColor} rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center`}
+        >
+          <Icon className="w-6 h-6 text-white" />
         </div>
       </div>
     </div>
@@ -262,32 +280,32 @@ function InvoiceRow({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="border-b border-ink/5 hover:bg-milk-tea/10 transition-colors"
+      className="border-b-2 border-ink/10 hover:bg-cream/30 transition-colors bg-white"
     >
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div>
-          <div className="font-medium text-ink">{invoice.number}</div>
-          <div className="text-sm text-ink/60">{invoice.title}</div>
+          <div className="font-black text-ink">{invoice.number}</div>
+          <div className="text-sm text-ink/60 font-bold">{invoice.title}</div>
         </div>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="text-ink">{invoice.project?.name || 'General'}</div>
       </td>
-      <td className="p-4">
-        <div className="font-medium text-ink">${invoice.totalAmount.toLocaleString()}</div>
+      <td className="px-4 py-4 font-bold text-ink">
+        <div className="font-black text-ink">${invoice.totalAmount.toLocaleString()}</div>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="text-ink">{new Date(invoice.dueDate).toLocaleDateString()}</div>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <span
-          className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${actualConfig.color} ${actualConfig.bg}`}
+          className={`inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-black rounded-full border-2 border-ink uppercase ${actualConfig.color} ${actualConfig.bg}`}
         >
           <ActualStatusIcon size={12} />
           <span>{actualConfig.label}</span>
         </span>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="flex items-center space-x-2">
           <button
             onClick={onView}
@@ -307,11 +325,11 @@ function InvoiceRow({
             <button
               onClick={onPay}
               disabled={paymentLoading}
-              className="px-3 py-1 bg-taro text-white text-xs rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1"
+              className="px-4 py-2 bg-matcha text-ink text-xs font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1"
             >
               {paymentLoading ? (
                 <>
-                  <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-3 h-3 border border-ink border-t-transparent rounded-full animate-spin"></div>
                   <span>processing...</span>
                 </>
               ) : (
@@ -339,19 +357,21 @@ function InvoiceDetailModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-xl border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] max-w-2xl w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-display text-2xl font-bold text-ink">{invoice.number}</h2>
+            <h2 className="font-display text-2xl font-black text-ink uppercase">
+              {invoice.number}
+            </h2>
             <button onClick={onClose} className="text-ink/60 hover:text-ink">
               <X size={24} />
             </button>
@@ -359,20 +379,22 @@ function InvoiceDetailModal({
 
           <div className="space-y-6">
             <div>
-              <h3 className="font-medium text-ink mb-2">{invoice.title}</h3>
-              {invoice.description && <p className="text-ink/70">{invoice.description}</p>}
+              <h3 className="font-black text-ink mb-2 uppercase">{invoice.title}</h3>
+              {invoice.description && (
+                <p className="text-ink/70 font-bold">{invoice.description}</p>
+              )}
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-ink/60">Issue Date:</span>
-                <span className="ml-2 text-ink">
+                <span className="text-ink/60 font-bold uppercase">Issue Date:</span>
+                <span className="ml-2 text-ink font-bold">
                   {new Date(invoice.issueDate).toLocaleDateString()}
                 </span>
               </div>
               <div>
-                <span className="text-ink/60">Due Date:</span>
-                <span className="ml-2 text-ink">
+                <span className="text-ink/60 font-bold uppercase">Due Date:</span>
+                <span className="ml-2 text-ink font-bold">
                   {new Date(invoice.dueDate).toLocaleDateString()}
                 </span>
               </div>
@@ -380,24 +402,24 @@ function InvoiceDetailModal({
 
             {/* Invoice Items */}
             <div>
-              <h4 className="font-medium text-ink mb-3">Items</h4>
-              <div className="border border-ink/10 rounded-lg overflow-hidden">
+              <h4 className="font-black text-ink mb-3 uppercase">Items</h4>
+              <div className="rounded-xl border-4 border-ink overflow-hidden">
                 <table className="w-full text-sm">
-                  <thead className="bg-milk-tea/20">
+                  <thead className="bg-gradient-to-r from-milk-tea to-cream border-b-4 border-ink">
                     <tr>
-                      <th className="text-left p-3">Description</th>
-                      <th className="text-left p-3">Qty</th>
-                      <th className="text-left p-3">Rate</th>
-                      <th className="text-left p-3">Amount</th>
+                      <th className="text-left p-3 font-black text-ink uppercase">Description</th>
+                      <th className="text-left p-3 font-black text-ink uppercase">Qty</th>
+                      <th className="text-left p-3 font-black text-ink uppercase">Rate</th>
+                      <th className="text-left p-3 font-black text-ink uppercase">Amount</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="bg-white">
                     {invoice.items.map((item, index) => (
-                      <tr key={item.id} className="border-b border-ink/5 last:border-b-0">
-                        <td className="p-3">{item.description}</td>
-                        <td className="p-3">{item.quantity}</td>
-                        <td className="p-3">${item.rate}</td>
-                        <td className="p-3">${item.amount}</td>
+                      <tr key={item.id} className="border-b-2 border-ink/10 last:border-b-0">
+                        <td className="p-3 font-bold text-ink">{item.description}</td>
+                        <td className="p-3 font-bold text-ink">{item.quantity}</td>
+                        <td className="p-3 font-bold text-ink">${item.rate}</td>
+                        <td className="p-3 font-bold text-ink">${item.amount}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -406,19 +428,19 @@ function InvoiceDetailModal({
             </div>
 
             {/* Totals */}
-            <div className="border-t border-ink/10 pt-4">
+            <div className="border-t-4 border-ink pt-4">
               <div className="flex justify-end">
                 <div className="w-64 space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-ink/60">Subtotal:</span>
-                    <span className="text-ink">${invoice.amount}</span>
+                    <span className="text-ink/60 font-bold uppercase">Subtotal:</span>
+                    <span className="text-ink font-bold">${invoice.amount}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-ink/60">Tax:</span>
-                    <span className="text-ink">${invoice.taxAmount}</span>
+                    <span className="text-ink/60 font-bold uppercase">Tax:</span>
+                    <span className="text-ink font-bold">${invoice.taxAmount}</span>
                   </div>
-                  <div className="flex justify-between font-medium text-lg">
-                    <span className="text-ink">Total:</span>
+                  <div className="flex justify-between font-black text-lg">
+                    <span className="text-ink uppercase">Total:</span>
                     <span className="text-ink">${invoice.totalAmount}</span>
                   </div>
                 </div>
@@ -430,7 +452,7 @@ function InvoiceDetailModal({
               <div className="flex justify-end">
                 <button
                   onClick={onPay}
-                  className="flex items-center space-x-2 px-6 py-3 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+                  className="flex items-center space-x-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all"
                 >
                   <CreditCard size={18} />
                   <span>pay ${invoice.totalAmount}</span>

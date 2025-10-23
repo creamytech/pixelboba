@@ -169,89 +169,91 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
       className="space-y-6"
     >
       {/* Header */}
-      <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 shadow-lg">
-        <div className="flex items-center justify-between mb-6">
-          <button
-            onClick={onBack}
-            className="flex items-center space-x-2 text-ink/70 hover:text-ink transition-colors"
-          >
-            <ArrowLeft size={20} />
-            <span>Back to clients</span>
-          </button>
-          <button
-            onClick={() => setShowUpdateForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all"
-          >
-            <Edit size={16} />
-            <span>Edit Client</span>
-          </button>
-        </div>
-
-        <div className="flex items-center space-x-6">
-          <div className="w-20 h-20 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center shadow-lg">
-            {data.client.image ? (
-              <Image
-                src={data.client.image}
-                alt={data.client.name || 'Client'}
-                width={80}
-                height={80}
-                className="w-full h-full rounded-full object-cover"
-              />
-            ) : (
-              <span className="font-display font-bold text-2xl text-taro">
-                {data.client.name?.charAt(0) || data.client.email.charAt(0)}
-              </span>
-            )}
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <button
+              onClick={onBack}
+              className="flex items-center space-x-2 px-4 py-2 bg-white text-ink font-black rounded-full border-3 border-ink uppercase hover:shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+            >
+              <ArrowLeft size={20} />
+              <span>Back</span>
+            </button>
+            <button
+              onClick={() => setShowUpdateForm(true)}
+              className="flex items-center space-x-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase"
+            >
+              <Edit size={16} />
+              <span>Edit Client</span>
+            </button>
           </div>
 
-          <div className="flex-1">
-            <h1 className="font-display text-3xl font-bold text-ink mb-2">
-              {data.client.name || 'Unnamed Client'}
-            </h1>
-            <div className="flex flex-wrap gap-4 text-sm text-ink/70">
-              <div className="flex items-center space-x-2">
-                <Mail size={16} />
-                <span>{data.client.email}</span>
-              </div>
-              {data.client.phone && (
-                <div className="flex items-center space-x-2">
-                  <Phone size={16} />
-                  <span>{data.client.phone}</span>
-                </div>
+          <div className="flex items-center space-x-6">
+            <div className="w-20 h-20 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+              {data.client.image ? (
+                <Image
+                  src={data.client.image}
+                  alt={data.client.name || 'Client'}
+                  width={80}
+                  height={80}
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <span className="font-display font-black text-2xl text-white">
+                  {data.client.name?.charAt(0) || data.client.email.charAt(0)}
+                </span>
               )}
-              {data.client.company && (
-                <div className="flex items-center space-x-2">
-                  <Building size={16} />
-                  <span>{data.client.company}</span>
-                </div>
-              )}
-              <div className="flex items-center space-x-2">
-                <Calendar size={16} />
-                <span>Joined {new Date(data.client.createdAt).toLocaleDateString()}</span>
-              </div>
             </div>
-          </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="bg-white/70 rounded-lg p-3">
-              <div className="font-display text-2xl font-bold text-taro">
-                {data.stats.activeProjects}
+            <div className="flex-1">
+              <h1 className="font-display text-3xl font-black text-ink mb-2">
+                {data.client.name || 'Unnamed Client'}
+              </h1>
+              <div className="flex flex-wrap gap-4 text-sm font-bold text-ink/70">
+                <div className="flex items-center space-x-2">
+                  <Mail size={16} />
+                  <span>{data.client.email}</span>
+                </div>
+                {data.client.phone && (
+                  <div className="flex items-center space-x-2">
+                    <Phone size={16} />
+                    <span>{data.client.phone}</span>
+                  </div>
+                )}
+                {data.client.company && (
+                  <div className="flex items-center space-x-2">
+                    <Building size={16} />
+                    <span>{data.client.company}</span>
+                  </div>
+                )}
+                <div className="flex items-center space-x-2">
+                  <Calendar size={16} />
+                  <span>Joined {new Date(data.client.createdAt).toLocaleDateString()}</span>
+                </div>
               </div>
-              <div className="text-xs text-ink/60">Active Projects</div>
             </div>
-            <div className="bg-white/70 rounded-lg p-3">
-              <div className="font-display text-2xl font-bold text-brown-sugar">
-                ${data.stats.totalRevenue.toLocaleString()}
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 gap-4 text-center">
+              <div className="bg-cream rounded-lg border-3 border-ink p-3 shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]">
+                <div className="font-display text-2xl font-black text-taro">
+                  {data.stats.activeProjects}
+                </div>
+                <div className="text-xs font-bold text-ink/60 uppercase">Active Projects</div>
               </div>
-              <div className="text-xs text-ink/60">Total Revenue</div>
+              <div className="bg-cream rounded-lg border-3 border-ink p-3 shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]">
+                <div className="font-display text-2xl font-black text-brown-sugar">
+                  ${data.stats.totalRevenue.toLocaleString()}
+                </div>
+                <div className="text-xs font-bold text-ink/60 uppercase">Total Revenue</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-milk-tea/60 backdrop-blur-lg rounded-xl p-2 border border-brown-sugar/20">
+      <div className="bg-cream rounded-xl border-4 border-ink p-2">
         <nav className="flex space-x-2">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -260,14 +262,14 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-2 px-4 py-3 rounded-lg font-display font-medium transition-all ${
+                className={`flex items-center space-x-2 px-4 py-3 rounded-full font-display font-black transition-all uppercase ${
                   isActive
-                    ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-lg'
-                    : 'text-ink/70 hover:text-ink hover:bg-milk-tea/80'
+                    ? 'bg-matcha text-ink border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+                    : 'text-ink/70 hover:text-ink hover:bg-white border-3 border-transparent'
                 }`}
               >
                 <Icon size={18} />
-                <span className="lowercase">{tab.name}</span>
+                <span>{tab.name}</span>
               </button>
             );
           })}
@@ -313,36 +315,36 @@ function OverviewTab({
   return (
     <div className="grid lg:grid-cols-2 gap-6">
       {/* Active Projects */}
-      <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
-        <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">active projects</h3>
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+        <h3 className="font-display text-xl font-black text-ink mb-4 uppercase">active projects</h3>
         <div className="space-y-4">
           {activeProjects.length > 0 ? (
             activeProjects.map((project) => (
-              <div key={project.id} className="bg-white/70 rounded-lg p-4">
+              <div key={project.id} className="bg-cream rounded-lg border-3 border-ink p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-display font-semibold text-ink">{project.name}</h4>
+                  <h4 className="font-display font-black text-ink">{project.name}</h4>
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    className={`px-3 py-1.5 rounded-full text-xs font-black border-2 border-ink uppercase ${
                       project.status === 'DEVELOPMENT'
-                        ? 'bg-taro/20 text-taro'
+                        ? 'bg-matcha text-ink'
                         : project.status === 'DESIGN'
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-100 text-gray-700'
+                          ? 'bg-taro text-white'
+                          : 'bg-cream text-ink'
                     }`}
                   >
                     {project.status.toLowerCase().replace('_', ' ')}
                   </span>
                 </div>
                 <div className="flex items-center space-x-4 mb-3">
-                  <div className="flex-1 bg-gray-200 rounded-full h-2">
+                  <div className="flex-1 bg-cream rounded-full h-3 border-2 border-ink">
                     <div
-                      className="bg-gradient-to-r from-taro to-brown-sugar h-2 rounded-full transition-all"
+                      className="bg-gradient-to-r from-taro to-brown-sugar h-full rounded-full transition-all"
                       style={{ width: `${project.progress}%` }}
                     />
                   </div>
-                  <span className="text-sm font-medium text-ink">{project.progress}%</span>
+                  <span className="text-sm font-black text-ink">{project.progress}%</span>
                 </div>
-                <div className="flex items-center justify-between text-xs text-ink/60">
+                <div className="flex items-center justify-between text-xs font-bold text-ink/60">
                   <span>Started {new Date(project.startDate).toLocaleDateString()}</span>
                   {project.deadline && (
                     <span>Due {new Date(project.deadline).toLocaleDateString()}</span>
@@ -353,25 +355,25 @@ function OverviewTab({
           ) : (
             <div className="text-center py-8 text-ink/50">
               <FolderOpen className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>No active projects</p>
+              <p className="font-bold">No active projects</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
-        <h3 className="font-display text-xl font-bold text-ink mb-4 lowercase">recent activity</h3>
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+        <h3 className="font-display text-xl font-black text-ink mb-4 uppercase">recent activity</h3>
         <div className="space-y-3">
           {data.messages.slice(0, 5).map((message) => (
             <div key={message.id} className="flex items-start space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center">
-                <MessageCircle size={14} className="text-taro" />
+              <div className="w-8 h-8 bg-gradient-to-br from-taro to-deep-taro rounded-full border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+                <MessageCircle size={14} className="text-white" />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-ink font-medium">{message.projectName}</p>
-                <p className="text-xs text-ink/60 line-clamp-2">{message.content}</p>
-                <p className="text-xs text-ink/40 mt-1">
+                <p className="text-sm text-ink font-black">{message.projectName}</p>
+                <p className="text-xs text-ink/60 font-bold line-clamp-2">{message.content}</p>
+                <p className="text-xs text-ink/40 font-bold mt-1">
                   {new Date(message.createdAt).toLocaleDateString()}
                 </p>
               </div>
@@ -410,12 +412,12 @@ function ProjectsTab({
 
   return (
     <div className="space-y-6">
-      <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-display text-xl font-bold text-ink lowercase">project updates</h3>
+          <h3 className="font-display text-xl font-black text-ink uppercase">project updates</h3>
           <button
             onClick={() => setSelectedProject(projects[0]?.id || '')}
-            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all text-sm"
+            className="flex items-center space-x-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase text-sm"
           >
             <Plus size={16} />
             <span>Send Update</span>
@@ -427,12 +429,12 @@ function ProjectsTab({
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="mb-6 bg-white/70 rounded-lg p-4 border border-brown-sugar/20"
+            className="mb-6 bg-cream rounded-lg border-3 border-ink p-4"
           >
             <select
               value={selectedProject}
               onChange={(e) => setSelectedProject(e.target.value)}
-              className="w-full mb-3 p-2 border border-brown-sugar/20 rounded-lg bg-white/70"
+              className="w-full mb-3 px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
             >
               {projects.map((project) => (
                 <option key={project.id} value={project.id}>
@@ -444,19 +446,19 @@ function ProjectsTab({
               value={updateContent}
               onChange={(e) => setUpdateContent(e.target.value)}
               placeholder="Write a project update for the client..."
-              className="w-full h-24 p-3 border border-brown-sugar/20 rounded-lg bg-white/70 resize-none"
+              className="w-full h-24 px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 resize-none"
             />
             <div className="flex justify-end space-x-2 mt-3">
               <button
                 onClick={() => setSelectedProject(null)}
-                className="px-4 py-2 text-ink/60 hover:text-ink"
+                className="px-4 py-2 bg-white text-ink font-black rounded-full border-3 border-ink uppercase"
               >
                 Cancel
               </button>
               <button
                 onClick={sendUpdate}
                 disabled={!updateContent.trim()}
-                className="px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
+                className="px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase disabled:opacity-50"
               >
                 Send Update
               </button>
@@ -469,52 +471,52 @@ function ProjectsTab({
         {projects.map((project) => (
           <div
             key={project.id}
-            className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20"
+            className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all p-6"
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h4 className="font-display text-lg font-bold text-ink">{project.name}</h4>
-                <p className="text-ink/60 text-sm">{project.description}</p>
+                <h4 className="font-display text-lg font-black text-ink">{project.name}</h4>
+                <p className="text-ink/60 text-sm font-bold">{project.description}</p>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-taro">{project.progress}%</div>
-                <div className="text-xs text-ink/60">
+                <div className="text-2xl font-black text-taro">{project.progress}%</div>
+                <div className="text-xs font-bold text-ink/60 uppercase">
                   {project.status.toLowerCase().replace('_', ' ')}
                 </div>
               </div>
             </div>
 
-            <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
+            <div className="w-full bg-cream rounded-full h-4 border-2 border-ink mb-4">
               <div
-                className="bg-gradient-to-r from-taro to-brown-sugar h-3 rounded-full transition-all"
+                className="bg-gradient-to-r from-taro to-brown-sugar h-full rounded-full transition-all"
                 style={{ width: `${project.progress}%` }}
               />
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-ink/60">Started:</span>
-                <div className="font-medium">
+                <span className="text-ink/60 font-bold uppercase text-xs">Started:</span>
+                <div className="font-black text-ink">
                   {new Date(project.startDate).toLocaleDateString()}
                 </div>
               </div>
               {project.deadline && (
                 <div>
-                  <span className="text-ink/60">Deadline:</span>
-                  <div className="font-medium">
+                  <span className="text-ink/60 font-bold uppercase text-xs">Deadline:</span>
+                  <div className="font-black text-ink">
                     {new Date(project.deadline).toLocaleDateString()}
                   </div>
                 </div>
               )}
               {project.totalValue && (
                 <div>
-                  <span className="text-ink/60">Value:</span>
-                  <div className="font-medium">${project.totalValue.toLocaleString()}</div>
+                  <span className="text-ink/60 font-bold uppercase text-xs">Value:</span>
+                  <div className="font-black text-ink">${project.totalValue.toLocaleString()}</div>
                 </div>
               )}
               <div>
-                <span className="text-ink/60">Status:</span>
-                <div className="font-medium capitalize">
+                <span className="text-ink/60 font-bold uppercase text-xs">Status:</span>
+                <div className="font-black capitalize text-ink">
                   {project.status.toLowerCase().replace('_', ' ')}
                 </div>
               </div>
@@ -528,24 +530,24 @@ function ProjectsTab({
 
 function MessagesTab({ messages }: { messages: ClientProfileData['messages'] }) {
   return (
-    <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
-      <h3 className="font-display text-xl font-bold text-ink mb-6 lowercase">message history</h3>
+    <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+      <h3 className="font-display text-xl font-black text-ink mb-6 uppercase">message history</h3>
       <div className="space-y-4 max-h-96 overflow-y-auto">
         {messages.map((message) => (
-          <div key={message.id} className="bg-white/70 rounded-lg p-4">
+          <div key={message.id} className="bg-cream rounded-lg border-3 border-ink p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-medium text-ink">{message.projectName}</span>
-              <span className="text-xs text-ink/50">
+              <span className="font-black text-ink">{message.projectName}</span>
+              <span className="text-xs font-bold text-ink/50">
                 {new Date(message.createdAt).toLocaleDateString()}
               </span>
             </div>
-            <p className="text-sm text-ink/70">{message.content}</p>
+            <p className="text-sm font-bold text-ink/70">{message.content}</p>
           </div>
         ))}
         {messages.length === 0 && (
           <div className="text-center py-8 text-ink/50">
             <MessageCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>No messages yet</p>
+            <p className="font-bold">No messages yet</p>
           </div>
         )}
       </div>
@@ -555,24 +557,24 @@ function MessagesTab({ messages }: { messages: ClientProfileData['messages'] }) 
 
 function FilesTab({ files }: { files: ClientProfileData['files'] }) {
   return (
-    <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
-      <h3 className="font-display text-xl font-bold text-ink mb-6 lowercase">uploaded files</h3>
+    <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+      <h3 className="font-display text-xl font-black text-ink mb-6 uppercase">uploaded files</h3>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {files.map((file) => (
           <div
             key={file.id}
-            className="bg-white/70 rounded-lg p-4 border border-brown-sugar/20 hover:shadow-lg transition-all"
+            className="bg-white rounded-lg border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all p-4"
           >
             <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-lg flex items-center justify-center">
-                <FileText size={20} className="text-taro" />
+              <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-lg border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+                <FileText size={20} className="text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-ink truncate">{file.originalName}</p>
-                <p className="text-xs text-ink/60">{(file.size / 1024).toFixed(1)} KB</p>
+                <p className="font-black text-ink truncate">{file.originalName}</p>
+                <p className="text-xs font-bold text-ink/60">{(file.size / 1024).toFixed(1)} KB</p>
               </div>
             </div>
-            <div className="text-xs text-ink/50 mb-2">
+            <div className="text-xs font-bold text-ink/50 mb-2">
               <div>Project: {file.projectName}</div>
               <div>Uploaded: {new Date(file.createdAt).toLocaleDateString()}</div>
             </div>
@@ -580,7 +582,7 @@ function FilesTab({ files }: { files: ClientProfileData['files'] }) {
               href={file.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1 text-sm text-taro hover:text-taro/80"
+              className="inline-flex items-center space-x-1 text-sm font-black text-taro hover:text-taro/80"
             >
               <span>Download</span>
               <ExternalLink size={14} />
@@ -590,7 +592,7 @@ function FilesTab({ files }: { files: ClientProfileData['files'] }) {
         {files.length === 0 && (
           <div className="col-span-full text-center py-8 text-ink/50">
             <Upload className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>No files uploaded yet</p>
+            <p className="font-bold">No files uploaded yet</p>
           </div>
         )}
       </div>
@@ -600,29 +602,29 @@ function FilesTab({ files }: { files: ClientProfileData['files'] }) {
 
 function InvoicesTab({ invoices }: { invoices: ClientProfileData['invoices'] }) {
   return (
-    <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
-      <h3 className="font-display text-xl font-bold text-ink mb-6 lowercase">invoices</h3>
+    <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+      <h3 className="font-display text-xl font-black text-ink mb-6 uppercase">invoices</h3>
       <div className="space-y-4">
         {invoices.map((invoice) => (
           <div
             key={invoice.id}
-            className="bg-white/70 rounded-lg p-4 flex items-center justify-between"
+            className="bg-cream rounded-lg border-3 border-ink p-4 flex items-center justify-between"
           >
             <div>
-              <div className="font-medium text-ink">{invoice.projectName}</div>
-              <div className="text-sm text-ink/60">
+              <div className="font-black text-ink">{invoice.projectName}</div>
+              <div className="text-sm font-bold text-ink/60">
                 Due: {new Date(invoice.dueDate).toLocaleDateString()}
               </div>
             </div>
             <div className="text-right">
-              <div className="font-bold text-lg text-ink">${invoice.amount.toLocaleString()}</div>
+              <div className="font-black text-lg text-ink">${invoice.amount.toLocaleString()}</div>
               <div
-                className={`text-xs px-2 py-1 rounded-full ${
+                className={`text-xs px-3 py-1.5 rounded-full font-black border-2 border-ink uppercase ${
                   invoice.status === 'PAID'
-                    ? 'bg-green-100 text-green-700'
+                    ? 'bg-matcha text-ink'
                     : invoice.status === 'PENDING'
-                      ? 'bg-yellow-100 text-yellow-700'
-                      : 'bg-red-100 text-red-700'
+                      ? 'bg-thai-tea text-ink'
+                      : 'bg-strawberry text-white'
                 }`}
               >
                 {invoice.status.toLowerCase()}
@@ -633,7 +635,7 @@ function InvoicesTab({ invoices }: { invoices: ClientProfileData['invoices'] }) 
         {invoices.length === 0 && (
           <div className="text-center py-8 text-ink/50">
             <CreditCard className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>No invoices yet</p>
+            <p className="font-bold">No invoices yet</p>
           </div>
         )}
       </div>
@@ -683,14 +685,14 @@ function MilestonesTab({
   return (
     <div className="space-y-6">
       {/* Milestone Creation */}
-      <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-display text-xl font-bold text-ink lowercase">
+          <h3 className="font-display text-xl font-black text-ink uppercase">
             send milestone update
           </h3>
           <button
             onClick={() => setSelectedProject(projects[0]?.id || '')}
-            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all text-sm"
+            className="flex items-center space-x-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase text-sm"
           >
             <Target size={16} />
             <span>Create Milestone</span>
@@ -701,15 +703,17 @@ function MilestonesTab({
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="bg-white/70 rounded-lg p-4 border border-brown-sugar/20"
+            className="bg-cream rounded-lg border-3 border-ink p-4"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="block text-sm font-medium text-ink/70 mb-2">Project</label>
+                <label className="block text-sm font-black text-ink/70 mb-2 uppercase">
+                  Project
+                </label>
                 <select
                   value={selectedProject}
                   onChange={(e) => setSelectedProject(e.target.value)}
-                  className="w-full p-2 border border-brown-sugar/20 rounded-lg bg-white/70"
+                  className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
                 >
                   {projects.map((project) => (
                     <option key={project.id} value={project.id}>
@@ -719,11 +723,11 @@ function MilestonesTab({
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-ink/70 mb-2">Type</label>
+                <label className="block text-sm font-black text-ink/70 mb-2 uppercase">Type</label>
                 <select
                   value={milestoneType}
                   onChange={(e) => setMilestoneType(e.target.value as 'MILESTONE' | 'UPDATE')}
-                  className="w-full p-2 border border-brown-sugar/20 rounded-lg bg-white/70"
+                  className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
                 >
                   <option value="MILESTONE">Milestone Achieved</option>
                   <option value="UPDATE">Progress Update</option>
@@ -739,20 +743,20 @@ function MilestonesTab({
                   ? "Describe the milestone achieved (e.g., 'Design phase completed', 'First prototype delivered')"
                   : 'Write a progress update for the client...'
               }
-              className="w-full h-24 p-3 border border-brown-sugar/20 rounded-lg bg-white/70 resize-none"
+              className="w-full h-24 px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 resize-none"
             />
 
             <div className="flex justify-end space-x-2 mt-3">
               <button
                 onClick={() => setSelectedProject(null)}
-                className="px-4 py-2 text-ink/60 hover:text-ink"
+                className="px-4 py-2 bg-white text-ink font-black rounded-full border-3 border-ink uppercase"
               >
                 Cancel
               </button>
               <button
                 onClick={sendMilestone}
                 disabled={!milestoneContent.trim()}
-                className="px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
+                className="px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase disabled:opacity-50"
               >
                 Send {milestoneType === 'MILESTONE' ? 'Milestone' : 'Update'}
               </button>
@@ -768,35 +772,37 @@ function MilestonesTab({
           return (
             <div
               key={project.id}
-              className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20"
+              className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all p-6"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-4">
-                  <div className={`w-4 h-4 ${progressInfo.color} rounded-full`}></div>
+                  <div
+                    className={`w-4 h-4 ${progressInfo.color} rounded-full border-2 border-ink`}
+                  ></div>
                   <div>
-                    <h4 className="font-display text-lg font-bold text-ink">{project.name}</h4>
-                    <p className="text-sm text-ink/60">{project.description}</p>
+                    <h4 className="font-display text-lg font-black text-ink">{project.name}</h4>
+                    <p className="text-sm font-bold text-ink/60">{project.description}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-taro">{project.progress}%</div>
-                  <div className={`text-xs ${progressInfo.textColor} font-medium`}>
+                  <div className="text-2xl font-black text-taro">{project.progress}%</div>
+                  <div className={`text-xs ${progressInfo.textColor} font-black uppercase`}>
                     {progressInfo.status}
                   </div>
                 </div>
               </div>
 
               {/* Progress Bar */}
-              <div className="w-full bg-gray-200 rounded-full h-4 mb-4 relative overflow-hidden">
+              <div className="w-full bg-cream rounded-full h-5 mb-4 relative overflow-hidden border-2 border-ink">
                 <motion.div
-                  className="bg-gradient-to-r from-taro to-brown-sugar h-4 rounded-full transition-all"
+                  className="bg-gradient-to-r from-taro to-brown-sugar h-full rounded-full transition-all"
                   style={{ width: `${project.progress}%` }}
                   initial={{ width: 0 }}
                   animate={{ width: `${project.progress}%` }}
                   transition={{ duration: 1, ease: 'easeOut' }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xs font-medium text-white drop-shadow-sm">
+                  <span className="text-xs font-black text-white drop-shadow-sm">
                     {project.progress}% Complete
                   </span>
                 </div>
@@ -804,7 +810,7 @@ function MilestonesTab({
 
               {/* Milestone Actions */}
               <div className="flex items-center justify-between text-sm">
-                <div className="flex space-x-4">
+                <div className="flex space-x-4 font-bold">
                   <span className="text-ink/60">
                     Started: {new Date(project.startDate).toLocaleDateString()}
                   </span>
@@ -819,7 +825,7 @@ function MilestonesTab({
                     setSelectedProject(project.id);
                     setMilestoneType('MILESTONE');
                   }}
-                  className="flex items-center space-x-1 px-3 py-1 bg-taro/10 text-taro rounded-lg hover:bg-taro/20 transition-colors"
+                  className="flex items-center space-x-1 px-3 py-1.5 bg-taro text-white font-black rounded-full border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] uppercase text-xs"
                 >
                   <Target size={14} />
                   <span>Add Milestone</span>
@@ -830,9 +836,9 @@ function MilestonesTab({
         })}
 
         {projects.length === 0 && (
-          <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20 text-center">
+          <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6 text-center">
             <Target className="w-12 h-12 mx-auto mb-2 opacity-50 text-ink/50" />
-            <p className="text-ink/50">No projects to track milestones for</p>
+            <p className="text-ink/50 font-bold">No projects to track milestones for</p>
           </div>
         )}
       </div>
@@ -843,11 +849,11 @@ function MilestonesTab({
 function ActivityTab({ clientId }: { clientId: string }) {
   // This would fetch activity logs for the client
   return (
-    <div className="bg-milk-tea/70 backdrop-blur-lg rounded-xl p-6 border border-brown-sugar/20">
-      <h3 className="font-display text-xl font-bold text-ink mb-6 lowercase">activity log</h3>
+    <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+      <h3 className="font-display text-xl font-black text-ink mb-6 uppercase">activity log</h3>
       <div className="text-center py-8 text-ink/50">
         <Activity className="w-12 h-12 mx-auto mb-2 opacity-50" />
-        <p>Activity tracking coming soon</p>
+        <p className="font-bold">Activity tracking coming soon</p>
       </div>
     </div>
   );

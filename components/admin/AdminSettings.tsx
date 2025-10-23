@@ -138,17 +138,17 @@ export default function AdminSettings() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0">
           <div>
-            <h2 className="font-display text-2xl font-bold text-ink">admin settings</h2>
-            <p className="text-ink/60 mt-1">configure system settings and preferences</p>
+            <h2 className="font-display text-2xl font-black text-ink uppercase">admin settings</h2>
+            <p className="text-ink/60 mt-1 font-bold">configure system settings and preferences</p>
           </div>
 
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center space-x-2 px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50"
+            className="flex items-center space-x-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all disabled:opacity-50"
           >
             <Save size={18} />
             <span>{saving ? 'saving...' : 'save changes'}</span>
@@ -159,17 +159,17 @@ export default function AdminSettings() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar */}
         <div className="lg:w-64">
-          <nav className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden">
+          <nav className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] overflow-hidden">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 text-left transition-colors ${
+                  className={`w-full flex items-center space-x-3 px-4 py-3 text-left transition-colors font-bold uppercase ${
                     activeTab === tab.id
                       ? 'bg-taro text-white'
-                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/10'
+                      : 'text-ink/70 hover:text-ink hover:bg-milk-tea/30'
                   }`}
                 >
                   <Icon size={18} />
@@ -187,7 +187,7 @@ export default function AdminSettings() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10"
+            className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6"
           >
             {renderTabContent()}
           </motion.div>
@@ -206,11 +206,11 @@ function CompanySettings({
 }) {
   return (
     <div className="space-y-6">
-      <h3 className="font-display text-xl font-semibold text-ink">company information</h3>
+      <h3 className="font-display text-xl font-black text-ink uppercase">company information</h3>
 
       <div className="grid sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">company name</label>
+          <label className="block text-sm font-black text-ink mb-2 uppercase">company name</label>
           <input
             type="text"
             value={settings.company.name}
@@ -220,12 +220,12 @@ function CompanySettings({
                 company: { ...settings.company, name: e.target.value },
               })
             }
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">email address</label>
+          <label className="block text-sm font-black text-ink mb-2 uppercase">email address</label>
           <input
             type="email"
             value={settings.company.email}
@@ -235,12 +235,12 @@ function CompanySettings({
                 company: { ...settings.company, email: e.target.value },
               })
             }
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">phone number</label>
+          <label className="block text-sm font-black text-ink mb-2 uppercase">phone number</label>
           <input
             type="tel"
             value={settings.company.phone}
@@ -250,12 +250,12 @@ function CompanySettings({
                 company: { ...settings.company, phone: e.target.value },
               })
             }
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">
+          <label className="block text-sm font-black text-ink mb-2 uppercase">
             display name for clients
           </label>
           <input
@@ -268,16 +268,16 @@ function CompanySettings({
               })
             }
             placeholder="How you want to appear to clients in messages"
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
-          <p className="text-xs text-ink/50 mt-1">
+          <p className="text-xs text-ink/50 mt-1 font-bold">
             This is the name clients will see when you send messages
           </p>
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-ink mb-2">address</label>
+        <label className="block text-sm font-black text-ink mb-2 uppercase">address</label>
         <textarea
           value={settings.company.address}
           onChange={(e) =>
@@ -287,7 +287,7 @@ function CompanySettings({
             })
           }
           rows={3}
-          className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+          className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
         />
       </div>
     </div>
@@ -303,11 +303,11 @@ function EmailSettings({
 }) {
   return (
     <div className="space-y-6">
-      <h3 className="font-display text-xl font-semibold text-ink">email configuration</h3>
+      <h3 className="font-display text-xl font-black text-ink uppercase">email configuration</h3>
 
       <div className="grid sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">from name</label>
+          <label className="block text-sm font-black text-ink mb-2 uppercase">from name</label>
           <input
             type="text"
             value={settings.email.fromName}
@@ -317,12 +317,12 @@ function EmailSettings({
                 email: { ...settings.email, fromName: e.target.value },
               })
             }
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">from email</label>
+          <label className="block text-sm font-black text-ink mb-2 uppercase">from email</label>
           <input
             type="email"
             value={settings.email.fromEmail}
@@ -332,13 +332,13 @@ function EmailSettings({
                 email: { ...settings.email, fromEmail: e.target.value },
               })
             }
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-ink mb-2">resend api key</label>
+        <label className="block text-sm font-black text-ink mb-2 uppercase">resend api key</label>
         <input
           type="password"
           value={settings.email.apiKey}
@@ -349,7 +349,7 @@ function EmailSettings({
             })
           }
           placeholder="re_your_resend_api_key_here"
-          className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+          className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
         />
       </div>
     </div>
@@ -365,11 +365,13 @@ function PaymentSettings({
 }) {
   return (
     <div className="space-y-6">
-      <h3 className="font-display text-xl font-semibold text-ink">payment configuration</h3>
+      <h3 className="font-display text-xl font-black text-ink uppercase">payment configuration</h3>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">stripe publishable key</label>
+          <label className="block text-sm font-black text-ink mb-2 uppercase">
+            stripe publishable key
+          </label>
           <input
             type="text"
             value={settings.payments.stripePublishableKey}
@@ -380,12 +382,14 @@ function PaymentSettings({
               })
             }
             placeholder="pk_test_your_publishable_key_here"
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-2">stripe secret key</label>
+          <label className="block text-sm font-black text-ink mb-2 uppercase">
+            stripe secret key
+          </label>
           <input
             type="password"
             value={settings.payments.stripeSecretKey}
@@ -396,13 +400,13 @@ function PaymentSettings({
               })
             }
             placeholder="sk_test_your_secret_key_here"
-            className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-ink mb-2">currency</label>
+            <label className="block text-sm font-black text-ink mb-2 uppercase">currency</label>
             <select
               value={settings.payments.currency}
               onChange={(e) =>
@@ -411,7 +415,7 @@ function PaymentSettings({
                   payments: { ...settings.payments, currency: e.target.value },
                 })
               }
-              className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
             >
               <option value="USD">USD - US Dollar</option>
               <option value="EUR">EUR - Euro</option>
@@ -421,7 +425,7 @@ function PaymentSettings({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ink mb-2">tax rate (%)</label>
+            <label className="block text-sm font-black text-ink mb-2 uppercase">tax rate (%)</label>
             <input
               type="number"
               min="0"
@@ -434,7 +438,7 @@ function PaymentSettings({
                   payments: { ...settings.payments, taxRate: parseFloat(e.target.value) },
                 })
               }
-              className="w-full px-3 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
             />
           </div>
         </div>
@@ -452,13 +456,15 @@ function NotificationSettings({
 }) {
   return (
     <div className="space-y-6">
-      <h3 className="font-display text-xl font-semibold text-ink">notification preferences</h3>
+      <h3 className="font-display text-xl font-black text-ink uppercase">
+        notification preferences
+      </h3>
 
       <div className="space-y-4">
-        <div className="flex items-center justify-between p-4 bg-milk-tea/10 rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-cream rounded-lg border-3 border-ink">
           <div>
-            <div className="font-medium text-ink">email notifications</div>
-            <div className="text-sm text-ink/60">send notifications via email</div>
+            <div className="font-black text-ink uppercase">email notifications</div>
+            <div className="text-sm text-ink/60 font-bold">send notifications via email</div>
           </div>
           <input
             type="checkbox"
@@ -473,10 +479,12 @@ function NotificationSettings({
           />
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-milk-tea/10 rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-cream rounded-lg border-3 border-ink">
           <div>
-            <div className="font-medium text-ink">project update notifications</div>
-            <div className="text-sm text-ink/60">notify clients when projects are updated</div>
+            <div className="font-black text-ink uppercase">project update notifications</div>
+            <div className="text-sm text-ink/60 font-bold">
+              notify clients when projects are updated
+            </div>
           </div>
           <input
             type="checkbox"
@@ -491,10 +499,10 @@ function NotificationSettings({
           />
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-milk-tea/10 rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-cream rounded-lg border-3 border-ink">
           <div>
-            <div className="font-medium text-ink">invoice reminders</div>
-            <div className="text-sm text-ink/60">send reminders for overdue invoices</div>
+            <div className="font-black text-ink uppercase">invoice reminders</div>
+            <div className="text-sm text-ink/60 font-bold">send reminders for overdue invoices</div>
           </div>
           <input
             type="checkbox"
@@ -509,10 +517,12 @@ function NotificationSettings({
           />
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-milk-tea/10 rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-cream rounded-lg border-3 border-ink">
           <div>
-            <div className="font-medium text-ink">contract notifications</div>
-            <div className="text-sm text-ink/60">notify when contracts are signed or expire</div>
+            <div className="font-black text-ink uppercase">contract notifications</div>
+            <div className="text-sm text-ink/60 font-bold">
+              notify when contracts are signed or expire
+            </div>
           </div>
           <input
             type="checkbox"
@@ -537,11 +547,11 @@ function NotificationSettings({
 function ContractSettings() {
   return (
     <div className="space-y-6">
-      <h3 className="font-display text-xl font-semibold text-ink">contract templates</h3>
+      <h3 className="font-display text-xl font-black text-ink uppercase">contract templates</h3>
 
-      <div className="p-8 text-center text-ink/50 border border-dashed border-ink/20 rounded-lg">
+      <div className="p-8 text-center text-ink/50 border-4 border-dashed border-ink/20 rounded-lg">
         <FileText className="w-12 h-12 mx-auto mb-4 text-ink/30" />
-        <p>contract template management coming soon</p>
+        <p className="font-bold">contract template management coming soon</p>
       </div>
     </div>
   );
@@ -550,11 +560,11 @@ function ContractSettings() {
 function DatabaseSettings() {
   return (
     <div className="space-y-6">
-      <h3 className="font-display text-xl font-semibold text-ink">database management</h3>
+      <h3 className="font-display text-xl font-black text-ink uppercase">database management</h3>
 
-      <div className="p-8 text-center text-ink/50 border border-dashed border-ink/20 rounded-lg">
+      <div className="p-8 text-center text-ink/50 border-4 border-dashed border-ink/20 rounded-lg">
         <Database className="w-12 h-12 mx-auto mb-4 text-ink/30" />
-        <p>database backup and migration tools coming soon</p>
+        <p className="font-bold">database backup and migration tools coming soon</p>
       </div>
     </div>
   );

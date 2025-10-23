@@ -116,10 +116,12 @@ export default function AdminMessageCenter() {
   return (
     <div className="h-[calc(100vh-180px)] flex gap-6">
       {/* Client List Sidebar */}
-      <div className="w-80 bg-white/70 backdrop-blur-sm rounded-3xl border-2 border-brown-sugar/10 shadow-lg flex flex-col">
+      <div className="w-80 bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] flex flex-col">
         {/* Search */}
-        <div className="p-4 border-b border-brown-sugar/10">
-          <h3 className="font-display font-bold text-xl text-ink mb-3">Client Messages</h3>
+        <div className="p-4 border-b-4 border-ink">
+          <h3 className="font-display font-black text-xl text-ink mb-3 uppercase">
+            Client Messages
+          </h3>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-ink/40" />
             <input
@@ -127,7 +129,7 @@ export default function AdminMessageCenter() {
               placeholder="Search clients..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-milk-tea/30 border border-brown-sugar/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-taro/20 text-ink"
+              className="w-full pl-10 pr-4 py-3 bg-white border-3 border-ink rounded-lg focus:outline-none focus:ring-4 focus:ring-taro/20 text-ink font-bold"
             />
           </div>
         </div>
@@ -135,7 +137,7 @@ export default function AdminMessageCenter() {
         {/* Client List */}
         <div className="flex-1 overflow-y-auto">
           {filteredClients.length === 0 ? (
-            <div className="p-4 text-center text-ink/60">No clients found</div>
+            <div className="p-4 text-center text-ink/60 font-bold">No clients found</div>
           ) : (
             filteredClients.map((client) => {
               const isSelected = selectedClient?.id === client.id;
@@ -144,8 +146,8 @@ export default function AdminMessageCenter() {
                 <motion.button
                   key={client.id}
                   onClick={() => setSelectedClient(client)}
-                  className={`w-full p-4 flex items-center gap-3 border-b border-brown-sugar/5 transition-colors ${
-                    isSelected ? 'bg-taro/10 border-l-4 border-l-taro' : 'hover:bg-milk-tea/20'
+                  className={`w-full p-4 flex items-center gap-3 border-b-2 border-ink/10 transition-colors ${
+                    isSelected ? 'bg-taro/10 border-l-4 border-l-taro' : 'hover:bg-cream/30'
                   }`}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
@@ -155,23 +157,23 @@ export default function AdminMessageCenter() {
                       <img
                         src={client.image}
                         alt={client.name || ''}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-taro/20"
+                        className="w-12 h-12 rounded-full object-cover border-3 border-ink"
                       />
                     ) : (
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-taro to-brown-sugar flex items-center justify-center text-white font-bold">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-taro to-deep-taro border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center text-white font-black">
                         {client.name?.charAt(0).toUpperCase() ||
                           client.email.charAt(0).toUpperCase()}
                       </div>
                     )}
                     {client.isOnline && (
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-matcha rounded-full border-2 border-white" />
                     )}
                   </div>
                   <div className="flex-1 text-left min-w-0">
-                    <p className="font-semibold text-ink truncate">
+                    <p className="font-black text-ink truncate">
                       {client.name || client.email.split('@')[0]}
                     </p>
-                    <p className="text-xs text-ink/60 truncate">{client.email}</p>
+                    <p className="text-xs text-ink/60 truncate font-bold">{client.email}</p>
                   </div>
                 </motion.button>
               );
@@ -182,29 +184,29 @@ export default function AdminMessageCenter() {
 
       {/* Message Area */}
       {selectedClient ? (
-        <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-3xl border-2 border-brown-sugar/10 shadow-lg flex flex-col">
+        <div className="flex-1 bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] flex flex-col">
           {/* Chat Header */}
-          <div className="p-6 border-b border-brown-sugar/10 flex items-center justify-between">
+          <div className="p-6 border-b-4 border-ink flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
                 {selectedClient.image ? (
                   <img
                     src={selectedClient.image}
                     alt={selectedClient.name || ''}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-taro/20"
+                    className="w-12 h-12 rounded-full object-cover border-3 border-ink"
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-taro to-brown-sugar flex items-center justify-center text-white font-bold text-lg">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-taro to-deep-taro border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center text-white font-black text-lg">
                     {selectedClient.name?.charAt(0).toUpperCase() ||
                       selectedClient.email.charAt(0).toUpperCase()}
                   </div>
                 )}
                 {selectedClient.isOnline && (
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-matcha rounded-full border-2 border-white" />
                 )}
               </div>
               <div>
-                <h3 className="font-display font-bold text-lg text-ink">
+                <h3 className="font-display font-black text-lg text-ink uppercase">
                   {selectedClient.name || selectedClient.email.split('@')[0]}
                 </h3>
                 <div className="flex items-center gap-2">
@@ -213,7 +215,7 @@ export default function AdminMessageCenter() {
                     lastActiveAt={selectedClient.lastActiveAt || null}
                     size="sm"
                   />
-                  <span className="text-xs text-ink/60">{selectedClient.email}</span>
+                  <span className="text-xs text-ink/60 font-bold">{selectedClient.email}</span>
                 </div>
               </div>
             </div>
@@ -222,7 +224,7 @@ export default function AdminMessageCenter() {
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.length === 0 ? (
-              <div className="flex items-center justify-center h-full text-ink/60">
+              <div className="flex items-center justify-center h-full text-ink/60 font-bold">
                 No messages yet. Start the conversation!
               </div>
             ) : (
@@ -237,12 +239,14 @@ export default function AdminMessageCenter() {
                     <div
                       className={`max-w-[70%] ${
                         isOwn
-                          ? 'bg-taro text-white rounded-2xl rounded-br-sm'
-                          : 'bg-milk-tea/30 text-ink rounded-2xl rounded-bl-sm'
+                          ? 'bg-taro text-white rounded-2xl rounded-br-sm border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+                          : 'bg-cream text-ink rounded-2xl rounded-bl-sm border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
                       } px-4 py-3`}
                     >
-                      <p className="text-sm">{message.content}</p>
-                      <div className={`text-xs mt-1 ${isOwn ? 'text-white/70' : 'text-ink/40'}`}>
+                      <p className="text-sm font-bold">{message.content}</p>
+                      <div
+                        className={`text-xs mt-1 font-bold ${isOwn ? 'text-white/70' : 'text-ink/40'}`}
+                      >
                         {new Date(message.createdAt).toLocaleTimeString('en-US', {
                           hour: 'numeric',
                           minute: '2-digit',
@@ -257,7 +261,7 @@ export default function AdminMessageCenter() {
           </div>
 
           {/* Message Input */}
-          <div className="p-4 border-t border-brown-sugar/10">
+          <div className="p-4 border-t-4 border-ink">
             <div className="flex items-center gap-3">
               <input
                 type="text"
@@ -265,12 +269,12 @@ export default function AdminMessageCenter() {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                className="flex-1 px-4 py-3 bg-milk-tea/30 border border-brown-sugar/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-taro/20 text-ink"
+                className="flex-1 px-4 py-3 bg-white border-3 border-ink rounded-lg focus:outline-none focus:ring-4 focus:ring-taro/20 text-ink font-bold"
               />
               <motion.button
                 onClick={sendMessage}
                 disabled={!newMessage.trim() || loading}
-                className="px-6 py-3 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transition-shadow"
+                className="px-6 py-3 bg-matcha text-ink rounded-full font-black border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -280,13 +284,17 @@ export default function AdminMessageCenter() {
           </div>
         </div>
       ) : (
-        <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-3xl border-2 border-brown-sugar/10 shadow-lg flex items-center justify-center">
+        <div className="flex-1 bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
           <div className="text-center">
-            <div className="w-20 h-20 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Users className="w-10 h-10 text-taro" />
+            <div className="w-20 h-20 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center mx-auto mb-4">
+              <Users className="w-10 h-10 text-white" />
             </div>
-            <h3 className="font-display font-bold text-2xl text-ink mb-2">Select a Client</h3>
-            <p className="text-ink/60">Choose a client from the list to start messaging</p>
+            <h3 className="font-display font-black text-2xl text-ink mb-2 uppercase">
+              Select a Client
+            </h3>
+            <p className="text-ink/60 font-bold">
+              Choose a client from the list to start messaging
+            </p>
           </div>
         </div>
       )}

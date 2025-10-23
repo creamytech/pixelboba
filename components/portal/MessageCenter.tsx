@@ -295,23 +295,21 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   // Show empty state if no projects
   if (projects.length === 0) {
     return (
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden h-[600px] flex items-center justify-center">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] overflow-hidden h-[600px] flex items-center justify-center">
         <div className="text-center p-8">
-          <div className="w-16 h-16 bg-taro/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Send className="w-8 h-8 text-taro/60" />
+          <div className="w-16 h-16 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center mx-auto mb-4">
+            <Send className="w-8 h-8 text-white" />
           </div>
-          <h3 className="font-display text-xl font-semibold text-ink mb-2 lowercase">
+          <h3 className="font-display text-xl font-black text-ink mb-2 uppercase">
             no projects yet
           </h3>
-          <p className="text-ink/60 mb-6 max-w-md">
+          <p className="text-ink/60 mb-6 max-w-md font-bold">
             Once you have active projects, you&apos;ll be able to communicate with your project
             manager here.
           </p>
-          <div className="bg-milk-tea/50 rounded-lg p-4 max-w-md">
-            <h4 className="font-display font-semibold text-ink mb-2 lowercase">
-              what happens next?
-            </h4>
-            <ul className="text-sm text-ink/70 space-y-1 text-left">
+          <div className="bg-cream rounded-xl border-3 border-ink p-4 max-w-md">
+            <h4 className="font-display font-black text-ink mb-2 uppercase">what happens next?</h4>
+            <ul className="text-sm text-ink/70 space-y-1 text-left font-bold">
               <li>• Your project manager will create your first project</li>
               <li>• You&apos;ll receive a notification when it&apos;s ready</li>
               <li>• Then you can start messaging about your project</li>
@@ -323,11 +321,11 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
   }
 
   return (
-    <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 min-h-[500px] h-[80vh] max-h-[800px] flex flex-col lg:flex-row touch-manipulation">
+    <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] min-h-[500px] h-[80vh] max-h-[800px] flex flex-col lg:flex-row touch-manipulation">
       {/* Project Sidebar */}
-      <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-ink/10 flex flex-col max-h-48 lg:max-h-none lg:h-full">
-        <div className="p-4 border-b border-ink/10">
-          <h3 className="font-display text-lg font-semibold text-ink">conversations</h3>
+      <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r-4 border-ink flex flex-col max-h-48 lg:max-h-none lg:h-full">
+        <div className="p-4 border-b-4 border-ink">
+          <h3 className="font-display text-lg font-black text-ink uppercase">conversations</h3>
         </div>
 
         <div
@@ -337,14 +335,14 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
           {/* Direct Messages Option */}
           <button
             onClick={() => setSelectedProject('direct')}
-            className={`w-full p-4 text-left border-b border-ink/5 transition-colors ${
+            className={`w-full p-4 text-left border-b-2 border-ink/10 transition-colors ${
               selectedProject === 'direct'
-                ? 'bg-taro/10 border-l-4 border-l-taro'
-                : 'hover:bg-milk-tea/20'
+                ? 'bg-taro/20 border-l-4 border-l-ink'
+                : 'hover:bg-cream/30'
             }`}
           >
-            <div className="font-medium text-ink">Direct Messages</div>
-            <div className="text-sm text-ink/60 mt-1">Chat with your project manager</div>
+            <div className="font-black text-ink uppercase">Direct Messages</div>
+            <div className="text-sm text-ink/60 mt-1 font-bold">Chat with your project manager</div>
           </button>
 
           {/* Project Messages */}
@@ -352,17 +350,17 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
             <button
               key={project.id}
               onClick={() => setSelectedProject(project.id)}
-              className={`w-full p-4 text-left border-b border-ink/5 transition-colors ${
+              className={`w-full p-4 text-left border-b-2 border-ink/10 transition-colors ${
                 selectedProject === project.id
-                  ? 'bg-taro/10 border-l-4 border-l-taro'
-                  : 'hover:bg-milk-tea/20'
+                  ? 'bg-taro/20 border-l-4 border-l-ink'
+                  : 'hover:bg-cream/30'
               }`}
             >
-              <div className="font-medium text-ink">{project.name}</div>
-              <div className="text-sm text-ink/60 capitalize mt-1">
+              <div className="font-black text-ink">{project.name}</div>
+              <div className="text-sm text-ink/60 uppercase mt-1 font-bold">
                 {project.status.toLowerCase().replace('_', ' ')}
               </div>
-              <div className="text-xs text-ink/40 mt-1">{project.progress}% complete</div>
+              <div className="text-xs text-ink/40 mt-1 font-bold">{project.progress}% complete</div>
             </button>
           ))}
         </div>
@@ -371,20 +369,20 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
       {/* Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Chat Header */}
-        <div className="p-4 border-b border-ink/10 bg-white/50">
+        <div className="p-4 border-b-4 border-ink bg-cream">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-display text-lg font-semibold text-ink">
+              <h3 className="font-display text-lg font-black text-ink uppercase">
                 {selectedProject === 'direct' ? 'Direct Messages' : selectedProjectData?.name}
               </h3>
-              <p className="text-sm text-ink/60">
+              <p className="text-sm text-ink/60 font-bold">
                 {selectedProject === 'direct'
                   ? 'Private conversation with your project manager'
                   : selectedProjectData?.description}
               </p>
             </div>
             <div className="text-right">
-              <div className="text-xs text-ink/60 mb-1">Team Status</div>
+              <div className="text-xs text-ink/60 mb-1 font-bold uppercase">Team Status</div>
               <div className="space-y-1">
                 {adminUsers.slice(0, 2).map((user) => (
                   <div key={user.id} className="flex items-center space-x-2">
@@ -427,7 +425,7 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
           >
             {loading ? (
               <div className="flex items-center justify-center h-full">
-                <div className="text-ink/50">loading messages...</div>
+                <div className="text-ink/50 font-bold uppercase">loading messages...</div>
               </div>
             ) : (
               <>
@@ -508,17 +506,19 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
 
         {/* File Upload Area */}
         {(uploadingFiles.length > 0 || selectedFiles.length > 0) && (
-          <div className="p-4 border-t border-ink/10 bg-milk-tea/10">
+          <div className="p-4 border-t-4 border-ink bg-cream">
             <div className="flex flex-wrap gap-2">
               {/* New uploaded files */}
               {uploadingFiles.map((file, index) => (
                 <div
                   key={`upload-${index}`}
-                  className="flex items-center space-x-2 bg-white/70 rounded-lg p-2 text-sm"
+                  className="flex items-center space-x-2 bg-white rounded-lg border-2 border-ink p-2 text-sm"
                 >
                   <FileText size={16} className="text-ink/60" />
-                  <span className="text-ink">{file.name}</span>
-                  <span className="text-xs text-taro bg-taro/10 px-1 rounded">new</span>
+                  <span className="text-ink font-bold">{file.name}</span>
+                  <span className="text-xs text-ink bg-matcha px-2 py-1 rounded-full border-2 border-ink font-black uppercase">
+                    new
+                  </span>
                   <button onClick={() => removeFile(index)} className="text-ink/40 hover:text-ink">
                     <X size={14} />
                   </button>
@@ -529,11 +529,13 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
               {selectedFiles.map((file) => (
                 <div
                   key={`selected-${file.id}`}
-                  className="flex items-center space-x-2 bg-white/70 rounded-lg p-2 text-sm"
+                  className="flex items-center space-x-2 bg-white rounded-lg border-2 border-ink p-2 text-sm"
                 >
                   <FileText size={16} className="text-ink/60" />
-                  <span className="text-ink">{file.originalName}</span>
-                  <span className="text-xs text-blue-600 bg-blue-100 px-1 rounded">library</span>
+                  <span className="text-ink font-bold">{file.originalName}</span>
+                  <span className="text-xs text-ink bg-taro px-2 py-1 rounded-full border-2 border-ink font-black uppercase">
+                    library
+                  </span>
                   <button
                     onClick={() => removeSelectedFile(file.id)}
                     className="text-ink/40 hover:text-ink"
@@ -547,10 +549,10 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
         )}
 
         {/* Message Input */}
-        <div className="p-4 border-t border-ink/10 bg-white/50">
+        <div className="p-4 border-t-4 border-ink bg-cream">
           <div
-            className={`flex items-center space-x-3 p-3 border rounded-xl transition-colors ${
-              isDragActive ? 'border-taro bg-taro/5' : 'border-ink/20 bg-white/70 hover:bg-white'
+            className={`flex items-center space-x-3 p-3 border-3 rounded-xl transition-colors ${
+              isDragActive ? 'border-taro bg-taro/5' : 'border-ink bg-white hover:bg-white'
             }`}
           >
             {selectedProject !== 'direct' && (
@@ -583,17 +585,17 @@ export default function MessageCenter({ projects }: MessageCenterProps) {
               placeholder={
                 isDragActive ? 'drop files here or type your message...' : 'type your message...'
               }
-              className="flex-1 bg-transparent outline-none text-ink placeholder-ink/50"
+              className="flex-1 bg-transparent outline-none text-ink placeholder-ink/50 font-bold"
             />
 
             <button
               onClick={sendMessage}
-              className="text-taro hover:text-taro/80 transition-colors disabled:opacity-50"
+              className="w-10 h-10 bg-matcha rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all disabled:opacity-50 flex items-center justify-center"
               disabled={
                 !newMessage.trim() && uploadingFiles.length === 0 && selectedFiles.length === 0
               }
             >
-              <Send size={20} />
+              <Send size={18} className="text-ink" />
             </button>
           </div>
         </div>
@@ -687,30 +689,30 @@ function FileLibraryModal({
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="bg-white rounded-xl shadow-lg max-w-4xl w-full max-h-[80vh] flex flex-col"
+        className="bg-white rounded-xl border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] max-w-4xl w-full max-h-[80vh] flex flex-col"
       >
         {/* Header */}
-        <div className="p-6 border-b border-ink/10">
+        <div className="p-6 border-b-4 border-ink">
           <div className="flex items-center justify-between">
-            <h3 className="font-display text-xl font-semibold text-ink">
+            <h3 className="font-display text-xl font-black text-ink uppercase">
               Select Files from Library
             </h3>
             <button onClick={onCancel} className="text-ink/40 hover:text-ink transition-colors">
               <X size={24} />
             </button>
           </div>
-          <p className="text-ink/60 mt-1">Choose files to attach to your message</p>
+          <p className="text-ink/60 mt-1 font-bold">Choose files to attach to your message</p>
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-auto p-6">
           {loadingFiles ? (
             <div className="flex items-center justify-center h-32">
-              <div className="text-ink/50">Loading files...</div>
+              <div className="text-ink/50 font-bold uppercase">Loading files...</div>
             </div>
           ) : files.length === 0 ? (
             <div className="flex items-center justify-center h-32">
-              <div className="text-ink/50">No files found</div>
+              <div className="text-ink/50 font-bold uppercase">No files found</div>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -769,22 +771,22 @@ function FileLibraryModal({
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-ink/10 flex items-center justify-between">
-          <p className="text-sm text-ink/60">
+        <div className="p-6 border-t-4 border-ink flex items-center justify-between">
+          <p className="text-sm text-ink/60 font-bold uppercase">
             {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} selected
           </p>
 
           <div className="flex items-center space-x-3">
             <button
               onClick={onCancel}
-              className="px-4 py-2 text-ink/60 hover:text-ink transition-colors"
+              className="bg-white text-ink font-black rounded-full border-3 border-ink uppercase px-4 py-2 hover:bg-cream transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={onConfirm}
               disabled={selectedFiles.length === 0}
-              className="px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Add {selectedFiles.length} File{selectedFiles.length !== 1 ? 's' : ''}
             </button>

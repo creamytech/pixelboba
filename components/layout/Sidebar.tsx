@@ -280,11 +280,11 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
                         onClick={handleClick}
                         className={`
                         relative flex items-center gap-3 px-4 py-3 rounded-2xl
-                        transition-all duration-300 group
+                        transition-all duration-200 group
                         ${
                           itemIsActive
-                            ? 'bg-gradient-to-r from-taro to-taro/80 text-white shadow-lg shadow-taro/30'
-                            : 'text-ink/60 hover:bg-milk-tea/30 hover:text-ink'
+                            ? 'bg-gradient-to-r from-taro to-taro/80 text-white border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+                            : 'text-ink/60 hover:bg-milk-tea/30 hover:text-ink hover:shadow-[1px_1px_0px_0px_rgba(58,0,29,0.3)] hover:translate-x-0.5 hover:translate-y-0.5'
                         }
                       `}
                       >
@@ -304,7 +304,9 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
                         <AnimatePresence>
                           {!isCollapsed && (
                             <motion.span
-                              className="font-display font-medium text-sm flex-1"
+                              className={`font-display text-sm flex-1 uppercase tracking-wide ${
+                                itemIsActive ? 'font-black' : 'font-bold'
+                              }`}
                               initial={{ opacity: 0, width: 0 }}
                               animate={{ opacity: 1, width: 'auto' }}
                               exit={{ opacity: 0, width: 0 }}
@@ -318,7 +320,7 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
                         {/* Badge */}
                         {!isCollapsed && item.badge && (
                           <motion.div
-                            className="bg-brown-sugar text-white text-xs font-bold px-2 py-0.5 rounded-full"
+                            className="bg-strawberry text-white text-xs font-black px-2 py-0.5 rounded-full border-2 border-ink"
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ type: 'spring', damping: 15 }}
@@ -399,7 +401,7 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
             <motion.div
               className={`
                 bg-gradient-to-br from-milk-tea/40 to-white/40 backdrop-blur-lg
-                rounded-2xl p-3 border border-brown-sugar/10
+                rounded-2xl p-3 border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]
                 ${isCollapsed ? 'flex items-center justify-center' : ''}
               `}
               whileHover={{ scale: 1.02 }}
@@ -436,17 +438,16 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-display font-semibold text-sm text-ink truncate">
-                      {user.name}
-                    </p>
+                    <p className="font-display font-black text-sm text-ink truncate">{user.name}</p>
                     <p className="text-xs text-ink/50 truncate">{user.role || 'Admin'}</p>
                   </div>
                   {onLogout && (
                     <motion.button
                       onClick={onLogout}
-                      className="p-2 hover:bg-red-50 rounded-xl text-red-400 hover:text-red-600 transition-colors"
+                      className="p-2 hover:bg-red-50 rounded-xl text-red-400 hover:text-red-600 transition-colors border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] uppercase font-black"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
+                      title="LOGOUT"
                     >
                       <LogOut className="w-4 h-4" />
                     </motion.button>

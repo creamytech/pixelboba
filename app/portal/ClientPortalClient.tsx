@@ -164,7 +164,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="text-center bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+          className="text-center bg-white rounded-xl p-8 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         >
           <motion.div
             className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-4"
@@ -172,7 +172,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           />
           <motion.p
-            className="font-display text-ink/70"
+            className="font-display font-bold text-ink/70 uppercase"
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           >
@@ -190,12 +190,14 @@ export default function ClientPortalClient({ session }: { session: Session }) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4 }}
-          className="text-center bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+          className="text-center bg-white rounded-xl p-8 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         >
-          <p className="font-display text-ink mb-4">Unable to load portal data</p>
+          <p className="font-display font-black uppercase text-ink mb-4">
+            Unable to load portal data
+          </p>
           <motion.button
             onClick={fetchPortalData}
-            className="px-6 py-3 bg-gradient-to-r from-taro to-brown-sugar text-white font-display rounded-2xl shadow-lg"
+            className="px-6 py-3 bg-gradient-to-r from-taro to-brown-sugar text-white font-display font-black uppercase rounded-xl border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -220,38 +222,38 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         return <TasksView data={portalData} />;
       case 'messages':
         return (
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <MessageCenter projects={portalData.projects} />
           </div>
         );
       case 'invoices':
         return (
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <InvoiceCenter />
           </div>
         );
       case 'contracts':
         return (
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <ContractCenter />
           </div>
         );
       case 'files':
         return (
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <FileCenter projects={portalData.projects} />
           </div>
         );
       case 'notifications':
         return (
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <NotificationCenter />
           </div>
         );
       case 'preferences':
         return (
           <div className="space-y-6">
-            <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-sm">
+            <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
               <NotificationPreferences />
             </div>
 
@@ -259,18 +261,20 @@ export default function ClientPortalClient({ session }: { session: Session }) {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-gradient-to-br from-taro/10 to-brown-sugar/10 backdrop-blur-sm rounded-3xl p-6 border-2 border-taro/20 shadow-sm"
+              className="bg-gradient-to-br from-taro/10 to-brown-sugar/10 rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-display font-bold text-lg text-ink mb-1">Portal Tour</h3>
-                  <p className="text-sm text-ink/60">
+                  <h3 className="font-display font-black uppercase text-lg text-ink mb-1">
+                    Portal Tour
+                  </h3>
+                  <p className="text-sm text-ink/60 font-bold">
                     New to the portal? Take a guided tour to learn about all the features.
                   </p>
                 </div>
                 <button
                   onClick={handleReplayTour}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-taro to-brown-sugar text-white font-medium hover:shadow-lg transition-all"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-taro to-brown-sugar text-white font-black uppercase border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                 >
                   Start Tour
                 </button>
@@ -456,8 +460,12 @@ function DashboardView({
         {/* Projects - 2/3 width */}
         <div className="lg:col-span-2 space-y-6" data-tour="projects-section">
           <div className="mb-4">
-            <h2 className="font-display font-bold text-2xl text-ink mb-2">Your Projects</h2>
-            <p className="text-ink/60 text-sm">Track progress and manage your active projects</p>
+            <h2 className="font-display font-black uppercase text-2xl text-ink mb-2">
+              Your Projects
+            </h2>
+            <p className="text-ink/60 text-sm font-bold">
+              Track progress and manage your active projects
+            </p>
           </div>
 
           {projectsForCards.length > 0 ? (
@@ -482,23 +490,23 @@ function DashboardView({
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="mt-4 bg-white/70 backdrop-blur-sm border-2 border-brown-sugar/10 rounded-3xl overflow-hidden shadow-lg"
+                          className="mt-4 bg-white border-4 border-ink rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
                         >
                           <div className="p-6 space-y-6">
                             {/* Project Description */}
                             {fullProject.description && (
                               <div>
-                                <h3 className="font-display font-bold text-lg text-ink mb-2">
+                                <h3 className="font-display font-black uppercase text-lg text-ink mb-2">
                                   About This Project
                                 </h3>
-                                <p className="text-ink/70">{fullProject.description}</p>
+                                <p className="text-ink/70 font-bold">{fullProject.description}</p>
                               </div>
                             )}
 
                             {/* Milestones */}
                             {fullProject.milestones && fullProject.milestones.length > 0 && (
                               <div>
-                                <h3 className="font-display font-bold text-lg text-ink mb-3">
+                                <h3 className="font-display font-black uppercase text-lg text-ink mb-3">
                                   Milestones
                                 </h3>
                                 <div className="space-y-2">
@@ -521,7 +529,7 @@ function DashboardView({
                                         >
                                           {milestone.completedAt ? '✓' : idx + 1}
                                         </div>
-                                        <span className="font-medium text-ink">
+                                        <span className="font-bold text-ink">
                                           {milestone.title}
                                         </span>
                                       </div>
@@ -540,7 +548,7 @@ function DashboardView({
                             {/* Website Preview */}
                             {fullProject.websiteUrl && (
                               <div data-tour="website-preview">
-                                <h3 className="font-display font-bold text-lg text-ink mb-3">
+                                <h3 className="font-display font-black uppercase text-lg text-ink mb-3">
                                   Live Website Preview
                                 </h3>
                                 <WebsitePreview
@@ -553,8 +561,10 @@ function DashboardView({
                             {/* Project Timeline */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div className="p-4 bg-taro/10 rounded-xl">
-                                <p className="text-xs text-ink/60 mb-1">Started</p>
-                                <p className="font-semibold text-ink">
+                                <p className="text-xs text-ink/60 mb-1 uppercase font-bold">
+                                  Started
+                                </p>
+                                <p className="font-bold text-ink">
                                   {new Date(fullProject.createdAt).toLocaleDateString('en-US', {
                                     month: 'long',
                                     day: 'numeric',
@@ -564,8 +574,10 @@ function DashboardView({
                               </div>
                               {fullProject.deadline && (
                                 <div className="p-4 bg-brown-sugar/10 rounded-xl">
-                                  <p className="text-xs text-ink/60 mb-1">Target Completion</p>
-                                  <p className="font-semibold text-ink">
+                                  <p className="text-xs text-ink/60 mb-1 uppercase font-bold">
+                                    Target Completion
+                                  </p>
+                                  <p className="font-bold text-ink">
                                     {new Date(fullProject.deadline).toLocaleDateString('en-US', {
                                       month: 'long',
                                       day: 'numeric',
@@ -585,7 +597,7 @@ function DashboardView({
             </div>
           ) : (
             <motion.div
-              className="bg-white/60 backdrop-blur-lg rounded-3xl p-12 border-2 border-brown-sugar/10 shadow-lg text-center"
+              className="bg-white rounded-xl p-12 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -593,8 +605,10 @@ function DashboardView({
               <div className="w-20 h-20 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-4xl">🎨</span>
               </div>
-              <h3 className="font-display font-bold text-2xl text-ink mb-2">No Active Projects</h3>
-              <p className="text-ink/60 mb-4">
+              <h3 className="font-display font-black uppercase text-2xl text-ink mb-2">
+                No Active Projects
+              </h3>
+              <p className="text-ink/60 mb-4 font-bold">
                 Your projects will appear here once we start working together
               </p>
             </motion.div>
@@ -657,19 +671,19 @@ function QuickActionCard({
   return (
     <motion.button
       onClick={onClick}
-      className="relative bg-white/70 backdrop-blur-sm border-2 border-brown-sugar/10 rounded-3xl p-6 text-left hover:shadow-xl transition-all"
+      className="relative bg-white border-4 border-ink rounded-xl p-6 text-left shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
       whileHover={{ y: -4, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
       <div
-        className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white mb-4 shadow-lg`}
+        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white mb-4 shadow-lg`}
       >
         {icon}
       </div>
-      <h3 className="font-display font-bold text-lg text-ink mb-1">{title}</h3>
-      <p className="text-sm text-ink/60 mb-2">{description}</p>
+      <h3 className="font-display font-black uppercase text-lg text-ink mb-1">{title}</h3>
+      <p className="text-sm text-ink/60 mb-2 font-bold">{description}</p>
       {count !== undefined && count > 0 && (
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-brown-sugar/10 text-brown-sugar rounded-full text-sm font-bold">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-brown-sugar/10 text-brown-sugar rounded-full text-sm font-bold uppercase">
           {count} pending
         </div>
       )}
@@ -695,7 +709,7 @@ function TasksView({ data }: { data: PortalData }) {
   if (data.projects.length === 0) {
     return (
       <motion.div
-        className="bg-white/60 backdrop-blur-lg rounded-3xl p-12 border-2 border-brown-sugar/10 shadow-lg text-center"
+        className="bg-white rounded-xl p-12 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -703,8 +717,12 @@ function TasksView({ data }: { data: PortalData }) {
         <div className="w-20 h-20 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle2 className="w-10 h-10 text-taro/60" />
         </div>
-        <h3 className="font-display text-2xl font-semibold text-ink mb-2">No Projects Yet</h3>
-        <p className="text-ink/60">Tasks will appear here once you have active projects with us</p>
+        <h3 className="font-display text-2xl font-black uppercase text-ink mb-2">
+          No Projects Yet
+        </h3>
+        <p className="text-ink/60 font-bold">
+          Tasks will appear here once you have active projects with us
+        </p>
       </motion.div>
     );
   }
@@ -713,18 +731,18 @@ function TasksView({ data }: { data: PortalData }) {
     <div className="space-y-6">
       {/* Project Selector */}
       <motion.div
-        className="bg-white/60 backdrop-blur-lg rounded-3xl p-6 border-2 border-brown-sugar/10 shadow-lg"
+        className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <label className="font-display text-sm font-medium text-ink/70 mb-3 block">
+        <label className="font-display text-sm font-bold uppercase text-ink/70 mb-3 block">
           Select Project
         </label>
         <select
           value={selectedProjectId || ''}
           onChange={(e) => setSelectedProjectId(e.target.value)}
-          className="w-full px-4 py-3 bg-white/70 border-2 border-brown-sugar/20 rounded-2xl focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro/40 transition-all font-display text-ink"
+          className="w-full px-4 py-3 bg-white border-4 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-taro/20 focus:border-taro/40 transition-all font-display font-bold text-ink"
         >
           {data.projects.map((project) => (
             <option key={project.id} value={project.id}>

@@ -30,12 +30,12 @@ export default function PortalLayout({
   onLogout,
 }: PortalLayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-milk-tea/20 via-white to-taro/10 relative overflow-hidden">
-      {/* Animated Background Elements */}
+    <div className="min-h-screen bg-cream relative overflow-hidden">
+      {/* Animated Background Elements - Simplified for Pomegranate */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Large decorative bubbles */}
+        {/* Large decorative shapes */}
         <motion.div
-          className="absolute w-96 h-96 bg-gradient-to-br from-taro/10 to-transparent rounded-full blur-3xl"
+          className="absolute w-96 h-96 bg-taro/5 rounded-full"
           animate={{
             x: [0, 100, 0],
             y: [0, -50, 0],
@@ -49,7 +49,7 @@ export default function PortalLayout({
           style={{ top: '10%', left: '20%' }}
         />
         <motion.div
-          className="absolute w-80 h-80 bg-gradient-to-br from-brown-sugar/10 to-transparent rounded-full blur-3xl"
+          className="absolute w-80 h-80 bg-matcha/5 rounded-full"
           animate={{
             x: [0, -80, 0],
             y: [0, 80, 0],
@@ -68,11 +68,11 @@ export default function PortalLayout({
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-taro/20 rounded-full"
+            className="absolute w-2 h-2 bg-ink/10 rounded-full"
             animate={{
               y: ['100vh', '-10vh'],
               x: [Math.random() * 100 + 'vw', Math.random() * 100 + 'vw'],
-              opacity: [0, 0.6, 0],
+              opacity: [0, 0.4, 0],
             }}
             transition={{
               duration: 10 + Math.random() * 10,

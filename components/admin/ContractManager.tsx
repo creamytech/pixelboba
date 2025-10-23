@@ -103,7 +103,7 @@ export default function ContractManager() {
 
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
           >
             <Plus size={18} />
             <span>new contract</span>
@@ -121,14 +121,14 @@ export default function ContractManager() {
               placeholder="search contracts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full pl-10 pr-4 py-2 border-4 border-ink rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as ContractStatus | 'ALL')}
-            className="px-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="px-4 py-2 border-3 border-ink rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20 font-black uppercase"
           >
             {statusOptions.map((status) => (
               <option key={status} value={status}>
@@ -140,15 +140,15 @@ export default function ContractManager() {
       </div>
 
       {/* Contracts List */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden">
+      <div className="bg-white/70 backdrop-blur-sm rounded-xl overflow-hidden border-4 border-ink">
         <table className="w-full">
-          <thead className="bg-milk-tea/20">
+          <thead className="bg-gradient-to-r from-milk-tea to-cream border-b-4 border-ink">
             <tr>
-              <th className="text-left p-4 font-medium text-ink">contract</th>
-              <th className="text-left p-4 font-medium text-ink">client</th>
-              <th className="text-left p-4 font-medium text-ink">status</th>
-              <th className="text-left p-4 font-medium text-ink">created</th>
-              <th className="text-left p-4 font-medium text-ink">actions</th>
+              <th className="text-left p-4 font-black uppercase text-sm text-ink">contract</th>
+              <th className="text-left p-4 font-black uppercase text-sm text-ink">client</th>
+              <th className="text-left p-4 font-black uppercase text-sm text-ink">status</th>
+              <th className="text-left p-4 font-black uppercase text-sm text-ink">created</th>
+              <th className="text-left p-4 font-black uppercase text-sm text-ink">actions</th>
             </tr>
           </thead>
           <tbody>
@@ -194,11 +194,11 @@ export default function ContractManager() {
 function ContractRow({ contract }: { contract: Contract }) {
   const getStatusColor = (status: ContractStatus) => {
     const colors = {
-      DRAFT: 'bg-gray-100 text-gray-700',
-      SENT: 'bg-blue-100 text-blue-700',
-      SIGNED: 'bg-green-100 text-green-700',
-      EXPIRED: 'bg-red-100 text-red-700',
-      CANCELLED: 'bg-gray-100 text-gray-700',
+      DRAFT: 'bg-taro text-white',
+      SENT: 'bg-thai-tea text-white',
+      SIGNED: 'bg-matcha text-ink',
+      EXPIRED: 'bg-strawberry text-white',
+      CANCELLED: 'bg-strawberry text-white',
     };
     return colors[status];
   };
@@ -246,23 +246,25 @@ function ContractRow({ contract }: { contract: Contract }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="border-b border-ink/5 hover:bg-milk-tea/10 transition-colors"
+      className="border-b-2 border-ink/10 hover:bg-cream/30 transition-colors"
     >
       <td className="p-4">
-        <div className="font-medium text-ink">{contract.title}</div>
+        <div className="font-bold text-ink">{contract.title}</div>
       </td>
       <td className="p-4">
-        <div className="text-ink">{contract.client.name}</div>
+        <div className="font-bold text-ink">{contract.client.name}</div>
       </td>
       <td className="p-4">
         <span
-          className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(contract.status)}`}
+          className={`px-2 py-1 rounded-full text-xs font-black uppercase border-2 border-ink ${getStatusColor(contract.status)}`}
         >
           {contract.status.toLowerCase()}
         </span>
       </td>
       <td className="p-4">
-        <div className="text-ink">{new Date(contract.createdAt).toLocaleDateString()}</div>
+        <div className="font-bold text-ink">
+          {new Date(contract.createdAt).toLocaleDateString()}
+        </div>
       </td>
       <td className="p-4">
         <div className="flex items-center space-x-2">
@@ -364,11 +366,13 @@ function CreateContractModal({ clients, templates, onClose, onSuccess }: CreateC
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
       >
         <div className="p-6 border-b border-ink/10">
           <div className="flex items-center justify-between">
-            <h3 className="font-display text-xl font-bold text-ink">create new contract</h3>
+            <h3 className="font-display text-xl font-black text-ink uppercase">
+              create new contract
+            </h3>
             <button onClick={onClose} className="p-1 text-ink/60 hover:text-ink">
               <X size={20} />
             </button>
@@ -377,13 +381,15 @@ function CreateContractModal({ clients, templates, onClose, onSuccess }: CreateC
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-ink mb-2">contract title *</label>
+            <label className="block text-sm font-bold uppercase text-ink mb-2">
+              contract title *
+            </label>
             <input
               type="text"
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full px-4 py-2 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
               placeholder="enter contract title..."
             />
           </div>
@@ -441,12 +447,12 @@ function CreateContractModal({ clients, templates, onClose, onSuccess }: CreateC
           )}
 
           <div>
-            <label className="block text-sm font-medium text-ink mb-2">client *</label>
+            <label className="block text-sm font-bold uppercase text-ink mb-2">client *</label>
             <select
               required
               value={formData.clientId}
               onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
-              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full px-4 py-2 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
             >
               <option value="">select a client...</option>
               {clients.map((client) => (
@@ -458,37 +464,41 @@ function CreateContractModal({ clients, templates, onClose, onSuccess }: CreateC
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ink mb-2">project (optional)</label>
+            <label className="block text-sm font-bold uppercase text-ink mb-2">
+              project (optional)
+            </label>
             <input
               type="text"
               value={formData.projectId}
               onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
-              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full px-4 py-2 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
               placeholder="project id (leave blank if none)..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ink mb-2">
+            <label className="block text-sm font-bold uppercase text-ink mb-2">
               expiration date (optional)
             </label>
             <input
               type="date"
               value={formData.expiresAt}
               onChange={(e) => setFormData({ ...formData, expiresAt: e.target.value })}
-              className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full px-4 py-2 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
             />
           </div>
 
           {formData.contractType === 'custom' && (
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">contract content *</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">
+                contract content *
+              </label>
               <textarea
                 required
                 rows={10}
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                className="w-full px-4 py-2 border border-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 resize-y"
+                className="w-full px-4 py-2 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 resize-y font-bold"
                 placeholder="enter contract terms and content..."
               />
             </div>
@@ -507,14 +517,14 @@ function CreateContractModal({ clients, templates, onClose, onSuccess }: CreateC
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-ink/60 hover:text-ink transition-colors"
+              className="px-4 py-2 text-ink/60 hover:text-ink transition-colors border-3 border-ink rounded-lg font-black uppercase shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
             >
               cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50"
+              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
             >
               {loading ? 'creating...' : 'create contract'}
             </button>

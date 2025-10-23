@@ -95,7 +95,7 @@ export default function ProjectManager() {
 
           <button
             onClick={() => setShowCreateForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
           >
             <Plus size={18} />
             <span>new project</span>
@@ -113,14 +113,14 @@ export default function ProjectManager() {
               placeholder="search projects or clients..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full pl-10 pr-4 py-2 border-4 border-ink rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as ProjectStatus | 'ALL')}
-            className="px-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="px-4 py-2 border-3 border-ink rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20 font-black uppercase"
           >
             {statusOptions.map((status) => (
               <option key={status} value={status}>
@@ -202,14 +202,14 @@ function ProjectCard({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="bg-white/50 rounded-lg p-6 border border-ink/10 hover:shadow-lg transition-all"
+        className="bg-white/50 rounded-lg p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
       >
         <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-6">
           {/* Project Info */}
           <div className="flex-1">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h3 className="font-display text-xl font-semibold text-ink mb-1">{project.name}</h3>
+                <h3 className="font-display text-xl font-black text-ink mb-1">{project.name}</h3>
                 <p className="text-ink/70 text-sm line-clamp-2">{project.description}</p>
               </div>
             </div>
@@ -231,7 +231,7 @@ function ProjectCard({
 
             <div className="flex items-center space-x-4 mt-4">
               <span
-                className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(project.status)}`}
+                className={`px-2 py-1 rounded-full text-xs font-black uppercase border-2 border-ink ${getStatusColor(project.status)}`}
               >
                 {project.status.toLowerCase().replace('_', ' ')}
               </span>
@@ -290,18 +290,18 @@ function ProjectCard({
 
 function getStatusColor(status: ProjectStatus) {
   const colors = {
-    DISCOVERY: 'bg-orange-100 text-orange-700',
-    WIREFRAMING: 'bg-blue-100 text-blue-700',
-    DESIGN: 'bg-purple-100 text-purple-700',
-    DEVELOPMENT: 'bg-cyan-100 text-cyan-700',
-    TESTING: 'bg-yellow-100 text-yellow-700',
-    LAUNCH: 'bg-green-100 text-green-700',
-    MAINTENANCE: 'bg-gray-100 text-gray-700',
-    COMPLETED: 'bg-emerald-100 text-emerald-700',
-    PAUSED: 'bg-gray-100 text-gray-700',
-    CANCELLED: 'bg-red-100 text-red-700',
+    DISCOVERY: 'bg-taro text-white',
+    WIREFRAMING: 'bg-taro text-white',
+    DESIGN: 'bg-taro text-white',
+    DEVELOPMENT: 'bg-taro text-white',
+    TESTING: 'bg-thai-tea text-white',
+    LAUNCH: 'bg-matcha text-ink',
+    MAINTENANCE: 'bg-taro text-white',
+    COMPLETED: 'bg-matcha text-ink',
+    PAUSED: 'bg-taro text-white',
+    CANCELLED: 'bg-strawberry text-white',
   };
-  return colors[status] || 'bg-gray-100 text-gray-700';
+  return colors[status] || 'bg-taro text-white';
 }
 
 function EditProjectModal({
@@ -374,42 +374,46 @@ function EditProjectModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto mx-4 transform scale-100"
+        className="bg-white rounded-xl max-w-lg w-full max-h-[90vh] overflow-y-auto mx-4 transform scale-100 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSubmit} className="p-6">
-          <h2 className="font-display text-2xl font-bold text-ink mb-6">update project</h2>
+          <h2 className="font-display text-2xl font-black text-ink mb-6 uppercase">
+            update project
+          </h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">project name</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">
+                project name
+              </label>
               <input
                 type="text"
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">description</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">description</label>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={3}
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">status</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">status</label>
               <select
                 value={formData.status}
                 onChange={(e) =>
                   setFormData({ ...formData, status: e.target.value as ProjectStatus })
                 }
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               >
                 {statusOptions.map((status) => (
                   <option key={status} value={status}>
@@ -455,19 +459,21 @@ function EditProjectModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">deadline (optional)</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">
+                deadline (optional)
+              </label>
               <input
                 type="date"
                 value={formData.deadline}
                 onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">
+              <label className="block text-sm font-bold uppercase text-ink mb-2">
                 website url (optional)
-                <span className="text-xs text-ink/60 block mt-1">
+                <span className="text-xs text-ink/60 block mt-1 normal-case font-normal">
                   share this link with clients for real-time project progress
                 </span>
               </label>
@@ -476,7 +482,7 @@ function EditProjectModal({
                 placeholder="https://example.com"
                 value={formData.websiteUrl}
                 onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               />
             </div>
           </div>
@@ -485,14 +491,14 @@ function EditProjectModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-ink/70 hover:text-ink transition-colors"
+              className="px-4 py-2 text-ink/70 hover:text-ink transition-colors border-3 border-ink rounded-lg font-black uppercase shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
             >
               cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50"
+              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
             >
               {loading ? 'updating...' : 'update project'}
             </button>
@@ -573,41 +579,45 @@ function CreateProjectModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto mx-4 transform scale-100"
+        className="bg-white rounded-xl max-w-lg w-full max-h-[90vh] overflow-y-auto mx-4 transform scale-100 border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSubmit} className="p-6">
-          <h2 className="font-display text-2xl font-bold text-ink mb-6">create new project</h2>
+          <h2 className="font-display text-2xl font-black text-ink mb-6 uppercase">
+            create new project
+          </h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">project name</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">
+                project name
+              </label>
               <input
                 type="text"
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">description</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">description</label>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={3}
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">client</label>
+              <label className="block text-sm font-bold uppercase text-ink mb-2">client</label>
               <select
                 required
                 value={formData.clientId}
                 onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
-                className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               >
                 <option value="">select client...</option>
                 {clients.map((client: any) => (
@@ -620,25 +630,27 @@ function CreateProjectModal({
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">start date</label>
+                <label className="block text-sm font-bold uppercase text-ink mb-2">
+                  start date
+                </label>
                 <input
                   type="date"
                   required
                   value={formData.startDate}
                   onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">
+                <label className="block text-sm font-bold uppercase text-ink mb-2">
                   deadline (optional)
                 </label>
                 <input
                   type="date"
                   value={formData.deadline}
                   onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
                 />
               </div>
             </div>
@@ -648,14 +660,14 @@ function CreateProjectModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-ink/70 hover:text-ink transition-colors"
+              className="px-4 py-2 text-ink/70 hover:text-ink transition-colors border-3 border-ink rounded-lg font-black uppercase shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
             >
               cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50"
+              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
             >
               {loading ? 'creating...' : 'create project'}
             </button>

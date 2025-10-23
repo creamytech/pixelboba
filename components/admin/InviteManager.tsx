@@ -73,11 +73,11 @@ export default function InviteManager() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <div className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20">
+        <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
           <div className="animate-pulse">
-            <div className="h-8 bg-brown-sugar/20 rounded mb-4"></div>
-            <div className="h-4 bg-brown-sugar/20 rounded mb-2"></div>
-            <div className="h-4 bg-brown-sugar/20 rounded w-2/3"></div>
+            <div className="h-8 bg-cream rounded mb-4"></div>
+            <div className="h-4 bg-cream rounded mb-2"></div>
+            <div className="h-4 bg-cream rounded w-2/3"></div>
           </div>
         </div>
       </div>
@@ -87,16 +87,18 @@ export default function InviteManager() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0">
           <div>
-            <h2 className="font-display text-2xl font-bold text-ink">invite management</h2>
-            <p className="text-ink/60 mt-1">create and manage user invitations</p>
+            <h2 className="font-display text-2xl font-black text-ink uppercase">
+              invite management
+            </h2>
+            <p className="text-ink/60 font-bold mt-1">create and manage user invitations</p>
           </div>
 
           <button
             onClick={() => setShowCreateForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+            className="flex items-center space-x-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase"
           >
             <Plus size={18} />
             <span>create invite</span>
@@ -105,26 +107,26 @@ export default function InviteManager() {
       </div>
 
       {/* Search */}
-      <div className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-ink/40" />
+          <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 w-5 h-5 text-ink/40" />
           <input
             type="text"
             placeholder="search invites by email or role..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-milk-tea/70 border border-brown-sugar/20 rounded-lg text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full pl-14 px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold text-ink placeholder-ink/40 focus:outline-none focus:ring-4 focus:ring-taro/20"
           />
         </div>
       </div>
 
       {/* Invites List */}
-      <div className="bg-milk-tea/70 backdrop-blur-sm rounded-xl p-6 border border-brown-sugar/20">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         {filteredInvites.length === 0 ? (
           <div className="text-center py-8">
             <User className="w-12 h-12 text-ink/40 mx-auto mb-4" />
-            <h3 className="font-medium text-ink mb-2">no invites found</h3>
-            <p className="text-ink/60 text-sm">
+            <h3 className="font-black text-ink mb-2 uppercase">no invites found</h3>
+            <p className="text-ink/60 text-sm font-bold">
               {searchQuery
                 ? 'no invites match your search'
                 : 'create your first invite to get started'}
@@ -139,26 +141,32 @@ export default function InviteManager() {
                   key={invite.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white/60 rounded-lg p-4 border border-brown-sugar/10"
+                  className="bg-cream rounded-lg border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all p-4"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3 mb-2">
                         <div className="flex items-center space-x-2">
                           <Mail className="w-4 h-4 text-ink/60" />
-                          <span className="font-medium text-ink">{invite.email}</span>
+                          <span className="font-black text-ink">{invite.email}</span>
                         </div>
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${statusInfo.bg} ${statusInfo.color}`}
+                          className={`px-3 py-1.5 rounded-full text-xs font-black border-2 border-ink uppercase ${
+                            statusInfo.status === 'used'
+                              ? 'bg-matcha text-ink'
+                              : statusInfo.status === 'expired'
+                                ? 'bg-strawberry text-white'
+                                : 'bg-taro text-white'
+                          }`}
                         >
                           {statusInfo.label}
                         </span>
-                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-taro/10 text-taro">
+                        <span className="px-3 py-1.5 rounded-full text-xs font-black border-2 border-ink bg-thai-tea text-ink uppercase">
                           {invite.role}
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-ink/60">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-bold text-ink/60">
                         <div className="flex items-center space-x-2">
                           <User className="w-4 h-4" />
                           <span>Created by {invite.createdBy.name}</span>
@@ -179,7 +187,7 @@ export default function InviteManager() {
                     {!invite.usedAt && new Date(invite.expiresAt) > new Date() && (
                       <button
                         onClick={() => copyInviteUrl(invite.token)}
-                        className="flex items-center space-x-2 px-3 py-1 text-sm bg-taro/10 text-taro rounded-lg hover:bg-taro/20 transition-colors"
+                        className="flex items-center space-x-2 px-3 py-2 text-sm bg-taro text-white font-black rounded-full border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] uppercase"
                       >
                         {copiedInvite === invite.token ? (
                           <>
@@ -262,66 +270,70 @@ function CreateInviteModal({ onClose, onSuccess }: { onClose: () => void; onSucc
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-xl border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] max-w-md w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-display text-2xl font-bold text-ink">create invite</h2>
+            <h2 className="font-display text-2xl font-black text-ink uppercase">create invite</h2>
             <button onClick={onClose} className="text-ink/40 hover:text-ink transition-colors">
               <X size={20} />
             </button>
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="bg-strawberry/20 border-3 border-strawberry rounded-lg p-3 mb-6">
+              <p className="text-strawberry text-sm font-bold">{error}</p>
             </div>
           )}
 
           {inviteUrl ? (
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                <Check className="w-8 h-8 text-green-600" />
+              <div className="w-16 h-16 bg-matcha rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center mx-auto">
+                <Check className="w-8 h-8 text-ink" />
               </div>
-              <h3 className="font-medium text-ink">invite created successfully!</h3>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-sm text-ink/60 mb-2">Invite URL (copied to clipboard):</p>
-                <code className="text-xs bg-white p-2 rounded border block break-all">
+              <h3 className="font-black text-ink uppercase">invite created successfully!</h3>
+              <div className="bg-cream rounded-lg border-3 border-ink p-4">
+                <p className="text-sm font-bold text-ink/60 mb-2 uppercase">
+                  Invite URL (copied to clipboard):
+                </p>
+                <code className="text-xs bg-white p-2 rounded border-2 border-ink block break-all font-bold">
                   {inviteUrl}
                 </code>
               </div>
-              <p className="text-sm text-ink/60">
+              <p className="text-sm font-bold text-ink/60">
                 Share this link with {formData.email}. It expires in {formData.expiresInDays} days.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">email address</label>
+                <label className="block text-sm font-black text-ink mb-2 uppercase">
+                  email address
+                </label>
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 text-ink"
                   placeholder="user@example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">role</label>
+                <label className="block text-sm font-black text-ink mb-2 uppercase">role</label>
                 <select
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 text-ink"
                 >
                   <option value="CLIENT">Client</option>
                   <option value="ADMIN">Admin</option>
@@ -329,13 +341,15 @@ function CreateInviteModal({ onClose, onSuccess }: { onClose: () => void; onSucc
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">expires in (days)</label>
+                <label className="block text-sm font-black text-ink mb-2 uppercase">
+                  expires in (days)
+                </label>
                 <select
                   value={formData.expiresInDays}
                   onChange={(e) =>
                     setFormData({ ...formData, expiresInDays: parseInt(e.target.value) })
                   }
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 text-ink"
                 >
                   <option value={1}>1 day</option>
                   <option value={3}>3 days</option>
@@ -349,17 +363,17 @@ function CreateInviteModal({ onClose, onSuccess }: { onClose: () => void; onSucc
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 text-ink/70 hover:text-ink transition-colors"
+                  className="px-4 py-2 bg-white text-ink font-black rounded-full border-3 border-ink uppercase"
                 >
                   cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 flex items-center space-x-2"
+                  className="px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase disabled:opacity-50 flex items-center space-x-2"
                 >
                   {loading ? (
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-2 border-ink border-t-transparent rounded-full animate-spin"></div>
                   ) : (
                     <>
                       <Plus size={16} />

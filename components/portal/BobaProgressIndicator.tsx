@@ -57,7 +57,7 @@ export default function BobaProgressIndicator({
         {/* Cup */}
         <div className="relative" style={{ width: cupWidth, height: cupHeight }}>
           <div
-            className="absolute bottom-0 bg-white/20 backdrop-blur-sm border-2 border-taro/30 rounded-b-3xl rounded-t-lg"
+            className="absolute bottom-0 bg-white border-3 border-ink rounded-b-3xl rounded-t-lg shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]"
             style={{ width: cupWidth, height: cupHeight - 16 }}
           >
             {/* Liquid */}
@@ -116,7 +116,7 @@ export default function BobaProgressIndicator({
 
         {/* Progress Percentage */}
         <motion.div
-          className={`mt-3 ${text} font-bold text-ink bg-milk-tea/80 px-3 py-1 rounded-full border border-brown-sugar/20 shadow-sm`}
+          className={`mt-3 ${text} font-black text-ink bg-matcha px-4 py-2 rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] uppercase`}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.8 }}
@@ -135,20 +135,19 @@ export default function BobaProgressIndicator({
         >
           {/* Status Badge */}
           <motion.div
-            className="inline-flex items-center px-4 py-2 rounded-full border border-brown-sugar/20 shadow-sm"
+            className="inline-flex items-center px-4 py-2 rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
             style={{
-              backgroundColor: `${config.color}15`,
-              color: config.color,
+              backgroundColor: config.color,
             }}
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: config.color }} />
-            <span className="font-medium text-sm lowercase">{config.phase}</span>
+            <div className="w-2 h-2 rounded-full mr-2 bg-ink" />
+            <span className="font-black text-sm uppercase text-ink">{config.phase}</span>
           </motion.div>
 
           {/* Flavor Description */}
-          <div className={`${details} text-ink/60 font-medium lowercase max-w-48 mx-auto`}>
+          <div className={`${details} text-ink/60 font-bold uppercase max-w-48 mx-auto`}>
             {config.label}
           </div>
         </motion.div>

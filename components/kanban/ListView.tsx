@@ -109,30 +109,32 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'URGENT':
-        return 'text-red-600 bg-red-50';
+        return 'text-white bg-strawberry border-2 border-ink';
       case 'HIGH':
-        return 'text-orange-600 bg-orange-50';
+        return 'text-ink bg-strawberry border-2 border-ink';
       case 'MEDIUM':
-        return 'text-yellow-600 bg-yellow-50';
+        return 'text-ink bg-thai-tea border-2 border-ink';
       case 'LOW':
-        return 'text-green-600 bg-green-50';
+        return 'text-ink bg-matcha border-2 border-ink';
       default:
-        return 'text-gray-600 bg-gray-50';
+        return 'text-ink bg-cream border-2 border-ink';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'COMPLETED':
-        return 'text-green-600 bg-green-50';
+        return 'text-ink bg-matcha border-2 border-ink';
       case 'IN_PROGRESS':
-        return 'text-violet-600 bg-violet-50';
+        return 'text-ink bg-thai-tea border-2 border-ink';
       case 'IN_REVIEW':
-        return 'text-yellow-600 bg-yellow-50';
+        return 'text-ink bg-milk-tea border-2 border-ink';
       case 'BLOCKED':
-        return 'text-red-600 bg-red-50';
+        return 'text-white bg-strawberry border-2 border-ink';
+      case 'TODO':
+        return 'text-white bg-taro border-2 border-ink';
       default:
-        return 'text-gray-600 bg-gray-50';
+        return 'text-ink bg-cream border-2 border-ink';
     }
   };
 
@@ -147,17 +149,17 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
 
   return (
     <motion.div
-      className="bg-white/60 backdrop-blur-lg rounded-xl border border-brown-sugar/20 shadow-lg overflow-hidden"
+      className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
       {/* Controls */}
-      <div className="p-4 bg-gradient-to-r from-taro/5 to-brown-sugar/5 border-b border-brown-sugar/20">
+      <div className="p-4 bg-gradient-to-r from-milk-tea to-cream rounded-t-xl border-b-4 border-ink">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2">
-            <ListIcon className="w-5 h-5 text-taro" />
-            <h3 className="font-display font-semibold text-ink lowercase">list view</h3>
+            <ListIcon className="w-5 h-5 text-ink" />
+            <h3 className="font-display font-black text-ink uppercase">list view</h3>
           </div>
 
           <div className="flex items-center gap-3">
@@ -165,7 +167,7 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
             <select
               value={groupBy}
               onChange={(e) => setGroupBy(e.target.value as GroupBy)}
-              className="px-3 py-1.5 bg-white border border-brown-sugar/20 rounded-lg text-sm font-display focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="px-4 py-3 bg-white border-3 border-ink rounded-lg text-sm font-display font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 uppercase"
             >
               <option value="none">No Grouping</option>
               <option value="status">Group by Status</option>
@@ -176,7 +178,7 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
             {/* Sort Direction */}
             <button
               onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-              className="p-2 bg-white hover:bg-gray-50 border border-brown-sugar/20 rounded-lg transition-colors"
+              className="p-2 bg-white hover:bg-cream border-3 border-ink rounded-lg transition-colors shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px]"
               title={`Sort ${sortDirection === 'asc' ? 'descending' : 'ascending'}`}
             >
               {sortDirection === 'asc' ? (
@@ -190,8 +192,8 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
       </div>
 
       {/* Table Header */}
-      <div className="bg-gray-50/50 border-b border-brown-sugar/20">
-        <div className="grid grid-cols-12 gap-4 px-4 py-3 text-xs font-display font-semibold text-ink/60 uppercase">
+      <div className="bg-cream/30 border-b-4 border-ink">
+        <div className="grid grid-cols-12 gap-4 px-4 py-3 text-xs font-display font-black text-ink uppercase">
           <button
             onClick={() => handleSort('title')}
             className="col-span-4 flex items-center gap-2 hover:text-taro transition-colors text-left"
@@ -227,12 +229,12 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
       </div>
 
       {/* Task Groups */}
-      <div className="max-h-[600px] overflow-y-auto">
+      <div className="max-h-[600px] overflow-y-auto bg-cream/30">
         {Object.entries(groupedTasks).map(([groupName, groupTasks]) => (
-          <div key={groupName} className="border-b border-brown-sugar/10 last:border-b-0">
+          <div key={groupName} className="border-b-3 border-ink/20 last:border-b-0">
             {groupBy !== 'none' && (
-              <div className="bg-gray-50/30 px-4 py-2 border-b border-brown-sugar/10">
-                <h4 className="font-display font-medium text-ink text-sm lowercase">
+              <div className="bg-gradient-to-r from-milk-tea to-cream px-4 py-2 border-b-3 border-ink">
+                <h4 className="font-display font-black text-ink text-sm uppercase">
                   {groupName} ({groupTasks.length})
                 </h4>
               </div>
@@ -246,21 +248,25 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
                 <motion.button
                   key={task.id}
                   onClick={() => onTaskClick(task)}
-                  className="w-full grid grid-cols-12 gap-4 px-4 py-3 hover:bg-taro/5 transition-colors border-b border-brown-sugar/5 last:border-b-0 text-left"
+                  className="w-full grid grid-cols-12 gap-4 px-4 py-3 hover:bg-taro/10 transition-all border-b-3 border-ink/10 last:border-b-0 text-left bg-white"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.02 }}
-                  whileHover={{ x: 4 }}
+                  whileHover={{ x: 4, backgroundColor: 'rgba(147, 51, 234, 0.05)' }}
                 >
                   {/* Task Title */}
                   <div className="col-span-4 flex items-center gap-2">
                     <div
-                      className={`w-2 h-2 rounded-full ${getPriorityColor(task.priority).split(' ')[1]}`}
+                      className={`w-3 h-3 rounded-full border-2 border-ink ${getPriorityColor(task.priority).split(' ')[1]}`}
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="font-display font-medium text-ink truncate">{task.title}</p>
+                      <p className="font-display font-black uppercase text-ink truncate">
+                        {task.title}
+                      </p>
                       {task.description && (
-                        <p className="text-xs text-ink/60 truncate mt-0.5">{task.description}</p>
+                        <p className="text-xs text-ink/60 truncate mt-0.5 font-bold">
+                          {task.description}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -268,18 +274,18 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
                   {/* Status */}
                   <div className="col-span-2 flex items-center">
                     <span
-                      className={`px-2 py-1 rounded text-xs font-display font-medium ${getStatusColor(task.status)}`}
+                      className={`px-3 py-1.5 rounded-full text-xs font-display font-black uppercase ${getStatusColor(task.status)}`}
                     >
-                      {task.status.replace('_', ' ').toLowerCase()}
+                      {task.status.replace('_', ' ')}
                     </span>
                   </div>
 
                   {/* Priority */}
                   <div className="col-span-2 flex items-center">
                     <span
-                      className={`px-2 py-1 rounded text-xs font-display font-medium ${getPriorityColor(task.priority)}`}
+                      className={`px-3 py-1.5 rounded-full text-xs font-display font-black uppercase ${getPriorityColor(task.priority)}`}
                     >
-                      {task.priority.toLowerCase()}
+                      {task.priority}
                     </span>
                   </div>
 
@@ -289,14 +295,16 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
                       <>
                         <Calendar className="w-3 h-3 text-ink/40" />
                         <span
-                          className={`text-sm font-display ${isOverdue ? 'text-red-600 font-medium' : 'text-ink/70'}`}
+                          className={`text-sm font-display font-bold uppercase ${isOverdue ? 'text-strawberry font-black' : 'text-ink/70'}`}
                         >
                           {format(new Date(task.dueDate), 'MMM d')}
                         </span>
-                        {isOverdue && <AlertCircle className="w-3 h-3 text-red-600" />}
+                        {isOverdue && <AlertCircle className="w-3 h-3 text-strawberry" />}
                       </>
                     ) : (
-                      <span className="text-sm text-ink/40 font-display">-</span>
+                      <span className="text-sm text-ink/40 font-display font-bold uppercase">
+                        -
+                      </span>
                     )}
                   </div>
 
@@ -308,19 +316,21 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
                           <img
                             src={task.assignedTo.image}
                             alt={task.assignedTo.name}
-                            className="w-6 h-6 rounded-full"
+                            className="w-8 h-8 rounded-full border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
                           />
                         ) : (
-                          <div className="w-6 h-6 rounded-full bg-taro/20 flex items-center justify-center">
-                            <User className="w-3 h-3 text-taro" />
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-taro to-deep-taro border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+                            <User className="w-4 h-4 text-white" />
                           </div>
                         )}
-                        <span className="text-sm font-display text-ink/70 truncate">
+                        <span className="text-sm font-display font-bold uppercase text-ink/70 truncate">
                           {task.assignedTo.name}
                         </span>
                       </>
                     ) : (
-                      <span className="text-sm text-ink/40 font-display">Unassigned</span>
+                      <span className="text-sm text-ink/40 font-display font-bold uppercase">
+                        Unassigned
+                      </span>
                     )}
                   </div>
                 </motion.button>
@@ -332,9 +342,9 @@ export default function ListView({ tasks, onTaskClick }: ListViewProps) {
 
       {/* Empty State */}
       {tasks.length === 0 && (
-        <div className="text-center py-12">
+        <div className="text-center py-12 bg-white">
           <ListIcon className="w-12 h-12 text-ink/20 mx-auto mb-4" />
-          <p className="font-display text-ink/60">No tasks to display</p>
+          <p className="font-display font-black uppercase text-ink/60">No tasks to display</p>
         </div>
       )}
     </motion.div>

@@ -184,7 +184,7 @@ export default function InvoiceManager() {
 
           <button
             onClick={() => setShowCreateForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
           >
             <Plus size={18} />
             <span>new invoice</span>
@@ -235,14 +235,14 @@ export default function InvoiceManager() {
               placeholder="search invoices..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="w-full pl-10 pr-4 py-2 border-4 border-ink rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as InvoiceStatus | 'ALL')}
-            className="px-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="px-4 py-2 border-3 border-ink rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20 font-black uppercase"
           >
             {statusOptions.map((status) => (
               <option key={status} value={status}>
@@ -254,7 +254,7 @@ export default function InvoiceManager() {
       </div>
 
       {/* Invoices List */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden">
+      <div className="bg-white/70 backdrop-blur-sm rounded-xl overflow-hidden border-4 border-ink">
         {loading ? (
           <div className="p-12 text-center text-ink/50">loading invoices...</div>
         ) : filteredInvoices.length === 0 ? (
@@ -262,9 +262,9 @@ export default function InvoiceManager() {
         ) : (
           <>
             <table className="w-full">
-              <thead className="bg-milk-tea/20">
+              <thead className="bg-gradient-to-r from-milk-tea to-cream border-b-4 border-ink">
                 <tr>
-                  <th className="text-left p-4 font-medium text-ink w-12">
+                  <th className="text-left p-4 font-black uppercase text-sm text-ink w-12">
                     <input
                       type="checkbox"
                       checked={
@@ -274,12 +274,12 @@ export default function InvoiceManager() {
                       className="w-4 h-4 text-taro bg-white border-ink/20 rounded focus:ring-taro/20"
                     />
                   </th>
-                  <th className="text-left p-4 font-medium text-ink">invoice #</th>
-                  <th className="text-left p-4 font-medium text-ink">client</th>
-                  <th className="text-left p-4 font-medium text-ink">amount</th>
-                  <th className="text-left p-4 font-medium text-ink">due date</th>
-                  <th className="text-left p-4 font-medium text-ink">status</th>
-                  <th className="text-left p-4 font-medium text-ink">actions</th>
+                  <th className="text-left p-4 font-black uppercase text-sm text-ink">invoice #</th>
+                  <th className="text-left p-4 font-black uppercase text-sm text-ink">client</th>
+                  <th className="text-left p-4 font-black uppercase text-sm text-ink">amount</th>
+                  <th className="text-left p-4 font-black uppercase text-sm text-ink">due date</th>
+                  <th className="text-left p-4 font-black uppercase text-sm text-ink">status</th>
+                  <th className="text-left p-4 font-black uppercase text-sm text-ink">actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -401,11 +401,11 @@ function InvoiceRow({
   };
   const getStatusColor = (status: InvoiceStatus) => {
     const colors = {
-      DRAFT: 'bg-gray-100 text-gray-700',
-      SENT: 'bg-blue-100 text-blue-700',
-      PAID: 'bg-green-100 text-green-700',
-      OVERDUE: 'bg-red-100 text-red-700',
-      CANCELLED: 'bg-gray-100 text-gray-700',
+      DRAFT: 'bg-taro text-white',
+      SENT: 'bg-thai-tea text-white',
+      PAID: 'bg-matcha text-ink',
+      OVERDUE: 'bg-strawberry text-white',
+      CANCELLED: 'bg-strawberry text-white',
     };
     return colors[status];
   };
@@ -418,7 +418,7 @@ function InvoiceRow({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="border-b border-ink/5 hover:bg-milk-tea/10 transition-colors"
+      className="border-b-2 border-ink/10 hover:bg-cream/30 transition-colors"
     >
       <td className="p-4">
         <input
@@ -429,21 +429,21 @@ function InvoiceRow({
         />
       </td>
       <td className="p-4">
-        <div className="font-medium text-ink">{invoice.number}</div>
+        <div className="font-bold text-ink">{invoice.number}</div>
         <div className="text-sm text-ink/60">{invoice.title}</div>
       </td>
       <td className="p-4">
-        <div className="text-ink">{invoice.client.name}</div>
+        <div className="font-bold text-ink">{invoice.client.name}</div>
       </td>
       <td className="p-4">
-        <div className="font-medium text-ink">${invoice.totalAmount.toLocaleString()}</div>
+        <div className="font-bold text-ink">${invoice.totalAmount.toLocaleString()}</div>
       </td>
       <td className="p-4">
-        <div className="text-ink">{new Date(invoice.dueDate).toLocaleDateString()}</div>
+        <div className="font-bold text-ink">{new Date(invoice.dueDate).toLocaleDateString()}</div>
       </td>
       <td className="p-4">
         <span
-          className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(displayStatus as InvoiceStatus)}`}
+          className={`px-2 py-1 rounded-full text-xs font-black uppercase border-2 border-ink ${getStatusColor(displayStatus as InvoiceStatus)}`}
         >
           {displayStatus.toLowerCase()}
         </span>
@@ -621,33 +621,37 @@ function CreateInvoiceModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={handleSubmit} className="p-6">
-          <h2 className="font-display text-2xl font-bold text-ink mb-6">create new invoice</h2>
+          <h2 className="font-display text-2xl font-black text-ink mb-6 uppercase">
+            create new invoice
+          </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">invoice title</label>
+                <label className="block text-sm font-bold uppercase text-ink mb-2">
+                  invoice title
+                </label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
                   placeholder="Website Development Services"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">client</label>
+                <label className="block text-sm font-bold uppercase text-ink mb-2">client</label>
                 <select
                   required
                   value={formData.clientId}
                   onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
                 >
                   <option value="">select client...</option>
                   {clients.map((client: any) => (
@@ -659,13 +663,13 @@ function CreateInvoiceModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">
+                <label className="block text-sm font-bold uppercase text-ink mb-2">
                   project (optional)
                 </label>
                 <select
                   value={formData.projectId}
                   onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
                 >
                   <option value="">no project</option>
                   {projects.map((project: any) => (
@@ -677,24 +681,24 @@ function CreateInvoiceModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-ink mb-2">due date</label>
+                <label className="block text-sm font-bold uppercase text-ink mb-2">due date</label>
                 <input
                   type="date"
                   required
                   value={formData.dueDate}
                   onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                  className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+                  className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-4">
-                <label className="block text-sm font-medium text-ink">invoice items</label>
+                <label className="block text-sm font-bold uppercase text-ink">invoice items</label>
                 <button
                   type="button"
                   onClick={addItem}
-                  className="flex items-center space-x-1 text-sm text-taro hover:text-taro/80"
+                  className="flex items-center space-x-1 text-sm text-taro hover:text-taro/80 font-black uppercase"
                 >
                   <Plus size={16} />
                   <span>add item</span>
@@ -797,12 +801,14 @@ function CreateInvoiceModal({
           </div>
 
           <div className="mt-6">
-            <label className="block text-sm font-medium text-ink mb-2">notes (optional)</label>
+            <label className="block text-sm font-bold uppercase text-ink mb-2">
+              notes (optional)
+            </label>
             <textarea
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
-              className="w-full px-3 py-2 bg-milk-tea/50 border border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink"
+              className="w-full px-3 py-2 bg-milk-tea/50 border-3 border-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-taro/20 focus:bg-milk-tea/70 text-ink font-bold"
               placeholder="Payment terms, additional notes..."
             />
           </div>
@@ -811,14 +817,14 @@ function CreateInvoiceModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-ink/70 hover:text-ink transition-colors"
+              className="px-4 py-2 text-ink/70 hover:text-ink transition-colors border-3 border-ink rounded-lg font-black uppercase shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
             >
               cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50"
+              className="px-6 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors disabled:opacity-50 border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
             >
               {loading ? 'creating...' : 'create invoice'}
             </button>

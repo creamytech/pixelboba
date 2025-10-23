@@ -32,35 +32,28 @@ function CustomTooltip({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       {...tooltipProps}
-      className="relative bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl border-2 border-taro/20 p-6 max-w-md"
+      className="relative bg-white rounded-xl shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] border-4 border-ink p-6 max-w-md"
     >
-      {/* Gradient decoration */}
-      <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-taro to-brown-sugar rounded-full blur-3xl opacity-20" />
-
       {/* Close button */}
       <button
         {...closeProps}
-        className="absolute top-4 right-4 p-2 rounded-lg hover:bg-brown-sugar/10 transition-colors"
+        className="absolute top-4 right-4 p-2 rounded-lg hover:bg-cream border-2 border-transparent hover:border-ink transition-all"
       >
-        <X className="w-4 h-4 text-ink/60" />
+        <X className="w-4 h-4 text-ink" />
       </button>
 
       {/* Progress indicator */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-medium text-taro">
+          <span className="text-xs font-black text-ink uppercase">
             Step {index + 1} of {size}
           </span>
           <div className="flex gap-1">
             {Array.from({ length: size }).map((_, i) => (
               <div
                 key={i}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === index
-                    ? 'w-8 bg-taro'
-                    : i < index
-                      ? 'w-1.5 bg-matcha'
-                      : 'w-1.5 bg-brown-sugar/20'
+                className={`h-2 rounded-full transition-all border-2 border-ink ${
+                  i === index ? 'w-8 bg-taro' : i < index ? 'w-2 bg-matcha' : 'w-2 bg-cream'
                 }`}
               />
             ))}
@@ -69,16 +62,18 @@ function CustomTooltip({
       </div>
 
       {/* Step title */}
-      {step.title && <h3 className="font-display font-bold text-xl text-ink mb-2">{step.title}</h3>}
+      {step.title && (
+        <h3 className="font-display font-black text-xl text-ink mb-2 uppercase">{step.title}</h3>
+      )}
 
       {/* Step content */}
-      <div className="text-ink/70 mb-6">{step.content}</div>
+      <div className="text-ink/70 mb-6 font-bold">{step.content}</div>
 
       {/* Navigation buttons */}
       <div className="flex items-center justify-between gap-3">
         <button
           {...skipProps}
-          className="text-sm text-ink/60 hover:text-ink/80 transition-colors font-medium"
+          className="text-sm text-ink/60 hover:text-ink transition-colors font-bold uppercase"
         >
           Skip Tour
         </button>
@@ -87,7 +82,7 @@ function CustomTooltip({
           {index > 0 && (
             <button
               {...backProps}
-              className="px-4 py-2 rounded-lg border-2 border-brown-sugar/20 text-ink font-medium hover:bg-brown-sugar/10 transition-all flex items-center gap-2"
+              className="px-4 py-2 rounded-full bg-white text-ink font-black border-3 border-ink uppercase shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all flex items-center gap-2"
             >
               <ChevronLeft className="w-4 h-4" />
               Back
@@ -96,7 +91,7 @@ function CustomTooltip({
 
           <button
             {...primaryProps}
-            className="px-6 py-2 rounded-lg bg-gradient-to-r from-taro to-brown-sugar text-white font-medium hover:shadow-lg transition-all flex items-center gap-2"
+            className="px-6 py-3 rounded-full bg-matcha text-ink font-black border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all flex items-center gap-2"
           >
             {isLastStep ? (
               <>

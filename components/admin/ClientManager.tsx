@@ -93,7 +93,7 @@ export default function ClientManager() {
 
           <button
             onClick={() => setShowCreateForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
           >
             <Plus size={18} />
             <span>add client</span>
@@ -110,7 +110,7 @@ export default function ClientManager() {
             placeholder="search clients..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20"
+            className="w-full pl-10 pr-4 py-2 border-4 border-ink rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20 font-bold"
           />
         </div>
       </div>
@@ -169,7 +169,7 @@ function ClientCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10 hover:shadow-lg transition-all"
+      className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
     >
       <div className="flex items-center space-x-4 mb-4">
         <div className="w-12 h-12 bg-taro/20 rounded-full flex items-center justify-center">
@@ -178,7 +178,7 @@ function ClientCard({
           </span>
         </div>
         <div className="flex-1">
-          <h3 className="font-medium text-ink">{client.name || 'No name'}</h3>
+          <h3 className="font-black text-ink">{client.name || 'No name'}</h3>
           <p className="text-sm text-ink/60">{client.role}</p>
         </div>
       </div>
@@ -265,61 +265,61 @@ function EditClientModal({
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-xl shadow-xl max-w-md w-full"
+        className="bg-white rounded-xl max-w-md w-full border-4 border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)]"
       >
         <div className="p-6 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Edit Client</h3>
+          <h3 className="text-lg font-black text-gray-900 uppercase">Edit Client</h3>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <label className="block text-sm font-bold uppercase text-gray-700 mb-1">Name</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+              className="w-full px-3 py-2 border-3 border-ink rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro font-bold"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-bold uppercase text-gray-700 mb-1">Email</label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+              className="w-full px-3 py-2 border-3 border-ink rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro font-bold"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+            <label className="block text-sm font-bold uppercase text-gray-700 mb-1">Phone</label>
             <input
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+              className="w-full px-3 py-2 border-3 border-ink rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro font-bold"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+            <label className="block text-sm font-bold uppercase text-gray-700 mb-1">Company</label>
             <input
               type="text"
               value={formData.company}
               onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+              className="w-full px-3 py-2 border-3 border-ink rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro font-bold"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <label className="block text-sm font-bold uppercase text-gray-700 mb-1">Role</label>
             <select
               value={formData.role}
               onChange={(e) =>
                 setFormData({ ...formData, role: e.target.value as 'CLIENT' | 'ADMIN' | 'OWNER' })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro"
+              className="w-full px-3 py-2 border-3 border-ink rounded-lg focus:ring-2 focus:ring-taro/20 focus:border-taro font-bold"
             >
               <option value="CLIENT">Client</option>
               <option value="ADMIN">Admin</option>
@@ -331,14 +331,14 @@ function EditClientModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="px-4 py-2 text-gray-700 border-3 border-ink rounded-lg hover:bg-gray-50 transition-colors font-black uppercase shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
+              className="px-4 py-2 bg-gradient-to-r from-taro to-brown-sugar text-white rounded-lg disabled:opacity-50 border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] font-black uppercase"
             >
               {loading ? 'Updating...' : 'Update Client'}
             </button>

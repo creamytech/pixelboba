@@ -156,67 +156,73 @@ export default function FileCenter({ projects }: FileCenterProps) {
       {/* Upload Area */}
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all cursor-pointer ${
-          isDragActive ? 'border-taro bg-taro/5' : 'border-ink/20 bg-white/50 hover:bg-white/70'
+        className={`border-4 border-dashed rounded-xl p-8 text-center transition-all cursor-pointer ${
+          isDragActive ? 'border-taro bg-taro/5' : 'border-ink bg-white hover:bg-cream/30'
         } ${uploading ? 'opacity-50 pointer-events-none' : ''}`}
       >
         <input {...getInputProps()} />
 
         <div className="space-y-4">
-          <div className="mx-auto w-16 h-16 bg-taro/10 rounded-full flex items-center justify-center">
-            <Upload className="w-8 h-8 text-taro" />
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+            <Upload className="w-8 h-8 text-white" />
           </div>
 
           <div>
-            <p className="text-lg font-medium text-ink">
+            <p className="text-lg font-black text-ink uppercase">
               {uploading ? 'uploading files...' : 'drop files here or click to upload'}
             </p>
-            <p className="text-sm text-ink/60 mt-1">
+            <p className="text-sm text-ink/60 mt-1 font-bold">
               supports images, documents, videos up to 50mb each
             </p>
           </div>
 
           {uploading && (
-            <div className="w-8 h-8 border-4 border-taro/30 border-t-taro rounded-full animate-spin mx-auto" />
+            <div className="w-8 h-8 border-4 border-ink/30 border-t-ink rounded-full animate-spin mx-auto" />
           )}
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid sm:grid-cols-3 gap-6">
-        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+        <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-ink/60 text-sm font-medium">total files</p>
-              <p className="text-2xl font-bold text-ink">{files.length}</p>
+              <p className="text-ink/60 text-sm font-bold uppercase">total files</p>
+              <p className="text-2xl font-black text-ink">{files.length}</p>
             </div>
-            <FileIcon className="w-8 h-8 text-taro/60" />
+            <div className="w-12 h-12 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+              <FileIcon className="w-6 h-6 text-white" />
+            </div>
           </div>
         </div>
 
-        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+        <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-ink/60 text-sm font-medium">storage used</p>
-              <p className="text-2xl font-bold text-ink">{formatFileSize(totalSize)}</p>
+              <p className="text-ink/60 text-sm font-bold uppercase">storage used</p>
+              <p className="text-2xl font-black text-ink">{formatFileSize(totalSize)}</p>
             </div>
-            <Upload className="w-8 h-8 text-taro/60" />
+            <div className="w-12 h-12 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+              <Upload className="w-6 h-6 text-white" />
+            </div>
           </div>
         </div>
 
-        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+        <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-ink/60 text-sm font-medium">projects</p>
-              <p className="text-2xl font-bold text-ink">{projects.length}</p>
+              <p className="text-ink/60 text-sm font-bold uppercase">projects</p>
+              <p className="text-2xl font-black text-ink">{projects.length}</p>
             </div>
-            <Filter className="w-8 h-8 text-taro/60" />
+            <div className="w-12 h-12 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
+              <Filter className="w-6 h-6 text-white" />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Controls */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+      <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0">
           <div className="flex items-center space-x-4">
             <div className="relative">
@@ -226,14 +232,14 @@ export default function FileCenter({ projects }: FileCenterProps) {
                 placeholder="search files..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-taro/20"
+                className="w-full px-4 py-3 pl-10 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 placeholder-ink/40"
               />
             </div>
 
             <select
               value={selectedProject}
               onChange={(e) => setSelectedProject(e.target.value)}
-              className="px-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 uppercase"
             >
               <option value="all">all projects</option>
               {projects.map((project) => (
@@ -280,11 +286,11 @@ export default function FileCenter({ projects }: FileCenterProps) {
       </div>
 
       {/* Files */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-ink/10 overflow-hidden">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-ink/50">loading files...</div>
+          <div className="p-12 text-center text-ink/50 font-bold uppercase">loading files...</div>
         ) : filteredFiles.length === 0 ? (
-          <div className="p-12 text-center text-ink/50">
+          <div className="p-12 text-center text-ink/50 font-bold uppercase">
             {searchQuery ? 'no files match your search' : 'no files uploaded yet'}
           </div>
         ) : viewMode === 'grid' ? (
@@ -319,13 +325,23 @@ export default function FileCenter({ projects }: FileCenterProps) {
         ) : (
           <div>
             <table className="w-full">
-              <thead className="bg-milk-tea/20">
+              <thead className="bg-gradient-to-r from-milk-tea to-cream border-b-4 border-ink">
                 <tr>
-                  <th className="text-left p-4 font-medium text-ink">name</th>
-                  <th className="text-left p-4 font-medium text-ink">project</th>
-                  <th className="text-left p-4 font-medium text-ink">size</th>
-                  <th className="text-left p-4 font-medium text-ink">uploaded</th>
-                  <th className="text-left p-4 font-medium text-ink">actions</th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    name
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    project
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    size
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    uploaded
+                  </th>
+                  <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                    actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -344,7 +360,7 @@ export default function FileCenter({ projects }: FileCenterProps) {
 
             {/* Pagination for list view */}
             {filteredFiles.length > 0 && (
-              <div className="border-t border-ink/10 p-4">
+              <div className="border-t-4 border-ink p-4">
                 <Pagination
                   currentPage={currentPage}
                   totalPages={totalPages}
@@ -379,7 +395,7 @@ function FileGridItem({
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="group relative bg-white/70 rounded-lg border border-ink/10 overflow-hidden hover:shadow-lg transition-all"
+      className="group relative bg-white rounded-lg border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] overflow-hidden transition-all"
     >
       {/* File Preview */}
       <div className="aspect-square bg-milk-tea/10 flex items-center justify-center relative overflow-hidden">
@@ -415,11 +431,13 @@ function FileGridItem({
 
       {/* File Info */}
       <div className="p-3">
-        <div className="font-medium text-ink text-sm line-clamp-1" title={file.originalName}>
+        <div className="font-black text-ink text-sm line-clamp-1" title={file.originalName}>
           {file.originalName}
         </div>
-        <div className="text-xs text-ink/60 mt-1">{formatFileSize(file.size)}</div>
-        {file.project && <div className="text-xs text-taro/70 mt-1">{file.project.name}</div>}
+        <div className="text-xs text-ink/60 mt-1 font-bold">{formatFileSize(file.size)}</div>
+        {file.project && (
+          <div className="text-xs text-taro mt-1 font-bold">{file.project.name}</div>
+        )}
       </div>
     </motion.div>
   );
@@ -441,26 +459,26 @@ function FileListItem({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="border-b border-ink/5 hover:bg-milk-tea/10 transition-colors"
+      className="border-b-2 border-ink/10 hover:bg-cream/30 transition-colors bg-white"
     >
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="flex items-center space-x-3">
-          <FileIcon className="w-6 h-6 text-taro/60 flex-shrink-0" />
+          <FileIcon className="w-6 h-6 text-taro flex-shrink-0" />
           <div className="min-w-0 flex-1">
-            <div className="font-medium text-ink line-clamp-1">{file.originalName}</div>
+            <div className="font-black text-ink line-clamp-1">{file.originalName}</div>
           </div>
         </div>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="text-ink">{file.project?.name || 'General'}</div>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="text-ink">{formatFileSize(file.size)}</div>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="text-ink">{new Date(file.createdAt).toLocaleDateString()}</div>
       </td>
-      <td className="p-4">
+      <td className="px-4 py-4 font-bold text-ink">
         <div className="flex items-center space-x-2">
           <button
             onClick={onDownload}
@@ -471,7 +489,7 @@ function FileListItem({
           </button>
           <button
             onClick={onDelete}
-            className="p-1 text-ink/60 hover:text-red-500 transition-colors"
+            className="p-1 text-ink/60 hover:text-strawberry transition-colors"
             title="Delete"
           >
             <Trash2 size={16} />

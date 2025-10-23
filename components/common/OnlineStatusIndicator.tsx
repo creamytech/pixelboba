@@ -38,22 +38,43 @@ export default function OnlineStatusIndicator({
     lg: 'w-4 h-4',
   };
 
-  const status = isOnline ? 'online' : 'offline';
-  const statusColor = isOnline ? 'bg-green-500' : 'bg-gray-400';
+  // Determine status based on online state and last active time
+  const getStatus = () => {
+    if (isOnline) return 'online';
+    if (!lastActiveAt) return 'offline';
+
+    const now = new Date();
+    const diff = now.getTime() - new Date(lastActiveAt).getTime();
+    const minutes = Math.floor(diff / (1000 * 60));
+
+    // Away if last active within 30 minutes
+    if (minutes < 30) return 'away';
+    return 'offline';
+  };
+
+  const status = getStatus();
+  const statusColor =
+    status === 'online' ? 'bg-matcha' : status === 'away' ? 'bg-thai-tea' : 'bg-cream';
   const lastActive = getTimeAgo(lastActiveAt);
 
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
       <div className="relative flex items-center">
         <motion.div
-          className={`${sizeClasses[size]} rounded-full ${statusColor} border-2 border-white shadow-sm`}
-          animate={isOnline ? { scale: [1, 1.2, 1] } : {}}
+          className={`${sizeClasses[size]} rounded-full ${statusColor} border-2 border-ink shadow-[1px_1px_0px_0px_rgba(58,0,29,1)]`}
+          animate={status === 'online' ? { scale: [1, 1.2, 1] } : {}}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          title={isOnline ? 'Online' : `Last active: ${lastActive}`}
+          title={
+            status === 'online'
+              ? 'Online'
+              : status === 'away'
+                ? `Away - Last active: ${lastActive}`
+                : `Offline - Last active: ${lastActive}`
+          }
         />
-        {isOnline && (
+        {status === 'online' && (
           <motion.div
-            className={`absolute ${sizeClasses[size]} rounded-full bg-green-400 opacity-75`}
+            className={`absolute ${sizeClasses[size]} rounded-full bg-matcha opacity-75`}
             animate={{ scale: [1, 2, 1], opacity: [0.75, 0, 0.75] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
@@ -61,8 +82,10 @@ export default function OnlineStatusIndicator({
       </div>
 
       {showLabel && (
-        <span className={`text-xs ${isOnline ? 'text-green-600' : 'text-gray-500'}`}>
-          {isOnline ? 'Online' : `Last seen ${lastActive}`}
+        <span
+          className={`text-xs font-bold uppercase ${status === 'online' ? 'text-matcha' : status === 'away' ? 'text-thai-tea' : 'text-ink'}`}
+        >
+          {status === 'online' ? 'Online' : status === 'away' ? 'Away' : `Offline ${lastActive}`}
         </span>
       )}
     </div>

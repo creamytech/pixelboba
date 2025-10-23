@@ -95,7 +95,7 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="text-center bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+          className="text-center bg-white rounded-xl p-8 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         >
           <motion.div
             className="w-12 h-12 border-4 border-taro/30 border-t-taro rounded-full mx-auto mb-4"
@@ -245,7 +245,7 @@ function OverviewTab({
   if (!stats) {
     return (
       <motion.div
-        className="min-h-[400px] bg-milk-tea/70 backdrop-blur-lg rounded-3xl border-2 border-brown-sugar/20 shadow-xl flex items-center justify-center"
+        className="min-h-[400px] bg-milk-tea rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
@@ -371,7 +371,7 @@ function OverviewTab({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.6 }}
       >
-        <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+        <h3 className="font-display text-2xl font-black uppercase text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
           Quick Actions
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -381,11 +381,11 @@ function OverviewTab({
               <motion.button
                 key={card.title}
                 onClick={card.onClick}
-                className={`bg-gradient-to-r ${card.color} backdrop-blur-sm rounded-2xl p-6 border-2 border-brown-sugar/20 hover:border-brown-sugar/40 transition-all shadow-lg hover:shadow-xl text-left`}
+                className={`bg-gradient-to-r ${card.color} rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] transition-all text-left font-black uppercase`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -4 }}
+                whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <div className="flex items-start justify-between mb-3">
@@ -393,8 +393,8 @@ function OverviewTab({
                     <Icon className="w-6 h-6 text-taro" />
                   </div>
                 </div>
-                <h4 className="font-display font-semibold text-ink mb-1">{card.title}</h4>
-                <p className="font-display text-sm text-ink/60">{card.description}</p>
+                <h4 className="font-display font-black text-ink mb-1">{card.title}</h4>
+                <p className="font-display text-sm font-bold text-ink/60">{card.description}</p>
               </motion.button>
             );
           })}
@@ -403,12 +403,12 @@ function OverviewTab({
 
       {/* Recent Activity */}
       <motion.div
-        className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+        className="bg-white rounded-xl p-8 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 1.0 }}
       >
-        <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+        <h3 className="font-display text-2xl font-black uppercase text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
           Recent Activity
         </h3>
         <div className="space-y-3">
@@ -423,10 +423,10 @@ function OverviewTab({
               >
                 <div className="w-2 h-2 rounded-full bg-taro mt-2 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="font-display font-medium text-ink">
+                  <p className="font-display font-bold text-ink">
                     {activity.action.replace('_', ' ')}
                   </p>
-                  <p className="text-sm text-ink/60 truncate">
+                  <p className="text-sm font-bold text-ink/60 truncate">
                     {activity.user.name || activity.user.email}
                     {activity.project && ` • ${activity.project.name}`} - {activity.description}
                   </p>
@@ -446,26 +446,26 @@ function OverviewTab({
 
       {/* Revenue Chart */}
       <motion.div
-        className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+        className="bg-white rounded-xl p-8 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 1.2 }}
       >
-        <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+        <h3 className="font-display text-2xl font-black uppercase text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
           Revenue Overview
         </h3>
         <div className="flex items-center justify-between mb-6">
           <div>
-            <p className="font-display text-sm text-ink/60">This Month</p>
-            <p className="font-display text-3xl font-bold text-ink">
+            <p className="font-display text-sm font-bold uppercase text-ink/60">This Month</p>
+            <p className="font-display text-3xl font-black text-ink">
               ${stats.monthlyRevenue.toLocaleString()}
             </p>
           </div>
           <div className="text-right">
-            <p className="font-display text-sm text-matcha flex items-center gap-1 justify-end">
+            <p className="font-display text-sm font-bold text-matcha flex items-center gap-1 justify-end">
               <span className="text-2xl">↗</span> +{Math.floor(stats.monthlyRevenue * 0.15)}%
             </p>
-            <p className="font-display text-xs text-ink/50">vs last month</p>
+            <p className="font-display text-xs font-bold uppercase text-ink/50">vs last month</p>
           </div>
         </div>
 
@@ -475,7 +475,7 @@ function OverviewTab({
             (height, index) => (
               <motion.div
                 key={index}
-                className="bg-gradient-to-t from-taro/60 to-taro/40 rounded-t-lg flex-1 min-h-[8px] relative group cursor-pointer"
+                className="bg-gradient-to-t from-taro/60 to-taro/40 rounded-t-xl flex-1 min-h-[8px] relative group cursor-pointer"
                 style={{ height: `${Math.max(height * 0.8, 8)}%` }}
                 initial={{ height: 0 }}
                 animate={{ height: `${Math.max(height * 0.8, 8)}%` }}
@@ -574,7 +574,7 @@ function AdminTasksView({ projects }: { projects: any[] }) {
   if (projects.length === 0) {
     return (
       <motion.div
-        className="bg-white/70 backdrop-blur-lg rounded-3xl p-12 border-2 border-brown-sugar/20 shadow-xl text-center"
+        className="bg-white rounded-xl p-12 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -582,8 +582,8 @@ function AdminTasksView({ projects }: { projects: any[] }) {
         <div className="w-16 h-16 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckSquare className="w-8 h-8 text-taro/60" />
         </div>
-        <h3 className="font-display text-xl font-semibold text-ink mb-2">No projects yet</h3>
-        <p className="text-ink/60">Create projects to start managing tasks</p>
+        <h3 className="font-display text-xl font-black uppercase text-ink mb-2">No projects yet</h3>
+        <p className="font-bold text-ink/60">Create projects to start managing tasks</p>
       </motion.div>
     );
   }
@@ -592,7 +592,7 @@ function AdminTasksView({ projects }: { projects: any[] }) {
     <div className="space-y-6">
       {/* View Mode Switcher & Filters */}
       <motion.div
-        className="bg-white/70 backdrop-blur-lg rounded-2xl p-6 border-2 border-brown-sugar/20 shadow-lg"
+        className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -600,13 +600,13 @@ function AdminTasksView({ projects }: { projects: any[] }) {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* View Mode Toggle */}
           <div className="flex items-center gap-3">
-            <span className="font-display text-sm font-medium text-ink/70">View:</span>
-            <div className="flex bg-milk-tea/50 rounded-xl p-1 border border-brown-sugar/20">
+            <span className="font-display text-sm font-bold uppercase text-ink/70">View:</span>
+            <div className="flex bg-milk-tea/50 rounded-xl p-1 border-4 border-ink">
               <button
                 onClick={() => setViewMode('single')}
-                className={`px-4 py-2 rounded-lg font-display text-sm transition-all ${
+                className={`px-4 py-2 rounded-lg font-display text-sm font-black uppercase transition-all ${
                   viewMode === 'single'
-                    ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-md'
+                    ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]'
                     : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
                 }`}
               >
@@ -614,9 +614,9 @@ function AdminTasksView({ projects }: { projects: any[] }) {
               </button>
               <button
                 onClick={() => setViewMode('overview')}
-                className={`px-4 py-2 rounded-lg font-display text-sm transition-all ${
+                className={`px-4 py-2 rounded-lg font-display text-sm font-black uppercase transition-all ${
                   viewMode === 'overview'
-                    ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-md'
+                    ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]'
                     : 'text-ink/60 hover:bg-taro/10 hover:text-taro'
                 }`}
               >
@@ -631,7 +631,7 @@ function AdminTasksView({ projects }: { projects: any[] }) {
               <select
                 value={selectedProjectId}
                 onChange={(e) => setSelectedProjectId(e.target.value)}
-                className="w-full px-4 py-3 bg-white/90 border-2 border-brown-sugar/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-taro/30 focus:border-taro transition-all font-display text-ink shadow-sm"
+                className="w-full px-4 py-3 bg-white border-4 border-ink rounded-xl focus:outline-none focus:ring-2 focus:ring-taro/30 focus:border-taro transition-all font-display font-bold text-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
               >
                 {projects.map((project) => (
                   <option key={project.id} value={project.id}>
@@ -668,7 +668,7 @@ function AdminTasksView({ projects }: { projects: any[] }) {
             ].map((stat, index) => (
               <motion.div
                 key={stat.title}
-                className={`bg-white/70 backdrop-blur-sm rounded-2xl p-6 border-2 border-brown-sugar/20 shadow-lg`}
+                className={`bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -684,20 +684,22 @@ function AdminTasksView({ projects }: { projects: any[] }) {
                     />
                   )}
                 </div>
-                <p className="font-display text-sm text-ink/60 mb-1">{stat.title}</p>
-                <p className="font-display text-3xl font-bold text-ink">{stat.value}</p>
+                <p className="font-display text-sm font-bold uppercase text-ink/60 mb-1">
+                  {stat.title}
+                </p>
+                <p className="font-display text-3xl font-black text-ink">{stat.value}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Project-wise Breakdown */}
           <motion.div
-            className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 border-2 border-brown-sugar/20 shadow-xl"
+            className="bg-white rounded-xl p-8 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.5 }}
           >
-            <h3 className="font-display text-2xl font-bold text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+            <h3 className="font-display text-2xl font-black uppercase text-ink mb-6 bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
               Tasks by Project
             </h3>
             <div className="space-y-4">
@@ -712,7 +714,7 @@ function AdminTasksView({ projects }: { projects: any[] }) {
                 return (
                   <motion.button
                     key={project.id}
-                    className="w-full bg-milk-tea/50 rounded-2xl p-6 border-2 border-brown-sugar/20 hover:border-taro/40 transition-all text-left shadow-md hover:shadow-lg"
+                    className="w-full bg-milk-tea/50 rounded-xl p-6 border-4 border-ink hover:border-taro transition-all text-left shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)]"
                     whileHover={{ scale: 1.01, y: -2 }}
                     onClick={() => {
                       setSelectedProjectId(project.id);
@@ -720,10 +722,8 @@ function AdminTasksView({ projects }: { projects: any[] }) {
                     }}
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-display font-semibold text-ink text-lg">
-                        {project.name}
-                      </h4>
-                      <span className="font-display text-sm text-ink/60 bg-white/60 px-3 py-1 rounded-full">
+                      <h4 className="font-display font-black text-ink text-lg">{project.name}</h4>
+                      <span className="font-display text-sm font-bold uppercase text-ink/60 bg-white/60 px-3 py-1 rounded-full">
                         {projectTasks.length} tasks
                       </span>
                     </div>
@@ -736,10 +736,10 @@ function AdminTasksView({ projects }: { projects: any[] }) {
                       />
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-display text-sm text-ink/60">
+                      <span className="font-display text-sm font-bold text-ink/60">
                         {completedCount} completed
                       </span>
-                      <span className="font-display text-sm font-semibold text-taro">
+                      <span className="font-display text-sm font-black text-taro">
                         {progressPercent}%
                       </span>
                     </div>

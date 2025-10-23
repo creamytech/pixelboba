@@ -69,10 +69,10 @@ export default function Pagination({
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">
       {/* Items count */}
-      <div className="text-sm text-ink/60 font-display">
-        Showing <span className="font-semibold text-ink">{startItem}</span> to{' '}
-        <span className="font-semibold text-ink">{endItem}</span> of{' '}
-        <span className="font-semibold text-ink">{totalItems}</span> items
+      <div className="text-sm text-ink font-display font-bold uppercase">
+        Showing <span className="text-taro">{startItem}</span> to{' '}
+        <span className="text-taro">{endItem}</span> of{' '}
+        <span className="text-taro">{totalItems}</span> items
       </div>
 
       {/* Pagination controls */}
@@ -81,13 +81,13 @@ export default function Pagination({
         <motion.button
           onClick={() => onPageChange(1)}
           disabled={currentPage === 1}
-          className={`p-2 rounded-xl transition-all ${
+          className={`p-2 rounded-full border-3 border-ink font-black transition-all ${
             currentPage === 1
-              ? 'text-ink/30 cursor-not-allowed'
-              : 'text-taro hover:bg-taro/10 active:bg-taro/20'
+              ? 'bg-cream opacity-50 cursor-not-allowed shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+              : 'bg-white text-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px]'
           }`}
-          whileHover={currentPage !== 1 ? { scale: 1.05 } : {}}
-          whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
+          whileHover={currentPage !== 1 ? {} : {}}
+          whileTap={currentPage !== 1 ? {} : {}}
           title="First page"
         >
           <ChevronsLeft className="w-4 h-4" />
@@ -97,13 +97,13 @@ export default function Pagination({
         <motion.button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`p-2 rounded-xl transition-all ${
+          className={`p-2 rounded-full border-3 border-ink font-black transition-all ${
             currentPage === 1
-              ? 'text-ink/30 cursor-not-allowed'
-              : 'text-taro hover:bg-taro/10 active:bg-taro/20'
+              ? 'bg-cream opacity-50 cursor-not-allowed shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+              : 'bg-white text-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px]'
           }`}
-          whileHover={currentPage !== 1 ? { scale: 1.05 } : {}}
-          whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
+          whileHover={currentPage !== 1 ? {} : {}}
+          whileTap={currentPage !== 1 ? {} : {}}
           title="Previous page"
         >
           <ChevronLeft className="w-4 h-4" />
@@ -114,7 +114,7 @@ export default function Pagination({
           {pageNumbers.map((page, index) => {
             if (page === '...') {
               return (
-                <span key={`ellipsis-${index}`} className="px-3 py-2 text-ink/40">
+                <span key={`ellipsis-${index}`} className="px-3 py-2 text-ink font-black">
                   ...
                 </span>
               );
@@ -128,16 +128,16 @@ export default function Pagination({
                 key={pageNum}
                 onClick={() => onPageChange(pageNum)}
                 className={`
-                  min-w-[40px] h-10 px-3 rounded-xl font-display font-medium text-sm
-                  transition-all
+                  min-w-[40px] h-10 px-3 rounded-full font-display font-black text-sm uppercase
+                  transition-all border-2 border-ink
                   ${
                     isActive
-                      ? 'bg-gradient-to-r from-taro to-brown-sugar text-white shadow-md'
-                      : 'text-ink/70 hover:bg-milk-tea/50 hover:text-ink'
+                      ? 'bg-taro text-white shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+                      : 'bg-white text-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px]'
                   }
                 `}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={!isActive ? {} : {}}
+                whileTap={!isActive ? {} : {}}
               >
                 {pageNum}
               </motion.button>
@@ -149,13 +149,13 @@ export default function Pagination({
         <motion.button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`p-2 rounded-xl transition-all ${
+          className={`p-2 rounded-full border-3 border-ink font-black transition-all ${
             currentPage === totalPages
-              ? 'text-ink/30 cursor-not-allowed'
-              : 'text-taro hover:bg-taro/10 active:bg-taro/20'
+              ? 'bg-cream opacity-50 cursor-not-allowed shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+              : 'bg-white text-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px]'
           }`}
-          whileHover={currentPage !== totalPages ? { scale: 1.05 } : {}}
-          whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
+          whileHover={currentPage !== totalPages ? {} : {}}
+          whileTap={currentPage !== totalPages ? {} : {}}
           title="Next page"
         >
           <ChevronRight className="w-4 h-4" />
@@ -165,13 +165,13 @@ export default function Pagination({
         <motion.button
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}
-          className={`p-2 rounded-xl transition-all ${
+          className={`p-2 rounded-full border-3 border-ink font-black transition-all ${
             currentPage === totalPages
-              ? 'text-ink/30 cursor-not-allowed'
-              : 'text-taro hover:bg-taro/10 active:bg-taro/20'
+              ? 'bg-cream opacity-50 cursor-not-allowed shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
+              : 'bg-white text-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px]'
           }`}
-          whileHover={currentPage !== totalPages ? { scale: 1.05 } : {}}
-          whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
+          whileHover={currentPage !== totalPages ? {} : {}}
+          whileTap={currentPage !== totalPages ? {} : {}}
           title="Last page"
         >
           <ChevronsRight className="w-4 h-4" />
@@ -181,11 +181,11 @@ export default function Pagination({
       {/* Items per page selector */}
       {showItemsPerPage && onItemsPerPageChange && (
         <div className="flex items-center gap-2">
-          <span className="text-sm text-ink/60 font-display">Items per page:</span>
+          <span className="text-sm text-ink font-display font-bold uppercase">Items per page:</span>
           <select
             value={itemsPerPage}
             onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-            className="px-3 py-2 bg-white/90 border-2 border-brown-sugar/20 rounded-xl text-sm font-display text-ink focus:outline-none focus:ring-2 focus:ring-taro/30 focus:border-taro transition-all"
+            className="px-3 py-2 bg-white border-3 border-ink rounded-full text-sm font-display font-black text-ink uppercase shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] focus:outline-none focus:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] focus:translate-x-[-2px] focus:translate-y-[-2px] transition-all"
           >
             <option value={10}>10</option>
             <option value={20}>20</option>

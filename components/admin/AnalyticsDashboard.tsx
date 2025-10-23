@@ -134,11 +134,13 @@ export default function AnalyticsDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0">
           <div>
-            <h2 className="font-display text-2xl font-bold text-ink">analytics dashboard</h2>
-            <p className="text-ink/60 mt-1">business insights and performance metrics</p>
+            <h2 className="font-display text-2xl font-black text-ink uppercase">
+              analytics dashboard
+            </h2>
+            <p className="text-ink/60 mt-1 font-bold">business insights and performance metrics</p>
           </div>
 
           <div className="flex items-center space-x-3">
@@ -146,7 +148,7 @@ export default function AnalyticsDashboard() {
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value as typeof timeRange)}
-              className="px-4 py-2 border border-ink/20 rounded-lg bg-white/70 text-ink focus:outline-none focus:ring-2 focus:ring-taro/20"
+              className="px-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20"
             >
               <option value="7d">Last 7 days</option>
               <option value="30d">Last 30 days</option>
@@ -157,7 +159,7 @@ export default function AnalyticsDashboard() {
             {/* Export Button */}
             <button
               onClick={exportReport}
-              className="flex items-center space-x-2 px-4 py-2 bg-taro text-white rounded-lg hover:bg-taro/80 transition-colors"
+              className="flex items-center space-x-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all"
             >
               <Download size={18} />
               <span>Export</span>
@@ -195,8 +197,8 @@ export default function AnalyticsDashboard() {
       </div>
 
       {/* Revenue Trend Chart */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
-        <h3 className="font-display text-lg font-semibold text-ink mb-4">Revenue Trend</h3>
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+        <h3 className="font-display text-lg font-black text-ink mb-4 uppercase">Revenue Trend</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={analytics.revenueData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
@@ -225,8 +227,10 @@ export default function AnalyticsDashboard() {
       {/* Project & Invoice Status */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Project Status */}
-        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
-          <h3 className="font-display text-lg font-semibold text-ink mb-4">Project Status</h3>
+        <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+          <h3 className="font-display text-lg font-black text-ink mb-4 uppercase">
+            Project Status
+          </h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
@@ -250,18 +254,23 @@ export default function AnalyticsDashboard() {
             {projectStatusData.map((item) => (
               <div key={item.name} className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-                  <span className="text-sm text-ink/70">{item.name}</span>
+                  <div
+                    className="w-3 h-3 rounded-full border-2 border-ink"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="text-sm text-ink/70 font-bold">{item.name}</span>
                 </div>
-                <span className="text-sm font-medium text-ink">{item.value}</span>
+                <span className="text-sm font-black text-ink">{item.value}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Invoice Status */}
-        <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
-          <h3 className="font-display text-lg font-semibold text-ink mb-4">Invoice Status</h3>
+        <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+          <h3 className="font-display text-lg font-black text-ink mb-4 uppercase">
+            Invoice Status
+          </h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={invoiceStatusData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
@@ -285,29 +294,35 @@ export default function AnalyticsDashboard() {
       </div>
 
       {/* Project Performance Table */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10">
-        <h3 className="font-display text-lg font-semibold text-ink mb-4">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+        <h3 className="font-display text-lg font-black text-ink mb-4 uppercase">
           Project Performance by Status
         </h3>
-        <div className="overflow-x-auto">
+        <div className="rounded-xl border-4 border-ink overflow-hidden">
           <table className="w-full">
-            <thead className="bg-milk-tea/20">
+            <thead className="bg-gradient-to-r from-milk-tea to-cream border-b-4 border-ink">
               <tr>
-                <th className="text-left p-4 font-medium text-ink">Status</th>
-                <th className="text-left p-4 font-medium text-ink">Count</th>
-                <th className="text-left p-4 font-medium text-ink">Total Value</th>
-                <th className="text-left p-4 font-medium text-ink">Avg Value</th>
+                <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                  Status
+                </th>
+                <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">Count</th>
+                <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                  Total Value
+                </th>
+                <th className="px-4 py-4 text-left font-black text-ink uppercase text-sm">
+                  Avg Value
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white">
               {analytics.projectStats.map((stat) => (
-                <tr key={stat.status} className="border-b border-ink/5">
-                  <td className="p-4">
-                    <span className="capitalize text-ink">{stat.status.toLowerCase()}</span>
+                <tr key={stat.status} className="border-b-2 border-ink/10 hover:bg-cream/30">
+                  <td className="px-4 py-4 font-bold text-ink">
+                    <span className="capitalize">{stat.status.toLowerCase()}</span>
                   </td>
-                  <td className="p-4 text-ink">{stat.count}</td>
-                  <td className="p-4 text-ink font-medium">${stat.value.toLocaleString()}</td>
-                  <td className="p-4 text-ink">
+                  <td className="px-4 py-4 font-bold text-ink">{stat.count}</td>
+                  <td className="px-4 py-4 font-bold text-ink">${stat.value.toLocaleString()}</td>
+                  <td className="px-4 py-4 font-bold text-ink">
                     ${stat.count > 0 ? (stat.value / stat.count).toLocaleString() : '0'}
                   </td>
                 </tr>
@@ -337,18 +352,18 @@ function MetricCard({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-ink/10"
+      className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] p-6 transition-all"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-ink/60">{title}</h3>
+        <h3 className="text-sm font-black text-ink/60 uppercase">{title}</h3>
         {icon}
       </div>
       <div className="flex items-end justify-between">
-        <p className="text-2xl font-bold text-ink">{value}</p>
+        <p className="text-2xl font-black text-ink">{value}</p>
         {trend && (
           <div
-            className={`flex items-center space-x-1 text-sm ${
-              trendUp ? 'text-green-500' : 'text-red-500'
+            className={`flex items-center space-x-1 text-sm font-black ${
+              trendUp ? 'text-matcha' : 'text-strawberry'
             }`}
           >
             <TrendingUp className={`w-4 h-4 ${!trendUp && 'rotate-180'}`} />

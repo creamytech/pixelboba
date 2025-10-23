@@ -328,14 +328,14 @@ export default function ProjectTaskBoard({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border-2 border-brown-sugar/20 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-ink flex items-center gap-3">
+            <h2 className="text-2xl font-black uppercase text-ink flex items-center gap-3">
               <span className="text-3xl">📋</span>
               {projectName} Task Board
             </h2>
-            <p className="text-ink/60 mt-1">
+            <p className="text-ink/60 mt-1 font-bold">
               {tasks.length} total tasks • {tasks.filter((t) => t.status === 'COMPLETED').length}{' '}
               completed
             </p>
@@ -350,12 +350,12 @@ export default function ProjectTaskBoard({
             />
 
             {/* View Mode Toggle */}
-            <div className="flex bg-white/70 rounded-lg p-1 border border-brown-sugar/20">
+            <div className="flex bg-white rounded-lg p-1 border-3 border-ink">
               <motion.button
                 onClick={() => setViewMode('kanban')}
-                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                className={`px-3 py-1.5 rounded text-xs font-display font-black uppercase transition-all ${
                   viewMode === 'kanban'
-                    ? 'bg-taro text-white shadow-sm'
+                    ? 'bg-taro text-white shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
                     : 'text-ink/60 hover:bg-taro/10'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -366,9 +366,9 @@ export default function ProjectTaskBoard({
               </motion.button>
               <motion.button
                 onClick={() => setViewMode('timeline')}
-                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                className={`px-3 py-1.5 rounded text-xs font-display font-black uppercase transition-all ${
                   viewMode === 'timeline'
-                    ? 'bg-taro text-white shadow-sm'
+                    ? 'bg-taro text-white shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
                     : 'text-ink/60 hover:bg-taro/10'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -379,9 +379,9 @@ export default function ProjectTaskBoard({
               </motion.button>
               <motion.button
                 onClick={() => setViewMode('list')}
-                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                className={`px-3 py-1.5 rounded text-xs font-display font-black uppercase transition-all ${
                   viewMode === 'list'
-                    ? 'bg-taro text-white shadow-sm'
+                    ? 'bg-taro text-white shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
                     : 'text-ink/60 hover:bg-taro/10'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -392,9 +392,9 @@ export default function ProjectTaskBoard({
               </motion.button>
               <motion.button
                 onClick={() => setViewMode('gantt')}
-                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                className={`px-3 py-1.5 rounded text-xs font-display font-black uppercase transition-all ${
                   viewMode === 'gantt'
-                    ? 'bg-taro text-white shadow-sm'
+                    ? 'bg-taro text-white shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
                     : 'text-ink/60 hover:bg-taro/10'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -405,9 +405,9 @@ export default function ProjectTaskBoard({
               </motion.button>
               <motion.button
                 onClick={() => setViewMode('analytics')}
-                className={`px-3 py-1.5 rounded text-xs font-display font-medium transition-all ${
+                className={`px-3 py-1.5 rounded text-xs font-display font-black uppercase transition-all ${
                   viewMode === 'analytics'
-                    ? 'bg-taro text-white shadow-sm'
+                    ? 'bg-taro text-white shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
                     : 'text-ink/60 hover:bg-taro/10'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -427,7 +427,7 @@ export default function ProjectTaskBoard({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search tasks... (⌘K)"
-                className="pl-10 pr-4 py-2 border-2 border-brown-sugar/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-taro bg-milk-tea/30 font-display text-sm"
+                className="pl-10 pr-4 py-3 bg-white rounded-lg border-3 border-ink font-bold focus:outline-none focus:ring-4 focus:ring-taro/20 font-display text-sm"
               />
             </div>
 
@@ -437,7 +437,7 @@ export default function ProjectTaskBoard({
             {/* Keyboard Shortcuts */}
             <motion.button
               onClick={() => setShowShortcuts(true)}
-              className="p-2 bg-white/70 hover:bg-white border border-brown-sugar/20 rounded-lg transition-colors"
+              className="p-2 bg-white hover:bg-white border-3 border-ink rounded-lg transition-colors shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               title="Keyboard shortcuts (?)"
@@ -448,12 +448,12 @@ export default function ProjectTaskBoard({
             {/* Quick Add Task */}
             <motion.button
               onClick={() => handleAddTask('TODO')}
-              className="flex items-center gap-2 px-4 py-2 bg-taro text-white rounded-lg font-display font-medium hover:bg-deep-taro transition-colors shadow-md"
+              className="flex items-center gap-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase font-display transition-all"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <Plus className="w-5 h-5" />
-              <span className="hidden sm:inline lowercase">new task</span>
+              <span className="hidden sm:inline">new task</span>
             </motion.button>
           </div>
         </div>
@@ -464,22 +464,22 @@ export default function ProjectTaskBoard({
             {
               label: 'Backlog',
               count: tasks.filter((t) => t.status === 'BACKLOG').length,
-              color: 'bg-gray-100 text-gray-700',
+              color: 'bg-cream text-ink border-ink',
             },
             {
               label: 'In Progress',
               count: tasks.filter((t) => t.status === 'IN_PROGRESS').length,
-              color: 'bg-blue-100 text-blue-700',
+              color: 'bg-thai-tea text-ink border-ink',
             },
             {
               label: 'In Review',
               count: tasks.filter((t) => t.status === 'IN_REVIEW').length,
-              color: 'bg-brown-sugar/10 text-brown-sugar',
+              color: 'bg-taro text-white border-ink',
             },
             {
               label: 'Completed',
               count: tasks.filter((t) => t.status === 'COMPLETED').length,
-              color: 'bg-matcha/10 text-matcha',
+              color: 'bg-matcha text-ink border-ink',
             },
           ].map((stat, i) => (
             <motion.div
@@ -487,10 +487,10 @@ export default function ProjectTaskBoard({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className={`${stat.color} rounded-lg p-3 text-center`}
+              className={`${stat.color} rounded-xl p-3 text-center border-3 shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]`}
             >
-              <div className="text-2xl font-bold">{stat.count}</div>
-              <div className="text-xs font-medium opacity-80">{stat.label}</div>
+              <div className="text-2xl font-black">{stat.count}</div>
+              <div className="text-xs font-black uppercase">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -501,7 +501,7 @@ export default function ProjectTaskBoard({
         {viewMode === 'kanban' && (
           <motion.div
             key="kanban"
-            className="bg-gradient-to-b from-milk-tea/30 to-white rounded-2xl border-2 border-brown-sugar/20 p-6"
+            className="bg-cream/30 rounded-xl border-4 border-ink p-6 shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
