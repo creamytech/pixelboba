@@ -207,12 +207,12 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
       <aside
         className={`fixed left-0 top-0 h-screen bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out will-change-transform ${
           isCollapsed ? 'w-[80px]' : 'w-[280px]'
+        } -translate-x-full ${
+          // Mobile: show when open
+          isMobileOpen ? 'max-lg:translate-x-0' : ''
         } ${
-          // Mobile behavior (< lg breakpoint)
-          isMobileOpen ? 'translate-x-0' : '-translate-x-full'
-        } ${
-          // Desktop behavior (>= lg breakpoint)
-          !isDesktopHidden ? 'lg:!translate-x-0' : 'lg:!-translate-x-full'
+          // Desktop: show when not hidden
+          !isDesktopHidden ? 'lg:translate-x-0' : ''
         }`}
         style={{ transform: 'translateZ(0)' }}
       >
