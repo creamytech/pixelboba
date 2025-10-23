@@ -12,7 +12,9 @@ import {
   CheckCircle,
   X,
   Loader2,
+  Sparkles,
 } from 'lucide-react';
+import TierSelectionModal from './TierSelectionModal';
 
 const TIERS = [
   {
@@ -97,6 +99,7 @@ export default function BillingCenter() {
   const [error, setError] = useState<string | null>(null);
   const [showChangePlanModal, setShowChangePlanModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showTierSelectionModal, setShowTierSelectionModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
@@ -189,22 +192,78 @@ export default function BillingCenter() {
 
   if (!subscription) {
     return (
-      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-8 text-center">
-        <div className="w-20 h-20 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] mx-auto mb-6 flex items-center justify-center">
-          <Icon icon="ph:empty-duotone" className="w-10 h-10 text-white" />
+      <>
+        <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-8 text-center mb-6">
+          <div className="w-20 h-20 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] mx-auto mb-6 flex items-center justify-center">
+            <Icon icon="ph:empty-duotone" className="w-10 h-10 text-white" />
+          </div>
+          <h3 className="font-black text-2xl text-ink uppercase mb-3">No Active Subscription</h3>
+          <p className="text-ink/70 font-bold mb-6">
+            You don&apos;t have an active Boba Club subscription. Choose a plan below to unlock
+            premium features.
+          </p>
         </div>
-        <h3 className="font-black text-2xl text-ink uppercase mb-3">No Active Subscription</h3>
-        <p className="text-ink/70 font-bold mb-6">
-          You don&apos;t have an active Boba Club subscription.
-        </p>
-        <a
-          href="/boba-club"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
-        >
-          Browse Plans
-          <TrendingUp className="w-5 h-5" />
-        </a>
-      </div>
+
+        {/* Tier Selection for Non-Subscribers */}
+        <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-8">
+          <h3 className="font-black text-2xl text-ink uppercase mb-6 text-center">
+            Choose Your Plan
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {TIERS.map((tier) => (
+              <div
+                key={tier.name}
+                className={`bg-white rounded-xl border-4 ${tier.gradient.includes('thai-tea') ? 'border-thai-tea' : tier.gradient.includes('taro') ? 'border-taro' : 'border-brown-sugar'} shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all p-6 flex flex-col relative`}
+              >
+                {tier.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-matcha text-ink font-black text-xs rounded-full border-2 border-ink uppercase">
+                      <Sparkles className="w-3 h-3" />
+                      Most Popular
+                    </span>
+                  </div>
+                )}
+                <Icon icon={tier.icon} className="w-16 h-16 text-taro mb-4" />
+                <h4 className="font-black text-2xl text-ink uppercase mb-2">{tier.name}</h4>
+                <p className="text-ink/70 font-bold text-sm mb-4">{tier.description}</p>
+
+                <div className="mb-6">
+                  <span className="font-black text-4xl text-ink">
+                    ${tier.price.toLocaleString()}
+                  </span>
+                  <span className="text-lg text-ink/70 font-bold">/month</span>
+                </div>
+
+                <ul className="space-y-2 mb-6 flex-1">
+                  {tier.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <Icon
+                        icon="ph:check-circle-duotone"
+                        className="w-5 h-5 text-matcha flex-shrink-0 mt-0.5"
+                      />
+                      <span className="text-ink font-bold text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => setShowTierSelectionModal(true)}
+                  className="w-full px-6 py-3 bg-taro text-white font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase flex items-center justify-center gap-2"
+                >
+                  Select Plan
+                  <TrendingUp className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <TierSelectionModal
+          isOpen={showTierSelectionModal}
+          onClose={() => setShowTierSelectionModal(false)}
+          currentTier={null}
+        />
+      </>
     );
   }
 

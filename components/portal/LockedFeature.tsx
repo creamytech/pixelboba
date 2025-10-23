@@ -48,19 +48,13 @@ export default function LockedFeature({
             <span className="font-black text-xs text-taro uppercase">Requires {requiredTier}</span>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/boba-club"
-              className="px-6 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
-            >
-              View Plans
-            </Link>
+          {/* CTA Button */}
+          <div className="flex justify-center">
             <Link
               href="/billing"
-              className="px-6 py-3 bg-white text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
+              className="px-8 py-3 bg-matcha text-ink font-black rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all uppercase"
             >
-              Manage Subscription
+              See Plans & Upgrade
             </Link>
           </div>
         </div>
