@@ -15,6 +15,8 @@ export default function WebsitePreview({ url, projectName }: WebsitePreviewProps
   const [device, setDevice] = useState<DeviceType>('desktop');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [iframeError, setIframeError] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
 
   const deviceSizes = {
     desktop: { width: '100%', height: '600px', icon: Monitor },
@@ -27,10 +29,22 @@ export default function WebsitePreview({ url, projectName }: WebsitePreviewProps
 
   const handleRefresh = () => {
     setRefreshKey((prev) => prev + 1);
+    setIframeError(false);
+    setIframeLoaded(false);
   };
 
   const handleOpenInNewTab = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleIframeLoad = () => {
+    setIframeLoaded(true);
+    setIframeError(false);
+  };
+
+  const handleIframeError = () => {
+    setIframeError(true);
+    setIframeLoaded(false);
   };
 
   return (
@@ -139,18 +153,53 @@ export default function WebsitePreview({ url, projectName }: WebsitePreviewProps
 
             {/* IFrame */}
             <div
-              className={`bg-white shadow-2xl overflow-hidden ${
+              className={`bg-white shadow-2xl overflow-hidden relative ${
                 device === 'desktop' ? 'rounded-b-xl' : 'rounded-2xl'
               }`}
               style={{ height: currentDevice.height }}
             >
+              {!iframeLoaded && !iframeError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-cream">
+                  <div className="text-center">
+                    <div className="animate-spin w-12 h-12 border-4 border-taro border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <p className="text-ink font-bold">Loading preview...</p>
+                  </div>
+                </div>
+              )}
+
+              {iframeError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-strawberry/10 to-thai-tea/10 p-8">
+                  <div className="text-center max-w-md">
+                    <div className="w-16 h-16 bg-strawberry/20 rounded-full border-4 border-ink flex items-center justify-center mx-auto mb-4">
+                      <ExternalLink className="w-8 h-8 text-strawberry" />
+                    </div>
+                    <h4 className="font-display font-black text-xl text-ink mb-2 uppercase">
+                      Preview Blocked
+                    </h4>
+                    <p className="text-sm text-ink/60 font-bold mb-4">
+                      This website cannot be displayed in a preview due to security restrictions.
+                      Click the button below to visit the site directly.
+                    </p>
+                    <button
+                      onClick={handleOpenInNewTab}
+                      className="px-6 py-3 rounded-full bg-gradient-to-r from-taro to-deep-taro text-white font-black border-3 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all flex items-center gap-2 mx-auto uppercase"
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                      Open Website in New Tab
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <iframe
                 key={refreshKey}
                 src={url}
                 className="w-full h-full border-0"
                 title={`${projectName} Preview`}
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation"
                 loading="lazy"
+                onLoad={handleIframeLoad}
+                onError={handleIframeError}
               />
             </div>
           </motion.div>
