@@ -96,6 +96,7 @@ export default function PortalLayout({
       {/* Sidebar */}
       <PortalSidebar
         user={user}
+        subscription={subscription}
         activeTab={activeTab}
         onTabChange={onTabChange}
         badges={badges}

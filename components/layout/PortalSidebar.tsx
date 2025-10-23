@@ -27,6 +27,10 @@ interface PortalSidebarProps {
     email: string;
     image?: string;
   };
+  subscription?: {
+    tier: string | null;
+    isActive: boolean;
+  };
   activeTab: string;
   onTabChange: (tab: string) => void;
   badges: {
@@ -46,6 +50,7 @@ interface NavItem {
 
 export default function PortalSidebar({
   user,
+  subscription,
   activeTab,
   onTabChange,
   badges,
@@ -246,6 +251,31 @@ export default function PortalSidebar({
     setIsMobileOpen(false);
   };
 
+  // Get tier display info
+  const getTierInfo = () => {
+    if (!subscription?.tier) {
+      return { name: 'Free', color: 'from-gray-400 to-gray-500', icon: 'game-icons:boba' };
+    }
+
+    const tierLower = subscription.tier.toLowerCase();
+    if (tierLower.includes('lite') || tierLower.includes('brew')) {
+      return { name: 'Lite Brew', color: 'from-milk-tea to-brown-sugar', icon: 'game-icons:boba' };
+    }
+    if (tierLower.includes('signature') || tierLower.includes('blend')) {
+      return {
+        name: 'Signature Blend',
+        color: 'from-thai-tea to-orange-600',
+        icon: 'ph:drop-duotone',
+      };
+    }
+    if (tierLower.includes('taro') || tierLower.includes('cloud')) {
+      return { name: 'Taro Cloud', color: 'from-deep-taro to-taro', icon: 'ph:cloud-duotone' };
+    }
+    return { name: subscription.tier, color: 'from-taro to-deep-taro', icon: 'game-icons:boba' };
+  };
+
+  const tierInfo = getTierInfo();
+
   return (
     <>
       {/* Menu Button - Mobile */}
@@ -327,18 +357,21 @@ export default function PortalSidebar({
       >
         <div className="flex flex-col h-full">
           {/* Logo Area */}
-          <div className="p-6 border-b-4 border-ink bg-white">
+          <div className="p-6 border-b-4 border-ink bg-gradient-to-br from-cream to-white">
             <Link href="/portal" className="block active:scale-98 transition-transform">
               <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center' : ''}`}>
-                <div className="w-12 h-12 bg-gradient-to-br from-taro to-deep-taro rounded-xl border-3 border-ink flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
-                  <Icon icon="game-icons:boba" className="w-7 h-7 text-white" />
+                <div className="w-14 h-14 bg-gradient-to-br from-taro via-deep-taro to-taro rounded-2xl border-4 border-ink flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] relative overflow-hidden">
+                  <div className="absolute inset-0 bg-white/10 animate-pulse" />
+                  <Icon icon="game-icons:boba" className="w-8 h-8 text-white relative z-10" />
                 </div>
                 {!isCollapsed && (
-                  <div>
-                    <h1 className="font-black text-lg uppercase text-ink leading-none">
-                      Client Portal
+                  <div className="flex-1">
+                    <h1 className="font-display font-black text-xl uppercase text-ink leading-tight tracking-tight">
+                      Portal
                     </h1>
-                    <p className="text-xs font-bold text-ink/60 uppercase mt-0.5">Pixel Boba</p>
+                    <p className="text-xs font-bold text-taro uppercase tracking-wide">
+                      Pixel Boba
+                    </p>
                   </div>
                 )}
               </div>
@@ -442,19 +475,19 @@ export default function PortalSidebar({
           </div>
 
           {/* User Profile */}
-          <div className="p-4 border-t-4 border-ink bg-white">
+          <div className="p-5 border-t-4 border-ink bg-gradient-to-br from-white to-cream">
             {isCollapsed ? (
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-3">
                 <div className="relative">
                   {user.image ? (
                     <img
                       src={user.image}
                       alt={user.name}
-                      className="w-12 h-12 rounded-full border-3 border-ink object-cover"
+                      className="w-14 h-14 rounded-full border-4 border-ink object-cover shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]"
                     />
                   ) : (
-                    <div className="w-12 h-12 bg-gradient-to-br from-matcha to-taro rounded-full border-3 border-ink flex items-center justify-center">
-                      <span className="text-white font-black text-lg">
+                    <div className="w-14 h-14 bg-gradient-to-br from-matcha to-taro rounded-full border-4 border-ink flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
+                      <span className="text-white font-black text-xl">
                         {user.name?.charAt(0).toUpperCase() || '?'}
                       </span>
                     </div>
@@ -463,7 +496,7 @@ export default function PortalSidebar({
                 {onLogout && (
                   <button
                     onClick={onLogout}
-                    className="w-10 h-10 flex items-center justify-center bg-strawberry/20 hover:bg-strawberry/30 text-strawberry rounded-lg border-3 border-ink transition-colors active:scale-95"
+                    className="w-10 h-10 flex items-center justify-center bg-white hover:bg-ink/10 text-ink/60 hover:text-ink rounded-full border-3 border-ink transition-all active:scale-95 shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
                     title="Logout"
                   >
                     <LogOut className="w-4 h-4" strokeWidth={2.5} />
@@ -472,27 +505,45 @@ export default function PortalSidebar({
               </div>
             ) : (
               <>
-                <div className="flex items-center gap-3 mb-3">
+                {/* Subscription Tier Badge */}
+                {subscription?.isActive && (
+                  <div
+                    className={`mb-4 p-3 rounded-xl border-3 border-ink bg-gradient-to-r ${tierInfo.color} shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Icon icon={tierInfo.icon} className="w-5 h-5 text-white" />
+                      <div className="flex-1">
+                        <p className="text-[10px] font-bold text-white/80 uppercase tracking-wide">
+                          Boba Club
+                        </p>
+                        <p className="text-sm font-black text-white uppercase leading-none">
+                          {tierInfo.name}
+                        </p>
+                      </div>
+                      <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                    </div>
+                  </div>
+                )}
+
+                {/* User Info */}
+                <div className="flex items-center gap-3 mb-4">
                   <div className="relative">
                     {user.image ? (
                       <img
                         src={user.image}
                         alt={user.name}
-                        className="w-12 h-12 rounded-full border-3 border-ink object-cover"
+                        className="w-14 h-14 rounded-full border-4 border-ink object-cover shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]"
                       />
                     ) : (
-                      <div className="w-12 h-12 bg-gradient-to-br from-matcha to-taro rounded-full border-3 border-ink flex items-center justify-center">
-                        <span className="text-white font-black text-lg">
+                      <div className="w-14 h-14 bg-gradient-to-br from-matcha to-taro rounded-full border-4 border-ink flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
+                        <span className="text-white font-black text-xl">
                           {user.name?.charAt(0).toUpperCase() || '?'}
                         </span>
                       </div>
                     )}
-                    <div className="absolute -bottom-1 -right-1 px-2 py-0.5 bg-taro border-2 border-ink rounded-full">
-                      <span className="text-[10px] font-black text-white uppercase">Client</span>
-                    </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-black text-sm text-ink truncate uppercase">{user.name}</p>
+                    <p className="font-black text-base text-ink truncate">{user.name}</p>
                     <p className="text-xs text-ink/60 font-bold truncate">{user.email}</p>
                   </div>
                 </div>
@@ -501,10 +552,10 @@ export default function PortalSidebar({
                 {onLogout && (
                   <button
                     onClick={onLogout}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-strawberry/20 hover:bg-strawberry/30 text-strawberry rounded-lg border-3 border-ink font-black uppercase text-sm transition-colors active:scale-98"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-ink/5 text-ink/70 hover:text-ink rounded-xl border-3 border-ink font-bold text-sm transition-all active:scale-98 shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px]]"
                   >
                     <LogOut className="w-4 h-4" strokeWidth={2.5} />
-                    <span>Logout</span>
+                    <span className="uppercase">Sign Out</span>
                   </button>
                 )}
               </>
