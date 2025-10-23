@@ -874,7 +874,7 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
 
       if (permRes.ok) {
         const permData = await permRes.json();
-        setPermissions(permData);
+        setPermissions(permData.permissions || permData);
       }
     } catch (error) {
       console.error('Error fetching access data:', error);
@@ -894,14 +894,17 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
     setSaving(true);
     try {
       const response = await fetch(`/api/admin/users/${clientId}/permissions`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(permissions),
       });
 
       if (response.ok) {
         alert('Permissions updated successfully!');
+        await fetchAccessData(); // Refresh data after save
       } else {
+        const errorData = await response.json();
+        console.error('Failed to update permissions:', errorData);
         alert('Failed to update permissions');
       }
     } catch (error) {
