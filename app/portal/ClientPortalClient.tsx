@@ -253,6 +253,7 @@ export default function ClientPortalClient({ session }: { session: Session }) {
               setSelectedProjectId(projectId);
               setActiveTab('projects');
             }}
+            onTabChange={(tab: string) => setActiveTab(tab)}
           />
         );
       case 'projects':
@@ -480,12 +481,14 @@ function DashboardView({
   setExpandedProjectId,
   onSearchClick,
   onViewProject,
+  onTabChange,
 }: {
   data: PortalData;
   expandedProjectId: string | null;
   setExpandedProjectId: (id: string | null) => void;
   onSearchClick?: () => void;
   onViewProject?: (projectId: string) => void;
+  onTabChange?: (tab: string) => void;
 }) {
   const activeProjects = data.projects.filter(
     (p) => !['COMPLETED', 'CANCELLED'].includes(p.status)
@@ -590,6 +593,7 @@ function DashboardView({
         userName={data.user.name?.split(' ')[0] || 'there'}
         notificationCount={data.unreadMessages + data.pendingInvoices + data.pendingContracts}
         onSearchClick={onSearchClick}
+        onNotificationClick={() => onTabChange?.('notifications')}
       />
 
       {/* Metrics Grid */}
@@ -778,31 +782,40 @@ function DashboardView({
           <QuickActionButton
             icon={<Upload className="w-5 h-5" />}
             label="Upload Files"
-            onClick={() => {}}
+            onClick={() => onTabChange?.('files')}
           />
           <QuickActionButton
             icon={<Send className="w-5 h-5" />}
             label="Send Message"
-            onClick={() => {}}
+            onClick={() => onTabChange?.('messages')}
           />
           <QuickActionButton
             icon={<Eye className="w-5 h-5" />}
             label="View Invoice"
-            onClick={() => {}}
+            onClick={() => onTabChange?.('invoices')}
           />
           <QuickActionButton
             icon={<Plus className="w-5 h-5" />}
             label="New Request"
-            onClick={() => {}}
+            onClick={() => onTabChange?.('requests')}
           />
         </div>
       </div>
 
       {/* Content Preview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <MessagesPreviewCard count={data.unreadMessages} onClick={() => {}} />
-        <InvoicesPreviewCard count={data.pendingInvoices} onClick={() => {}} />
-        <ContractsPreviewCard count={data.pendingContracts} onClick={() => {}} />
+        <MessagesPreviewCard
+          count={data.unreadMessages}
+          onClick={() => onTabChange?.('messages')}
+        />
+        <InvoicesPreviewCard
+          count={data.pendingInvoices}
+          onClick={() => onTabChange?.('invoices')}
+        />
+        <ContractsPreviewCard
+          count={data.pendingContracts}
+          onClick={() => onTabChange?.('contracts')}
+        />
       </div>
     </div>
   );

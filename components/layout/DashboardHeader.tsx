@@ -9,12 +9,14 @@ interface DashboardHeaderProps {
   userName: string;
   notificationCount?: number;
   onSearchClick?: () => void;
+  onNotificationClick?: () => void;
 }
 
 export default function DashboardHeader({
   userName,
   notificationCount = 0,
   onSearchClick,
+  onNotificationClick,
 }: DashboardHeaderProps) {
   const [greeting, setGreeting] = useState('');
   const [icon, setIcon] = useState('ph:hand-waving-duotone');
@@ -90,7 +92,11 @@ export default function DashboardHeader({
 
           {/* Notifications */}
           <div className="relative">
-            <button className="p-3 lg:p-4 bg-white rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] active:shadow-[1px_1px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] transition-all">
+            <button
+              onClick={onNotificationClick}
+              className="p-3 lg:p-4 bg-white rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] active:shadow-[1px_1px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+              title="Notifications"
+            >
               <Bell className="w-6 h-6 text-taro" strokeWidth={2.5} />
               {notificationCount > 0 && (
                 <motion.div

@@ -853,9 +853,11 @@ function MilestonesTab({
 function AccessSubscriptionTab({ clientId }: { clientId: string }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [granting, setGranting] = useState(false);
   const [subscription, setSubscription] = useState<any>(null);
   const [permissions, setPermissions] = useState<any>(null);
-  const [selectedTier, setSelectedTier] = useState<string>('');
+  const [selectedPriceId, setSelectedPriceId] = useState<string>('');
+  const [stripeProducts, setStripeProducts] = useState<any[]>([]);
 
   // Define tier permissions
   const tierPermissions = {
@@ -926,7 +928,20 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
 
   useEffect(() => {
     fetchAccessData();
+    fetchStripeProducts();
   }, [clientId]);
+
+  const fetchStripeProducts = async () => {
+    try {
+      const response = await fetch('/api/admin/stripe/products');
+      if (response.ok) {
+        const data = await response.json();
+        setStripeProducts(data.products || []);
+      }
+    } catch (error) {
+      console.error('Error fetching Stripe products:', error);
+    }
+  };
 
   const fetchAccessData = async () => {
     try {
@@ -958,10 +973,29 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
     }));
   };
 
-  const handleTierChange = (tier: string) => {
-    setSelectedTier(tier);
-    if (tier && tierPermissions[tier as keyof typeof tierPermissions]) {
-      setPermissions(tierPermissions[tier as keyof typeof tierPermissions]);
+  const handleGrantSubscription = async (priceId: string) => {
+    setGranting(true);
+    setSelectedPriceId(priceId);
+    try {
+      const response = await fetch(`/api/admin/clients/${clientId}/subscription`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId }),
+      });
+
+      if (response.ok) {
+        alert('Subscription granted successfully!');
+        await fetchAccessData(); // Refresh subscription and permissions
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to grant subscription: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error granting subscription:', error);
+      alert('Error granting subscription');
+    } finally {
+      setGranting(false);
+      setSelectedPriceId('');
     }
   };
 
@@ -1035,46 +1069,48 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
           Assign Boba Club Tier
         </h3>
         <p className="text-sm text-ink/60 font-bold mb-4">
-          Select a tier to automatically set permissions based on the plan features
+          Select a tier to grant the client a Boba Club subscription with automatic permissions
         </p>
-        <div className="grid md:grid-cols-3 gap-4">
-          <button
-            onClick={() => handleTierChange('MATCHA')}
-            className={`p-6 rounded-xl border-4 border-ink transition-all ${
-              selectedTier === 'MATCHA'
-                ? 'bg-matcha text-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] scale-105'
-                : 'bg-white hover:bg-matcha/10 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
-            }`}
-          >
-            <Icon icon="game-icons:boba" className="w-8 h-8 mx-auto mb-2" />
-            <div className="font-display font-black uppercase text-lg mb-1">Matcha</div>
-            <div className="text-xs opacity-80">$999/month</div>
-          </button>
-          <button
-            onClick={() => handleTierChange('TARO')}
-            className={`p-6 rounded-xl border-4 border-ink transition-all ${
-              selectedTier === 'TARO'
-                ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] scale-105'
-                : 'bg-white hover:bg-taro/10 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
-            }`}
-          >
-            <Icon icon="game-icons:boba" className="w-8 h-8 mx-auto mb-2" />
-            <div className="font-display font-black uppercase text-lg mb-1">Taro</div>
-            <div className="text-xs opacity-80">$1,899/month</div>
-          </button>
-          <button
-            onClick={() => handleTierChange('THAI_TEA')}
-            className={`p-6 rounded-xl border-4 border-ink transition-all ${
-              selectedTier === 'THAI_TEA'
-                ? 'bg-thai-tea text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] scale-105'
-                : 'bg-white hover:bg-thai-tea/10 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
-            }`}
-          >
-            <Icon icon="game-icons:boba" className="w-8 h-8 mx-auto mb-2" />
-            <div className="font-display font-black uppercase text-lg mb-1">Thai Tea</div>
-            <div className="text-xs opacity-80">$2,799/month</div>
-          </button>
-        </div>
+        {stripeProducts.length > 0 ? (
+          <div className="grid md:grid-cols-3 gap-4">
+            {stripeProducts.map((product) => {
+              const price = product.prices?.[0];
+              const priceId = price?.id;
+              const amount = price?.unitAmount ? (price.unitAmount / 100).toLocaleString() : '0';
+              const isGranting = granting && selectedPriceId === priceId;
+              const tierColor = product.name?.toLowerCase().includes('matcha')
+                ? 'matcha'
+                : product.name?.toLowerCase().includes('taro')
+                  ? 'taro'
+                  : 'thai-tea';
+
+              return (
+                <button
+                  key={product.id}
+                  onClick={() => priceId && handleGrantSubscription(priceId)}
+                  disabled={granting}
+                  className={`p-6 rounded-xl border-4 border-ink transition-all disabled:opacity-50 ${
+                    isGranting
+                      ? `bg-${tierColor} text-${tierColor === 'taro' || tierColor === 'thai-tea' ? 'white' : 'ink'} shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] scale-105`
+                      : `bg-white hover:bg-${tierColor}/10 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]`
+                  }`}
+                >
+                  <Icon icon="game-icons:boba" className="w-8 h-8 mx-auto mb-2" />
+                  <div className="font-display font-black uppercase text-lg mb-1">
+                    {product.name}
+                  </div>
+                  <div className="text-xs opacity-80">${amount}/month</div>
+                  {isGranting && <div className="text-xs mt-2">Granting...</div>}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-ink/50">
+            <Icon icon="game-icons:boba" className="w-12 h-12 mx-auto mb-2 opacity-50" />
+            <p className="font-bold">Loading Stripe products...</p>
+          </div>
+        )}
       </div>
 
       {/* Subscription Info */}
