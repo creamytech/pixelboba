@@ -21,6 +21,8 @@ import {
   Activity,
   Target,
   CheckCircle,
+  Shield,
+  Save,
 } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import BobaProgressIndicator from '@/components/portal/BobaProgressIndicator';
@@ -154,6 +156,7 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
 
   const tabs = [
     { id: 'overview', name: 'overview', icon: User },
+    { id: 'access', name: 'access & subscription', icon: Shield },
     { id: 'milestones', name: 'milestones', icon: Target },
     { id: 'projects', name: 'projects', icon: FolderOpen },
     { id: 'messages', name: 'messages', icon: MessageCircle },
@@ -286,6 +289,7 @@ export default function ClientProfileView({ clientId, onBack }: ClientProfileVie
         {activeTab === 'overview' && (
           <OverviewTab data={data} onSendMilestone={sendMilestoneNotification} />
         )}
+        {activeTab === 'access' && <AccessSubscriptionTab clientId={clientId} />}
         {activeTab === 'milestones' && (
           <MilestonesTab projects={data.projects} onSendMilestone={sendMilestoneNotification} />
         )}
@@ -842,6 +846,233 @@ function MilestonesTab({
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function AccessSubscriptionTab({ clientId }: { clientId: string }) {
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [subscription, setSubscription] = useState<any>(null);
+  const [permissions, setPermissions] = useState<any>(null);
+
+  useEffect(() => {
+    fetchAccessData();
+  }, [clientId]);
+
+  const fetchAccessData = async () => {
+    try {
+      const [subRes, permRes] = await Promise.all([
+        fetch(`/api/admin/clients/${clientId}/subscription`),
+        fetch(`/api/admin/users/${clientId}/permissions`),
+      ]);
+
+      if (subRes.ok) {
+        const subData = await subRes.json();
+        setSubscription(subData);
+      }
+
+      if (permRes.ok) {
+        const permData = await permRes.json();
+        setPermissions(permData);
+      }
+    } catch (error) {
+      console.error('Error fetching access data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePermissionToggle = (field: string) => {
+    setPermissions((prev: any) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handleSavePermissions = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch(`/api/admin/users/${clientId}/permissions`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(permissions),
+      });
+
+      if (response.ok) {
+        alert('Permissions updated successfully!');
+      } else {
+        alert('Failed to update permissions');
+      }
+    } catch (error) {
+      console.error('Error saving permissions:', error);
+      alert('Error saving permissions');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+        <div className="text-center py-12 text-ink/50">
+          <div className="animate-spin w-8 h-8 border-4 border-taro border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="font-bold">Loading access settings...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const tabAccessPermissions = [
+    { key: 'canAccessDashboard', label: 'Dashboard' },
+    { key: 'canAccessProjects', label: 'Projects' },
+    { key: 'canAccessTasks', label: 'Tasks' },
+    { key: 'canAccessMessages', label: 'Messages' },
+    { key: 'canAccessFiles', label: 'Files' },
+    { key: 'canAccessInvoices', label: 'Invoices' },
+    { key: 'canAccessContracts', label: 'Contracts' },
+    { key: 'canAccessMeetings', label: 'Meetings' },
+    { key: 'canAccessTeam', label: 'Team' },
+    { key: 'canAccessRequests', label: 'Requests' },
+    { key: 'canAccessBilling', label: 'Billing' },
+  ];
+
+  const featurePermissions = [
+    { key: 'canUploadFiles', label: 'Upload Files' },
+    { key: 'canCreateTasks', label: 'Create Tasks' },
+    { key: 'canEditTasks', label: 'Edit Tasks' },
+    { key: 'canDeleteTasks', label: 'Delete Tasks' },
+    { key: 'canSendMessages', label: 'Send Messages' },
+    { key: 'canInviteTeam', label: 'Invite Team Members' },
+    { key: 'canViewAnalytics', label: 'View Analytics' },
+    { key: 'canManageProjects', label: 'Manage Projects' },
+  ];
+
+  return (
+    <div className="space-y-6">
+      {/* Subscription Info */}
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+        <h3 className="font-display text-xl font-black text-ink mb-6 uppercase flex items-center gap-2">
+          <Icon icon="game-icons:boba" className="w-6 h-6 text-taro" />
+          Boba Club Subscription
+        </h3>
+
+        {subscription ? (
+          <div className="space-y-4">
+            <div className="bg-cream rounded-lg border-3 border-ink p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-bold text-ink/60 uppercase text-sm">Status</span>
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-black border-2 border-ink uppercase ${
+                    subscription.status === 'ACTIVE'
+                      ? 'bg-matcha text-ink'
+                      : subscription.status === 'TRIALING'
+                        ? 'bg-taro text-white'
+                        : subscription.status === 'PAUSED'
+                          ? 'bg-brown-sugar text-white'
+                          : 'bg-strawberry/20 text-strawberry'
+                  }`}
+                >
+                  {subscription.status}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-ink/60 uppercase text-sm">Plan ID</span>
+                <span className="font-black text-ink">{subscription.stripePriceId}</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-cream rounded-lg border-3 border-ink p-4">
+                <div className="text-xs font-bold text-ink/60 uppercase mb-1">Period Start</div>
+                <div className="font-black text-ink">
+                  {new Date(subscription.currentPeriodStart).toLocaleDateString()}
+                </div>
+              </div>
+              <div className="bg-cream rounded-lg border-3 border-ink p-4">
+                <div className="text-xs font-bold text-ink/60 uppercase mb-1">Period End</div>
+                <div className="font-black text-ink">
+                  {new Date(subscription.currentPeriodEnd).toLocaleDateString()}
+                </div>
+              </div>
+            </div>
+
+            {subscription.trialEnd && (
+              <div className="bg-taro/10 rounded-lg border-3 border-taro p-4">
+                <div className="text-xs font-bold text-taro uppercase mb-1">Trial Ends</div>
+                <div className="font-black text-taro">
+                  {new Date(subscription.trialEnd).toLocaleDateString()}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-ink/50">
+            <Icon icon="game-icons:boba" className="w-12 h-12 mx-auto mb-2 opacity-50" />
+            <p className="font-bold">No active subscription</p>
+            <p className="text-sm mt-2">Client hasn&apos;t subscribed to Boba Club yet</p>
+          </div>
+        )}
+      </div>
+
+      {/* Tab Access Permissions */}
+      {permissions && (
+        <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+          <h3 className="font-display text-xl font-black text-ink mb-6 uppercase flex items-center gap-2">
+            <Shield className="w-6 h-6 text-taro" />
+            Tab Access Permissions
+          </h3>
+
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
+            {tabAccessPermissions.map((perm) => (
+              <label
+                key={perm.key}
+                className="flex items-center gap-3 p-4 bg-cream rounded-lg border-3 border-ink cursor-pointer hover:bg-matcha/20 transition-colors"
+              >
+                <input
+                  type="checkbox"
+                  checked={permissions[perm.key] || false}
+                  onChange={() => handlePermissionToggle(perm.key)}
+                  className="w-5 h-5 border-3 border-ink rounded accent-taro"
+                />
+                <span className="font-black text-ink uppercase text-sm">{perm.label}</span>
+              </label>
+            ))}
+          </div>
+
+          <h4 className="font-display text-lg font-black text-ink mb-4 uppercase mt-8">
+            Feature Permissions
+          </h4>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {featurePermissions.map((perm) => (
+              <label
+                key={perm.key}
+                className="flex items-center gap-3 p-4 bg-cream rounded-lg border-3 border-ink cursor-pointer hover:bg-matcha/20 transition-colors"
+              >
+                <input
+                  type="checkbox"
+                  checked={permissions[perm.key] || false}
+                  onChange={() => handlePermissionToggle(perm.key)}
+                  className="w-5 h-5 border-3 border-ink rounded accent-taro"
+                />
+                <span className="font-black text-ink uppercase text-sm">{perm.label}</span>
+              </label>
+            ))}
+          </div>
+
+          <div className="mt-6 flex justify-end">
+            <button
+              onClick={handleSavePermissions}
+              disabled={saving}
+              className="flex items-center gap-2 px-6 py-3 bg-taro text-white font-black rounded-lg border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[5px_5px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] uppercase transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Save className="w-4 h-4" />
+              {saving ? 'Saving...' : 'Save Permissions'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
