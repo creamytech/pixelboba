@@ -144,51 +144,44 @@ export default function PortalSidebar({
   return (
     <>
       {/* Mobile Menu Button */}
-      <motion.button
+      <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-[60] w-12 h-12 bg-white border-4 border-ink rounded-xl flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        className="lg:hidden fixed top-4 left-4 z-[60] w-12 h-12 bg-white border-4 border-ink rounded-xl flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] active:scale-95 transition-transform"
       >
         {isMobileOpen ? (
           <X className="w-6 h-6 text-ink" strokeWidth={2.5} />
         ) : (
           <Menu className="w-6 h-6 text-ink" strokeWidth={2.5} />
         )}
-      </motion.button>
+      </button>
 
       {/* Mobile Overlay */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isMobileOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="lg:hidden fixed inset-0 bg-ink/40 backdrop-blur-sm z-40"
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="lg:hidden fixed inset-0 bg-ink/40 z-40"
+            style={{ backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}
             onClick={() => setIsMobileOpen(false)}
           />
         )}
       </AnimatePresence>
 
       {/* Sidebar */}
-      <motion.aside
-        initial={false}
-        animate={{
-          x:
-            isMobileOpen || (typeof window !== 'undefined' && window.innerWidth >= 1024) ? 0 : -320,
-        }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className="fixed left-0 top-0 h-screen w-[280px] bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden lg:translate-x-0"
+      <aside
+        className={`fixed left-0 top-0 h-screen w-[280px] bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden lg:translate-x-0 transition-transform duration-300 ease-out will-change-transform ${
+          isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        }`}
+        style={{ transform: 'translateZ(0)' }}
       >
         <div className="flex flex-col h-full">
           {/* Logo Area */}
           <div className="p-6 border-b-4 border-ink bg-white">
-            <Link href="/portal" className="block">
-              <motion.div
-                className="flex items-center gap-3"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
+            <Link href="/portal" className="block active:scale-98 transition-transform">
+              <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-taro to-deep-taro rounded-xl border-3 border-ink flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
                   <Icon icon="game-icons:boba" className="w-7 h-7 text-white" />
                 </div>
@@ -198,7 +191,7 @@ export default function PortalSidebar({
                   </h1>
                   <p className="text-xs font-bold text-ink/60 uppercase mt-0.5">Pixel Boba</p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
           </div>
 
@@ -208,14 +201,12 @@ export default function PortalSidebar({
               const active = isActive(item.id);
               const Icon = item.icon;
               return (
-                <motion.button
+                <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
                   data-tour={`sidebar-${item.id}`}
-                  whileHover={{ x: active ? 0 : 4 }}
-                  whileTap={{ scale: 0.98 }}
                   className={`
-                    w-full flex items-center gap-3 px-4 py-3 rounded-lg border-3 border-ink font-black uppercase text-sm transition-all relative
+                    w-full flex items-center gap-3 px-4 py-3 rounded-lg border-3 border-ink font-black uppercase text-sm transition-colors relative active:scale-98
                     ${
                       active
                         ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
@@ -237,7 +228,7 @@ export default function PortalSidebar({
                       {item.badge > 99 ? '99+' : item.badge}
                     </motion.div>
                   )}
-                </motion.button>
+                </button>
               );
             })}
           </nav>
@@ -271,19 +262,17 @@ export default function PortalSidebar({
 
             {/* Logout Button */}
             {onLogout && (
-              <motion.button
+              <button
                 onClick={onLogout}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-strawberry/20 hover:bg-strawberry/30 text-strawberry rounded-lg border-3 border-ink font-black uppercase text-sm transition-all"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-strawberry/20 hover:bg-strawberry/30 text-strawberry rounded-lg border-3 border-ink font-black uppercase text-sm transition-colors active:scale-98"
               >
                 <LogOut className="w-4 h-4" strokeWidth={2.5} />
                 <span>Logout</span>
-              </motion.button>
+              </button>
             )}
           </div>
         </div>
-      </motion.aside>
+      </aside>
     </>
   );
 }
