@@ -54,6 +54,12 @@ export default function PortalSidebar({
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isDesktopHidden, setIsDesktopHidden] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    workspace: true,
+    communication: true,
+    financial: true,
+    settings: true,
+  });
 
   useEffect(() => {
     setIsMobileOpen(false);
@@ -69,6 +75,103 @@ export default function PortalSidebar({
       document.body.style.overflow = 'unset';
     };
   }, [isMobileOpen]);
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId],
+    }));
+  };
+
+  const navSections = [
+    {
+      id: 'workspace',
+      label: 'Workspace',
+      items: [
+        {
+          id: 'dashboard',
+          label: 'Dashboard',
+          icon: LayoutDashboard,
+        },
+        {
+          id: 'requests',
+          label: 'Requests',
+          icon: Zap,
+        },
+        {
+          id: 'tasks',
+          label: 'Tasks',
+          icon: CheckSquare,
+        },
+      ],
+    },
+    {
+      id: 'communication',
+      label: 'Communication',
+      items: [
+        {
+          id: 'messages',
+          label: 'Messages',
+          icon: MessageSquare,
+          badge: badges.messages,
+        },
+        {
+          id: 'meetings',
+          label: 'Meetings',
+          icon: Calendar,
+        },
+        {
+          id: 'team',
+          label: 'Team',
+          icon: Users,
+        },
+      ],
+    },
+    {
+      id: 'financial',
+      label: 'Financial',
+      items: [
+        {
+          id: 'invoices',
+          label: 'Invoices',
+          icon: CreditCard,
+          badge: badges.invoices,
+        },
+        {
+          id: 'contracts',
+          label: 'Contracts',
+          icon: FileCheck,
+          badge: badges.contracts,
+        },
+        {
+          id: 'billing',
+          label: 'Billing',
+          icon: CreditCard,
+        },
+      ],
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      items: [
+        {
+          id: 'files',
+          label: 'Files',
+          icon: FolderOpen,
+        },
+        {
+          id: 'notifications',
+          label: 'Notifications',
+          icon: Bell,
+        },
+        {
+          id: 'preferences',
+          label: 'Preferences',
+          icon: Settings,
+        },
+      ],
+    },
+  ];
 
   const navItems: NavItem[] = [
     {
@@ -243,50 +346,83 @@ export default function PortalSidebar({
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-1">
-            {navItems.map((item) => {
-              const active = isActive(item.id);
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
-                  data-tour={`sidebar-${item.id}`}
-                  title={isCollapsed ? item.label : undefined}
-                  className={`
-                    w-full flex items-center gap-3 px-4 py-3 rounded-lg border-3 border-ink font-black uppercase text-sm transition-colors relative active:scale-98
-                    ${isCollapsed ? 'justify-center' : ''}
-                    ${
-                      active
-                        ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
-                        : 'bg-white text-ink hover:bg-matcha/20'
-                    }
-                  `}
-                >
-                  <span className={active ? 'text-white' : 'text-taro'}>
-                    <Icon className="w-5 h-5" strokeWidth={2.5} />
-                  </span>
-                  {!isCollapsed && <span className="flex-1 text-left">{item.label}</span>}
-                  {!isCollapsed && item.badge && item.badge > 0 && (
+          <nav className="flex-1 p-4 space-y-3 overflow-y-auto">
+            {navSections.map((section) => (
+              <div key={section.id} className="space-y-1">
+                {/* Section Header */}
+                {!isCollapsed && (
+                  <button
+                    onClick={() => toggleSection(section.id)}
+                    className="w-full flex items-center justify-between px-2 py-2 text-xs font-black uppercase text-ink/60 hover:text-ink transition-colors"
+                  >
+                    <span>{section.label}</span>
                     <motion.div
-                      className="bg-strawberry text-white text-xs font-black px-2 py-0.5 rounded-full min-w-[20px] text-center border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', damping: 15 }}
+                      animate={{ rotate: expandedSections[section.id] ? 0 : -90 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      {item.badge > 99 ? '99+' : item.badge}
+                      <Icon icon="material-symbols:chevron-down" className="w-5 h-5" />
+                    </motion.div>
+                  </button>
+                )}
+
+                {/* Section Items */}
+                <AnimatePresence>
+                  {(isCollapsed || expandedSections[section.id]) && (
+                    <motion.div
+                      initial={!isCollapsed ? { opacity: 0, height: 0 } : false}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-1"
+                    >
+                      {section.items.map((item) => {
+                        const active = isActive(item.id);
+                        const ItemIcon = item.icon;
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => handleNavClick(item.id)}
+                            data-tour={`sidebar-${item.id}`}
+                            title={isCollapsed ? item.label : undefined}
+                            className={`
+                              w-full flex items-center gap-3 px-4 py-3 rounded-lg border-3 border-ink font-black uppercase text-sm transition-colors relative active:scale-98
+                              ${isCollapsed ? 'justify-center' : ''}
+                              ${
+                                active
+                                  ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
+                                  : 'bg-white text-ink hover:bg-matcha/20'
+                              }
+                            `}
+                          >
+                            <span className={active ? 'text-white' : 'text-taro'}>
+                              <ItemIcon className="w-5 h-5" strokeWidth={2.5} />
+                            </span>
+                            {!isCollapsed && <span className="flex-1 text-left">{item.label}</span>}
+                            {!isCollapsed && item.badge && item.badge > 0 && (
+                              <motion.div
+                                className="bg-strawberry text-white text-xs font-black px-2 py-0.5 rounded-full min-w-[20px] text-center border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ type: 'spring', damping: 15 }}
+                              >
+                                {item.badge > 99 ? '99+' : item.badge}
+                              </motion.div>
+                            )}
+                            {isCollapsed && item.badge && item.badge > 0 && (
+                              <div className="absolute -top-1 -right-1 w-5 h-5 bg-strawberry rounded-full border-2 border-white flex items-center justify-center">
+                                <span className="text-[10px] font-black text-white">
+                                  {item.badge > 9 ? '9+' : item.badge}
+                                </span>
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
                     </motion.div>
                   )}
-                  {isCollapsed && item.badge && item.badge > 0 && (
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-strawberry rounded-full border-2 border-white flex items-center justify-center">
-                      <span className="text-[10px] font-black text-white">
-                        {item.badge > 9 ? '9+' : item.badge}
-                      </span>
-                    </div>
-                  )}
-                </button>
-              );
-            })}
+                </AnimatePresence>
+              </div>
+            ))}
           </nav>
 
           {/* Collapse Toggle - Desktop Only */}

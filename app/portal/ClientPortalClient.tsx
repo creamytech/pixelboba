@@ -32,7 +32,14 @@ import {
   MessageSquare,
   CreditCard,
   FileCheck,
+  Upload,
+  Send,
+  Eye,
+  Plus,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import { Project, User as UserType } from '@/types/portal';
 import { Session } from 'next-auth';
 
@@ -743,13 +750,13 @@ function DashboardView({
               transition={{ duration: 0.5 }}
             >
               <div className="w-20 h-20 bg-gradient-to-br from-taro/20 to-brown-sugar/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-4xl">🎨</span>
+                <Icon icon="material-symbols:palette-outline" className="text-4xl text-taro/60" />
               </div>
               <h3 className="font-display font-black uppercase text-2xl text-ink mb-2">
                 No Active Projects
               </h3>
               <p className="text-ink/60 mb-4 font-bold">
-                Your projects will appear here once we start working together
+                Ready to start? Your projects will appear here once we begin working together!
               </p>
             </motion.div>
           )}
@@ -761,34 +768,228 @@ function DashboardView({
         </div>
       </div>
 
-      {/* Quick Actions Row */}
+      {/* Quick Actions Panel */}
+      <div className="bg-gradient-to-br from-taro/10 to-brown-sugar/10 rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+        <h2 className="font-display font-black uppercase text-xl text-ink mb-4 flex items-center gap-2">
+          <Icon icon="material-symbols:bolt" className="text-2xl text-taro" />
+          Quick Actions
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <QuickActionButton
+            icon={<Upload className="w-5 h-5" />}
+            label="Upload Files"
+            onClick={() => {}}
+          />
+          <QuickActionButton
+            icon={<Send className="w-5 h-5" />}
+            label="Send Message"
+            onClick={() => {}}
+          />
+          <QuickActionButton
+            icon={<Eye className="w-5 h-5" />}
+            label="View Invoice"
+            onClick={() => {}}
+          />
+          <QuickActionButton
+            icon={<Plus className="w-5 h-5" />}
+            label="New Request"
+            onClick={() => {}}
+          />
+        </div>
+      </div>
+
+      {/* Content Preview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <QuickActionCard
-          icon={<MessageSquare className="w-6 h-6" />}
-          title="Messages"
-          description="Chat with your project manager"
-          count={data.unreadMessages}
-          onClick={() => {}}
-          gradient="from-taro to-purple-500"
-        />
-        <QuickActionCard
-          icon={<CreditCard className="w-6 h-6" />}
-          title="Invoices"
-          description="View and pay invoices"
-          count={data.pendingInvoices}
-          onClick={() => {}}
-          gradient="from-thai-tea to-orange-500"
-        />
-        <QuickActionCard
-          icon={<FileCheck className="w-6 h-6" />}
-          title="Contracts"
-          description="Review and sign contracts"
-          count={data.pendingContracts}
-          onClick={() => {}}
-          gradient="from-matcha to-green-500"
-        />
+        <MessagesPreviewCard count={data.unreadMessages} onClick={() => {}} />
+        <InvoicesPreviewCard count={data.pendingInvoices} onClick={() => {}} />
+        <ContractsPreviewCard count={data.pendingContracts} onClick={() => {}} />
       </div>
     </div>
+  );
+}
+
+// Quick Action Button Component
+function QuickActionButton({
+  icon,
+  label,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <motion.button
+      onClick={onClick}
+      className="flex flex-col items-center gap-2 p-4 bg-white rounded-xl border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-taro to-deep-taro flex items-center justify-center text-white">
+        {icon}
+      </div>
+      <span className="text-xs font-bold text-ink text-center uppercase">{label}</span>
+    </motion.button>
+  );
+}
+
+// Messages Preview Card
+function MessagesPreviewCard({ count, onClick }: { count: number; onClick: () => void }) {
+  return (
+    <motion.div
+      className="bg-white border-4 border-ink rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all cursor-pointer"
+      onClick={onClick}
+      whileHover={{ y: -4 }}
+    >
+      <div className="bg-gradient-to-br from-taro to-deep-taro p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Icon icon="material-symbols:chat-bubble-outline" className="text-3xl text-white" />
+            <h3 className="font-display font-black uppercase text-white">Messages</h3>
+          </div>
+          {count > 0 && (
+            <div className="bg-white text-taro font-bold text-sm px-3 py-1 rounded-full">
+              {count}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="p-4">
+        {count > 0 ? (
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brown-sugar to-thai-tea flex items-center justify-center text-white font-bold">
+                PM
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-bold text-ink">Your Project Manager</p>
+                <p className="text-xs text-ink/60 line-clamp-2">
+                  {count === 1 ? 'You have 1 unread message' : `You have ${count} unread messages`}
+                </p>
+                <p className="text-xs text-taro font-bold mt-1">30 minutes ago</p>
+              </div>
+            </div>
+            <button className="w-full py-2 bg-taro/10 text-taro font-bold text-sm rounded-lg hover:bg-taro/20 transition-colors uppercase">
+              View All Messages
+            </button>
+          </div>
+        ) : (
+          <div className="text-center py-4">
+            <Icon
+              icon="material-symbols:check-circle-outline"
+              className="text-4xl text-matcha/60 mx-auto mb-2"
+            />
+            <p className="text-sm font-bold text-ink/60">All caught up!</p>
+            <p className="text-xs text-ink/40">No new messages</p>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+// Invoices Preview Card
+function InvoicesPreviewCard({ count, onClick }: { count: number; onClick: () => void }) {
+  return (
+    <motion.div
+      className="bg-white border-4 border-ink rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all cursor-pointer"
+      onClick={onClick}
+      whileHover={{ y: -4 }}
+    >
+      <div className="bg-gradient-to-br from-thai-tea to-orange-600 p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Icon icon="material-symbols:receipt-long-outline" className="text-3xl text-white" />
+            <h3 className="font-display font-black uppercase text-white">Invoices</h3>
+          </div>
+          {count > 0 && (
+            <div className="bg-white text-thai-tea font-bold text-sm px-3 py-1 rounded-full">
+              {count}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="p-4">
+        {count > 0 ? (
+          <div className="space-y-3">
+            <div className="bg-thai-tea/10 rounded-lg p-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-ink/60 uppercase">Next Payment</span>
+                <span className="text-xs font-bold text-thai-tea uppercase">Due Soon</span>
+              </div>
+              <p className="font-display font-black text-2xl text-ink mb-1">$2,500.00</p>
+              <p className="text-xs text-ink/60 font-bold">
+                {count === 1 ? '1 invoice' : `${count} invoices`} awaiting payment
+              </p>
+            </div>
+            <button className="w-full py-2 bg-thai-tea/10 text-thai-tea font-bold text-sm rounded-lg hover:bg-thai-tea/20 transition-colors uppercase">
+              View & Pay
+            </button>
+          </div>
+        ) : (
+          <div className="text-center py-4">
+            <Icon
+              icon="material-symbols:check-circle-outline"
+              className="text-4xl text-matcha/60 mx-auto mb-2"
+            />
+            <p className="text-sm font-bold text-ink/60">All paid up!</p>
+            <p className="text-xs text-ink/40">No pending invoices</p>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+// Contracts Preview Card
+function ContractsPreviewCard({ count, onClick }: { count: number; onClick: () => void }) {
+  return (
+    <motion.div
+      className="bg-white border-4 border-ink rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:shadow-[6px_6px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all cursor-pointer"
+      onClick={onClick}
+      whileHover={{ y: -4 }}
+    >
+      <div className="bg-gradient-to-br from-matcha to-green-600 p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Icon icon="material-symbols:contract-outline" className="text-3xl text-white" />
+            <h3 className="font-display font-black uppercase text-white">Contracts</h3>
+          </div>
+          {count > 0 && (
+            <div className="bg-white text-matcha font-bold text-sm px-3 py-1 rounded-full">
+              {count}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="p-4">
+        {count > 0 ? (
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 p-2 bg-matcha/10 rounded-lg">
+                <Icon icon="material-symbols:edit-document" className="text-lg text-matcha" />
+                <div className="flex-1">
+                  <p className="text-xs font-bold text-ink">Service Agreement</p>
+                  <p className="text-xs text-ink/60">Awaiting signature</p>
+                </div>
+              </div>
+            </div>
+            <button className="w-full py-2 bg-matcha/10 text-matcha font-bold text-sm rounded-lg hover:bg-matcha/20 transition-colors uppercase">
+              Review & Sign
+            </button>
+          </div>
+        ) : (
+          <div className="text-center py-4">
+            <Icon
+              icon="material-symbols:check-circle-outline"
+              className="text-4xl text-matcha/60 mx-auto mb-2"
+            />
+            <p className="text-sm font-bold text-ink/60">All signed!</p>
+            <p className="text-xs text-ink/40">No pending contracts</p>
+          </div>
+        )}
+      </div>
+    </motion.div>
   );
 }
 

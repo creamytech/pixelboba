@@ -855,6 +855,74 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
   const [saving, setSaving] = useState(false);
   const [subscription, setSubscription] = useState<any>(null);
   const [permissions, setPermissions] = useState<any>(null);
+  const [selectedTier, setSelectedTier] = useState<string>('');
+
+  // Define tier permissions
+  const tierPermissions = {
+    MATCHA: {
+      canAccessDashboard: true,
+      canAccessProjects: true,
+      canAccessTasks: true,
+      canAccessMessages: true,
+      canAccessFiles: true,
+      canAccessInvoices: true,
+      canAccessContracts: true,
+      canUploadFiles: true,
+      canSendMessages: true,
+      canViewAnalytics: false,
+      canAccessMeetings: false,
+      canAccessTeam: false,
+      canAccessRequests: false,
+      canAccessBilling: false,
+      canCreateTasks: false,
+      canEditTasks: false,
+      canDeleteTasks: false,
+      canInviteTeam: false,
+      canManageProjects: false,
+    },
+    TARO: {
+      canAccessDashboard: true,
+      canAccessProjects: true,
+      canAccessTasks: true,
+      canAccessMessages: true,
+      canAccessFiles: true,
+      canAccessInvoices: true,
+      canAccessContracts: true,
+      canAccessMeetings: true,
+      canAccessTeam: true,
+      canAccessRequests: true,
+      canAccessBilling: true,
+      canUploadFiles: true,
+      canSendMessages: true,
+      canCreateTasks: true,
+      canEditTasks: true,
+      canViewAnalytics: true,
+      canDeleteTasks: false,
+      canInviteTeam: false,
+      canManageProjects: false,
+    },
+    THAI_TEA: {
+      canAccessDashboard: true,
+      canAccessProjects: true,
+      canAccessTasks: true,
+      canAccessMessages: true,
+      canAccessFiles: true,
+      canAccessInvoices: true,
+      canAccessContracts: true,
+      canAccessMeetings: true,
+      canAccessTeam: true,
+      canAccessRequests: true,
+      canAccessBilling: true,
+      canUploadFiles: true,
+      canSendMessages: true,
+      canCreateTasks: true,
+      canEditTasks: true,
+      canDeleteTasks: true,
+      canInviteTeam: true,
+      canViewAnalytics: true,
+      canManageProjects: true,
+    },
+  };
 
   useEffect(() => {
     fetchAccessData();
@@ -888,6 +956,13 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
       ...prev,
       [field]: !prev[field],
     }));
+  };
+
+  const handleTierChange = (tier: string) => {
+    setSelectedTier(tier);
+    if (tier && tierPermissions[tier as keyof typeof tierPermissions]) {
+      setPermissions(tierPermissions[tier as keyof typeof tierPermissions]);
+    }
   };
 
   const handleSavePermissions = async () => {
@@ -953,11 +1028,60 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
 
   return (
     <div className="space-y-6">
+      {/* Boba Club Tier Selector */}
+      <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
+        <h3 className="font-display text-xl font-black text-ink mb-6 uppercase flex items-center gap-2">
+          <Icon icon="game-icons:boba" className="w-6 h-6 text-taro" />
+          Assign Boba Club Tier
+        </h3>
+        <p className="text-sm text-ink/60 font-bold mb-4">
+          Select a tier to automatically set permissions based on the plan features
+        </p>
+        <div className="grid md:grid-cols-3 gap-4">
+          <button
+            onClick={() => handleTierChange('MATCHA')}
+            className={`p-6 rounded-xl border-4 border-ink transition-all ${
+              selectedTier === 'MATCHA'
+                ? 'bg-matcha text-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] scale-105'
+                : 'bg-white hover:bg-matcha/10 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
+            }`}
+          >
+            <Icon icon="game-icons:boba" className="w-8 h-8 mx-auto mb-2" />
+            <div className="font-display font-black uppercase text-lg mb-1">Matcha</div>
+            <div className="text-xs opacity-80">$999/month</div>
+          </button>
+          <button
+            onClick={() => handleTierChange('TARO')}
+            className={`p-6 rounded-xl border-4 border-ink transition-all ${
+              selectedTier === 'TARO'
+                ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] scale-105'
+                : 'bg-white hover:bg-taro/10 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
+            }`}
+          >
+            <Icon icon="game-icons:boba" className="w-8 h-8 mx-auto mb-2" />
+            <div className="font-display font-black uppercase text-lg mb-1">Taro</div>
+            <div className="text-xs opacity-80">$1,899/month</div>
+          </button>
+          <button
+            onClick={() => handleTierChange('THAI_TEA')}
+            className={`p-6 rounded-xl border-4 border-ink transition-all ${
+              selectedTier === 'THAI_TEA'
+                ? 'bg-thai-tea text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] scale-105'
+                : 'bg-white hover:bg-thai-tea/10 hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
+            }`}
+          >
+            <Icon icon="game-icons:boba" className="w-8 h-8 mx-auto mb-2" />
+            <div className="font-display font-black uppercase text-lg mb-1">Thai Tea</div>
+            <div className="text-xs opacity-80">$2,799/month</div>
+          </button>
+        </div>
+      </div>
+
       {/* Subscription Info */}
       <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
         <h3 className="font-display text-xl font-black text-ink mb-6 uppercase flex items-center gap-2">
           <Icon icon="game-icons:boba" className="w-6 h-6 text-taro" />
-          Boba Club Subscription
+          Current Subscription
         </h3>
 
         {subscription ? (
