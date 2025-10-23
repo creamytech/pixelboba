@@ -40,7 +40,10 @@
       "Bash(del nul)",
       "Bash(taskkill:*)",
       "Bash(npm uninstall:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(git remote:*)",
+      "Read(//c/Users/benja/Documents/**)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []
