@@ -110,10 +110,28 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
           icon: <Users className="w-5 h-5" strokeWidth={2.5} />,
         },
         {
+          label: 'Requests',
+          href: '/admin',
+          id: 'requests',
+          icon: <Icon icon="ph:clipboard-text-duotone" className="w-5 h-5" />,
+        },
+        {
+          label: 'Meetings',
+          href: '/admin',
+          id: 'meetings',
+          icon: <Icon icon="ph:calendar-check-duotone" className="w-5 h-5" />,
+        },
+        {
           label: 'Messages',
           href: '/admin',
           id: 'messages',
           icon: <MessageSquare className="w-5 h-5" strokeWidth={2.5} />,
+        },
+        {
+          label: 'Notifications',
+          href: '/admin',
+          id: 'notifications',
+          icon: <Icon icon="ph:bell-duotone" className="w-5 h-5" />,
         },
         {
           label: 'Invites',

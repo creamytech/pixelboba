@@ -24,6 +24,9 @@ import InviteManager from '@/components/admin/InviteManager';
 import AdminMessageCenter from '@/components/admin/AdminMessageCenter';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import AnalyticsDashboard from '@/components/admin/AnalyticsDashboard';
+import RequestManager from '@/components/admin/RequestManager';
+import MeetingManager from '@/components/admin/MeetingManager';
+import NotificationSender from '@/components/admin/NotificationSender';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Session } from 'next-auth';
 
@@ -124,8 +127,14 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         return <ProjectManager />;
       case 'clients':
         return <ClientManager />;
+      case 'requests':
+        return <RequestManager />;
+      case 'meetings':
+        return <MeetingManager />;
       case 'messages':
         return <AdminMessageCenter />;
+      case 'notifications':
+        return <NotificationSender />;
       case 'contracts':
         return <ContractManager />;
       case 'invoices':
