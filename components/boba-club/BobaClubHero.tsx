@@ -86,7 +86,7 @@ export default function BobaClubHero() {
           transition={{ duration: 0.4, delay: 0.25, ease: 'easeOut' }}
         >
           <span className="text-2xl sm:text-3xl md:text-4xl font-black text-ink">
-            Starting at $1,995
+            Starting at $1,500
           </span>
           <span className="text-base sm:text-lg text-ink/60 font-bold">/month</span>
         </motion.div>
@@ -137,7 +137,7 @@ export default function BobaClubHero() {
         >
           <div className="flex items-center gap-2 bg-white px-4 sm:px-5 py-2 sm:py-3 rounded-full border-2 border-ink/10 min-h-[44px]">
             <Icon icon="ph:lightning-duotone" className="w-5 h-5 sm:w-6 sm:h-6 text-matcha" />
-            <span className="font-bold text-sm sm:text-base text-ink">24-48 Hour Delivery</span>
+            <span className="font-bold text-sm sm:text-base text-ink">Fast Delivery</span>
           </div>
           <div className="flex items-center gap-2 bg-white px-4 sm:px-5 py-2 sm:py-3 rounded-full border-2 border-ink/10 min-h-[44px]">
             <Icon

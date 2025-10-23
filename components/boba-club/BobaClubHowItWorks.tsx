@@ -19,7 +19,7 @@ const steps = [
     number: '03',
     icon: 'ph:lightning-duotone',
     title: 'Receive',
-    description: 'Get beautiful work in 1-3 days.',
+    description: 'Get beautiful work delivered fast.',
   },
   {
     number: '04',

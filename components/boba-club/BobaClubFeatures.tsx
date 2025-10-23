@@ -14,7 +14,7 @@ const includedFeatures = [
     text: 'Unlimited revisions until perfect',
     color: 'text-deep-taro',
   },
-  { icon: 'ph:clock-duotone', text: 'Get your work in 1-3 days', color: 'text-matcha' },
+  { icon: 'ph:clock-duotone', text: 'Fast turnaround times', color: 'text-matcha' },
   { icon: 'ph:globe-duotone', text: 'Custom websites built from scratch', color: 'text-deep-taro' },
   { icon: 'ph:storefront-duotone', text: 'Online stores & e-commerce sites', color: 'text-matcha' },
   {

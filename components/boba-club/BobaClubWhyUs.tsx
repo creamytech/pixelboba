@@ -19,7 +19,7 @@ const highlights = [
   {
     icon: 'ph:lightning-duotone',
     title: 'Lightning Fast Delivery',
-    description: 'Receive new work in 24-48 hours on average.',
+    description: 'Fast turnaround based on your tier, from 24 hours to 3-4 days.',
     color: 'text-matcha',
   },
   {
