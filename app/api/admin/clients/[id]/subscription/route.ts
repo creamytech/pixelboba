@@ -49,79 +49,63 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    // For admin-granted subscriptions, we'll create a database-only subscription
+    // without involving Stripe payment processing at all
     let stripeCustomerId = user.subscription?.stripeCustomerId;
 
-    // Create Stripe customer if doesn't exist
+    // Create Stripe customer if doesn't exist (for future use)
     if (!stripeCustomerId) {
-      const customer = await stripe.customers.create({
-        email: user.email || undefined,
-        name: user.name || undefined,
-        metadata: {
-          userId: user.id,
-        },
-      });
-      stripeCustomerId = customer.id;
+      try {
+        const customer = await stripe.customers.create({
+          email: user.email || undefined,
+          name: user.name || undefined,
+          metadata: {
+            userId: user.id,
+          },
+        });
+        stripeCustomerId = customer.id;
+      } catch (error) {
+        console.error('Error creating Stripe customer:', error);
+        // Continue without Stripe customer - subscription will be database-only
+        stripeCustomerId = `admin_grant_${Date.now()}`;
+      }
     }
 
-    // If user already has a subscription, cancel it first
-    if (user.subscription?.stripeSubscriptionId) {
+    // Cancel existing Stripe subscription if it exists
+    if (
+      user.subscription?.stripeSubscriptionId &&
+      !user.subscription.stripeSubscriptionId.startsWith('admin_grant_')
+    ) {
       try {
         await stripe.subscriptions.cancel(user.subscription.stripeSubscriptionId);
       } catch (error) {
         console.error('Error canceling existing subscription:', error);
-        // Continue even if cancel fails (subscription might already be canceled)
       }
     }
 
-    // Create new subscription in Stripe (admin-granted, 100% discount - completely free)
-    const stripeSubscription = await stripe.subscriptions.create({
-      customer: stripeCustomerId,
-      items: [{ price: priceId }],
-      // Apply 100% discount for admin-granted subscriptions
-      discounts: [
-        {
-          coupon: await stripe.coupons
-            .create({
-              percent_off: 100,
-              duration: 'forever',
-              name: 'Admin Granted Subscription',
-            })
-            .then((c) => c.id)
-            .catch(() => {
-              // If coupon creation fails, try to find existing 100% coupon
-              return 'ADMIN_COMP';
-            }),
-        },
-      ],
-      metadata: {
-        userId: user.id,
-        grantedByAdmin: 'true',
-        grantedAt: new Date().toISOString(),
-      },
-    });
-
-    // Create or update subscription in database
-    const currentPeriodStart = new Date((stripeSubscription as any).current_period_start * 1000);
-    const currentPeriodEnd = new Date((stripeSubscription as any).current_period_end * 1000);
+    // Create subscription directly in database (no Stripe subscription needed for admin grants)
+    const now = new Date();
+    const oneMonthFromNow = new Date(now);
+    oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
 
     const subscription = await prisma.subscription.upsert({
       where: { userId: clientId },
       create: {
         userId: clientId,
         stripeCustomerId,
-        stripeSubscriptionId: stripeSubscription.id,
+        stripeSubscriptionId: `admin_grant_${Date.now()}`, // Fake subscription ID for admin grants
         stripePriceId: priceId,
-        status: 'ACTIVE', // Admin-granted subscriptions are immediately active
-        currentPeriodStart,
-        currentPeriodEnd,
+        status: 'ACTIVE',
+        currentPeriodStart: now,
+        currentPeriodEnd: oneMonthFromNow,
         cancelAtPeriodEnd: false,
       },
       update: {
-        stripeSubscriptionId: stripeSubscription.id,
+        stripeSubscriptionId: `admin_grant_${Date.now()}`,
         stripePriceId: priceId,
         status: 'ACTIVE',
-        currentPeriodStart,
-        currentPeriodEnd,
+        currentPeriodStart: now,
+        currentPeriodEnd: oneMonthFromNow,
         cancelAtPeriodEnd: false,
         canceledAt: null,
         pausedAt: null,
