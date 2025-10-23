@@ -168,6 +168,60 @@ model User {
   managedOrganizations Organization[] @relation("DedicatedManager")
   teamInvites       TeamInvite[]   @relation("TeamInviteCreator")
   meetings          Meeting[]
+  permissions       UserPermissions?
+  projectMemberships ProjectMember[]
+}
+
+// User permissions for fine-grained access control
+model UserPermissions {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Tab access
+  canAccessDashboard  Boolean @default(true)
+  canAccessProjects   Boolean @default(true)
+  canAccessTasks      Boolean @default(true)
+  canAccessMessages   Boolean @default(true)
+  canAccessFiles      Boolean @default(true)
+  canAccessInvoices   Boolean @default(true)
+  canAccessContracts  Boolean @default(true)
+  canAccessMeetings   Boolean @default(true)
+  canAccessTeam       Boolean @default(false) // Only for multi-user plans
+  canAccessRequests   Boolean @default(true)
+  canAccessBilling    Boolean @default(false) // Usually only account owner
+
+  // Feature permissions
+  canUploadFiles      Boolean @default(true)
+  canCreateTasks      Boolean @default(false) // Usually admin only
+  canEditTasks        Boolean @default(true)
+  canDeleteTasks      Boolean @default(false)
+  canSendMessages     Boolean @default(true)
+  canInviteTeam       Boolean @default(false)
+  canViewAnalytics    Boolean @default(true)
+  canManageProjects   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Project team members with specific access
+model ProjectMember {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  role      String   @default("viewer") // viewer, collaborator, manager
+  canEdit   Boolean  @default(false)
+  canComment Boolean @default(true)
+
+  addedAt   DateTime @default(now())
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
 }
 
 model Project {
@@ -185,7 +239,7 @@ model Project {
 
   // Relations
   clientId   String
-  client     User        @relation(fields: [clientId], references: [id])
+  client     User            @relation(fields: [clientId], references: [id])
   messages   Message[]
   files      File[]
   contracts  Contract[]
@@ -194,6 +248,7 @@ model Project {
   activities Activity[]
   tasks      Task[]
   requests   Request[]
+  members    ProjectMember[]
 }
 
 model Milestone {
