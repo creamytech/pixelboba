@@ -36,18 +36,18 @@ export default function DashboardHeader({ userName, notificationCount = 0 }: Das
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex items-center gap-2 lg:gap-3 mb-2"
           >
             <motion.div
               animate={{ rotate: [0, 14, -8, 14, 0] }}
               transition={{ duration: 1.5, delay: 0.5 }}
             >
-              <Icon icon={icon} className="w-8 h-8 lg:w-10 lg:h-10 text-deep-taro flex-shrink-0" />
+              <Icon icon={icon} className="w-10 h-10 lg:w-12 lg:h-12 text-taro flex-shrink-0" />
             </motion.div>
-            <h1 className="font-display font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-ink truncate">
+            <h1 className="font-display font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-ink truncate">
               {greeting},{' '}
-              <span className="bg-gradient-to-r from-taro via-brown-sugar to-taro bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-taro via-deep-taro to-taro bg-clip-text text-transparent">
                 {userName}
               </span>
             </h1>
@@ -55,8 +55,8 @@ export default function DashboardHeader({ userName, notificationCount = 0 }: Das
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-ink/60 font-body text-xs sm:text-sm md:text-base"
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="text-ink/60 font-bold text-sm sm:text-base md:text-lg"
           >
             Ready to make some magic happen today? ✨
           </motion.p>
@@ -66,18 +66,16 @@ export default function DashboardHeader({ userName, notificationCount = 0 }: Das
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
           className="relative flex-shrink-0"
         >
-          <button className="p-3 bg-white/70 backdrop-blur-sm border-2 border-brown-sugar/10 rounded-2xl hover:bg-white/90 transition-all shadow-sm hover:shadow-md">
-            <Bell className="w-5 h-5 text-taro" />
+          <button className="p-3 lg:p-4 bg-white rounded-full border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] active:shadow-[1px_1px_0px_0px_rgba(58,0,29,1)] active:translate-x-[2px] active:translate-y-[2px] transition-all">
+            <Bell className="w-6 h-6 text-taro" strokeWidth={2.5} />
             {notificationCount > 0 && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg"
+                className="absolute -top-1 -right-1 min-w-[22px] h-[22px] px-1.5 bg-strawberry rounded-full border-2 border-ink flex items-center justify-center text-white text-xs font-black shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
               >
                 {notificationCount > 9 ? '9+' : notificationCount}
               </motion.div>
