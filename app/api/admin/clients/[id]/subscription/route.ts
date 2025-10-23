@@ -73,13 +73,26 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       }
     }
 
-    // Create new subscription in Stripe (admin-granted, no payment required)
+    // Create new subscription in Stripe (admin-granted, 100% discount - completely free)
     const stripeSubscription = await stripe.subscriptions.create({
       customer: stripeCustomerId,
       items: [{ price: priceId }],
-      // Skip payment for admin-granted subscriptions
-      collection_method: 'send_invoice',
-      days_until_due: 0,
+      // Apply 100% discount for admin-granted subscriptions
+      discounts: [
+        {
+          coupon: await stripe.coupons
+            .create({
+              percent_off: 100,
+              duration: 'forever',
+              name: 'Admin Granted Subscription',
+            })
+            .then((c) => c.id)
+            .catch(() => {
+              // If coupon creation fails, try to find existing 100% coupon
+              return 'ADMIN_COMP';
+            }),
+        },
+      ],
       metadata: {
         userId: user.id,
         grantedByAdmin: 'true',
