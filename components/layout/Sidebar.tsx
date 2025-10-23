@@ -45,6 +45,12 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isDesktopHidden, setIsDesktopHidden] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    workspace: true,
+    clients: true,
+    finance: true,
+    system: true,
+  });
   const pathname = usePathname();
 
   useEffect(() => {
@@ -62,68 +68,99 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
     };
   }, [isMobileOpen]);
 
-  const navItems: NavItem[] = [
+  const navSections = [
     {
-      label: 'Overview',
-      href: '/admin',
-      id: 'overview',
-      icon: <LayoutDashboard className="w-5 h-5" strokeWidth={2.5} />,
+      id: 'workspace',
+      label: 'Workspace',
+      items: [
+        {
+          label: 'Overview',
+          href: '/admin',
+          id: 'overview',
+          icon: <LayoutDashboard className="w-5 h-5" strokeWidth={2.5} />,
+        },
+        {
+          label: 'Tasks',
+          href: '/admin',
+          id: 'tasks',
+          icon: <CheckSquare className="w-5 h-5" strokeWidth={2.5} />,
+        },
+        {
+          label: 'Projects',
+          href: '/admin',
+          id: 'projects',
+          icon: <FolderKanban className="w-5 h-5" strokeWidth={2.5} />,
+        },
+        {
+          label: 'Analytics',
+          href: '/admin',
+          id: 'analytics',
+          icon: <BarChart3 className="w-5 h-5" strokeWidth={2.5} />,
+        },
+      ],
     },
     {
-      label: 'Tasks',
-      href: '/admin',
-      id: 'tasks',
-      icon: <CheckSquare className="w-5 h-5" strokeWidth={2.5} />,
-    },
-    {
-      label: 'Projects',
-      href: '/admin',
-      id: 'projects',
-      icon: <FolderKanban className="w-5 h-5" strokeWidth={2.5} />,
-    },
-    {
-      label: 'Clients',
-      href: '/admin',
       id: 'clients',
-      icon: <Users className="w-5 h-5" strokeWidth={2.5} />,
+      label: 'Clients & Communication',
+      items: [
+        {
+          label: 'Clients',
+          href: '/admin',
+          id: 'clients',
+          icon: <Users className="w-5 h-5" strokeWidth={2.5} />,
+        },
+        {
+          label: 'Messages',
+          href: '/admin',
+          id: 'messages',
+          icon: <MessageSquare className="w-5 h-5" strokeWidth={2.5} />,
+        },
+        {
+          label: 'Invites',
+          href: '/admin',
+          id: 'invites',
+          icon: <Sparkles className="w-5 h-5" strokeWidth={2.5} />,
+        },
+      ],
     },
     {
-      label: 'Messages',
-      href: '/admin',
-      id: 'messages',
-      icon: <MessageSquare className="w-5 h-5" strokeWidth={2.5} />,
+      id: 'finance',
+      label: 'Finance',
+      items: [
+        {
+          label: 'Invoices',
+          href: '/admin',
+          id: 'invoices',
+          icon: <TrendingUp className="w-5 h-5" strokeWidth={2.5} />,
+        },
+        {
+          label: 'Contracts',
+          href: '/admin',
+          id: 'contracts',
+          icon: <FileText className="w-5 h-5" strokeWidth={2.5} />,
+        },
+      ],
     },
     {
-      label: 'Contracts',
-      href: '/admin',
-      id: 'contracts',
-      icon: <FileText className="w-5 h-5" strokeWidth={2.5} />,
-    },
-    {
-      label: 'Invoices',
-      href: '/admin',
-      id: 'invoices',
-      icon: <TrendingUp className="w-5 h-5" strokeWidth={2.5} />,
-    },
-    {
-      label: 'Analytics',
-      href: '/admin',
-      id: 'analytics',
-      icon: <BarChart3 className="w-5 h-5" strokeWidth={2.5} />,
-    },
-    {
-      label: 'Invites',
-      href: '/admin',
-      id: 'invites',
-      icon: <Sparkles className="w-5 h-5" strokeWidth={2.5} />,
-    },
-    {
-      label: 'Settings',
-      href: '/admin',
-      id: 'settings',
-      icon: <Settings className="w-5 h-5" strokeWidth={2.5} />,
+      id: 'system',
+      label: 'System',
+      items: [
+        {
+          label: 'Settings',
+          href: '/admin',
+          id: 'settings',
+          icon: <Settings className="w-5 h-5" strokeWidth={2.5} />,
+        },
+      ],
     },
   ];
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId],
+    }));
+  };
 
   const isActive = (item: NavItem) => {
     if (onTabChange && activeTab) {
@@ -242,29 +279,62 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-1">
-            {navItems.map((item) => {
-              const active = isActive(item);
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item)}
-                  title={isCollapsed ? item.label : undefined}
-                  className={`
-                    w-full flex items-center gap-3 px-4 py-3 rounded-lg border-3 border-ink font-black uppercase text-sm transition-colors active:scale-98
-                    ${isCollapsed ? 'justify-center' : ''}
-                    ${
-                      active
-                        ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
-                        : 'bg-white text-ink hover:bg-matcha/20'
-                    }
-                  `}
-                >
-                  <span className={active ? 'text-white' : 'text-taro'}>{item.icon}</span>
-                  {!isCollapsed && <span>{item.label}</span>}
-                </button>
-              );
-            })}
+          <nav className="flex-1 p-4 space-y-3 overflow-y-auto">
+            {navSections.map((section) => (
+              <div key={section.id} className="space-y-1">
+                {/* Section Header */}
+                {!isCollapsed && (
+                  <button
+                    onClick={() => toggleSection(section.id)}
+                    className="w-full flex items-center justify-between px-2 py-2 text-xs font-black uppercase text-ink/60 hover:text-ink transition-colors"
+                  >
+                    <span>{section.label}</span>
+                    <motion.div
+                      animate={{ rotate: expandedSections[section.id] ? 0 : -90 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Icon icon="material-symbols:chevron-down" className="w-4 h-4" />
+                    </motion.div>
+                  </button>
+                )}
+
+                {/* Section Items */}
+                <AnimatePresence>
+                  {(isCollapsed || expandedSections[section.id]) && (
+                    <motion.div
+                      initial={!isCollapsed ? { height: 0, opacity: 0 } : false}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-1"
+                    >
+                      {section.items.map((item) => {
+                        const active = isActive(item);
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => handleNavClick(item)}
+                            title={isCollapsed ? item.label : undefined}
+                            className={`
+                              w-full flex items-center gap-3 px-4 py-3 rounded-lg border-3 border-ink font-black uppercase text-sm transition-colors active:scale-98
+                              ${isCollapsed ? 'justify-center' : ''}
+                              ${
+                                active
+                                  ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
+                                  : 'bg-white text-ink hover:bg-matcha/20'
+                              }
+                            `}
+                          >
+                            <span className={active ? 'text-white' : 'text-taro'}>{item.icon}</span>
+                            {!isCollapsed && <span>{item.label}</span>}
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
           </nav>
 
           {/* Collapse Toggle - Desktop Only */}

@@ -80,7 +80,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     const body = await request.json();
-    const { name, description, status, progress, deadline } = body;
+    const { name, description, status, progress, deadline, websiteUrl } = body;
 
     try {
       const { prisma } = await import('@/lib/prisma');
@@ -105,6 +105,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
           ...(deadline !== undefined && {
             deadline: deadline ? new Date(deadline) : null,
           }),
+          ...(websiteUrl !== undefined && { websiteUrl }),
           ...(status === 'COMPLETED' &&
             !existingProject.completedAt && {
               completedAt: new Date(),
