@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd pixelboba && npm run build",
+  "outputDirectory": "pixelboba/.next",
+  "installCommand": "cd pixelboba && npm install",
+  "devCommand": "cd pixelboba && npm run dev",
+  "framework": "nextjs",
+  "rootDirectory": "pixelboba"
+}
