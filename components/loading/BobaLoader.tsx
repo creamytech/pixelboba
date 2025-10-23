@@ -1,142 +1,123 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface BobaLoaderProps {
   isVisible: boolean;
 }
 
 export default function BobaLoader({ isVisible }: BobaLoaderProps) {
-  const pearls = [
-    { id: 1, color: '#A78BFA', size: 20, delay: 0 },
-    { id: 2, color: '#84CC16', size: 16, delay: 0.2 },
-    { id: 3, color: '#D97706', size: 18, delay: 0.4 },
-    { id: 4, color: '#F5E9DA', size: 14, delay: 0.6 },
-    { id: 5, color: '#A78BFA', size: 22, delay: 0.8 },
-  ];
-
   if (!isVisible) return null;
 
   return (
     <motion.div
-      className="fixed inset-0 bg-background z-50 flex items-center justify-center"
+      className="fixed inset-0 bg-cream z-50 flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.2 }}
     >
-      <div className="relative">
-        {/* Main loading container */}
+      <div className="text-center">
+        {/* Animated bouncing cat with bold Pomegranate styling */}
         <motion.div
-          className="flex flex-col items-center"
+          className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-8"
           initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          animate={{
+            scale: [0.8, 1, 0.95, 1],
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.6,
+            ease: 'easeOut',
+          }}
         >
-          {/* Boba cup outline */}
-          <div className="relative w-24 h-32 mb-4">
-            {/* Cup */}
-            <div className="absolute bottom-0 w-24 h-28 bg-white/20 backdrop-blur-sm border-2 border-taro/30 rounded-b-3xl rounded-t-lg">
-              {/* Liquid */}
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-brown-sugar/40 to-milk-tea/40 rounded-b-3xl"
-                initial={{ height: '20%' }}
-                animate={{ height: '70%' }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                  ease: 'easeInOut',
-                }}
-              />
-
-              {/* Floating pearls inside cup */}
-              {pearls.map((pearl) => (
-                <motion.div
-                  key={pearl.id}
-                  className="absolute rounded-full"
-                  style={{
-                    backgroundColor: pearl.color,
-                    width: pearl.size,
-                    height: pearl.size,
-                    left: `${20 + pearl.id * 10}%`,
-                    bottom: '10%',
-                  }}
-                  animate={{
-                    y: [-5, -25, -5],
-                    x: [-2, 2, -2],
-                    scale: [1, 1.1, 1],
-                    opacity: [0.7, 1, 0.7],
-                  }}
-                  transition={{
-                    duration: 2 + pearl.delay,
-                    repeat: Infinity,
-                    delay: pearl.delay,
-                    ease: 'easeInOut',
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Straw */}
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-2 h-8 bg-taro/40 rounded-full" />
-            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-1 h-4 bg-taro/60 rounded-full" />
-          </div>
-
-          {/* Loading text */}
+          {/* Background blob with hard shadow */}
           <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <h3 className="font-display text-lg font-semibold text-ink mb-2">
-              brewing something sweet...
-            </h3>
+            className="absolute inset-0 bg-gradient-to-br from-taro to-deep-taro rounded-full border-4 sm:border-[5px] border-ink shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] sm:shadow-[12px_12px_0px_0px_rgba(58,0,29,1)]"
+            animate={{
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
 
-            {/* Animated dots */}
-            <div className="flex justify-center space-x-1">
-              {[...Array(3)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="w-2 h-2 bg-taro rounded-full"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    delay: i * 0.2,
-                    ease: 'easeInOut',
-                  }}
-                />
-              ))}
-            </div>
+          {/* Cat image */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center"
+            animate={{
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          >
+            <Image
+              src="/01.svg"
+              alt="Loading..."
+              width={80}
+              height={80}
+              className="w-16 h-16 sm:w-20 sm:h-20"
+              priority
+            />
           </motion.div>
         </motion.div>
 
-        {/* Ambient floating pearls */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(8)].map((_, i) => (
+        {/* Loading text with dots */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h2 className="font-display text-2xl sm:text-3xl font-black text-ink mb-3">
+            Brewing Something Special
+          </h2>
+
+          {/* Animated dots */}
+          <div className="flex justify-center gap-2">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                className="w-3 h-3 sm:w-4 sm:h-4 bg-matcha rounded-full border-2 border-ink"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  y: [0, -8, 0],
+                }}
+                transition={{
+                  duration: 0.8,
+                  repeat: Infinity,
+                  delay: i * 0.15,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Decorative boba pearls floating around */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-3 h-3 rounded-full"
+              className="absolute w-4 h-4 sm:w-6 sm:h-6 bg-ink rounded-full border-2 border-cream opacity-20"
               style={{
-                backgroundColor: pearls[i % pearls.length]?.color || '#A78BFA',
-                left: `${Math.random() * 300}px`,
-                top: `${Math.random() * 200}px`,
+                left: `${15 + i * 15}%`,
+                top: `${20 + (i % 3) * 20}%`,
               }}
               animate={{
-                y: [0, -30, 0],
-                x: [0, Math.random() * 20 - 10, 0],
-                opacity: [0.2, 0.6, 0.2],
-                scale: [0.5, 1, 0.5],
+                y: [0, -20, 0],
+                x: [0, 10, 0],
+                opacity: [0.1, 0.3, 0.1],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: 3 + i * 0.5,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: i * 0.3,
                 ease: 'easeInOut',
               }}
             />
