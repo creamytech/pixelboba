@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
+import { Icon } from '@iconify/react';
 import {
   LayoutDashboard,
   CheckSquare,
@@ -13,9 +13,7 @@ import {
   FolderOpen,
   Bell,
   Settings,
-  ChevronLeft,
   LogOut,
-  Sparkles,
   Menu,
   X,
   Users,
@@ -39,6 +37,13 @@ interface PortalSidebarProps {
   onLogout?: () => void;
 }
 
+interface NavItem {
+  id: string;
+  label: string;
+  icon: React.ComponentType<any>;
+  badge?: number;
+}
+
 export default function PortalSidebar({
   user,
   activeTab,
@@ -46,15 +51,12 @@ export default function PortalSidebar({
   badges,
   onLogout,
 }: PortalSidebarProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  // Close mobile menu when tab changes
   useEffect(() => {
     setIsMobileOpen(false);
   }, [activeTab]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileOpen) {
       document.body.style.overflow = 'hidden';
@@ -66,7 +68,7 @@ export default function PortalSidebar({
     };
   }, [isMobileOpen]);
 
-  const navItems = [
+  const navItems: NavItem[] = [
     {
       id: 'dashboard',
       label: 'Dashboard',
@@ -134,19 +136,24 @@ export default function PortalSidebar({
 
   const isActive = (id: string) => activeTab === id;
 
+  const handleNavClick = (id: string) => {
+    onTabChange(id);
+    setIsMobileOpen(false);
+  };
+
   return (
     <>
       {/* Mobile Menu Button */}
       <motion.button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-[60] w-12 h-12 bg-white/90 backdrop-blur-sm border-2 border-brown-sugar/20 rounded-2xl flex items-center justify-center shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-[60] w-12 h-12 bg-white border-4 border-ink rounded-xl flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
         {isMobileOpen ? (
-          <X className="w-6 h-6 text-taro" />
+          <X className="w-6 h-6 text-ink" strokeWidth={2.5} />
         ) : (
-          <Menu className="w-6 h-6 text-taro" />
+          <Menu className="w-6 h-6 text-ink" strokeWidth={2.5} />
         )}
       </motion.button>
 
@@ -157,8 +164,7 @@ export default function PortalSidebar({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden fixed inset-0 bg-ink/20 backdrop-blur-sm z-40"
+            className="lg:hidden fixed inset-0 bg-ink/40 backdrop-blur-sm z-40"
             onClick={() => setIsMobileOpen(false)}
           />
         )}
@@ -166,244 +172,115 @@ export default function PortalSidebar({
 
       {/* Sidebar */}
       <motion.aside
-        className={`
-          fixed left-0 top-0 h-screen bg-gradient-to-b from-milk-tea/20 via-white to-taro/10 border-r-2 border-brown-sugar/10 backdrop-blur-xl z-50 overflow-visible
-          ${isMobileOpen ? 'shadow-2xl' : ''}
-        `}
-        animate={{ width: isCollapsed ? '80px' : '280px' }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        style={{
-          transform:
-            !isMobileOpen && typeof window !== 'undefined' && window.innerWidth < 1024
-              ? 'translateX(-100%)'
-              : undefined,
+        initial={false}
+        animate={{
+          x:
+            isMobileOpen || (typeof window !== 'undefined' && window.innerWidth >= 1024) ? 0 : -320,
         }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+        className="fixed left-0 top-0 h-screen w-[280px] bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden lg:translate-x-0"
       >
-        <div className="flex flex-col h-full relative overflow-x-visible overflow-y-hidden">
-          {/* Floating Bubble Decorations */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
-              className="absolute w-32 h-32 bg-taro/5 rounded-full blur-2xl"
-              animate={{
-                y: [0, -20, 0],
-                x: [0, 10, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{ top: '10%', left: '10%' }}
-            />
-            <motion.div
-              className="absolute w-24 h-24 bg-brown-sugar/5 rounded-full blur-2xl"
-              animate={{
-                y: [0, 20, 0],
-                x: [0, -10, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 1,
-              }}
-              style={{ bottom: '20%', right: '10%' }}
-            />
-          </div>
-
+        <div className="flex flex-col h-full">
           {/* Logo Area */}
-          <div className="relative p-6 border-b border-brown-sugar/10">
+          <div className="p-6 border-b-4 border-ink bg-white">
             <Link href="/portal" className="block">
               <motion.div
                 className="flex items-center gap-3"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="relative w-10 h-10">
-                  <Image
-                    src="/Pixel_Boba_Icon_PNG.png"
-                    alt="Pixel Boba"
-                    width={40}
-                    height={40}
-                    className="rounded-2xl"
-                  />
+                <div className="w-12 h-12 bg-gradient-to-br from-taro to-deep-taro rounded-xl border-3 border-ink flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]">
+                  <Icon icon="game-icons:boba" className="w-7 h-7 text-white" />
                 </div>
-                <AnimatePresence>
-                  {!isCollapsed && (
-                    <motion.div
-                      initial={{ opacity: 0, width: 0 }}
-                      animate={{ opacity: 1, width: 'auto' }}
-                      exit={{ opacity: 0, width: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <h1 className="font-display font-bold text-lg text-ink">Client Portal</h1>
-                      <p className="text-xs text-ink/60">Pixel Boba</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div>
+                  <h1 className="font-black text-lg uppercase text-ink leading-none">
+                    Client Portal
+                  </h1>
+                  <p className="text-xs font-bold text-ink/60 uppercase mt-0.5">Pixel Boba</p>
+                </div>
               </motion.div>
             </Link>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 overflow-y-auto scrollbar-hide">
-            <div className="space-y-2">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <motion.div
-                    key={item.id}
-                    whileHover={{ x: isCollapsed ? 0 : 4 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <button
-                      onClick={() => onTabChange(item.id)}
-                      data-tour={`sidebar-${item.id}`}
-                      className={`
-                      relative flex items-center gap-3 px-4 py-3 rounded-2xl w-full
-                      transition-all duration-200 group
-                      ${
-                        isActive(item.id)
-                          ? 'bg-gradient-to-r from-taro to-taro/80 text-white border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]'
-                          : 'text-ink/60 hover:bg-milk-tea/30 hover:text-ink hover:shadow-[1px_1px_0px_0px_rgba(58,0,29,0.3)] hover:translate-x-0.5 hover:translate-y-0.5'
-                      }
-                    `}
+          <nav className="flex-1 p-4 space-y-1">
+            {navItems.map((item) => {
+              const active = isActive(item.id);
+              const Icon = item.icon;
+              return (
+                <motion.button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  data-tour={`sidebar-${item.id}`}
+                  whileHover={{ x: active ? 0 : 4 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`
+                    w-full flex items-center gap-3 px-4 py-3 rounded-lg border-3 border-ink font-black uppercase text-sm transition-all relative
+                    ${
+                      active
+                        ? 'bg-taro text-white shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]'
+                        : 'bg-white text-ink hover:bg-matcha/20'
+                    }
+                  `}
+                >
+                  <span className={active ? 'text-white' : 'text-taro'}>
+                    <Icon className="w-5 h-5" strokeWidth={2.5} />
+                  </span>
+                  <span className="flex-1 text-left">{item.label}</span>
+                  {item.badge && item.badge > 0 && (
+                    <motion.div
+                      className="bg-strawberry text-white text-xs font-black px-2 py-0.5 rounded-full min-w-[20px] text-center border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', damping: 15 }}
                     >
-                      {/* Active Bubble Indicator */}
-                      {isActive(item.id) && (
-                        <motion.div
-                          className="absolute -left-1 w-1.5 h-8 bg-brown-sugar rounded-full"
-                          layoutId="activeIndicator"
-                          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                        />
-                      )}
-
-                      {/* Icon */}
-                      <div className={isActive(item.id) ? 'text-white' : 'text-taro'}>
-                        <Icon className="w-5 h-5" />
-                      </div>
-
-                      {/* Label */}
-                      <AnimatePresence>
-                        {!isCollapsed && (
-                          <motion.span
-                            className={`font-display text-sm flex-1 text-left uppercase tracking-wide ${
-                              isActive(item.id) ? 'font-black' : 'font-bold'
-                            }`}
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: 'auto' }}
-                            exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            {item.label}
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
-
-                      {/* Badge */}
-                      {!isCollapsed && item.badge && item.badge > 0 && (
-                        <motion.div
-                          className="bg-strawberry text-white text-xs font-black px-2 py-0.5 rounded-full min-w-[20px] text-center border-2 border-ink"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: 'spring', damping: 15 }}
-                        >
-                          {item.badge > 99 ? '99+' : item.badge}
-                        </motion.div>
-                      )}
-
-                      {/* Badge indicator when collapsed */}
-                      {isCollapsed && item.badge && item.badge > 0 && (
-                        <motion.div
-                          className="absolute -top-1 -right-1 w-4 h-4 bg-brown-sugar rounded-full border-2 border-white"
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                        />
-                      )}
-                    </button>
-                  </motion.div>
-                );
-              })}
-            </div>
+                      {item.badge > 99 ? '99+' : item.badge}
+                    </motion.div>
+                  )}
+                </motion.button>
+              );
+            })}
           </nav>
 
-          {/* Collapse Toggle - Desktop Only */}
-          <div className="hidden lg:flex items-center justify-center p-2 border-t border-brown-sugar/10">
-            <motion.button
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className="w-8 h-8 bg-white border-2 border-brown-sugar/20 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-shadow"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            >
-              <motion.div
-                animate={{ rotate: isCollapsed ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ChevronLeft className="w-4 h-4 text-taro" />
-              </motion.div>
-            </motion.button>
-          </div>
+          {/* User Profile */}
+          <div className="p-4 border-t-4 border-ink bg-white">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="relative">
+                {user.image ? (
+                  <img
+                    src={user.image}
+                    alt={user.name}
+                    className="w-12 h-12 rounded-full border-3 border-ink object-cover"
+                  />
+                ) : (
+                  <div className="w-12 h-12 bg-gradient-to-br from-matcha to-taro rounded-full border-3 border-ink flex items-center justify-center">
+                    <span className="text-white font-black text-lg">
+                      {user.name?.charAt(0).toUpperCase() || '?'}
+                    </span>
+                  </div>
+                )}
+                <div className="absolute -bottom-1 -right-1 px-2 py-0.5 bg-taro border-2 border-ink rounded-full">
+                  <span className="text-[10px] font-black text-white uppercase">Client</span>
+                </div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-black text-sm text-ink truncate uppercase">{user.name}</p>
+                <p className="text-xs text-ink/60 font-bold truncate">{user.email}</p>
+              </div>
+            </div>
 
-          {/* User Profile Card */}
-          <div className="relative p-4 border-t border-brown-sugar/10">
-            <motion.div
-              className={`
-              bg-gradient-to-br from-milk-tea/40 to-white/40 backdrop-blur-lg
-              rounded-2xl p-3 border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]
-              ${isCollapsed ? 'flex items-center justify-center' : ''}
-            `}
-              whileHover={{ scale: 1.02 }}
-            >
-              {isCollapsed ? (
-                <div className="relative">
-                  {user.image ? (
-                    <img
-                      src={user.image}
-                      alt={user.name}
-                      className="w-10 h-10 rounded-full border-2 border-taro/20"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-taro to-brown-sugar flex items-center justify-center text-white font-bold">
-                      {user.name?.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
-                </div>
-              ) : (
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    {user.image ? (
-                      <img
-                        src={user.image}
-                        alt={user.name}
-                        className="w-12 h-12 rounded-full border-2 border-taro/20"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-taro to-brown-sugar flex items-center justify-center text-white font-bold text-lg">
-                        {user.name?.charAt(0).toUpperCase()}
-                      </div>
-                    )}
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-display font-black text-sm text-ink truncate">{user.name}</p>
-                    <p className="text-xs text-ink/50 truncate">Client</p>
-                  </div>
-                  {onLogout && (
-                    <motion.button
-                      onClick={onLogout}
-                      className="p-2 hover:bg-red-50 rounded-xl text-red-400 hover:text-red-600 transition-colors border-3 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] uppercase font-black"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      title="LOGOUT"
-                    >
-                      <LogOut className="w-4 h-4" />
-                    </motion.button>
-                  )}
-                </div>
-              )}
-            </motion.div>
+            {/* Logout Button */}
+            {onLogout && (
+              <motion.button
+                onClick={onLogout}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-strawberry/20 hover:bg-strawberry/30 text-strawberry rounded-lg border-3 border-ink font-black uppercase text-sm transition-all"
+              >
+                <LogOut className="w-4 h-4" strokeWidth={2.5} />
+                <span>Logout</span>
+              </motion.button>
+            )}
           </div>
         </div>
       </motion.aside>
