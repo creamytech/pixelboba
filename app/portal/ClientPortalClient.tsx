@@ -14,6 +14,7 @@ import ContractCenter from '@/components/portal/ContractCenter';
 import FileCenter from '@/components/portal/FileCenter';
 import NotificationCenter from '@/components/portal/NotificationCenter';
 import NotificationPreferences from '@/components/portal/NotificationPreferences';
+import BillingCenter from '@/components/portal/BillingCenter';
 import ProjectTaskBoard from '@/components/kanban/ProjectTaskBoard';
 import WebsitePreview from '@/components/portal/WebsitePreview';
 // import OnboardingTour from '@/components/portal/OnboardingTour'; // Temporarily disabled for React 18 compatibility
@@ -248,6 +249,12 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         return (
           <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
             <NotificationCenter />
+          </div>
+        );
+      case 'billing':
+        return (
+          <div className="bg-white rounded-xl p-6 border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)]">
+            <BillingCenter />
           </div>
         );
       case 'preferences':

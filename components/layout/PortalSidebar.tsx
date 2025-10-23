@@ -103,6 +103,11 @@ export default function PortalSidebar({
       icon: Bell,
     },
     {
+      id: 'billing',
+      label: 'Billing',
+      icon: CreditCard,
+    },
+    {
       id: 'preferences',
       label: 'Preferences',
       icon: Settings,
