@@ -125,6 +125,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'User is already a team member' }, { status: 400 });
     }
 
+    // Check for existing pending invite
     const existingInvite = await prisma.teamInvite.findFirst({
       where: {
         email,
@@ -134,25 +135,37 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    if (existingInvite) {
-      return NextResponse.json({ error: 'Invitation already sent to this email' }, { status: 400 });
-    }
-
-    // Create invitation
+    let invite;
     const token = randomBytes(32).toString('hex');
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7); // 7 days to accept
 
-    const invite = await prisma.teamInvite.create({
-      data: {
-        email,
-        token,
-        role: role || 'TEAM_MEMBER',
-        expiresAt,
-        organizationId: organization.id,
-        createdById: user.id,
-      },
-    });
+    if (existingInvite) {
+      // Update existing invite with new token and extended expiry (resend functionality)
+      console.log('[Team Invite] Resending existing invite:', existingInvite.id);
+      invite = await prisma.teamInvite.update({
+        where: { id: existingInvite.id },
+        data: {
+          token,
+          expiresAt,
+          role: role || existingInvite.role, // Allow role update on resend
+          createdById: user.id, // Update who resent it
+        },
+      });
+    } else {
+      // Create new invitation
+      console.log('[Team Invite] Creating new invite for:', email);
+      invite = await prisma.teamInvite.create({
+        data: {
+          email,
+          token,
+          role: role || 'TEAM_MEMBER',
+          expiresAt,
+          organizationId: organization.id,
+          createdById: user.id,
+        },
+      });
+    }
 
     // Send invitation email
     const inviteUrl = `${process.env.NEXTAUTH_URL}/team/accept-invite?token=${token}`;
@@ -165,7 +178,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({
-      message: 'Invitation sent successfully',
+      message: existingInvite ? 'Invitation resent successfully' : 'Invitation sent successfully',
       invite: {
         id: invite.id,
         email: invite.email,
