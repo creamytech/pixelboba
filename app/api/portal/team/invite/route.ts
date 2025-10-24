@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { randomBytes } from 'crypto';
-import { sendEmail } from '@/lib/email';
+import { sendTeamInvitationEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -156,19 +156,12 @@ export async function POST(request: NextRequest) {
 
     // Send invitation email
     const inviteUrl = `${process.env.NEXTAUTH_URL}/team/accept-invite?token=${token}`;
-    await sendEmail({
+    await sendTeamInvitationEmail({
       to: email,
-      subject: `You've been invited to join ${organization.name} on Pixel Boba`,
-      html: `
-        <h1>Team Invitation</h1>
-        <p>${user.name || user.email} has invited you to join their team on Pixel Boba.</p>
-        <p><strong>Organization:</strong> ${organization.name}</p>
-        <p><strong>Role:</strong> ${role || 'Team Member'}</p>
-        <p>Click the link below to accept the invitation:</p>
-        <a href="${inviteUrl}" style="padding: 12px 24px; background-color: #9333EA; color: white; text-decoration: none; border-radius: 8px; display: inline-block; margin: 16px 0;">Accept Invitation</a>
-        <p>This invitation expires in 7 days.</p>
-        <p style="color: #666; font-size: 14px;">If you didn't expect this invitation, you can safely ignore this email.</p>
-      `,
+      inviterName: user.name || user.email,
+      organizationName: organization.name,
+      role: role || 'Team Member',
+      inviteUrl,
     });
 
     return NextResponse.json({
