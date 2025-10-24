@@ -8,6 +8,7 @@ declare module 'next-auth' {
       name: string;
       role: 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN';
       image?: string;
+      organizationId?: string | null;
     };
   }
 
@@ -17,11 +18,13 @@ declare module 'next-auth' {
     name: string;
     role: 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN';
     image?: string;
+    organizationId?: string | null;
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
     role: string;
+    organizationId?: string | null;
   }
 }

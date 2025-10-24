@@ -157,24 +157,55 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
+      // On sign in or update, fetch fresh user data from database
       if (user) {
         console.log('JWT callback - adding user data to token:', user.id, user.role);
         token.role = user.role;
         token.id = user.id;
       }
-      console.log('JWT callback - token:', { id: token.id, role: token.role, email: token.email });
+
+      // Fetch fresh user data on every JWT refresh to get updated organizationId
+      if (token.id) {
+        try {
+          const { prisma } = await import('./prisma');
+          const dbUser = await prisma.user.findUnique({
+            where: { id: token.id as string },
+            select: { id: true, role: true, organizationId: true },
+          });
+
+          if (dbUser) {
+            token.role = dbUser.role;
+            token.organizationId = dbUser.organizationId;
+          }
+        } catch (error) {
+          console.error('Error fetching user data in JWT callback:', error);
+        }
+      }
+
+      console.log('JWT callback - token:', {
+        id: token.id,
+        role: token.role,
+        organizationId: token.organizationId,
+        email: token.email,
+      });
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        console.log('Session callback - token data:', { id: token.id, role: token.role });
+        console.log('Session callback - token data:', {
+          id: token.id,
+          role: token.role,
+          organizationId: token.organizationId,
+        });
         session.user.id = token.id as string;
         session.user.role = token.role as 'CLIENT' | 'ADMIN' | 'OWNER';
+        session.user.organizationId = token.organizationId as string | null;
       }
       console.log('Session callback - final session:', {
         id: session.user.id,
         role: session.user.role,
+        organizationId: session.user.organizationId,
         email: session.user.email,
       });
       return session;

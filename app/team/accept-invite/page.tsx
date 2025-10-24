@@ -41,6 +41,8 @@ export default function AcceptInvitePage() {
   const acceptInvitation = async () => {
     try {
       setState('loading');
+      console.log('[Accept Invite Page] Sending accept request with token:', token);
+
       const response = await fetch('/api/portal/team/accept', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,6 +50,7 @@ export default function AcceptInvitePage() {
       });
 
       const data = await response.json();
+      console.log('[Accept Invite Page] Response:', { ok: response.ok, data });
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to accept invitation');
@@ -57,11 +60,16 @@ export default function AcceptInvitePage() {
       setState('success');
       setMessage(data.message);
 
-      // Redirect to portal after 3 seconds
+      console.log('[Accept Invite Page] Success! Refreshing session and redirecting...');
+
+      // CRITICAL: Force session refresh to get updated user data
+      // Use window.location instead of router.push to force a full page reload
+      // This ensures NextAuth fetches the updated user with organizationId
       setTimeout(() => {
-        router.push('/portal');
+        window.location.href = '/portal';
       }, 3000);
     } catch (error) {
+      console.error('[Accept Invite Page] Error:', error);
       setState('error');
       setMessage(error instanceof Error ? error.message : 'Failed to accept invitation');
     }
