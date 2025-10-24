@@ -77,7 +77,24 @@ export const authOptions: NextAuthOptions = {
           if (!dbUser) {
             console.log('User does not exist in database, checking invites...');
 
-            // Find any pending invite for this email (don't rely on token in URL)
+            // Check for TEAM invitation first (new system)
+            const teamInvite = await prisma.teamInvite.findFirst({
+              where: {
+                email: profile.email,
+                usedAt: null,
+                expiresAt: {
+                  gt: new Date(),
+                },
+              },
+              orderBy: {
+                createdAt: 'desc',
+              },
+              include: {
+                organization: true,
+              },
+            });
+
+            // Check for old ADMIN invitation system (fallback)
             const invite = await prisma.invite.findFirst({
               where: {
                 email: profile.email,
@@ -92,16 +109,35 @@ export const authOptions: NextAuthOptions = {
             });
 
             let userRole: 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN' = 'CLIENT'; // default
+            let organizationId: string | undefined;
 
-            if (invite) {
-              console.log('Found valid invite for user:', invite.role);
+            if (teamInvite) {
+              console.log('Found valid TEAM invite for user:', {
+                role: teamInvite.role,
+                organizationId: teamInvite.organizationId,
+                organizationName: teamInvite.organization.name,
+              });
+              userRole = teamInvite.role as
+                | 'CLIENT'
+                | 'ADMIN'
+                | 'OWNER'
+                | 'TEAM_MEMBER'
+                | 'TEAM_ADMIN';
+              organizationId = teamInvite.organizationId;
+            } else if (invite) {
+              console.log('Found valid ADMIN invite for user:', invite.role);
               userRole = invite.role as 'CLIENT' | 'ADMIN' | 'OWNER' | 'TEAM_MEMBER' | 'TEAM_ADMIN';
             } else {
               console.log('No valid invite found, using default CLIENT role');
             }
 
             // Create user
-            console.log('Creating new user with role:', userRole);
+            console.log(
+              'Creating new user with role:',
+              userRole,
+              'organizationId:',
+              organizationId
+            );
             dbUser = await prisma.user.create({
               data: {
                 email: profile.email,
@@ -109,10 +145,22 @@ export const authOptions: NextAuthOptions = {
                 image: (profile as any)?.picture,
                 role: userRole,
                 emailVerified: new Date(),
+                organizationId: organizationId,
               },
             });
 
-            // Mark invite as used if it exists
+            // Mark team invite as used if it exists
+            if (teamInvite) {
+              await prisma.teamInvite.update({
+                where: { id: teamInvite.id },
+                data: {
+                  usedAt: new Date(),
+                },
+              });
+              console.log('Team invite marked as used');
+            }
+
+            // Mark admin invite as used if it exists
             if (invite) {
               await prisma.invite.update({
                 where: { id: invite.id },
@@ -121,10 +169,15 @@ export const authOptions: NextAuthOptions = {
                   usedById: dbUser.id,
                 },
               });
-              console.log('Invite marked as used');
+              console.log('Admin invite marked as used');
             }
 
-            console.log('User created successfully:', dbUser.id);
+            console.log(
+              'User created successfully:',
+              dbUser.id,
+              'with organizationId:',
+              dbUser.organizationId
+            );
           } else {
             console.log('Existing user found:', dbUser.id, 'Role:', dbUser.role);
           }
