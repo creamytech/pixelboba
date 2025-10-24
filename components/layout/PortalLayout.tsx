@@ -1,9 +1,22 @@
 'use client';
 
 import { ReactNode } from 'react';
-import PortalSidebar from './PortalSidebar';
+import ModernSidebar from './ModernSidebar';
 import SubscriptionBadge from '../portal/SubscriptionBadge';
 import { motion } from 'framer-motion';
+import {
+  LayoutDashboard,
+  CheckSquare,
+  MessageSquare,
+  CreditCard,
+  FileCheck,
+  FolderOpen,
+  Bell,
+  Settings,
+  Users,
+  Zap,
+  Calendar,
+} from 'lucide-react';
 
 interface PortalLayoutProps {
   children: ReactNode;
@@ -94,13 +107,113 @@ export default function PortalLayout({
       </div>
 
       {/* Sidebar */}
-      <PortalSidebar
-        user={user}
+      <ModernSidebar
+        user={{
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        }}
         subscription={subscription}
+        sections={[
+          {
+            id: 'workspace',
+            label: 'Workspace',
+            items: [
+              {
+                id: 'dashboard',
+                label: 'Dashboard',
+                icon: <LayoutDashboard className="w-5 h-5" />,
+              },
+              {
+                id: 'requests',
+                label: 'Requests',
+                icon: <Zap className="w-5 h-5" />,
+              },
+              {
+                id: 'tasks',
+                label: 'Tasks',
+                icon: <CheckSquare className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+          {
+            id: 'communication',
+            label: 'Communication',
+            items: [
+              {
+                id: 'messages',
+                label: 'Messages',
+                icon: <MessageSquare className="w-5 h-5" />,
+                badge: badges.messages,
+                badgeColor: 'bg-strawberry text-white',
+              },
+              {
+                id: 'meetings',
+                label: 'Meetings',
+                icon: <Calendar className="w-5 h-5" />,
+              },
+              {
+                id: 'team',
+                label: 'Team',
+                icon: <Users className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+          {
+            id: 'financial',
+            label: 'Financial',
+            items: [
+              {
+                id: 'invoices',
+                label: 'Invoices',
+                icon: <CreditCard className="w-5 h-5" />,
+                badge: badges.invoices,
+                badgeColor: 'bg-thai-tea text-white',
+              },
+              {
+                id: 'contracts',
+                label: 'Contracts',
+                icon: <FileCheck className="w-5 h-5" />,
+                badge: badges.contracts,
+                badgeColor: 'bg-matcha text-white',
+              },
+              {
+                id: 'billing',
+                label: 'Billing',
+                icon: <CreditCard className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+          {
+            id: 'management',
+            label: 'Management',
+            items: [
+              {
+                id: 'files',
+                label: 'Files',
+                icon: <FolderOpen className="w-5 h-5" />,
+              },
+              {
+                id: 'notifications',
+                label: 'Notifications',
+                icon: <Bell className="w-5 h-5" />,
+              },
+              {
+                id: 'preferences',
+                label: 'Preferences',
+                icon: <Settings className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+        ]}
         activeTab={activeTab}
         onTabChange={onTabChange}
-        badges={badges}
         onLogout={onLogout}
+        brandName="Pixel Boba"
       />
 
       {/* Main Content */}

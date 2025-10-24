@@ -11,8 +11,17 @@ import {
   DollarSign,
   Calendar,
   CheckSquare,
+  LayoutDashboard,
+  FolderKanban,
+  TrendingUp,
+  Settings,
+  Sparkles,
+  BarChart3,
+  MessageSquare,
+  Activity,
 } from 'lucide-react';
-import Sidebar from '@/components/layout/Sidebar';
+import { Icon } from '@iconify/react';
+import ModernSidebar from '@/components/layout/ModernSidebar';
 import DashboardHeader from '@/components/layout/DashboardHeader';
 import MetricCard from '@/components/dashboard/MetricCard';
 import ProjectManager from '@/components/admin/ProjectManager';
@@ -212,16 +221,117 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
       </div>
 
       {/* Sidebar */}
-      <Sidebar
+      <ModernSidebar
         user={{
           name: session?.user?.name || 'Admin',
           email: session?.user?.email || '',
           image: session?.user?.image,
           role: 'Admin',
         }}
-        onLogout={() => signOut({ callbackUrl: '/' })}
+        sections={[
+          {
+            id: 'workspace',
+            label: 'Workspace',
+            items: [
+              {
+                id: 'overview',
+                label: 'Overview',
+                icon: <LayoutDashboard className="w-5 h-5" />,
+              },
+              {
+                id: 'tasks',
+                label: 'Tasks',
+                icon: <CheckSquare className="w-5 h-5" />,
+              },
+              {
+                id: 'projects',
+                label: 'Projects',
+                icon: <FolderKanban className="w-5 h-5" />,
+              },
+              {
+                id: 'analytics',
+                label: 'Analytics',
+                icon: <BarChart3 className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+          {
+            id: 'clients',
+            label: 'Clients & Communication',
+            items: [
+              {
+                id: 'clients',
+                label: 'Clients',
+                icon: <Users className="w-5 h-5" />,
+              },
+              {
+                id: 'requests',
+                label: 'Requests',
+                icon: <Icon icon="ph:clipboard-text-duotone" className="w-5 h-5" />,
+              },
+              {
+                id: 'meetings',
+                label: 'Meetings',
+                icon: <Icon icon="ph:calendar-check-duotone" className="w-5 h-5" />,
+              },
+              {
+                id: 'messages',
+                label: 'Messages',
+                icon: <MessageSquare className="w-5 h-5" />,
+              },
+              {
+                id: 'notifications',
+                label: 'Notifications',
+                icon: <Icon icon="ph:bell-duotone" className="w-5 h-5" />,
+              },
+              {
+                id: 'invites',
+                label: 'Invites',
+                icon: <Sparkles className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+          {
+            id: 'finance',
+            label: 'Finance',
+            items: [
+              {
+                id: 'invoices',
+                label: 'Invoices',
+                icon: <TrendingUp className="w-5 h-5" />,
+              },
+              {
+                id: 'contracts',
+                label: 'Contracts',
+                icon: <FileText className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+          {
+            id: 'system',
+            label: 'System',
+            items: [
+              {
+                id: 'audit',
+                label: 'Audit Logs',
+                icon: <Activity className="w-5 h-5" />,
+              },
+              {
+                id: 'settings',
+                label: 'Settings',
+                icon: <Settings className="w-5 h-5" />,
+              },
+            ],
+            defaultExpanded: true,
+          },
+        ]}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        onLogout={() => signOut({ callbackUrl: '/' })}
+        brandName="Pixel Boba"
       />
 
       {/* Main Content */}
