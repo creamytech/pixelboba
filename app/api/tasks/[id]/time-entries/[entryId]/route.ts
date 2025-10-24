@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; entryId: string } }
+  { params }: { params: Promise<{ id: string; entryId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -13,7 +13,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: taskId, entryId } = params;
+    const resolvedParams = await params;
+    const { id: taskId, entryId } = resolvedParams;
 
     // Delete the time entry
     await prisma.timeEntry.delete({

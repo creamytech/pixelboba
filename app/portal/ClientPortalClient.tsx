@@ -23,7 +23,7 @@ import RequestTracking from '@/components/portal/RequestTracking';
 import MeetingScheduler from '@/components/portal/MeetingScheduler';
 import ProjectDetails from '@/components/portal/ProjectDetails';
 import GlobalSearch from '@/components/portal/GlobalSearch';
-// import OnboardingTour from '@/components/portal/OnboardingTour'; // Temporarily disabled for React 18 compatibility
+import OnboardingTour from '@/components/portal/OnboardingTour';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import {
   FolderKanban,
@@ -461,12 +461,12 @@ export default function ClientPortalClient({ session }: { session: Session }) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Onboarding Tour - Temporarily disabled for React 18 compatibility */}
-      {/* <OnboardingTour
+      {/* Onboarding Tour */}
+      <OnboardingTour
         run={runOnboarding}
         onComplete={handleOnboardingComplete}
         onSkip={handleOnboardingSkip}
-      /> */}
+      />
 
       {/* Global Search */}
       <GlobalSearch isOpen={showGlobalSearch} onClose={() => setShowGlobalSearch(false)} />

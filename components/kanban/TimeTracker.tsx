@@ -8,9 +8,9 @@ interface TimeEntry {
   id: string;
   duration: number;
   description: string;
-  isBillable: boolean;
-  startedAt: Date;
-  endedAt?: Date;
+  billable: boolean;
+  startTime: Date;
+  endTime?: Date;
 }
 
 interface TimeTrackerProps {
@@ -181,7 +181,7 @@ export default function TimeTracker({ taskId, onTimeUpdate }: TimeTrackerProps) 
   };
 
   const getTotalBillableMinutes = () => {
-    return timeEntries.filter((e) => e.isBillable).reduce((sum, entry) => sum + entry.duration, 0);
+    return timeEntries.filter((e) => e.billable).reduce((sum, entry) => sum + entry.duration, 0);
   };
 
   return (
@@ -330,7 +330,7 @@ export default function TimeTracker({ taskId, onTimeUpdate }: TimeTrackerProps) 
                   <div className="flex-1">
                     <p className="font-bold text-sm text-ink">{entry.description}</p>
                     <p className="text-xs text-ink/60 font-bold">
-                      {formatDuration(entry.duration)} {entry.isBillable && '• Billable'}
+                      {formatDuration(entry.duration)} {entry.billable && '• Billable'}
                     </p>
                   </div>
                   <button

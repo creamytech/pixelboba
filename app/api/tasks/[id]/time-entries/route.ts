@@ -3,19 +3,20 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const taskId = params.id;
+    const resolvedParams = await params;
+    const taskId = resolvedParams.id;
 
     // Fetch all time entries for this task
     const entries = await prisma.timeEntry.findMany({
       where: { taskId },
-      orderBy: { startedAt: 'desc' },
+      orderBy: { startTime: 'desc' },
       include: {
         user: {
           select: {
@@ -35,14 +36,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const taskId = params.id;
+    const resolvedParams = await params;
+    const taskId = resolvedParams.id;
     const body = await request.json();
     const { duration, description, isBillable } = body;
 
@@ -51,8 +53,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
 
     // Create time entry
-    const startedAt = new Date();
-    const endedAt = new Date(startedAt.getTime() + duration * 60000);
+    const startTime = new Date();
+    const endTime = new Date(startTime.getTime() + duration * 60000);
 
     const entry = await prisma.timeEntry.create({
       data: {
@@ -60,9 +62,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         userId: session.user.id,
         duration,
         description: description || 'Time tracked',
-        isBillable: isBillable ?? true,
-        startedAt,
-        endedAt,
+        billable: isBillable ?? true,
+        startTime,
+        endTime,
       },
       include: {
         user: {
