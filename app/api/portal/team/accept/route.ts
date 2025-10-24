@@ -44,15 +44,33 @@ export async function POST(request: NextRequest) {
     // Get user
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
+      include: {
+        organization: true,
+      },
     });
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    if (user.email !== invite.email) {
+    console.log('[Accept Invite] User found:', {
+      id: user.id,
+      email: user.email,
+      currentOrganizationId: user.organizationId,
+      currentRole: user.role,
+    });
+
+    // Case-insensitive email comparison
+    const userEmail = user.email?.toLowerCase().trim();
+    const inviteEmail = invite.email?.toLowerCase().trim();
+
+    console.log('[Accept Invite] Email comparison:', { userEmail, inviteEmail });
+
+    if (userEmail !== inviteEmail) {
       return NextResponse.json(
-        { error: 'This invitation was sent to a different email address' },
+        {
+          error: `This invitation was sent to ${invite.email}, but you're signed in as ${user.email}. Please sign in with the correct email address.`,
+        },
         { status: 403 }
       );
     }
@@ -83,7 +101,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Update user and mark invitation as used
-    await prisma.$transaction([
+    console.log('[Accept Invite] Updating user:', {
+      userId: user.id,
+      organizationId: invite.organizationId,
+      role: invite.role,
+    });
+
+    const [updatedUser] = await prisma.$transaction([
       prisma.user.update({
         where: { id: user.id },
         data: {
@@ -96,6 +120,13 @@ export async function POST(request: NextRequest) {
         data: { usedAt: new Date() },
       }),
     ]);
+
+    console.log('[Accept Invite] User updated successfully:', {
+      userId: updatedUser.id,
+      email: updatedUser.email,
+      organizationId: updatedUser.organizationId,
+      role: updatedUser.role,
+    });
 
     return NextResponse.json({
       message: 'Successfully joined team',
