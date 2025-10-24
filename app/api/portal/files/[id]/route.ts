@@ -23,6 +23,20 @@ export async function DELETE(
     const { id: fileId } = await params;
     const { prisma } = await import('@/lib/prisma');
 
+    // Get user with organization info for proper access control
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: {
+        id: true,
+        role: true,
+        organizationId: true,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
     // Get the file to check permissions and get file path
     const file = await prisma.file.findUnique({
       where: { id: fileId },
@@ -31,6 +45,11 @@ export async function DELETE(
           select: {
             id: true,
             clientId: true,
+            client: {
+              select: {
+                organizationId: true,
+              },
+            },
           },
         },
       },
@@ -40,12 +59,24 @@ export async function DELETE(
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
 
-    // Check if user has permission to delete this file
-    const canDelete =
-      file.uploaderId === session.user.id || // User owns the file
-      session.user.role === 'ADMIN' || // Admin can delete any file
-      session.user.role === 'OWNER' || // Owner can delete any file
-      (file.project && file.project.clientId === session.user.id); // Client can delete files in their projects
+    // SECURITY: Check if user has permission to delete this file
+    let canDelete = false;
+
+    if (user.role === 'ADMIN') {
+      // Admin can delete any file
+      canDelete = true;
+    } else if (user.role === 'CLIENT' || user.role === 'OWNER') {
+      // Client/Owner can delete files they uploaded or files in their projects
+      canDelete = Boolean(
+        (file.uploaderId && file.uploaderId === user.id) ||
+          (file.project && file.project.clientId === user.id)
+      );
+    } else if (user.role === 'TEAM_MEMBER' || user.role === 'TEAM_ADMIN') {
+      // Team members can only delete files from their organization's projects
+      if (user.organizationId && file.project && file.project.client) {
+        canDelete = file.project.client.organizationId === user.organizationId;
+      }
+    }
 
     if (!canDelete) {
       return NextResponse.json({ error: 'Permission denied' }, { status: 403 });

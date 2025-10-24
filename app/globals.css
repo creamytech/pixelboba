@@ -247,6 +247,49 @@ select:focus-visible {
   }
 }
 
+/* Fix cursor visibility in modals and overlays */
+[role='dialog'],
+.modal,
+[data-state='open'],
+.fixed {
+  cursor: auto !important;
+}
+
+[role='dialog'] *,
+.modal *,
+[data-state='open'] *,
+.fixed * {
+  cursor: inherit;
+}
+
+/* Ensure cursor is visible over all interactive elements */
+button,
+a,
+input,
+textarea,
+select,
+[role='button'],
+[tabindex='0'] {
+  cursor: pointer !important;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='number'],
+input[type='tel'],
+input[type='url'],
+textarea {
+  cursor: text !important;
+}
+
+/* Ensure grain overlay doesn't interfere with cursor */
+body::after {
+  cursor: none;
+  pointer-events: none !important;
+}
+
 /* Typography improvements matching Pomegranate style */
 h1 {
   font-size: 2em;

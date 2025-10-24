@@ -15,31 +15,74 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url);
     const projectId = url.searchParams.get('projectId');
 
+    // Get user with organization info for proper access control
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: {
+        id: true,
+        role: true,
+        organizationId: true,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
     let whereClause: any = {};
 
-    // If user is a client, only show their files
-    if (session.user.role === 'CLIENT') {
+    // SECURITY: Scope file access based on user role and organization
+    if (user.role === 'ADMIN') {
+      // Admin can see all files
       if (projectId) {
-        // Show files from a specific project they have access to
+        whereClause = { projectId };
+      }
+    } else if (user.role === 'CLIENT' || user.role === 'OWNER') {
+      // Client/Owner can only see files from their own projects
+      if (projectId) {
         whereClause = {
           project: {
             id: projectId,
-            clientId: session.user.id,
+            clientId: user.id,
           },
         };
       } else {
-        // Show all files from their projects
         whereClause = {
           project: {
-            clientId: session.user.id,
+            clientId: user.id,
+          },
+        };
+      }
+    } else if (user.role === 'TEAM_MEMBER' || user.role === 'TEAM_ADMIN') {
+      // Team members can only see files from their organization's projects
+      if (!user.organizationId) {
+        return NextResponse.json(
+          { error: 'Team member must belong to an organization' },
+          { status: 403 }
+        );
+      }
+
+      if (projectId) {
+        whereClause = {
+          project: {
+            id: projectId,
+            client: {
+              organizationId: user.organizationId,
+            },
+          },
+        };
+      } else {
+        whereClause = {
+          project: {
+            client: {
+              organizationId: user.organizationId,
+            },
           },
         };
       }
     } else {
-      // Admin/Owner can see all files
-      if (projectId) {
-        whereClause = { projectId };
-      }
+      // Fallback: no access
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
     const files = await prisma.file.findMany({
