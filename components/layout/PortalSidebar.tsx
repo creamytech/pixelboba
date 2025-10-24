@@ -339,7 +339,7 @@ export default function PortalSidebar({
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-cream border-r-4 border-ink z-50 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out ${
+        className={`fixed left-0 top-0 h-screen bg-cream z-50 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out ${
           isCollapsed ? 'w-[80px]' : 'w-[280px]'
         }`}
         style={{
