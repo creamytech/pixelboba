@@ -19,6 +19,7 @@ import {
   X,
   BarChart3,
   MessageSquare,
+  Activity,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -163,6 +164,12 @@ export default function Sidebar({ user, onLogout, activeTab, onTabChange }: Side
       id: 'system',
       label: 'System',
       items: [
+        {
+          label: 'Audit Logs',
+          href: '/admin',
+          id: 'audit',
+          icon: <Activity className="w-5 h-5" strokeWidth={2.5} />,
+        },
         {
           label: 'Settings',
           href: '/admin',

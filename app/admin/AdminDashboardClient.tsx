@@ -27,6 +27,7 @@ import AnalyticsDashboard from '@/components/admin/AnalyticsDashboard';
 import RequestManager from '@/components/admin/RequestManager';
 import MeetingManager from '@/components/admin/MeetingManager';
 import NotificationSender from '@/components/admin/NotificationSender';
+import AuditLogViewer from '@/components/admin/AuditLogViewer';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { Session } from 'next-auth';
 
@@ -143,6 +144,8 @@ export default function AdminDashboardClient({ session }: { session: Session }) 
         return <AnalyticsDashboard />;
       case 'invites':
         return <InviteManager />;
+      case 'audit':
+        return <AuditLogViewer />;
       case 'settings':
         return <AdminSettings />;
       default:
