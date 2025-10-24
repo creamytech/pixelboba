@@ -98,21 +98,21 @@ export default function ModernSidebar({
   const tierInfo = getTierInfo();
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-gradient-to-b from-ink to-ink/95">
+    <div className="flex flex-col h-full bg-cream">
       {/* Brand Header */}
-      <div className="p-6 border-b-2 border-white/10">
+      <div className="p-6 border-b-4 border-ink">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-xl border-2 border-white/20 shadow-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center">
             {brandIcon || <Icon icon="ph:drop-duotone" className="w-6 h-6 text-white" />}
           </div>
           <div>
-            <h1 className="font-display text-xl font-black text-white uppercase tracking-tight">
+            <h1 className="font-display text-xl font-black text-ink uppercase tracking-tight">
               {brandName}
             </h1>
             {tierInfo && (
               <div className="flex items-center gap-1 mt-0.5">
-                <Sparkles className="w-3 h-3 text-white/60" />
-                <span className="text-xs font-bold text-white/60 uppercase">{tierInfo.name}</span>
+                <Sparkles className="w-3 h-3 text-taro" />
+                <span className="text-xs font-bold text-ink/60 uppercase">{tierInfo.name}</span>
               </div>
             )}
           </div>
@@ -120,7 +120,7 @@ export default function ModernSidebar({
 
         {tierInfo && (
           <div
-            className={`px-3 py-2 bg-gradient-to-r ${tierInfo.color} rounded-lg border-2 border-white/20 shadow-lg`}
+            className={`px-3 py-2 bg-gradient-to-r ${tierInfo.color} rounded-lg border-4 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]`}
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-black text-white uppercase">{tierInfo.name}</span>
@@ -132,7 +132,7 @@ export default function ModernSidebar({
 
       {/* Main Label */}
       <div className="px-6 py-3">
-        <span className="text-xs font-black text-white/40 uppercase tracking-wider">Main</span>
+        <span className="text-xs font-black text-ink/40 uppercase tracking-wider">Main</span>
       </div>
 
       {/* Navigation Sections */}
@@ -143,7 +143,7 @@ export default function ModernSidebar({
             {section.label && (
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full px-3 py-2 flex items-center justify-between text-white/60 hover:text-white transition-colors group"
+                className="w-full px-3 py-2 flex items-center justify-between text-ink/60 hover:text-ink transition-colors group"
               >
                 <span className="text-xs font-black uppercase tracking-wider">{section.label}</span>
                 {expandedSections[section.id] ? (
@@ -174,15 +174,15 @@ export default function ModernSidebar({
                           w-full px-4 py-3 rounded-lg flex items-center gap-3 transition-all group relative
                           ${
                             isActive
-                              ? 'bg-gradient-to-r from-white/20 to-white/10 shadow-lg border-l-4 border-white'
-                              : 'hover:bg-white/5 border-l-4 border-transparent hover:border-white/20'
+                              ? 'bg-white border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)]'
+                              : 'hover:bg-milk-tea/30 border-3 border-transparent hover:border-ink/10'
                           }
                         `}
                       >
                         <div
                           className={`
                           transition-colors
-                          ${isActive ? 'text-white' : 'text-white/60 group-hover:text-white'}
+                          ${isActive ? 'text-taro' : 'text-ink/60 group-hover:text-ink'}
                         `}
                         >
                           {item.icon}
@@ -190,7 +190,7 @@ export default function ModernSidebar({
                         <span
                           className={`
                           flex-1 text-left font-bold text-sm
-                          ${isActive ? 'text-white' : 'text-white/80 group-hover:text-white'}
+                          ${isActive ? 'text-ink' : 'text-ink/80 group-hover:text-ink'}
                         `}
                         >
                           {item.label}
@@ -200,7 +200,7 @@ export default function ModernSidebar({
                             className={`
                             px-2 py-0.5 rounded-full text-xs font-black min-w-[20px] text-center
                             ${item.badgeColor || 'bg-strawberry text-white'}
-                            border-2 border-white/20 shadow-lg
+                            border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)]
                           `}
                           >
                             {item.badge > 99 ? '99+' : item.badge}
@@ -217,31 +217,29 @@ export default function ModernSidebar({
       </nav>
 
       {/* User Profile */}
-      <div className="p-4 border-t-2 border-white/10">
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border-2 border-white/10 hover:bg-white/10 transition-all group cursor-pointer">
+      <div className="p-4 border-t-4 border-ink">
+        <div className="flex items-center gap-3 p-3 rounded-xl bg-white border-3 border-ink shadow-[3px_3px_0px_0px_rgba(58,0,29,1)] hover:shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all group cursor-pointer">
           {user.image ? (
             <img
               src={user.image}
               alt={user.name}
-              className="w-10 h-10 rounded-full border-2 border-white/20 object-cover"
+              className="w-10 h-10 rounded-full border-3 border-ink object-cover"
             />
           ) : (
-            <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-full border-2 border-white/20 flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-taro to-deep-taro rounded-full border-3 border-ink flex items-center justify-center">
               <span className="text-white font-black text-lg">
                 {user.name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase()}
               </span>
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <div className="font-bold text-white text-sm truncate">{user.name || user.email}</div>
-            <div className="text-xs text-white/60 truncate font-bold">
-              {user.role || user.email}
-            </div>
+            <div className="font-bold text-ink text-sm truncate">{user.name || user.email}</div>
+            <div className="text-xs text-ink/60 truncate font-bold">{user.role || user.email}</div>
           </div>
           {onLogout && (
             <button
               onClick={onLogout}
-              className="p-2 rounded-lg hover:bg-strawberry/20 text-white/60 hover:text-strawberry transition-all"
+              className="p-2 rounded-lg hover:bg-strawberry/20 text-ink/60 hover:text-strawberry transition-all"
               title="Logout"
             >
               <LogOut className="w-4 h-4" />
@@ -291,7 +289,7 @@ export default function ModernSidebar({
       </AnimatePresence>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-72 border-r-4 border-ink shadow-[4px_0px_0px_0px_rgba(58,0,29,1)]">
+      <aside className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 w-[280px] border-r-4 border-ink shadow-[4px_0px_0px_0px_rgba(58,0,29,1)]">
         <SidebarContent />
       </aside>
     </>
