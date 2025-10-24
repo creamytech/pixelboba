@@ -13,6 +13,7 @@ import {
   Trash2,
   AlertCircle,
 } from 'lucide-react';
+import TimeTracker from './TimeTracker';
 import { Task, TaskStatus, Priority, User as UserType } from '@prisma/client';
 import { format } from 'date-fns';
 
@@ -403,6 +404,18 @@ export default function TaskModal({
                       )}
                     </div>
                   </div>
+
+                  {/* Time Tracking */}
+                  {task && currentUser?.role !== 'CLIENT' && (
+                    <div className="mt-6">
+                      <TimeTracker
+                        taskId={task.id}
+                        onTimeUpdate={(totalMinutes) => {
+                          console.log('Total time updated:', totalMinutes);
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Footer */}

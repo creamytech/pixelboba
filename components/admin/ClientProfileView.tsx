@@ -1241,14 +1241,177 @@ function AccessSubscriptionTab({ clientId }: { clientId: string }) {
 }
 
 function ActivityTab({ clientId }: { clientId: string }) {
-  // This would fetch activity logs for the client
+  const [activities, setActivities] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<Record<string, number>>({});
+  const [filter, setFilter] = useState<string>('all');
+
+  useEffect(() => {
+    fetchActivities();
+  }, [clientId, filter]);
+
+  const fetchActivities = async () => {
+    try {
+      setLoading(true);
+      const url = `/api/admin/clients/${clientId}/activity${filter !== 'all' ? `?action=${filter}` : ''}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setActivities(data.activities || []);
+        setStats(data.stats || {});
+      }
+    } catch (error) {
+      console.error('Error fetching activities:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getActionIcon = (action: string) => {
+    switch (action.toLowerCase()) {
+      case 'login':
+      case 'signin':
+        return <User className="w-4 h-4" />;
+      case 'upload':
+      case 'file_upload':
+        return <Upload className="w-4 h-4" />;
+      case 'message':
+      case 'send_message':
+        return <MessageCircle className="w-4 h-4" />;
+      case 'create':
+        return <Plus className="w-4 h-4" />;
+      case 'update':
+      case 'edit':
+        return <Edit className="w-4 h-4" />;
+      case 'delete':
+        return <FileText className="w-4 h-4" />;
+      case 'payment':
+      case 'invoice_paid':
+        return <CreditCard className="w-4 h-4" />;
+      default:
+        return <Activity className="w-4 h-4" />;
+    }
+  };
+
+  const getActionColor = (action: string) => {
+    switch (action.toLowerCase()) {
+      case 'login':
+      case 'signin':
+        return 'from-matcha to-green-600';
+      case 'upload':
+      case 'file_upload':
+        return 'from-taro to-deep-taro';
+      case 'message':
+      case 'send_message':
+        return 'from-thai-tea to-strawberry';
+      case 'create':
+        return 'from-blue-500 to-blue-600';
+      case 'update':
+      case 'edit':
+        return 'from-yellow-500 to-orange-500';
+      case 'delete':
+        return 'from-strawberry to-red-600';
+      case 'payment':
+      case 'invoice_paid':
+        return 'from-matcha to-green-600';
+      default:
+        return 'from-ink/70 to-ink';
+    }
+  };
+
+  const formatTimestamp = (date: string) => {
+    const now = new Date();
+    const activityDate = new Date(date);
+    const diffMs = now.getTime() - activityDate.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return activityDate.toLocaleDateString();
+  };
+
   return (
     <div className="bg-white rounded-xl border-4 border-ink shadow-[4px_4px_0px_0px_rgba(58,0,29,1)] p-6">
-      <h3 className="font-display text-xl font-black text-ink mb-6 uppercase">activity log</h3>
-      <div className="text-center py-8 text-ink/50">
-        <Activity className="w-12 h-12 mx-auto mb-2 opacity-50" />
-        <p className="font-bold">Activity tracking coming soon</p>
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="font-display text-xl font-black text-ink uppercase">activity log</h3>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="px-4 py-2 border-3 border-ink rounded-lg font-black text-sm uppercase focus:outline-none focus:ring-2 focus:ring-taro"
+        >
+          <option value="all">All Activity</option>
+          {Object.keys(stats).map((action) => (
+            <option key={action} value={action}>
+              {action} ({stats[action]})
+            </option>
+          ))}
+        </select>
       </div>
+
+      {loading ? (
+        <div className="text-center py-12">
+          <div className="inline-block w-8 h-8 border-4 border-taro border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 font-bold text-ink/50">Loading activity...</p>
+        </div>
+      ) : activities.length > 0 ? (
+        <div className="space-y-3 max-h-[600px] overflow-y-auto">
+          {activities.map((activity) => (
+            <motion.div
+              key={activity.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-start gap-4 p-4 bg-cream/30 rounded-lg border-2 border-ink/10 hover:border-taro/30 transition-all"
+            >
+              <div
+                className={`w-10 h-10 rounded-full border-2 border-ink shadow-[2px_2px_0px_0px_rgba(58,0,29,1)] flex items-center justify-center bg-gradient-to-br ${getActionColor(activity.action)} flex-shrink-0`}
+              >
+                <div className="text-white">{getActionIcon(activity.action)}</div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h4 className="font-black text-ink text-sm uppercase truncate">
+                    {activity.action}
+                  </h4>
+                  <span className="text-xs font-bold text-ink/50 whitespace-nowrap">
+                    {formatTimestamp(activity.createdAt)}
+                  </span>
+                </div>
+                <div className="text-xs font-bold text-ink/70 space-y-1">
+                  <p>
+                    <span className="text-ink/50">Entity:</span> {activity.entityType} (
+                    {activity.entityId.substring(0, 8)}...)
+                  </p>
+                  {activity.ipAddress && (
+                    <p>
+                      <span className="text-ink/50">IP:</span> {activity.ipAddress}
+                    </p>
+                  )}
+                  {activity.changes && (
+                    <details className="mt-2">
+                      <summary className="cursor-pointer text-taro hover:text-deep-taro font-black uppercase text-xs">
+                        View Changes
+                      </summary>
+                      <pre className="mt-2 p-2 bg-ink/5 rounded border border-ink/10 text-xs overflow-x-auto">
+                        {JSON.stringify(activity.changes, null, 2)}
+                      </pre>
+                    </details>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-12 text-ink/50">
+          <Activity className="w-12 h-12 mx-auto mb-2 opacity-50" />
+          <p className="font-bold">No activity recorded yet</p>
+          <p className="text-sm mt-2">Activity will appear here as the client uses the portal</p>
+        </div>
+      )}
     </div>
   );
 }
