@@ -29,6 +29,15 @@ export async function GET(request: NextRequest) {
             orderBy: { createdAt: 'desc' },
           },
           subscription: true,
+          organization: {
+            include: {
+              owner: {
+                include: {
+                  subscription: true,
+                },
+              },
+            },
+          },
         },
       });
 
@@ -50,6 +59,15 @@ export async function GET(request: NextRequest) {
               orderBy: { createdAt: 'desc' },
             },
             subscription: true,
+            organization: {
+              include: {
+                owner: {
+                  include: {
+                    subscription: true,
+                  },
+                },
+              },
+            },
           },
         });
       }
@@ -77,15 +95,23 @@ export async function GET(request: NextRequest) {
       ]);
 
       // Determine subscription tier name
+      // For team members, use the organization owner's subscription
       let subscriptionTier = null;
       let isSubscriptionActive = false;
 
-      if (user.subscription) {
+      // Check if user is part of an organization (team member)
+      let effectiveSubscription = user.subscription;
+      if (!effectiveSubscription && user.organization?.owner?.subscription) {
+        console.log('User is team member, using organization owner subscription');
+        effectiveSubscription = user.organization.owner.subscription;
+      }
+
+      if (effectiveSubscription) {
         isSubscriptionActive =
-          user.subscription.status === 'ACTIVE' && !user.subscription.cancelAtPeriodEnd;
+          effectiveSubscription.status === 'ACTIVE' && !effectiveSubscription.cancelAtPeriodEnd;
 
         // Map price ID to tier name
-        const priceId = user.subscription.stripePriceId;
+        const priceId = effectiveSubscription.stripePriceId;
         if (priceId === process.env.NEXT_PUBLIC_STRIPE_LITE_BREW_PRICE_ID) {
           subscriptionTier = 'Lite Brew';
         } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_SIGNATURE_BLEND_PRICE_ID) {
@@ -93,6 +119,12 @@ export async function GET(request: NextRequest) {
         } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_TARO_CLOUD_PRICE_ID) {
           subscriptionTier = 'Taro Cloud';
         }
+
+        console.log('Subscription determined:', {
+          subscriptionTier,
+          isSubscriptionActive,
+          userId: user.id,
+        });
       }
 
       const portalData = {
