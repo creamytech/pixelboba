@@ -215,7 +215,7 @@ export async function sendTeamInvitationEmail({
 
           <div class="footer">
             <p>If you didn't expect this invitation, you can safely ignore this email.</p>
-            <p>Need help? Contact us at support@pixelboba.com</p>
+            <p>Need help? Contact us at hello@pixelboba.com</p>
           </div>
         </div>
       </body>

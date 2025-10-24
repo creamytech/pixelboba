@@ -14,6 +14,7 @@ import {
   Trash2,
   Clock,
   Check,
+  RotateCcw,
 } from 'lucide-react';
 
 interface TeamMember {
@@ -152,6 +153,33 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
       fetchTeamData();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to remove member');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleResendInvite = async (inviteEmail: string, inviteRole: string) => {
+    setActionLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const response = await fetch('/api/portal/team/invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: inviteEmail, role: inviteRole }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to resend invitation');
+      }
+
+      setSuccess(`Invitation resent to ${inviteEmail}`);
+      fetchTeamData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to resend invitation');
     } finally {
       setActionLoading(false);
     }
@@ -335,7 +363,7 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
 
                 <div className="flex-1">
                   <h4 className="font-black text-ink mb-1">{invite.email}</h4>
-                  <div className="flex items-center gap-3 text-sm">
+                  <div className="flex items-center gap-3 text-sm mb-2">
                     <span className="font-bold text-ink/70">{getRoleLabel(invite.role)}</span>
                     <span className="text-ink/50">•</span>
                     <div className="flex items-center gap-1 text-ink/70 font-bold">
@@ -343,6 +371,16 @@ export default function TeamManagement({ onUpgrade }: TeamManagementProps = {}) 
                       Expires {new Date(invite.expiresAt).toLocaleDateString()}
                     </div>
                   </div>
+                  {isOwner && (
+                    <button
+                      onClick={() => handleResendInvite(invite.email, invite.role)}
+                      disabled={actionLoading}
+                      className="px-3 py-1.5 bg-taro/10 text-taro font-black rounded-lg border-2 border-taro hover:bg-taro hover:text-white transition-all uppercase text-xs flex items-center gap-1.5 disabled:opacity-50"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      Resend Email
+                    </button>
+                  )}
                 </div>
 
                 <span className="px-3 py-1.5 bg-thai-tea/10 text-thai-tea font-black text-xs rounded-full border-2 border-thai-tea uppercase">
