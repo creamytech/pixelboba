@@ -86,11 +86,6 @@ export default function ProcessPage() {
     <div className="min-h-screen">
       <Header>
         <div className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
-          {/* Floating cat decoration */}
-          <div className="absolute top-10 right-[8%] w-32 h-32 opacity-20 hidden md:block">
-            <Image src="/03.svg" alt="" width={128} height={128} className="w-full h-full" />
-          </div>
-
           <div className="max-w-6xl mx-auto relative z-10">
             {/* Badge */}
             <div className="text-center mb-20">
@@ -226,7 +221,7 @@ export default function ProcessPage() {
 
             {/* Bottom CTA with cat */}
             <div className="relative">
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2 z-10">
+              <div className="absolute -top-[110px] left-1/2 -translate-x-1/2 z-11">
                 <Image
                   src="/01.svg"
                   alt=""

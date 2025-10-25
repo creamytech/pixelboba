@@ -42,11 +42,6 @@ export default function StartProjectPage() {
     <div className="min-h-screen">
       <Header>
         <div className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
-          {/* Floating cat decoration */}
-          <div className="absolute top-10 left-[8%] w-32 h-32 opacity-20 hidden md:block">
-            <Image src="/03.svg" alt="" width={128} height={128} className="w-full h-full" />
-          </div>
-
           <div className="max-w-5xl mx-auto relative z-10">
             {/* Badge */}
             <div className="text-center mb-20">

@@ -6,8 +6,19 @@ import Image from 'next/image';
 export default function CTASection() {
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-cream">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8">
-        <div className="relative text-center bg-white border-4 sm:border-[5px] md:border-[6px] border-ink rounded-2xl sm:rounded-3xl md:rounded-[32px] shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] sm:shadow-[12px_12px_0px_0px_rgba(58,0,29,1)] md:shadow-[16px_16px_0px_0px_rgba(58,0,29,1)] p-8 sm:p-10 md:p-12 lg:p-16">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 relative">
+        {/* Cat peeking over */}
+        <div className="absolute -top-[110px] left-1/2 -translate-x-1/2 z-10">
+          <Image
+            src="/01.svg"
+            alt=""
+            width={160}
+            height={160}
+            className="w-36 h-36 sm:w-40 sm:h-40"
+          />
+        </div>
+
+        <div className="relative text-center bg-white border-4 sm:border-[5px] md:border-[6px] border-ink rounded-2xl sm:rounded-3xl md:rounded-[32px] shadow-[8px_8px_0px_0px_rgba(58,0,29,1)] sm:shadow-[12px_12px_0px_0px_rgba(58,0,29,1)] md:shadow-[16px_16px_0px_0px_rgba(58,0,29,1)] p-8 sm:p-10 md:p-12 lg:p-16 pt-12 sm:pt-14 md:pt-16 lg:pt-20">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-ink mb-6 sm:mb-8 leading-tight">
             Ready for More Customers?
           </h2>

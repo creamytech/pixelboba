@@ -26,11 +26,6 @@ const values = [
 export default function AboutPageClient() {
   return (
     <div className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
-      {/* Floating cat */}
-      <div className="absolute top-10 right-[10%] w-28 h-28 opacity-15 hidden md:block">
-        <Image src="/02.svg" alt="" width={112} height={112} className="w-full h-full" />
-      </div>
-
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Hero */}
         <div className="text-center mb-24">
@@ -178,7 +173,7 @@ export default function AboutPageClient() {
 
         {/* CTA with cat */}
         <div className="max-w-3xl mx-auto relative">
-          <div className="absolute -top-20 left-1/2 -translate-x-1/2 z-10">
+          <div className="absolute -top-[110px] left-1/2 -translate-x-1/2 z-10">
             <Image
               src="/01.svg"
               alt=""

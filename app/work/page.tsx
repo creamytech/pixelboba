@@ -47,11 +47,6 @@ export default async function WorkPage() {
       <Header>
         {/* Hero Section */}
         <div className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
-          {/* Floating cat decoration */}
-          <div className="absolute top-10 right-[8%] w-32 h-32 opacity-20 hidden md:block">
-            <Image src="/02.svg" alt="" width={128} height={128} className="w-full h-full" />
-          </div>
-
           <div className="max-w-5xl mx-auto text-center mb-20 relative z-10">
             {/* Badge */}
             <div className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] px-6 py-3 rounded-full border-2 border-[#7C3AED]/20 mb-8">
@@ -76,7 +71,7 @@ export default async function WorkPage() {
           {/* Bottom CTA with cat */}
           <div className="max-w-3xl mx-auto relative">
             {/* Cat peeking over */}
-            <div className="absolute -top-20 left-1/2 -translate-x-1/2 z-10">
+            <div className="absolute -top-[110px] left-1/2 -translate-x-1/2 z-10">
               <Image
                 src="/01.svg"
                 alt=""

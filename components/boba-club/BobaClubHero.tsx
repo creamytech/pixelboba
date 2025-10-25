@@ -9,36 +9,6 @@ import { Icon } from '@iconify/react';
 export default function BobaClubHero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-12 sm:pb-16">
-      {/* Floating cat decorations */}
-      <motion.div
-        className="absolute top-20 right-[8%] w-32 h-32 opacity-20 hidden md:block"
-        animate={{
-          y: [0, -20, 0],
-          rotate: [-5, 5, -5],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      >
-        <Image src="/01.svg" alt="" width={128} height={128} className="w-full h-full" />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-20 left-[8%] w-32 h-32 opacity-20 hidden md:block"
-        animate={{
-          y: [0, 20, 0],
-          rotate: [5, -5, 5],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      >
-        <Image src="/03.svg" alt="" width={128} height={128} className="w-full h-full" />
-      </motion.div>
-
       <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10 text-center max-w-5xl">
         {/* Purple badge */}
         <motion.div
